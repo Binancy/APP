@@ -12,3 +12,16 @@ TextStyle addButtonStyle() {
 TextStyle titleCardStyle() {
   return TextStyle(color: textColor, fontSize: 20);
 }
+
+TextStyle semititleStyle() {
+  return TextStyle(color: textColor, fontSize: 15);
+}
+
+TextStyle balanceValueStyle() {
+  return TextStyle(
+      color: primaryColor, fontSize: 50, fontWeight: FontWeight.bold);
+}
+
+TextStyle detailStyle() {
+  return TextStyle(color: textColor, fontSize: 12);
+}
