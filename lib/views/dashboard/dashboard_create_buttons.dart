@@ -13,7 +13,7 @@ class DashboardCreateButtons extends StatelessWidget {
         children: [
           Card(
             elevation: 5,
-            color: accentColor,
+            color: primaryColor,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(customBorderRadius)),
             child: Padding(
@@ -24,7 +24,7 @@ class DashboardCreateButtons extends StatelessWidget {
                 children: [
                   Icon(
                     Icons.send,
-                    color: primaryColor,
+                    color: Colors.white,
                   ),
                   SizedBox(
                     width: 5,
@@ -40,7 +40,7 @@ class DashboardCreateButtons extends StatelessWidget {
           ),
           Card(
             elevation: 5,
-            color: accentColor,
+            color: primaryColor,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(customBorderRadius)),
             child: Padding(
@@ -51,7 +51,7 @@ class DashboardCreateButtons extends StatelessWidget {
                 children: [
                   Icon(
                     Icons.send,
-                    color: primaryColor,
+                    color: Colors.white,
                   ),
                   SizedBox(
                     width: 5,
