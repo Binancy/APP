@@ -6,6 +6,7 @@ class Expend {
   double value = 0;
   String description = "";
   Category category = Category();
+  DateTime date = DateTime.now();
 
   Expend();
 

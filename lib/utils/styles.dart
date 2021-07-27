@@ -31,6 +31,25 @@ TextStyle detailStyle() {
   return TextStyle(color: textColor, fontSize: 12);
 }
 
+TextStyle dashboardDateStyle() {
+  return TextStyle(
+      color: primaryColor, fontSize: 12, fontWeight: FontWeight.w600);
+}
+
+TextStyle dashboardCategoryStyle() {
+  return TextStyle(
+      color: secondaryColor, fontSize: 12, fontWeight: FontWeight.w600);
+}
+
+TextStyle dashboardDescriptionStyle() {
+  return TextStyle(color: textColor, fontSize: 14);
+}
+
+TextStyle dashboardValueStyle() {
+  return TextStyle(
+      color: primaryColor, fontSize: 20, fontWeight: FontWeight.w600);
+}
+
 class MyBehavior extends ScrollBehavior {
   @override
   Widget buildViewportChrome(

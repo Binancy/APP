@@ -34,12 +34,14 @@ class DashboardChangeNotifier extends ChangeNotifier {
             ..idExpend = Random().nextInt(1000)
             ..idUser = 0
             ..value = Random().nextInt(1000).toDouble()
-            ..description = "Ingreso de ejemplo")
+            ..description =
+                "Este es un gasto de ejemplo con una descripción bastante larga, es tan larga debido a que se quiere comprobar como queda visualmente tanto en tamaño de la fuente como separación y espacio")
           : movementsList.add(Income()
             ..idIncome = Random().nextInt(1000)
             ..idUser = 0
             ..value = Random().nextInt(1000).toDouble()
-            ..description = "Gasto de ejemplo");
+            ..description =
+                "Este es un gasto de ejemplo con una descripción bastante larga, es tan larga debido a que se quiere comprobar como queda visualmente tanto en tamaño de la fuente como separación y espacio");
     }
   }
 }
