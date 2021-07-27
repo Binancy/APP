@@ -6,7 +6,8 @@ Color accentColor = Color(0xffDAE3F2);
 Color textColor = Color(0xff5d5d5d);
 
 TextStyle appBarStyle() {
-  return TextStyle(color: Colors.white, fontSize: 20);
+  return TextStyle(
+      color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold);
 }
 
 TextStyle addButtonStyle() {

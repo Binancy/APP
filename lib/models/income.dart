@@ -6,6 +6,9 @@ class Income {
   double value = 0;
   String description = "";
   Category category = Category();
+  DateTime date = DateTime.now();
+
+  Income();
 
   Income.fromJson(Map<String, dynamic> json)
       : idIncome = json['idIncome'],

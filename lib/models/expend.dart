@@ -7,6 +7,8 @@ class Expend {
   String description = "";
   Category category = Category();
 
+  Expend();
+
   Expend.fromJson(Map<String, dynamic> json)
       : idExpend = json['idExpend'],
         idUser = json['idUser'],
