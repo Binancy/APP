@@ -1,6 +1,4 @@
-import 'package:binancy/globals.dart';
 import 'package:binancy/utils/styles.dart';
-import 'package:binancy/views/dashboard/dashboard_chart.dart';
 import 'package:binancy/views/dashboard/dashboard_summary_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -16,43 +14,47 @@ class _DashboardViewState extends State<DashboardView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: BottomNavigationBar(
+          elevation: 5,
+          backgroundColor: Colors.white,
+          items: [
+            BottomNavigationBarItem(
+                icon: Icon(Icons.dashboard_rounded), label: 'Dashboard'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.dashboard_rounded), label: 'Dashboard')
+          ]),
       backgroundColor: Colors.white,
-      body: Stack(
-        children: [
-          Positioned(
-              child: Container(
-            height: 300,
-            decoration: BoxDecoration(
-                color: primaryColor,
-                borderRadius: BorderRadius.only(
-                    bottomRight: Radius.circular(customBorderRadius))),
-          )),
-          Positioned(
-            child: Scaffold(
-              backgroundColor: Colors.transparent,
-              appBar: AppBar(
-                elevation: 0,
-                title: Text(AppLocalizations.of(context)!.header_summary),
-                backgroundColor: Colors.transparent,
-                centerTitle: true,
-                leading: IconButton(
-                    icon: Icon(Icons.settings_rounded), onPressed: () {}),
-                actions: [
-                  IconButton(
-                      icon: Icon(Icons.notifications_active), onPressed: () {})
-                ],
-              ),
-              body: ListView(
-                children: [
-                  SizedBox(height: 75),
-                  DashboardSummaryCard(),
-                  DashboardCreateButtons(),
-                  DashboardChart()
-                ],
+      body: ScrollConfiguration(
+        behavior: MyBehavior(),
+        child: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              pinned: false,
+              floating: true,
+              snap: true,
+              brightness: Brightness.dark,
+              centerTitle: true,
+              elevation: 0,
+              backgroundColor: primaryColor,
+              actions: [
+                IconButton(
+                    icon: Icon(Icons.notifications_outlined), onPressed: () {})
+              ],
+              leading: IconButton(
+                  icon: Icon(Icons.settings_outlined), onPressed: () {}),
+              title: Text(
+                AppLocalizations.of(context)!.dashboard_header,
+                style: appBarStyle(),
               ),
             ),
-          )
-        ],
+            SliverToBoxAdapter(
+              child: DashboardSummary(),
+            ),
+            SliverToBoxAdapter(
+              child: DashboardCreateButtons(),
+            )
+          ],
+        ),
       ),
     );
   }

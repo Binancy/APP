@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 
 Color primaryColor = Color(0xff054ECE);
-Color secondaryColor = Color(0xff195AD2);
+Color secondaryColor = Color(0xff4186FF);
 Color accentColor = Color(0xffDAE3F2);
 Color textColor = Color(0xff5d5d5d);
 
+TextStyle appBarStyle() {
+  return TextStyle(color: Colors.white, fontSize: 20);
+}
+
 TextStyle addButtonStyle() {
-  return TextStyle(color: Colors.white, fontSize: 12);
+  return TextStyle(color: Colors.white, fontSize: 13);
 }
 
 TextStyle titleCardStyle() {
@@ -24,4 +28,12 @@ TextStyle balanceValueStyle() {
 
 TextStyle detailStyle() {
   return TextStyle(color: textColor, fontSize: 12);
+}
+
+class MyBehavior extends ScrollBehavior {
+  @override
+  Widget buildViewportChrome(
+      BuildContext context, Widget child, AxisDirection axisDirection) {
+    return child;
+  }
 }

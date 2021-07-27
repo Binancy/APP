@@ -1,3 +1,5 @@
 {
-    "header_summary": "Tu resumen"
+    "dashboard_header": "Tu resumen",
+    "dashboard_button_income" : "Añade un ingreso",
+    "dashboard_button_expense" : "Añade un gasto"
 }

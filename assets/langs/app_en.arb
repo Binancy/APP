@@ -1,3 +1,5 @@
 {
-    "header_summary": "Your summary"
+    "dashboard_header": "Your summary",
+    "dashboard_button_income" : "Add an income",
+    "dashboard_button_expense" : "Add an expense"
 }

@@ -3,12 +3,59 @@ import 'package:binancy/utils/styles.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:flutter/material.dart';
 
+class DashboardSummary extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+        width: MediaQuery.of(context).size.width,
+        height: 350,
+        child: Stack(
+          children: [
+            Positioned(
+              child: ClipPath(
+                clipper: BackgrounClipper(),
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 250,
+                  color: primaryColor,
+                ),
+              ),
+            ),
+            Positioned(
+                child: Center(
+              child: DashboardSummaryCard(),
+            ))
+          ],
+        ));
+  }
+}
+
+class BackgrounClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    Path path = Path();
+    path.lineTo(0, size.height);
+    path.lineTo(size.width, size.height - 60);
+    path.lineTo(size.width, 0);
+    path.lineTo(0, 0);
+    return path;
+  }
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
+    return true;
+  }
+}
+
 class DashboardSummaryCard extends StatelessWidget {
+  const DashboardSummaryCard({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Card(
       elevation: 5,
-      margin: EdgeInsets.only(top: 20, left: 20, right: 20),
+      shadowColor: Colors.black.withOpacity(0.2),
+      margin: EdgeInsets.only(left: 20, right: 20),
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(customBorderRadius)),
       child: Container(
@@ -37,9 +84,10 @@ class DashboardSummaryCard extends StatelessWidget {
                         pointers: [
                           RangePointer(
                             value: 0.97,
+                            gradient: SweepGradient(
+                                colors: [primaryColor, secondaryColor]),
                             cornerStyle: CornerStyle.bothCurve,
                             width: 15,
-                            color: primaryColor,
                           )
                         ],
                       )
