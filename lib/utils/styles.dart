@@ -6,8 +6,11 @@ Color accentColor = Color(0xffDAE3F2);
 Color textColor = Color(0xff5d5d5d);
 
 TextStyle appBarStyle() {
-  return TextStyle(
-      color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold);
+  return TextStyle(color: Colors.white, fontSize: 22);
+}
+
+TextStyle whiteButtonStyle() {
+  return TextStyle(color: Colors.white, fontSize: 18);
 }
 
 TextStyle addButtonStyle() {
@@ -15,7 +18,7 @@ TextStyle addButtonStyle() {
 }
 
 TextStyle titleCardStyle() {
-  return TextStyle(color: textColor, fontSize: 20);
+  return TextStyle(color: textColor, fontSize: 20, fontWeight: FontWeight.bold);
 }
 
 TextStyle semititleStyle() {

@@ -1,6 +1,7 @@
 import 'package:binancy/controllers/dashboard_change_notifier.dart';
 import 'package:binancy/globals.dart';
 import 'package:binancy/utils/loading_widget.dart';
+import 'package:binancy/utils/styles.dart';
 import 'package:binancy/views/dashboard/dashboard_notification.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,8 +20,19 @@ class DashboardSummaryNotificationLayout extends StatelessWidget {
 
   List<Widget> mountNotifications(List<dynamic> movementsList) {
     List<Widget> widgetList = [];
+
+    widgetList.add(Padding(
+      padding: EdgeInsets.fromLTRB(20, 30, 20, 10),
+      child: Center(
+        child: Text(
+          'Tus ultimos movimientos',
+          style: titleCardStyle(),
+        ),
+      ),
+    ));
+
     if (movementsList.length > dashboardMaxNotifications) {
-      for (var i = 0; i <= dashboardMaxNotifications; i++) {
+      for (var i = 0; i < dashboardMaxNotifications; i++) {
         widgetList.add(DashboardNotification(movementsList[i]));
       }
       widgetList.add(DashboardSeeAllNotifications());

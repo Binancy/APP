@@ -27,7 +27,7 @@ class _DashboardViewState extends State<DashboardView> {
       ],
       child: Scaffold(
         bottomNavigationBar: BottomNavigationBar(
-            elevation: 5,
+            elevation: 0,
             backgroundColor: Colors.white,
             items: [
               BottomNavigationBarItem(
@@ -41,9 +41,7 @@ class _DashboardViewState extends State<DashboardView> {
           child: CustomScrollView(
             slivers: [
               SliverAppBar(
-                pinned: false,
-                floating: true,
-                snap: true,
+                pinned: true,
                 brightness: Brightness.dark,
                 centerTitle: true,
                 elevation: 0,

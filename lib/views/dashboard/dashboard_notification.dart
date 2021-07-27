@@ -91,6 +91,30 @@ class DashboardNotification extends StatelessWidget {
 class DashboardSeeAllNotifications extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Padding(
+      padding: EdgeInsets.all(20),
+      child: Material(
+        color: primaryColor,
+        borderRadius: BorderRadius.circular(customBorderRadius),
+        shadowColor: Colors.black.withOpacity(0.2),
+        elevation: 5,
+        child: InkWell(
+          onTap: () {},
+          borderRadius: BorderRadius.circular(customBorderRadius),
+          highlightColor: Colors.transparent,
+          splashColor: accentColor.withOpacity(0.2),
+          child: Container(
+            child: Padding(
+                padding: EdgeInsets.all(20),
+                child: Center(
+                  child: Text(
+                    'Ver todas las notificaciones',
+                    style: whiteButtonStyle(),
+                  ),
+                )),
+          ),
+        ),
+      ),
+    );
   }
 }
