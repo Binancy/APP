@@ -34,10 +34,16 @@ dependencies:
   fl_chart: ^0.36.3
   syncfusion_flutter_gauges: ^19.2.48
   provider: ^5.0.0
+  flutter_launcher_icons: ^0.9.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icons/binancy_icon.jpg"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

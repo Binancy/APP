@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.binancy">
    <application
-        android:label="binancy"
-        android:icon="@mipmap/ic_launcher">
+        android:label="Binancy"
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

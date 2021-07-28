@@ -1,5 +1,6 @@
 import 'package:binancy/controllers/dashboard_change_notifier.dart';
 import 'package:binancy/utils/styles.dart';
+import 'package:binancy/views/dashboard/dashboard_chart.dart';
 import 'package:binancy/views/dashboard/dashboard_summary_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -41,7 +42,9 @@ class _DashboardViewState extends State<DashboardView> {
           child: CustomScrollView(
             slivers: [
               SliverAppBar(
-                pinned: true,
+                pinned: false,
+                snap: true,
+                floating: true,
                 brightness: Brightness.dark,
                 centerTitle: true,
                 elevation: 0,
@@ -67,7 +70,10 @@ class _DashboardViewState extends State<DashboardView> {
               SliverToBoxAdapter(
                 child: DashboardCreateButtons(),
               ),
-              DashboardSummaryNotificationLayout()
+              DashboardSummaryNotificationLayout(),
+              SliverToBoxAdapter(
+                child: DashboardChartView(),
+              )
             ],
           ),
         ),

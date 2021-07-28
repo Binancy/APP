@@ -46,23 +46,13 @@ class DashboardNotification extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      DateFormat.yMd().format(_notification.date),
-                      style: dashboardDateStyle(),
-                    ),
-                    SizedBox(width: 15),
-                    Text(
-                      'Compras online',
-                      style: dashboardCategoryStyle(),
-                    )
-                  ],
+                Text(
+                  DateFormat.yMd().format(_notification.date),
+                  style: dashboardDateStyle(),
                 ),
-                SizedBox(
-                  height: 3,
+                Text(
+                  'Compras online',
+                  style: dashboardCategoryStyle(),
                 ),
                 Text(
                   _notification.description,
@@ -76,10 +66,15 @@ class DashboardNotification extends StatelessWidget {
               width: 10,
             ),
             Center(
-              child: Text(
-                (_notification.value as double).toStringAsFixed(2) + "€",
-                style: dashboardValueStyle(),
-              ),
+              child: _notification.value % 1 == 0
+                  ? Text(
+                      (_notification.value as double).toStringAsFixed(0) + "€",
+                      style: dashboardValueStyle(),
+                    )
+                  : Text(
+                      (_notification.value as double).toStringAsFixed(2) + "€",
+                      style: dashboardValueStyle(),
+                    ),
             )
           ],
         ),

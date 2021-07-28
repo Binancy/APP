@@ -1,4 +1,5 @@
 import 'package:binancy/globals.dart';
+import 'package:binancy/utils/styles.dart';
 import 'package:binancy/views/dashboard/dashboard_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
         statusBarBrightness: Brightness.dark,
         systemNavigationBarColor: Colors.white,
         systemNavigationBarIconBrightness: Brightness.dark,
-        statusBarColor: Colors.transparent));
+        statusBarColor: primaryColor));
     return MaterialApp(
       title: appName,
       debugShowCheckedModeBanner: false,

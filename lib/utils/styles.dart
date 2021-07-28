@@ -21,6 +21,11 @@ TextStyle titleCardStyle() {
   return TextStyle(color: textColor, fontSize: 20, fontWeight: FontWeight.bold);
 }
 
+TextStyle whiteTitleCardStyle() {
+  return TextStyle(
+      color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold);
+}
+
 TextStyle semititleStyle() {
   return TextStyle(color: textColor, fontSize: 15);
 }

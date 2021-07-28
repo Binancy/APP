@@ -13,7 +13,7 @@ class DashboardSummary extends StatelessWidget {
           children: [
             Positioned(
               child: ClipPath(
-                clipper: BackgrounClipper(),
+                clipper: DashboardSummaryCardBackgroundClipper(),
                 child: Container(
                   width: MediaQuery.of(context).size.width,
                   height: 250,
@@ -30,7 +30,7 @@ class DashboardSummary extends StatelessWidget {
   }
 }
 
-class BackgrounClipper extends CustomClipper<Path> {
+class DashboardSummaryCardBackgroundClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     Path path = Path();
