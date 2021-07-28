@@ -17,7 +17,11 @@ class DashboardSummary extends StatelessWidget {
                 child: Container(
                   width: MediaQuery.of(context).size.width,
                   height: 250,
-                  color: primaryColor,
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [primaryColor, secondaryColor])),
                 ),
               ),
             ),

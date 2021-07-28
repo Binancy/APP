@@ -1,4 +1,5 @@
 import 'package:binancy/controllers/dashboard_change_notifier.dart';
+import 'package:binancy/globals.dart';
 import 'package:binancy/utils/styles.dart';
 import 'package:binancy/views/dashboard/dashboard_chart.dart';
 import 'package:binancy/views/dashboard/dashboard_summary_card.dart';
@@ -26,57 +27,82 @@ class _DashboardViewState extends State<DashboardView> {
       providers: [
         ChangeNotifierProvider(create: (_) => dashboardChangeNotifier)
       ],
-      child: Scaffold(
-        bottomNavigationBar: BottomNavigationBar(
-            elevation: 0,
+      child: Stack(
+        children: [
+          Positioned(
+              child: Scaffold(
             backgroundColor: Colors.white,
-            items: [
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.dashboard_rounded), label: 'Dashboard'),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.dashboard_rounded), label: 'Dashboard')
-            ]),
-        backgroundColor: Colors.white,
-        body: ScrollConfiguration(
-          behavior: MyBehavior(),
-          child: CustomScrollView(
-            slivers: [
-              SliverAppBar(
-                pinned: false,
-                snap: true,
-                floating: true,
-                brightness: Brightness.dark,
-                centerTitle: true,
-                elevation: 0,
-                backgroundColor: primaryColor,
-                actions: [
-                  IconButton(
-                      iconSize: 36,
-                      icon: Icon(Icons.notifications_outlined),
-                      onPressed: () {})
+            body: ScrollConfiguration(
+              behavior: MyBehavior(),
+              child: CustomScrollView(
+                slivers: [
+                  SliverAppBar(
+                    pinned: false,
+                    snap: true,
+                    floating: true,
+                    brightness: Brightness.dark,
+                    centerTitle: true,
+                    elevation: 0,
+                    backgroundColor: primaryColor,
+                    actions: [
+                      IconButton(
+                          iconSize: 36,
+                          icon: Icon(Icons.notifications_outlined),
+                          onPressed: () {})
+                    ],
+                    leading: IconButton(
+                        iconSize: 36,
+                        icon: Icon(Icons.settings_outlined),
+                        onPressed: () {}),
+                    title: Text(
+                      AppLocalizations.of(context)!.dashboard_header,
+                      style: appBarStyle(),
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: DashboardSummary(),
+                  ),
+                  SliverToBoxAdapter(
+                    child: DashboardCreateButtons(),
+                  ),
+                  DashboardSummaryNotificationLayout(),
+                  SliverToBoxAdapter(
+                    child: DashboardChartView(),
+                  ),
+                  SliverToBoxAdapter(
+                    child: Container(
+                      color: secondaryColor,
+                      height: kBottomNavigationBarHeight,
+                    ),
+                  )
                 ],
-                leading: IconButton(
-                    iconSize: 36,
-                    icon: Icon(Icons.settings_outlined),
-                    onPressed: () {}),
-                title: Text(
-                  AppLocalizations.of(context)!.dashboard_header,
-                  style: appBarStyle(),
-                ),
               ),
-              SliverToBoxAdapter(
-                child: DashboardSummary(),
-              ),
-              SliverToBoxAdapter(
-                child: DashboardCreateButtons(),
-              ),
-              DashboardSummaryNotificationLayout(),
-              SliverToBoxAdapter(
-                child: DashboardChartView(),
-              )
-            ],
-          ),
-        ),
+            ),
+          )),
+          Positioned(
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: ClipRRect(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(customBorderRadius),
+                    topRight: Radius.circular(customBorderRadius)),
+                child: BottomNavigationBar(
+                    elevation: 5,
+                    showSelectedLabels: false,
+                    showUnselectedLabels: false,
+                    backgroundColor: Colors.white,
+                    iconSize: 30,
+                    items: [
+                      BottomNavigationBarItem(
+                          icon: Icon(Icons.dashboard_rounded),
+                          label: 'Dashboard'),
+                      BottomNavigationBarItem(
+                          icon: Icon(Icons.bar_chart_outlined),
+                          label: 'Dashboard')
+                    ]),
+              ))
+        ],
       ),
     );
   }

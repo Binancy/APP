@@ -22,7 +22,11 @@ class DashboardChartView extends StatelessWidget {
                 child: Container(
                   height: 375,
                   width: MediaQuery.of(context).size.width,
-                  color: primaryColor,
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [primaryColor, secondaryColor])),
                 ),
               )),
               Positioned(
