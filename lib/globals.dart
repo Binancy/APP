@@ -1,3 +1,3 @@
 String appName = "Binancy";
-double customBorderRadius = 30;
+double customBorderRadius = 20;
 int dashboardMaxNotifications = 3;
