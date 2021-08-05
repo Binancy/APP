@@ -1,14 +1,13 @@
 import 'package:binancy/controllers/dashboard_change_notifier.dart';
 import 'package:binancy/globals.dart';
 import 'package:binancy/utils/styles.dart';
-import 'package:binancy/views/dashboard/dashboard_chart.dart';
+import 'package:binancy/views/dashboard/dashboard_actions.dart';
 import 'package:binancy/views/dashboard/dashboard_header_row.dart';
 import 'package:binancy/views/dashboard/dashboard_summary_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
-import 'dashboard_create_buttons.dart';
 import 'dashboard_summary_notifications.dart';
 
 class DashboardView extends StatefulWidget {
@@ -66,6 +65,12 @@ class _DashboardViewState extends State<DashboardView> {
                     ),
                     SliverToBoxAdapter(
                       child: DashboardHeaderRow(),
+                    ),
+                    SliverToBoxAdapter(
+                      child: DashboardSummaryCard(),
+                    ),
+                    SliverToBoxAdapter(
+                      child: DashboardActionsCard(),
                     )
                   ],
                 ),

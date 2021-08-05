@@ -22,8 +22,8 @@ TextStyle whiteButtonStyle() {
   return TextStyle(color: Colors.white, fontSize: 18);
 }
 
-TextStyle addButtonStyle() {
-  return TextStyle(color: Colors.white, fontSize: 13);
+TextStyle dashboardActionButtonStyle() {
+  return TextStyle(color: Colors.white, fontSize: 12);
 }
 
 TextStyle titleCardStyle() {
@@ -40,8 +40,7 @@ TextStyle semititleStyle() {
 }
 
 TextStyle balanceValueStyle() {
-  return TextStyle(
-      color: primaryColor, fontSize: 50, fontWeight: FontWeight.bold);
+  return TextStyle(color: textColor, fontSize: 50, fontWeight: FontWeight.bold);
 }
 
 TextStyle detailStyle() {

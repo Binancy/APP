@@ -9,13 +9,13 @@ class DashboardHeaderRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<DashboardChangeNotifier>(builder: (context, value, child) {
       List<Widget> rowItems = [
-        rowWidget(2151.15, "Ver patrimonio", () {}),
+        rowWidget(21252.00, "Ver patrimonio", () {}),
         rowWidget(1250.50, "Ver ingresos", () {}),
         rowWidget(752.76, "Ver gastos", () {})
       ];
       return Container(
           margin: EdgeInsets.all(customMargin),
-          height: 75,
+          height: (MediaQuery.of(context).size.height / 10),
           child: ListView.separated(
               physics: BouncingScrollPhysics(),
               scrollDirection: Axis.horizontal,
@@ -32,7 +32,7 @@ class DashboardHeaderRow extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(customBorderRadius),
         highlightColor: Colors.transparent,
-        splashColor: secondaryColor.withOpacity(0.2),
+        splashColor: themeColor.withOpacity(0.1),
         onTap: action,
         child: Container(
             height: 75,
@@ -43,8 +43,13 @@ class DashboardHeaderRow extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(value.toStringAsFixed(2),
-                      style: dashboardHeaderItemTitleStyle()),
+                  value >= 10000
+                      ? Text(
+                          value.toInt().toString() + "€",
+                          style: dashboardHeaderItemTitleStyle(),
+                        )
+                      : Text(value.toStringAsFixed(2) + "€",
+                          style: dashboardHeaderItemTitleStyle()),
                   Text(placeholder, style: dashboardHeaderItemActionStyle())
                 ],
               ),
