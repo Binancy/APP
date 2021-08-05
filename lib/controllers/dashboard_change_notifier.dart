@@ -1,7 +1,9 @@
 import 'dart:math';
 
+import 'package:binancy/globals.dart';
 import 'package:binancy/models/expend.dart';
 import 'package:binancy/models/income.dart';
+import 'package:binancy/utils/conn_api.dart';
 import 'package:flutter/material.dart';
 
 class DashboardChangeNotifier extends ChangeNotifier {
@@ -28,20 +30,44 @@ class DashboardChangeNotifier extends ChangeNotifier {
 
   Future<void> getLatestsMovements() async {
     movementsList.clear();
-    for (var i = 0; i < Random().nextInt(10) + 1; i++) {
-      Random().nextBool()
-          ? movementsList.add(Expend()
-            ..idExpend = Random().nextInt(1000)
-            ..idUser = 0
-            ..value = Random().nextInt(1000).toDouble()
-            ..description =
-                "Este es un gasto de ejemplo con una descripción bastante larga, es tan larga debido a que se quiere comprobar como queda visualmente tanto en tamaño de la fuente como separación y espacio")
-          : movementsList.add(Income()
-            ..idIncome = Random().nextInt(1000)
-            ..idUser = 0
-            ..value = Random().nextInt(1000).toDouble()
-            ..description =
-                "Este es un gasto de ejemplo con una descripción bastante larga, es tan larga debido a que se quiere comprobar como queda visualmente tanto en tamaño de la fuente como separación y espacio");
+    await getLatestsIncomes();
+    await getLatestExpenses();
+    print(movementsList);
+    movementsList.sort((a, b) {
+      DateTime aDate = a.date as DateTime;
+      DateTime bDate = b.date as DateTime;
+      return aDate.compareTo(bDate);
+    });
+  }
+
+  Future<void> getLatestsIncomes() async {
+    ConnAPI connAPI = ConnAPI('/api/incomes/latestIncomes', "POST", false,
+        {'id': userData['idUser']});
+    await connAPI.callAPI();
+    List<dynamic>? responseJSON = connAPI.getResponse();
+    if (responseJSON != null) {
+      print(responseJSON);
+      for (var movement in responseJSON) {
+        movementsList.add(Income.fromJson(movement));
+      }
+    } else {
+      print('Error, el JSON no tiene datos');
+    }
+  }
+
+  Future<void> getLatestExpenses() async {
+    ConnAPI connAPI = ConnAPI('/api/expenses/latestExpenses', "POST", false,
+        {'id': userData['idUser']});
+    await connAPI.callAPI();
+    List<dynamic>? responseJSON = connAPI.getResponse();
+    if (responseJSON != null) {
+      print(responseJSON);
+
+      for (var movement in responseJSON) {
+        movementsList.add(Expend.fromJson(movement));
+      }
+    } else {
+      print('Error, el JSON no tiene datos');
     }
   }
 }

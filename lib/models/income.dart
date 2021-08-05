@@ -3,7 +3,7 @@ import 'category.dart';
 class Income {
   int idIncome = 0;
   int idUser = 0;
-  double value = 0;
+  dynamic value = 0;
   String description = "";
   Category category = Category();
   DateTime date = DateTime.now();

@@ -68,11 +68,11 @@ class DashboardNotification extends StatelessWidget {
             Center(
               child: _notification.value % 1 == 0
                   ? Text(
-                      (_notification.value as double).toStringAsFixed(0) + "€",
+                      (_notification.value).toStringAsFixed(0) + "€",
                       style: dashboardValueStyle(),
                     )
                   : Text(
-                      (_notification.value as double).toStringAsFixed(2) + "€",
+                      (_notification.value).toStringAsFixed(2) + "€",
                       style: dashboardValueStyle(),
                     ),
             )

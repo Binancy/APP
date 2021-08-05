@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
 
-Color primaryColor = Color(0xff054ECE);
-Color secondaryColor = Color(0xff4186FF);
-Color accentColor = Color(0xffDAE3F2);
-Color textColor = Color(0xff5d5d5d);
+Color primaryColor = Color(0xff012457);
+Color secondaryColor = Color(0xff054CCB);
+Color accentColor = Color(0xffFDCB32);
+Color textColor = Color(0xffffffff);
+Color themeColor = Colors.black;
+
+TextStyle dashboardHeaderItemTitleStyle() {
+  return TextStyle(fontSize: 20, color: textColor);
+}
+
+TextStyle dashboardHeaderItemActionStyle() {
+  return TextStyle(fontSize: 12, color: accentColor);
+}
 
 TextStyle appBarStyle() {
   return TextStyle(color: Colors.white, fontSize: 22);

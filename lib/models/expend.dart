@@ -3,7 +3,7 @@ import 'package:binancy/models/category.dart';
 class Expend {
   int idExpend = 0;
   int idUser = 0;
-  double value = 0;
+  dynamic value = 0;
   String description = "";
   Category category = Category();
   DateTime date = DateTime.now();
