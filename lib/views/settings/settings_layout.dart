@@ -34,7 +34,7 @@ class SettingsView extends StatelessWidget {
             BinancyButton(
               context: context,
               text: "Cerrar sesión",
-              action: () {
+              action: () async {
                 CustomDialog(
                     context, "¿Estas seguro que quieres cerrar tu sesión?", [
                   CustomDialogItem("Cancelar", () => Navigator.pop(context)),

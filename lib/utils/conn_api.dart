@@ -8,8 +8,7 @@ class ConnAPI {
   String method = "";
   Map<String, dynamic>? requestJSON = {};
   bool isTest = false;
-  late Response response;
-
+  var response;
   Map<String, String> headers = {"Content-Type": "application/json"};
 
   ConnAPI(String endpoint, String method, bool isTest,

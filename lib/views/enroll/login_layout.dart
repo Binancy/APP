@@ -1,6 +1,10 @@
 import 'package:binancy/globals.dart';
+import 'package:binancy/utils/conn_api.dart';
+import 'package:binancy/utils/dialogs.dart';
 import 'package:binancy/utils/styles.dart';
+import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/widgets.dart';
+import 'package:binancy/views/dashboard/dashboard_layout.dart';
 import 'package:flutter/material.dart';
 
 class LoginView extends StatefulWidget {
@@ -57,7 +61,9 @@ class _LoginViewState extends State<LoginView> {
                               BinancyButton(
                                   context: context,
                                   text: "Iniciar sesión",
-                                  action: makeLogin),
+                                  action: () async {
+                                    await makeLogin();
+                                  }),
                               SpaceDivider(),
                               SpaceDivider(),
                               Center(
@@ -80,7 +86,39 @@ class _LoginViewState extends State<LoginView> {
     );
   }
 
-  void makeLogin() {}
+  Future<void> makeLogin() async {
+    String email = emailController.text;
+    String password = Utils().encrypt(passwordController.text);
+
+    if (email.isNotEmpty && password.isNotEmpty) {
+      if (Utils().verifyEmail(email)) {
+        ConnAPI connAPI = ConnAPI(
+            '/api/login', "POST", false, {'email': email, 'pass': password});
+        await connAPI.callAPI();
+        List<dynamic>? response = connAPI.getResponse();
+        if (response != null) {
+          userData = response[0];
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => DashboardView()),
+              (route) => false);
+        } else {
+          CustomDialog(
+              context,
+              "El correo electrónico o la contraseña son incorretos.",
+              [CustomDialogItem("Aceptar", () => Navigator.pop(context))]);
+        }
+      } else {
+        CustomDialog(
+            context,
+            "El correo electrónico que has introducido no es válido...",
+            [CustomDialogItem("Aceptar", () => Navigator.pop(context))]);
+      }
+    } else {
+      CustomDialog(context, "Faltan datos por introducirse",
+          [CustomDialogItem("Aceptar", () => Navigator.pop(context))]);
+    }
+  }
 
   Widget inputEmailWidget() {
     return Container(
