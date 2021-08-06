@@ -1,14 +1,12 @@
 import 'package:binancy/controllers/dashboard_change_notifier.dart';
-import 'package:binancy/globals.dart';
 import 'package:binancy/utils/styles.dart';
 import 'package:binancy/views/dashboard/dashboard_actions.dart';
 import 'package:binancy/views/dashboard/dashboard_header_row.dart';
 import 'package:binancy/views/dashboard/dashboard_summary_card.dart';
+import 'package:binancy/views/settings/settings_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
-
-import 'dashboard_summary_notifications.dart';
 
 class DashboardView extends StatefulWidget {
   @override
@@ -37,45 +35,28 @@ class _DashboardViewState extends State<DashboardView> {
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter)),
             child: Scaffold(
-              backgroundColor: Colors.transparent,
-              body: ScrollConfiguration(
-                behavior: MyBehavior(),
-                child: CustomScrollView(
-                  slivers: [
-                    SliverAppBar(
-                      pinned: false,
-                      snap: true,
-                      floating: true,
-                      brightness: Brightness.dark,
-                      centerTitle: true,
-                      elevation: 0,
-                      backgroundColor: Colors.transparent,
-                      actions: [
-                        IconButton(
-                            icon: Icon(Icons.notifications_outlined),
-                            onPressed: () {})
-                      ],
-                      leading: IconButton(
-                          icon: Icon(Icons.settings_outlined),
-                          onPressed: () {}),
-                      title: Text(
-                        AppLocalizations.of(context)!.dashboard_header,
-                        style: appBarStyle(),
-                      ),
-                    ),
-                    SliverToBoxAdapter(
-                      child: DashboardHeaderRow(),
-                    ),
-                    SliverToBoxAdapter(
-                      child: DashboardSummaryCard(),
-                    ),
-                    SliverToBoxAdapter(
-                      child: DashboardActionsCard(),
-                    )
-                  ],
+                appBar: AppBar(
+                  leading: IconButton(
+                      icon: Icon(Icons.settings_rounded),
+                      onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SettingsView()))),
+                  automaticallyImplyLeading: false,
+                  title: Text('Mi resumen', style: appBarStyle()),
+                  centerTitle: true,
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  brightness: Brightness.dark,
                 ),
-              ),
-            ),
+                backgroundColor: Colors.transparent,
+                body: Column(
+                  children: [
+                    DashboardHeaderRow(),
+                    DashboardSummaryCard(),
+                    DashboardActionsCard()
+                  ],
+                )),
           )),
         ],
       ),

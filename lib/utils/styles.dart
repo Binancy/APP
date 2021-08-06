@@ -7,15 +7,15 @@ Color textColor = Color(0xffffffff);
 Color themeColor = Colors.black;
 
 TextStyle dashboardHeaderItemTitleStyle() {
-  return TextStyle(fontSize: 20, color: textColor);
+  return TextStyle(fontSize: 22, color: textColor);
 }
 
 TextStyle dashboardHeaderItemActionStyle() {
-  return TextStyle(fontSize: 12, color: accentColor);
+  return TextStyle(fontSize: 13, color: accentColor);
 }
 
 TextStyle appBarStyle() {
-  return TextStyle(color: Colors.white, fontSize: 22);
+  return TextStyle(color: Colors.white, fontSize: 25);
 }
 
 TextStyle whiteButtonStyle() {
@@ -23,11 +23,11 @@ TextStyle whiteButtonStyle() {
 }
 
 TextStyle dashboardActionButtonStyle() {
-  return TextStyle(color: Colors.white, fontSize: 12);
+  return TextStyle(color: Colors.white, fontSize: 13);
 }
 
 TextStyle titleCardStyle() {
-  return TextStyle(color: textColor, fontSize: 20, fontWeight: FontWeight.bold);
+  return TextStyle(color: textColor, fontSize: 25, fontWeight: FontWeight.bold);
 }
 
 TextStyle whiteTitleCardStyle() {
@@ -40,11 +40,11 @@ TextStyle semititleStyle() {
 }
 
 TextStyle balanceValueStyle() {
-  return TextStyle(color: textColor, fontSize: 50, fontWeight: FontWeight.bold);
+  return TextStyle(color: textColor, fontSize: 70, fontWeight: FontWeight.bold);
 }
 
 TextStyle detailStyle() {
-  return TextStyle(color: textColor, fontSize: 12);
+  return TextStyle(color: textColor, fontSize: 15);
 }
 
 TextStyle dashboardDateStyle() {
@@ -64,6 +64,19 @@ TextStyle dashboardDescriptionStyle() {
 TextStyle dashboardValueStyle() {
   return TextStyle(
       color: primaryColor, fontSize: 20, fontWeight: FontWeight.w600);
+}
+
+TextStyle settingsKeyStyle() {
+  return TextStyle(color: textColor, fontSize: 20);
+}
+
+TextStyle settingsValueStyle() {
+  return TextStyle(color: accentColor, fontSize: 20);
+}
+
+TextStyle buttonStyle() {
+  return TextStyle(
+      color: accentColor, fontSize: 25, fontWeight: FontWeight.bold);
 }
 
 class MyBehavior extends ScrollBehavior {

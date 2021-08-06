@@ -6,60 +6,74 @@ import 'package:flutter_svg/flutter_svg.dart';
 class DashboardActionsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-        height: (MediaQuery.of(context).size.height / 10 * 3),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(customBorderRadius),
-          color: themeColor.withOpacity(0.1),
+    return Column(
+      children: [
+        Text(
+          '¿Que quieres hacer?',
+          style: titleCardStyle(),
         ),
-        margin: EdgeInsets.only(left: customMargin, right: customMargin),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                buildActionWidget(
-                    context,
-                    SvgPicture.asset("assets/svg/dashboard_add_income.svg"),
-                    "Añade un ingreso",
-                    () {}),
-                buildActionWidget(
-                    context,
-                    SvgPicture.asset("assets/svg/dashboard_add_expense.svg"),
-                    "Añade un ingreso",
-                    () {}),
-                buildActionWidget(
-                    context,
-                    SvgPicture.asset("assets/svg/dashboard_check_balance.svg"),
-                    "Añade un ingreso",
-                    () {}),
-              ],
+        SizedBox(
+          height: 20,
+        ),
+        Container(
+            height: (MediaQuery.of(context).size.height / 10 * 2.75),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(customBorderRadius),
+              color: themeColor.withOpacity(0.1),
             ),
-            Row(
+            margin: EdgeInsets.only(left: customMargin, right: customMargin),
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                buildActionWidget(
-                    context,
-                    SvgPicture.asset("assets/svg/dashboard_compare.svg"),
-                    "Añade un ingreso",
-                    () {}),
-                buildActionWidget(
-                    context,
-                    SvgPicture.asset("assets/svg/dashboard_see_movements.svg"),
-                    "Añade un ingreso",
-                    () {}),
-                buildActionWidget(
-                    context,
-                    SvgPicture.asset("assets/svg/dashboard_advices.svg"),
-                    "Añade un ingreso",
-                    () {}),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    buildActionWidget(
+                        context,
+                        SvgPicture.asset("assets/svg/dashboard_add_income.svg"),
+                        "Añade un ingreso",
+                        () {}),
+                    buildActionWidget(
+                        context,
+                        SvgPicture.asset(
+                            "assets/svg/dashboard_add_expense.svg"),
+                        "Añade un ingreso",
+                        () {}),
+                    buildActionWidget(
+                        context,
+                        SvgPicture.asset(
+                            "assets/svg/dashboard_check_balance.svg"),
+                        "Añade un ingreso",
+                        () {}),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    buildActionWidget(
+                        context,
+                        SvgPicture.asset("assets/svg/dashboard_compare.svg"),
+                        "Añade un ingreso",
+                        () {}),
+                    buildActionWidget(
+                        context,
+                        SvgPicture.asset(
+                            "assets/svg/dashboard_see_movements.svg"),
+                        "Añade un ingreso",
+                        () {}),
+                    buildActionWidget(
+                        context,
+                        SvgPicture.asset("assets/svg/dashboard_advices.svg"),
+                        "Añade un ingreso",
+                        () {}),
+                  ],
+                )
               ],
-            )
-          ],
-        ));
+            ))
+      ],
+    );
   }
 
   Widget buildActionWidget(

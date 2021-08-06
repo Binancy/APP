@@ -36,6 +36,8 @@ dependencies:
   provider: ^5.0.0
   http: ^0.13.3
   flutter_svg: ^0.22.0
+  responsive_framework: ^0.1.4
+  crop: ^0.5.1+1
 
 dev_dependencies:
   flutter_test:

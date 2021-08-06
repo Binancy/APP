@@ -14,9 +14,10 @@ class DashboardHeaderRow extends StatelessWidget {
         rowWidget(752.76, "Ver gastos", () {})
       ];
       return Container(
-          margin: EdgeInsets.all(customMargin),
+          margin: EdgeInsets.only(top: 10, bottom: customMargin),
           height: (MediaQuery.of(context).size.height / 10),
           child: ListView.separated(
+              padding: EdgeInsets.only(left: 20, right: 20),
               physics: BouncingScrollPhysics(),
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) => rowItems.elementAt(index),
@@ -36,7 +37,7 @@ class DashboardHeaderRow extends StatelessWidget {
         onTap: action,
         child: Container(
             height: 75,
-            width: 140,
+            width: 160,
             child: Padding(
               padding: EdgeInsets.only(left: customMargin, right: customMargin),
               child: Column(

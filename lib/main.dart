@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 void main() {
   runApp(MyApp());
@@ -19,6 +20,8 @@ class MyApp extends StatelessWidget {
         systemNavigationBarIconBrightness: Brightness.light,
         statusBarColor: Colors.transparent));
     return MaterialApp(
+      builder: (context, child) =>
+          ResponsiveWrapper.builder(child, defaultScale: true),
       title: appName,
       debugShowCheckedModeBanner: false,
       home: DashboardView(),
