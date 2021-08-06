@@ -1,4 +1,5 @@
 import 'package:binancy/globals.dart';
+import 'package:binancy/utils/dialogs.dart';
 import 'package:binancy/utils/styles.dart';
 import 'package:binancy/utils/widgets.dart';
 import 'package:flutter/material.dart';
@@ -33,11 +34,11 @@ class SettingsView extends StatelessWidget {
             padding: EdgeInsets.fromLTRB(
                 customMargin, customMargin, customMargin, 0),
             children: [
-              myDataCard(),
+              myDataCard(context),
               SpaceDivider(),
-              actionsCard(),
+              actionsCard(context),
               SpaceDivider(),
-              logoutButton()
+              logoutButton(context)
             ],
           ),
         )),
@@ -45,7 +46,7 @@ class SettingsView extends StatelessWidget {
     );
   }
 
-  Widget myDataCard() {
+  Widget myDataCard(BuildContext context) {
     List<Widget> widgetList = [
       SettingsHeaderRow(text: "Mis datos"),
       LinearDivider(),
@@ -67,7 +68,7 @@ class SettingsView extends StatelessWidget {
         ));
   }
 
-  Widget actionsCard() {
+  Widget actionsCard(BuildContext context) {
     List<Widget> widgetList = [
       SettingsHeaderRow(text: "Acciones"),
       LinearDivider(),
@@ -93,13 +94,20 @@ class SettingsView extends StatelessWidget {
         ));
   }
 
-  Widget logoutButton() {
+  Widget logoutButton(BuildContext context) {
     return Material(
       color: themeColor.withOpacity(0.1),
       elevation: 0,
       borderRadius: BorderRadius.circular(customBorderRadius),
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          CustomDialog(context, "¿Estas seguro que quieres cerrar tu sesión?", [
+            CustomDialogItem("Cancelar", () => Navigator.pop(context)),
+            CustomDialogItem("Cerrar sesión", () {
+              Navigator.pop(context);
+            }),
+          ]);
+        },
         highlightColor: Colors.transparent,
         borderRadius: BorderRadius.circular(customBorderRadius),
         splashColor: themeColor.withOpacity(0.1),
