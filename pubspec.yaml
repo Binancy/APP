@@ -62,6 +62,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/svg/binancy_icon.svg
     - assets/svg/dashboard_add_income.svg
     - assets/svg/dashboard_add_expense.svg
     - assets/svg/dashboard_advices.svg

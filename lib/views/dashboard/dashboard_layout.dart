@@ -1,5 +1,6 @@
 import 'package:binancy/controllers/dashboard_change_notifier.dart';
 import 'package:binancy/utils/styles.dart';
+import 'package:binancy/utils/widgets.dart';
 import 'package:binancy/views/dashboard/dashboard_actions.dart';
 import 'package:binancy/views/dashboard/dashboard_header_row.dart';
 import 'package:binancy/views/dashboard/dashboard_summary_card.dart';
@@ -28,13 +29,8 @@ class _DashboardViewState extends State<DashboardView> {
       child: Stack(
         children: [
           Positioned(
-              child: Container(
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    colors: [primaryColor, secondaryColor],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter)),
-            child: Scaffold(
+              child: BalancyBackground(
+            Scaffold(
                 appBar: AppBar(
                   leading: IconButton(
                       icon: Icon(Icons.settings_rounded),

@@ -79,6 +79,30 @@ TextStyle buttonStyle() {
       color: accentColor, fontSize: 25, fontWeight: FontWeight.bold);
 }
 
+TextStyle inputStyle() {
+  return TextStyle(color: textColor, fontSize: 18);
+}
+
+TextStyle accentStyle() {
+  return TextStyle(color: accentColor, fontSize: 18);
+}
+
+InputDecoration customInputDecoration(String text, IconData icon) {
+    return InputDecoration(
+        border: InputBorder.none,
+        focusedBorder: InputBorder.none,
+        enabledBorder: InputBorder.none,
+        errorBorder: InputBorder.none,
+        disabledBorder: InputBorder.none,
+        labelText: text,
+        labelStyle: inputStyle(),
+        icon: Icon(
+          icon,
+          color: accentColor,
+          size: 36,
+        ));
+  }
+
 class MyBehavior extends ScrollBehavior {
   @override
   Widget buildViewportChrome(

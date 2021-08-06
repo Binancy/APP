@@ -2,48 +2,54 @@ import 'package:binancy/globals.dart';
 import 'package:binancy/utils/dialogs.dart';
 import 'package:binancy/utils/styles.dart';
 import 'package:binancy/utils/widgets.dart';
+import 'package:binancy/views/enroll/login_layout.dart';
 import 'package:flutter/material.dart';
 
 class SettingsView extends StatelessWidget {
-  double _rowHeight = 65;
-
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          gradient: LinearGradient(
-              colors: [primaryColor, secondaryColor],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter)),
-      child: Scaffold(
+    return BalancyBackground(Scaffold(
+      backgroundColor: Colors.transparent,
+      appBar: AppBar(
         backgroundColor: Colors.transparent,
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          title: Text(
-            "Ajustes",
-            style: appBarStyle(),
-          ),
-          centerTitle: true,
-          elevation: 0,
-          brightness: Brightness.dark,
+        title: Text(
+          "Ajustes",
+          style: appBarStyle(),
         ),
-        body: Container(
-            child: ScrollConfiguration(
-          behavior: MyBehavior(),
-          child: ListView(
-            padding: EdgeInsets.fromLTRB(
-                customMargin, customMargin, customMargin, 0),
-            children: [
-              myDataCard(context),
-              SpaceDivider(),
-              actionsCard(context),
-              SpaceDivider(),
-              logoutButton(context)
-            ],
-          ),
-        )),
+        centerTitle: true,
+        elevation: 0,
+        brightness: Brightness.dark,
       ),
-    );
+      body: Container(
+          child: ScrollConfiguration(
+        behavior: MyBehavior(),
+        child: ListView(
+          padding:
+              EdgeInsets.fromLTRB(customMargin, customMargin, customMargin, 0),
+          children: [
+            myDataCard(context),
+            SpaceDivider(),
+            actionsCard(context),
+            SpaceDivider(),
+            BinancyButton(
+              context: context,
+              text: "Cerrar sesión",
+              action: () {
+                CustomDialog(
+                    context, "¿Estas seguro que quieres cerrar tu sesión?", [
+                  CustomDialogItem("Cancelar", () => Navigator.pop(context)),
+                  CustomDialogItem("Cerrar sesión", () {
+                    Navigator.pop(context);
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => LoginView()));
+                  }),
+                ]);
+              },
+            )
+          ],
+        ),
+      )),
+    ));
   }
 
   Widget myDataCard(BuildContext context) {
@@ -92,36 +98,6 @@ class SettingsView extends StatelessWidget {
         child: Column(
           children: widgetList,
         ));
-  }
-
-  Widget logoutButton(BuildContext context) {
-    return Material(
-      color: themeColor.withOpacity(0.1),
-      elevation: 0,
-      borderRadius: BorderRadius.circular(customBorderRadius),
-      child: InkWell(
-        onTap: () {
-          CustomDialog(context, "¿Estas seguro que quieres cerrar tu sesión?", [
-            CustomDialogItem("Cancelar", () => Navigator.pop(context)),
-            CustomDialogItem("Cerrar sesión", () {
-              Navigator.pop(context);
-            }),
-          ]);
-        },
-        highlightColor: Colors.transparent,
-        borderRadius: BorderRadius.circular(customBorderRadius),
-        splashColor: themeColor.withOpacity(0.1),
-        child: Container(
-          height: buttonHeight,
-          child: Center(
-            child: Text(
-              "Cerrar sesión",
-              style: buttonStyle(),
-            ),
-          ),
-        ),
-      ),
-    );
   }
 }
 
