@@ -1,6 +1,7 @@
 import 'package:binancy/globals.dart';
 import 'package:binancy/utils/dialogs.dart';
 import 'package:binancy/utils/styles.dart';
+import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/widgets.dart';
 import 'package:binancy/views/enroll/login_view.dart';
 import 'package:flutter/material.dart';
@@ -40,8 +41,11 @@ class SettingsView extends StatelessWidget {
                   CustomDialogItem("Cancelar", () => Navigator.pop(context)),
                   CustomDialogItem("Cerrar sesión", () {
                     Navigator.pop(context);
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => LoginView()));
+                    Utils.clearSecureStorage();
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginView()),
+                        (route) => false);
                   }),
                 ]);
               },

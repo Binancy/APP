@@ -1,5 +1,6 @@
 import 'package:binancy/globals.dart';
-import 'package:binancy/utils/conn_api.dart';
+import 'package:binancy/utils/api/conn_api.dart';
+import 'package:binancy/utils/api/endpoints.dart';
 import 'package:binancy/utils/dialogs.dart';
 import 'package:binancy/utils/styles.dart';
 import 'package:binancy/utils/utils.dart';
@@ -452,7 +453,7 @@ class _RegisterViewState extends State<RegisterView> {
   }
 
   Future<void> makeRegister(Map<String, dynamic> userData) async {
-    ConnAPI connAPI = ConnAPI("/api/register", "POST", false, userData);
+    ConnAPI connAPI = ConnAPI(APIEndpoints.REGISTER, "POST", false, userData);
     await connAPI.callAPI();
     if (connAPI.getStatus() == 200) {
       Navigator.pushAndRemoveUntil(

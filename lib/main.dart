@@ -1,6 +1,7 @@
 import 'package:binancy/globals.dart';
 import 'package:binancy/utils/styles.dart';
 import 'package:binancy/views/dashboard/dashboard_view.dart';
+import 'package:binancy/views/enroll/splash_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
           ResponsiveWrapper.builder(child, defaultScale: true),
       title: appName,
       debugShowCheckedModeBanner: false,
-      home: DashboardView(),
+      home: SplashScreen(),
       localizationsDelegates: [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,

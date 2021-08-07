@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:binancy/globals.dart';
 import 'package:binancy/models/expend.dart';
 import 'package:binancy/models/income.dart';
-import 'package:binancy/utils/conn_api.dart';
+import 'package:binancy/utils/api/conn_api.dart';
 import 'package:flutter/material.dart';
 
 class DashboardChangeNotifier extends ChangeNotifier {

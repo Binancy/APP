@@ -1,5 +1,6 @@
 import 'package:binancy/views/advice/advice_card.dart';
 import 'package:crypto/crypto.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'dart:convert';
 
 import 'package:flutter_svg/svg.dart';
@@ -32,5 +33,30 @@ class Utils {
 
   static List<AdviceCard> getAllAdviceCards() {
     return adviceCardList;
+  }
+
+  static Future<void> saveOnSecureStorage(String key, dynamic value) async {
+    var storage = FlutterSecureStorage();
+    await storage.write(key: key, value: value);
+  }
+
+  static Future<void> removeFromSecureStorage(String key) async {
+    var storage = FlutterSecureStorage();
+    await storage.delete(key: key);
+  }
+
+  static Future<void> clearSecureStorage() async {
+    var storage = FlutterSecureStorage();
+    await storage.deleteAll();
+  }
+
+  static Future<String> getFromSecureStorage(String key) async {
+    var storage = FlutterSecureStorage();
+    return await storage.read(key: key) ?? "";
+  }
+
+  static Future<bool> isOnSecureStorage(String key) async {
+    var storage = FlutterSecureStorage();
+    return await storage.containsKey(key: key);
   }
 }

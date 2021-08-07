@@ -1,10 +1,10 @@
 import 'package:binancy/globals.dart';
-import 'package:binancy/utils/conn_api.dart';
+import 'package:binancy/utils/api/conn_api.dart';
+import 'package:binancy/utils/api/endpoints.dart';
 import 'package:binancy/utils/dialogs.dart';
 import 'package:binancy/utils/styles.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/widgets.dart';
-import 'package:binancy/views/dashboard/dashboard_view.dart';
 import 'package:binancy/views/enroll/loading_view.dart';
 import 'package:binancy/views/enroll/register_view.dart';
 import 'package:flutter/material.dart';
@@ -98,12 +98,13 @@ class _LoginViewState extends State<LoginView> {
 
     if (email.isNotEmpty && password.isNotEmpty) {
       if (Utils.verifyEmail(email)) {
-        ConnAPI connAPI = ConnAPI(
-            '/api/login', "POST", false, {'email': email, 'pass': password});
+        ConnAPI connAPI = ConnAPI(APIEndpoints.LOGIN, "POST", false,
+            {'email': email, 'pass': password});
         await connAPI.callAPI();
         List<dynamic>? response = connAPI.getResponse();
         if (response != null) {
           userData = response[0];
+          await Utils.saveOnSecureStorage("token", userData['token']);
           Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (context) => LoadingView()),

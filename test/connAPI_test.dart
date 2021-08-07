@@ -1,7 +1,5 @@
-import 'dart:convert';
-
 import 'package:binancy/globals.dart';
-import 'package:binancy/utils/conn_api.dart';
+import 'package:binancy/utils/api/conn_api.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
