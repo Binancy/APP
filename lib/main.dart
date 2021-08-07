@@ -20,6 +20,9 @@ class MyApp extends StatelessWidget {
         systemNavigationBarIconBrightness: Brightness.light,
         statusBarColor: Colors.transparent));
     return MaterialApp(
+      theme: ThemeData(
+          toggleableActiveColor: Colors.transparent,
+          unselectedWidgetColor: accentColor),
       builder: (context, child) =>
           ResponsiveWrapper.builder(child, defaultScale: true),
       title: appName,

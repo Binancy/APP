@@ -6,6 +6,7 @@ import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/widgets.dart';
 import 'package:binancy/views/dashboard/dashboard_view.dart';
 import 'package:binancy/views/enroll/loading_view.dart';
+import 'package:binancy/views/enroll/register_view.dart';
 import 'package:flutter/material.dart';
 
 class LoginView extends StatefulWidget {
@@ -77,7 +78,11 @@ class _LoginViewState extends State<LoginView> {
                               BinancyButton(
                                   context: context,
                                   text: "Registrate",
-                                  action: () {})
+                                  action: () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              RegisterView())))
                             ],
                           ),
                         ))
@@ -89,10 +94,10 @@ class _LoginViewState extends State<LoginView> {
 
   Future<void> makeLogin() async {
     String email = emailController.text;
-    String password = Utils().encrypt(passwordController.text);
+    String password = Utils.encrypt(passwordController.text);
 
     if (email.isNotEmpty && password.isNotEmpty) {
-      if (Utils().verifyEmail(email)) {
+      if (Utils.verifyEmail(email)) {
         ConnAPI connAPI = ConnAPI(
             '/api/login', "POST", false, {'email': email, 'pass': password});
         await connAPI.callAPI();

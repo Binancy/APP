@@ -60,6 +60,10 @@ class ConnAPI {
     }
   }
 
+  int getStatus() {
+    return response.statusCode;
+  }
+
   dynamic getResponse() {
     if (response.statusCode == 200) {
       return List<dynamic>.from(jsonDecode(response.body)['data']);

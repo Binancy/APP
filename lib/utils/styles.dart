@@ -87,21 +87,29 @@ TextStyle accentStyle() {
   return TextStyle(color: accentColor, fontSize: 18);
 }
 
+TextStyle miniInputStyle() {
+  return TextStyle(color: textColor, fontSize: 14);
+}
+
+TextStyle miniAccentStyle() {
+  return TextStyle(color: accentColor, fontSize: 14);
+}
+
 InputDecoration customInputDecoration(String text, IconData icon) {
-    return InputDecoration(
-        border: InputBorder.none,
-        focusedBorder: InputBorder.none,
-        enabledBorder: InputBorder.none,
-        errorBorder: InputBorder.none,
-        disabledBorder: InputBorder.none,
-        labelText: text,
-        labelStyle: inputStyle(),
-        icon: Icon(
-          icon,
-          color: accentColor,
-          size: 36,
-        ));
-  }
+  return InputDecoration(
+      border: InputBorder.none,
+      focusedBorder: InputBorder.none,
+      enabledBorder: InputBorder.none,
+      errorBorder: InputBorder.none,
+      disabledBorder: InputBorder.none,
+      labelText: text,
+      labelStyle: inputStyle(),
+      icon: Icon(
+        icon,
+        color: accentColor,
+        size: 36,
+      ));
+}
 
 class MyBehavior extends ScrollBehavior {
   @override
