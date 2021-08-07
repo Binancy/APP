@@ -4,7 +4,7 @@ import 'package:binancy/utils/dialogs.dart';
 import 'package:binancy/utils/styles.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/widgets.dart';
-import 'package:binancy/views/dashboard/dashboard_layout.dart';
+import 'package:binancy/views/dashboard/dashboard_view.dart';
 import 'package:flutter/material.dart';
 
 class LoginView extends StatefulWidget {

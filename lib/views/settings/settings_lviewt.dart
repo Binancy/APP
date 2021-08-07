@@ -2,7 +2,7 @@ import 'package:binancy/globals.dart';
 import 'package:binancy/utils/dialogs.dart';
 import 'package:binancy/utils/styles.dart';
 import 'package:binancy/utils/widgets.dart';
-import 'package:binancy/views/enroll/login_layout.dart';
+import 'package:binancy/views/enroll/login_view.dart';
 import 'package:flutter/material.dart';
 
 class SettingsView extends StatelessWidget {
