@@ -11,6 +11,7 @@ double customBorderRadius = 10;
 double customMargin = 20;
 double settingsRowHeight = 62;
 double buttonHeight = 75;
+double animLoadingSize = 200;
 
 // UI GLOBALS
 int dashboardMaxNotifications = 3;

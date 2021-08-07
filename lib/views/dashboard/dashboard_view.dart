@@ -4,7 +4,7 @@ import 'package:binancy/utils/widgets.dart';
 import 'package:binancy/views/dashboard/dashboard_actions.dart';
 import 'package:binancy/views/dashboard/dashboard_header_row.dart';
 import 'package:binancy/views/dashboard/dashboard_summary_card.dart';
-import 'package:binancy/views/settings/settings_lviewt.dart';
+import 'package:binancy/views/settings/settings_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
@@ -29,7 +29,7 @@ class _DashboardViewState extends State<DashboardView> {
       child: Stack(
         children: [
           Positioned(
-              child: BalancyBackground(
+              child: BinancyBackground(
             Scaffold(
                 appBar: AppBar(
                   leading: IconButton(

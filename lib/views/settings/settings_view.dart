@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 class SettingsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BalancyBackground(Scaffold(
+    return BinancyBackground(Scaffold(
       backgroundColor: Colors.transparent,
       appBar: AppBar(
         backgroundColor: Colors.transparent,

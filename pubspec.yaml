@@ -37,8 +37,8 @@ dependencies:
   http: ^0.13.3
   flutter_svg: ^0.22.0
   responsive_framework: ^0.1.4
-  crop: ^0.5.1+1
   crypto: ^3.0.1
+  lottie: ^1.1.0
 
 dev_dependencies:
   flutter_test:
@@ -70,6 +70,10 @@ flutter:
     - assets/svg/dashboard_check_balance.svg
     - assets/svg/dashboard_compare.svg
     - assets/svg/dashboard_see_movements.svg
+    - assets/svg/dashboard_categories.svg
+    - assets/svg/dashboard_historial.svg
+    - assets/svg/dashboard_pie_chart.svg
+    - assets/lottie/loading_view_anim.json
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

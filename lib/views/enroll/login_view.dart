@@ -5,6 +5,7 @@ import 'package:binancy/utils/styles.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/widgets.dart';
 import 'package:binancy/views/dashboard/dashboard_view.dart';
+import 'package:binancy/views/enroll/loading_view.dart';
 import 'package:flutter/material.dart';
 
 class LoginView extends StatefulWidget {
@@ -21,7 +22,7 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
-      child: BalancyBackground(Scaffold(
+      child: BinancyBackground(Scaffold(
           backgroundColor: Colors.transparent,
           body: Padding(
               padding: EdgeInsets.all(20),
@@ -100,7 +101,7 @@ class _LoginViewState extends State<LoginView> {
           userData = response[0];
           Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => DashboardView()),
+              MaterialPageRoute(builder: (context) => LoadingView()),
               (route) => false);
         } else {
           CustomDialog(

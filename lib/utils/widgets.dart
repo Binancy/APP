@@ -20,13 +20,26 @@ class LinearDivider extends StatelessWidget {
 }
 
 class SpaceDivider extends StatelessWidget {
-  const SpaceDivider({Key? key, this.customSpace = 0}) : super(key: key);
+  const SpaceDivider({Key? key, this.customSpace = 0, this.isVertical = false})
+      : super(key: key);
 
-  final customSpace;
+  final double customSpace;
+  final bool isVertical;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(height: customSpace != 0 ? customSpace : customMargin);
+    return SizedBox(
+      height: isVertical
+          ? 0
+          : customSpace != 0
+              ? customSpace
+              : customMargin,
+      width: isVertical
+          ? customSpace != 0
+              ? customSpace
+              : customMargin
+          : 0,
+    );
   }
 }
 
@@ -67,8 +80,8 @@ class BinancyButton extends StatelessWidget {
   }
 }
 
-class BalancyBackground extends StatelessWidget {
-  const BalancyBackground(this.child, {Key? key}) : super(key: key);
+class BinancyBackground extends StatelessWidget {
+  const BinancyBackground(this.child, {Key? key}) : super(key: key);
 
   final Widget child;
   @override

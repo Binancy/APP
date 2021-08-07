@@ -4,7 +4,6 @@ import 'package:binancy/utils/styles.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:flutter/material.dart';
-import 'package:crop/crop.dart';
 
 class DashboardSummary extends StatelessWidget {
   @override
