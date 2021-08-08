@@ -17,10 +17,13 @@ class DashboardSummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<DashboardChangeNotifier>(builder: (context, value, child) {
-      double totalBalance = value.totalIncomes - value.totalExpenses;
-      double barPercentage =
-          _getTotalBalance(value.totalIncomes, value.totalExpenses);
+    return Consumer<DashboardChangeNotifier>(
+        builder: (context, provider, child) {
+      double totalBalance =
+          provider.getThisMonthIncomes() - provider.getThisMonthExpenses();
+      double barPercentage = _getTotalBalance(
+          provider.getThisMonthIncomes(), provider.getThisMonthExpenses());
+      print(barPercentage);
       return Column(
         children: [
           Text(
@@ -43,31 +46,7 @@ class DashboardSummaryCard extends StatelessWidget {
                     width: MediaQuery.of(context).size.width - 42,
                     child: Container(
                       height: (MediaQuery.of(context).size.height / 10 * 4),
-                      child: SfRadialGauge(
-                        enableLoadingAnimation: true,
-                        animationDuration: 0.5,
-                        axes: [
-                          RadialAxis(
-                            minimum: 0,
-                            maximum: 1,
-                            showLabels: false,
-                            showTicks: false,
-                            axisLineStyle: AxisLineStyle(
-                              thickness: 15,
-                              cornerStyle: CornerStyle.bothCurve,
-                              color: themeColor.withOpacity(0.1),
-                            ),
-                            pointers: [
-                              RangePointer(
-                                value: 0.5,
-                                color: accentColor,
-                                cornerStyle: CornerStyle.bothCurve,
-                                width: 15,
-                              )
-                            ],
-                          )
-                        ],
-                      ),
+                      child: radialGauge(barPercentage),
                     )),
                 Positioned(
                     child: SizedBox(
@@ -77,16 +56,31 @@ class DashboardSummaryCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(
-                          "+75€",
-                          style: balanceValueStyle(),
-                        ),
+                        totalBalance >= 1000 || totalBalance <= -1000
+                            ? Text(
+                                totalBalance.toStringAsFixed(0) + "€",
+                                style: balanceValueStyle(),
+                              )
+                            : Text(
+                                totalBalance.toStringAsFixed(2) + "€",
+                                style: balanceValueStyle(),
+                              ),
                         Padding(
                           padding: EdgeInsets.only(
                               left: MediaQuery.of(context).size.width / 5,
                               right: MediaQuery.of(context).size.width / 5),
                           child: Text(
-                            'En Julio has ingresado 2500€ y has gastado 2575€',
+                            'En Julio has ingresado ' +
+                                provider
+                                    .getThisMonthIncomes()
+                                    .ceilToDouble()
+                                    .toStringAsFixed(0) +
+                                '€ y has gastado ' +
+                                provider
+                                    .getThisMonthExpenses()
+                                    .ceilToDouble()
+                                    .toStringAsFixed(0) +
+                                '€',
                             style: detailStyle(),
                             textAlign: TextAlign.center,
                           ),
@@ -101,6 +95,32 @@ class DashboardSummaryCard extends StatelessWidget {
         ],
       );
     });
+  }
+
+  SfRadialGauge radialGauge(double barPercentage) {
+    return SfRadialGauge(
+      axes: [
+        RadialAxis(
+          minimum: 0,
+          maximum: 1,
+          showLabels: false,
+          showTicks: false,
+          axisLineStyle: AxisLineStyle(
+            thickness: 15,
+            cornerStyle: CornerStyle.bothCurve,
+            color: themeColor.withOpacity(0.1),
+          ),
+          pointers: [
+            RangePointer(
+              value: barPercentage,
+              color: accentColor,
+              cornerStyle: CornerStyle.bothCurve,
+              width: 15,
+            )
+          ],
+        )
+      ],
+    );
   }
 
   double _getTotalBalance(double totalIncomes, double totalExpenses) {

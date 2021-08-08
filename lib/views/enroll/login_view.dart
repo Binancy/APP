@@ -135,6 +135,7 @@ class _LoginViewState extends State<LoginView> {
           color: themeColor.withOpacity(0.1)),
       alignment: Alignment.center,
       child: TextField(
+        keyboardType: TextInputType.emailAddress,
         controller: emailController,
         style: inputStyle(),
         decoration:
@@ -155,6 +156,7 @@ class _LoginViewState extends State<LoginView> {
           children: [
             Expanded(
               child: TextField(
+                onSubmitted: (value) async => await makeLogin(),
                 controller: passwordController,
                 style: inputStyle(),
                 autocorrect: false,

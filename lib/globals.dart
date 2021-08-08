@@ -10,7 +10,7 @@ Map<String, dynamic> userData = {};
 double customBorderRadius = 10;
 double customMargin = 20;
 double settingsRowHeight = 62;
-double buttonHeight = 75;
+double buttonHeight = 70;
 double animLoadingSize = 200;
 
 // UI GLOBALS

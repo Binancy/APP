@@ -13,6 +13,9 @@ class DashboardChangeNotifier extends ChangeNotifier {
   List<dynamic> expendList = [];
   double totalIncomes = 0, totalExpenses = 0, totalHeritage = 0;
 
+  @override
+  void dispose() {}
+
   void updateDashboard() async {
     isUpdating(true);
     await getAllIncomes();
