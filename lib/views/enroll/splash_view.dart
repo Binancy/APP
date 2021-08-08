@@ -1,3 +1,4 @@
+import 'package:binancy/controllers/providers/dashboard_change_notifier.dart';
 import 'package:binancy/utils/api/conn_api.dart';
 import 'package:binancy/utils/api/endpoints.dart';
 import 'package:binancy/utils/utils.dart';
@@ -5,6 +6,7 @@ import 'package:binancy/utils/widgets.dart';
 import 'package:binancy/views/dashboard/dashboard_view.dart';
 import 'package:binancy/views/enroll/login_view.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../globals.dart';
 
@@ -28,16 +30,9 @@ class _SplashScreenState extends State<SplashScreen> {
   void startSplashScreen() async {
     await Future.delayed(Duration(seconds: 3));
     if (await checkLoginWithToken()) {
-      // TODO: Aqui se confirma que ha hecho login con el token, por lo cual ahora tiene que obtener los datos previos, una vez hecho esto mandar a DashbaordView()
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => DashboardView()),
-          (route) => false);
+      gotoDashboard();
     } else {
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => LoginView()),
-          (route) => false);
+      gotoLogin();
     }
   }
 
@@ -46,7 +41,7 @@ class _SplashScreenState extends State<SplashScreen> {
     if (isOnStorage) {
       String token = await Utils.getFromSecureStorage("token");
       ConnAPI connAPI = ConnAPI(
-          APIEndpoints.LOGIN_WITH__TOKEN, "POST", false, {"token": token});
+          APIEndpoints.LOGIN_WITH_TOKEN, "POST", false, {"token": token});
       await connAPI.callAPI();
       List<dynamic>? response = connAPI.getResponse();
       if (response != null) {
@@ -56,5 +51,22 @@ class _SplashScreenState extends State<SplashScreen> {
     }
 
     return false;
+  }
+
+  void gotoDashboard() {
+    DashboardChangeNotifier dashboardChangeNotifier = DashboardChangeNotifier();
+    dashboardChangeNotifier.updateDashboard();
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+            builder: (_) => MultiProvider(providers: [
+                  ChangeNotifierProvider(
+                      create: (context) => dashboardChangeNotifier)
+                ], child: DashboardView())),
+        (route) => false);
+  }
+
+  void gotoLogin() {
+    Navigator.pushAndRemoveUntil(context,
+        MaterialPageRoute(builder: (context) => LoginView()), (route) => false);
   }
 }

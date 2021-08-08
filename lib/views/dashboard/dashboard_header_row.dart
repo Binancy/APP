@@ -1,4 +1,4 @@
-import 'package:binancy/controllers/dashboard_change_notifier.dart';
+import 'package:binancy/controllers/providers/dashboard_change_notifier.dart';
 import 'package:binancy/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -7,11 +7,12 @@ import 'package:binancy/utils/styles.dart';
 class DashboardHeaderRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer<DashboardChangeNotifier>(builder: (context, value, child) {
+    return Consumer<DashboardChangeNotifier>(
+        builder: (context, provider, child) {
       List<Widget> rowItems = [
-        rowWidget(21252.00, "Ver patrimonio", () {}),
-        rowWidget(1250.50, "Ver ingresos", () {}),
-        rowWidget(752.76, "Ver gastos", () {})
+        rowWidget(provider.totalHeritage, "Ver patrimonio", () {}),
+        rowWidget(provider.getThisMonthIncomes(), "Ver ingresos", () {}),
+        rowWidget(provider.getThisMonthExpenses(), "Ver gastos", () {})
       ];
       return Container(
           margin: EdgeInsets.only(top: 10, bottom: customMargin),

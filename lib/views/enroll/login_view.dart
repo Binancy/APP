@@ -104,7 +104,6 @@ class _LoginViewState extends State<LoginView> {
         List<dynamic>? response = connAPI.getResponse();
         if (response != null) {
           userData = response[0];
-          await Utils.saveOnSecureStorage("token", userData['token']);
           Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (context) => LoadingView()),

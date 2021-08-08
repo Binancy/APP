@@ -1,17 +1,19 @@
+import 'dart:math';
+
+import 'package:binancy/controllers/providers/dashboard_change_notifier.dart';
 import 'package:binancy/utils/styles.dart';
+import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/widgets.dart';
 import 'package:binancy/views/dashboard/dashboard_view.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_svg/parser.dart';
 import 'package:lottie/lottie.dart';
-
+import 'package:provider/provider.dart';
 import '../../globals.dart';
 
 class LoadingView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    getData(context);
+    initializeApp(context);
     return WillPopScope(
         child: BinancyBackground(Scaffold(
             backgroundColor: Colors.transparent,
@@ -32,47 +34,33 @@ class LoadingView extends StatelessWidget {
                     style: titleCardStyle(),
                   ),
                   SpaceDivider(),
-                  Container(
-                    margin: EdgeInsets.only(
-                        left: customMargin, right: customMargin),
-                    decoration: BoxDecoration(
-                        color: themeColor.withOpacity(0.1),
-                        borderRadius:
-                            BorderRadius.circular(customBorderRadius)),
-                    height: 100,
-                    padding: EdgeInsets.all(customMargin),
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          height: 50,
-                          width: 50,
-                          child: SvgPicture.asset(
-                              "assets/svg/dashboard_categories.svg"),
-                        ),
-                        SpaceDivider(isVertical: true),
-                        Expanded(
-                            child: Text(
-                          "Binancy te permite clasificar tus movimientos en categorias para tener un mayor control de ellos",
-                          style: semititleStyle(),
-                        ))
-                      ],
-                    ),
-                  )
+                  Utils.getAllAdviceCards()[
+                      Random().nextInt(Utils.getAllAdviceCards().length)]
                 ],
               ),
             )))),
         onWillPop: () async => false);
   }
 
-  void getData(BuildContext context) {
+  void initializeApp(BuildContext context) async {
+    await storeToken();
     gotoDashboard(context);
   }
 
   void gotoDashboard(BuildContext context) async {
     await Future.delayed(Duration(seconds: 3));
-    Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => DashboardView()),
+    DashboardChangeNotifier dashboardChangeNotifier = DashboardChangeNotifier();
+    dashboardChangeNotifier.updateDashboard();
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+            builder: (_) => MultiProvider(providers: [
+                  ChangeNotifierProvider(
+                      create: (context) => dashboardChangeNotifier)
+                ], child: DashboardView())),
         (route) => false);
+  }
+
+  Future<void> storeToken() async {
+    await Utils.saveOnSecureStorage("token", userData["token"]);
   }
 }

@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 import 'category.dart';
 
 class Income {
@@ -14,12 +16,14 @@ class Income {
       : idIncome = json['idIncome'],
         idUser = json['idUser'],
         value = json['value'],
-        description = json['description'];
+        description = json['description'],
+        date = DateFormat("yyyy-MM-ddTHH:mm:ss").parse(json['date']);
 
   Map<String, dynamic> toJson() => {
         'idIncome': idIncome,
         'idUser': idUser,
         'value': value,
         'description': description,
+        'date': date.toIso8601String()
       };
 }
