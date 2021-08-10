@@ -1,16 +1,15 @@
 class Category {
   int idCategory = 0;
-  String key = "";
-  List categoryItems = [];
+  int idUser = 0;
+  String name = "";
 
   Category();
 
   Category.fromJson(Map<String, dynamic> json)
       : idCategory = json['idCategory'],
-        key = json['key'];
+        idUser = json['idUser'],
+        name = json['name'];
 
-  Map<String, dynamic> toJson() => {
-        'idCategory': idCategory,
-        'idUser': key,
-      };
+  Map<String, dynamic> toJson() =>
+      {'idCategory': idCategory, 'idUser': idUser, 'name': name};
 }

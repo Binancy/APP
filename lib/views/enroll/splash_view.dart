@@ -1,4 +1,5 @@
-import 'package:binancy/controllers/providers/dashboard_change_notifier.dart';
+import 'package:binancy/controllers/providers/categories_change_notifier.dart';
+import 'package:binancy/controllers/providers/movements_change_notifier.dart';
 import 'package:binancy/utils/api/conn_api.dart';
 import 'package:binancy/utils/api/endpoints.dart';
 import 'package:binancy/utils/utils.dart';
@@ -54,13 +55,20 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void gotoDashboard() {
-    DashboardChangeNotifier dashboardChangeNotifier = DashboardChangeNotifier();
+    MovementsChangeNotifier dashboardChangeNotifier = MovementsChangeNotifier();
     dashboardChangeNotifier.updateDashboard();
+
+    CategoriesChangeNotifier categoriesChangeNotifier =
+        CategoriesChangeNotifier();
+
+    categoriesChangeNotifier.updateCategories();
     Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
             builder: (_) => MultiProvider(providers: [
                   ChangeNotifierProvider(
-                      create: (context) => dashboardChangeNotifier)
+                      create: (context) => dashboardChangeNotifier),
+                  ChangeNotifierProvider(
+                      create: (context) => categoriesChangeNotifier)
                 ], child: DashboardView())),
         (route) => false);
   }

@@ -1,7 +1,8 @@
-import 'package:binancy/controllers/providers/dashboard_change_notifier.dart';
+import 'package:binancy/controllers/providers/categories_change_notifier.dart';
+import 'package:binancy/controllers/providers/movements_change_notifier.dart';
 import 'package:binancy/globals.dart';
 import 'package:binancy/utils/styles.dart';
-import 'package:binancy/views/incomes/income_view.dart';
+import 'package:binancy/views/movements/movements_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -43,17 +44,42 @@ class DashboardActionsCard extends StatelessWidget {
                                       providers: [
                                         ChangeNotifierProvider(
                                           create: (_) => Provider.of<
-                                              DashboardChangeNotifier>(context),
+                                              MovementsChangeNotifier>(context),
+                                        ),
+                                        ChangeNotifierProvider(
+                                          create: (_) => Provider.of<
+                                                  CategoriesChangeNotifier>(
+                                              context),
                                         )
                                       ],
-                                      child: IncomeView(),
+                                      child: MovementView(
+                                        movementType: MovementType.INCOME,
+                                      ),
                                     )))),
                     buildActionWidget(
                         context,
                         SvgPicture.asset(
                             "assets/svg/dashboard_add_expense.svg"),
-                        "Añade un ingreso",
-                        () {}),
+                        "Añade un gasto",
+                        () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => MultiProvider(
+                                      providers: [
+                                        ChangeNotifierProvider(
+                                          create: (_) => Provider.of<
+                                              MovementsChangeNotifier>(context),
+                                        ),
+                                        ChangeNotifierProvider(
+                                          create: (_) => Provider.of<
+                                                  CategoriesChangeNotifier>(
+                                              context),
+                                        )
+                                      ],
+                                      child: MovementView(
+                                        movementType: MovementType.EXPEND,
+                                      ),
+                                    )))),
                     buildActionWidget(
                         context,
                         SvgPicture.asset(

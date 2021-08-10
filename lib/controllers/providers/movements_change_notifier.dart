@@ -7,7 +7,7 @@ import 'package:binancy/utils/api/conn_api.dart';
 import 'package:binancy/utils/api/endpoints.dart';
 import 'package:flutter/material.dart';
 
-class DashboardChangeNotifier extends ChangeNotifier {
+class MovementsChangeNotifier extends ChangeNotifier {
   bool updating = false;
   List<dynamic> incomeList = [];
   List<dynamic> expendList = [];
@@ -67,8 +67,9 @@ class DashboardChangeNotifier extends ChangeNotifier {
   }
 
   Future<void> getAllIncomes() async {
+    incomeList.clear();
     ConnAPI connAPI = ConnAPI(
-        APIEndpoints.GET_INCOMES, "POST", false, {'id': userData['idUser']});
+        APIEndpoints.READ_INCOMES, "POST", false, {'id': userData['idUser']});
     await connAPI.callAPI();
     List<dynamic>? responseJSON = connAPI.getResponse();
     if (responseJSON != null) {
@@ -81,8 +82,9 @@ class DashboardChangeNotifier extends ChangeNotifier {
   }
 
   Future<void> getAllExpenses() async {
+    expendList.clear();
     ConnAPI connAPI = ConnAPI(
-        APIEndpoints.GET_EXPENSES, "POST", false, {'id': userData['idUser']});
+        APIEndpoints.READ_EXPENSES, "POST", false, {'id': userData['idUser']});
     await connAPI.callAPI();
     List<dynamic>? responseJSON = connAPI.getResponse();
     if (responseJSON != null) {

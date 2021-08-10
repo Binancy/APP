@@ -1,7 +1,7 @@
 import 'package:binancy/globals.dart';
 import 'package:binancy/utils/api/conn_api.dart';
 import 'package:binancy/utils/api/endpoints.dart';
-import 'package:binancy/utils/dialogs.dart';
+import 'package:binancy/utils/dialogs/info_dialog.dart';
 import 'package:binancy/utils/styles.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/widgets.dart';
@@ -411,16 +411,16 @@ class _RegisterViewState extends State<RegisterView> {
                 curve: Curves.easeOut);
           });
         } else {
-          CustomDialog(context, "Las contraseñas no coinciden...",
-              [CustomDialogItem("Aceptar", () => Navigator.pop(context))]);
+          BinancyInfoDialog(context, "Las contraseñas no coinciden...",
+              [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
         }
       } else {
-        CustomDialog(context, "El correo introducido no es válido...",
-            [CustomDialogItem("Aceptar", () => Navigator.pop(context))]);
+        BinancyInfoDialog(context, "El correo introducido no es válido...",
+            [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
       }
     } else {
-      CustomDialog(context, "Faltan datos por introducirse",
-          [CustomDialogItem("Aceptar", () => Navigator.pop(context))]);
+      BinancyInfoDialog(context, "Faltan datos por introducirse",
+          [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
     }
   }
 
@@ -447,8 +447,8 @@ class _RegisterViewState extends State<RegisterView> {
         }
       });
     } else {
-      CustomDialog(context, "Faltan datos por introducirse",
-          [CustomDialogItem("Aceptar", () => Navigator.pop(context))]);
+      BinancyInfoDialog(context, "Faltan datos por introducirse",
+          [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
     }
   }
 
@@ -461,10 +461,10 @@ class _RegisterViewState extends State<RegisterView> {
           MaterialPageRoute(builder: (context) => LoadingView()),
           (route) => false);
     } else {
-      CustomDialog(
+      BinancyInfoDialog(
           context,
           "Ha ocurrido un error al registrarte, intentalo más tarde",
-          [CustomDialogItem("Aceptar", () => Navigator.pop(context))]);
+          [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
     }
   }
 }

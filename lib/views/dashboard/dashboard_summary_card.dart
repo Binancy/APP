@@ -1,4 +1,4 @@
-import 'package:binancy/controllers/providers/dashboard_change_notifier.dart';
+import 'package:binancy/controllers/providers/movements_change_notifier.dart';
 import 'package:binancy/globals.dart';
 import 'package:binancy/utils/styles.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +17,7 @@ class DashboardSummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<DashboardChangeNotifier>(
+    return Consumer<MovementsChangeNotifier>(
         builder: (context, provider, child) {
       double totalBalance =
           provider.getThisMonthIncomes() - provider.getThisMonthExpenses();
@@ -131,13 +131,13 @@ class DashboardSummaryCard extends StatelessWidget {
     } else if (totalExpenses == 0) {
       return 1;
     } else if (totalIncomes > totalExpenses) {
-      if (totalIncomes / totalExpenses >= 2) {
+      if (totalIncomes / totalExpenses >= summaryMaxDifference) {
         return 1;
       } else {
-        return (totalIncomes / totalExpenses) / 2;
+        return (totalIncomes / totalExpenses) / summaryMaxDifference;
       }
     } else if (totalExpenses > totalIncomes) {
-      return (totalExpenses / totalIncomes) / 2;
+      return (totalIncomes / totalExpenses) / 2;
     }
 
     return 1;

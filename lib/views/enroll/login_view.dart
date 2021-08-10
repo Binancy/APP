@@ -1,7 +1,7 @@
 import 'package:binancy/globals.dart';
 import 'package:binancy/utils/api/conn_api.dart';
 import 'package:binancy/utils/api/endpoints.dart';
-import 'package:binancy/utils/dialogs.dart';
+import 'package:binancy/utils/dialogs/info_dialog.dart';
 import 'package:binancy/utils/styles.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/widgets.dart';
@@ -109,20 +109,20 @@ class _LoginViewState extends State<LoginView> {
               MaterialPageRoute(builder: (context) => LoadingView()),
               (route) => false);
         } else {
-          CustomDialog(
+          BinancyInfoDialog(
               context,
               "El correo electrónico o la contraseña son incorretos.",
-              [CustomDialogItem("Aceptar", () => Navigator.pop(context))]);
+              [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
         }
       } else {
-        CustomDialog(
+        BinancyInfoDialog(
             context,
             "El correo electrónico que has introducido no es válido...",
-            [CustomDialogItem("Aceptar", () => Navigator.pop(context))]);
+            [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
       }
     } else {
-      CustomDialog(context, "Faltan datos por introducirse",
-          [CustomDialogItem("Aceptar", () => Navigator.pop(context))]);
+      BinancyInfoDialog(context, "Faltan datos por introducirse",
+          [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
     }
   }
 

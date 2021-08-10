@@ -2,17 +2,17 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../globals.dart';
+import '../../globals.dart';
 
 /// Shows a dialog, depending of the host platform, if host is iOS then will
 /// show a CupertinoDialog, instead it will return a MaterialDialog.
-class CustomDialog {
+class BinancyInfoDialog {
   late BuildContext context;
   String text = "";
-  List<CustomDialogItem> listItems = [];
+  List<BinancyInfoDialogItem> listItems = [];
 
-  CustomDialog(
-      BuildContext context, String text, List<CustomDialogItem> listItems) {
+  BinancyInfoDialog(BuildContext context, String text,
+      List<BinancyInfoDialogItem> listItems) {
     this.context = context;
     this.text = text;
     this.listItems = listItems;
@@ -61,9 +61,9 @@ class CustomDialog {
 
 /// Creates an item for CustomDialog, this item contain a placeholder text of the item
 /// and the action that will be realized when the user taps on it.
-class CustomDialogItem {
+class BinancyInfoDialogItem {
   String text;
   Function() action;
 
-  CustomDialogItem(this.text, this.action);
+  BinancyInfoDialogItem(this.text, this.action);
 }

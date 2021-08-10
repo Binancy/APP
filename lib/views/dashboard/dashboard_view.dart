@@ -1,4 +1,4 @@
-import 'package:binancy/controllers/providers/dashboard_change_notifier.dart';
+import 'package:binancy/controllers/providers/movements_change_notifier.dart';
 import 'package:binancy/utils/styles.dart';
 import 'package:binancy/utils/widgets.dart';
 import 'package:binancy/views/dashboard/dashboard_actions.dart';

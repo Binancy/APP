@@ -1,37 +1,60 @@
-import 'package:binancy/controllers/providers/dashboard_change_notifier.dart';
+import 'package:binancy/build_configs.dart';
+import 'package:binancy/controllers/categories_controller.dart';
+import 'package:binancy/controllers/expenses_controller.dart';
+import 'package:binancy/controllers/incomes_controller.dart';
+import 'package:binancy/controllers/providers/categories_change_notifier.dart';
+import 'package:binancy/controllers/providers/movements_change_notifier.dart';
 import 'package:binancy/globals.dart';
 import 'package:binancy/models/category.dart';
+import 'package:binancy/models/expend.dart';
 import 'package:binancy/models/income.dart';
 import 'package:binancy/models/savings_plan.dart';
-import 'package:binancy/utils/dialogs.dart';
+import 'package:binancy/utils/dialogs/info_dialog.dart';
+import 'package:binancy/utils/dialogs/list_dialog.dart';
 import 'package:binancy/utils/styles.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/widgets.dart';
+import 'package:binancy/views/dashboard/dashboard_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class IncomeView extends StatefulWidget {
+enum MovementType { INCOME, EXPEND }
+
+class MovementView extends StatefulWidget {
+  final MovementType movementType;
+  final dynamic? selectedMovement;
+
+  MovementView({required this.movementType, this.selectedMovement});
   @override
-  _IncomeViewState createState() => _IncomeViewState();
+  _MovementViewState createState() => _MovementViewState(selectedMovement);
 }
 
-class _IncomeViewState extends State<IncomeView> {
-  Income selectedIncome = Income();
+class _MovementViewState extends State<MovementView> {
   bool allowEdit = true, createMode = false;
+  dynamic? selectedMovement;
 
   TextEditingController valueController = TextEditingController();
   TextEditingController titleController = TextEditingController();
+  TextEditingController noteController = TextEditingController();
 
   String parsedDate = "Fecha de realización";
+
   Category? selectedCategory;
   SavingsPlan? selectedSavingsPlan;
 
+  _MovementViewState(dynamic? selectedMovement) {
+    this.selectedMovement = selectedMovement;
+    checkMovement();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return BinancyBackground(Consumer<DashboardChangeNotifier>(
-        builder: (context, value, child) => Scaffold(
+    return BinancyBackground(Consumer2<MovementsChangeNotifier,
+            CategoriesChangeNotifier>(
+        builder: (context, movementsProvider, categoriesProvider, child) =>
+            Scaffold(
               appBar: AppBar(
                 elevation: 0,
                 brightness: Brightness.dark,
@@ -55,22 +78,22 @@ class _IncomeViewState extends State<IncomeView> {
                     : createMode
                         ? IconButton(
                             icon: Icon(Icons.arrow_back_ios_rounded),
-                            onPressed: () => CustomDialog(context,
+                            onPressed: () => BinancyInfoDialog(context,
                                     "¿Estas seguro que quieres salir?", [
-                                  CustomDialogItem(
+                                  BinancyInfoDialogItem(
                                       "Cancelar", () => Navigator.pop(context)),
-                                  CustomDialogItem("Abortar", () {
+                                  BinancyInfoDialogItem("Abortar", () {
                                     Navigator.pop(context);
                                     Navigator.pop(context);
                                   })
                                 ]))
                         : IconButton(
                             icon: Icon(Icons.close_outlined),
-                            onPressed: () => CustomDialog(
+                            onPressed: () => BinancyInfoDialog(
                                 context, "Estas seguro que quieres salir?", [
-                              CustomDialogItem(
+                              BinancyInfoDialogItem(
                                   "Canelar", () => Navigator.pop(context)),
-                              CustomDialogItem("Abortar", () {
+                              BinancyInfoDialogItem("Abortar", () {
                                 Navigator.pop(context);
                                 setState(() {
                                   allowEdit = false;
@@ -79,7 +102,13 @@ class _IncomeViewState extends State<IncomeView> {
                             ]),
                           ),
                 title: Text(
-                    createMode ? "Añade un ingreso" : "[DEBUG] - Income title",
+                    createMode
+                        ? widget.movementType.index == 0
+                            ? "Añade un ingreso"
+                            : "Añade un gasto"
+                        : widget.movementType.index == 0
+                            ? "[DEBUG] - Income title"
+                            : "[DEBUG] - Expend title",
                     style: appBarStyle()),
               ),
               backgroundColor: Colors.transparent,
@@ -99,8 +128,12 @@ class _IncomeViewState extends State<IncomeView> {
                           datePicker(context),
                           SpaceDivider(),
                           categorySelector(context),
-                          SpaceDivider(),
-                          savingsPlanSelector(context),
+                          BuildConfigs.enableSavingsPlan
+                              ? SpaceDivider()
+                              : SizedBox(),
+                          BuildConfigs.enableSavingsPlan
+                              ? savingsPlanSelector(context)
+                              : SizedBox(),
                           SpaceDivider(),
                           SpaceDivider(),
                           allowEdit
@@ -111,9 +144,7 @@ class _IncomeViewState extends State<IncomeView> {
                                       context: context,
                                       text: "Añadir ingreso",
                                       action: () async {
-                                        createMode
-                                            ? await insertIncome()
-                                            : await updateIncome();
+                                        await checkData(movementsProvider);
                                       }))
                               : SizedBox()
                         ],
@@ -150,6 +181,7 @@ class _IncomeViewState extends State<IncomeView> {
           borderRadius: BorderRadius.circular(customBorderRadius)),
       padding: EdgeInsets.all(customMargin),
       child: TextField(
+        controller: noteController,
         readOnly: !allowEdit,
         expands: true,
         decoration: InputDecoration(
@@ -221,43 +253,45 @@ class _IncomeViewState extends State<IncomeView> {
       child: Material(
         color: themeColor.withOpacity(0.1),
         borderRadius: BorderRadius.circular(customBorderRadius),
-        child: InkWell(
-          onTap: () => showDatePicker(
-                  context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime(1970),
-                  lastDate: DateTime(DateTime.now().year + 1))
-              .then((value) {
-            setState(() {
-              parsedDate = DateFormat.yMd(
-                      Localizations.localeOf(context).toLanguageTag())
-                  .format(value!);
-            });
-          }),
-          borderRadius: BorderRadius.circular(customBorderRadius),
-          highlightColor: Colors.transparent,
-          splashColor: themeColor.withOpacity(0.1),
-          child: Container(
-              height: buttonHeight,
-              padding: EdgeInsets.only(left: customMargin, right: customMargin),
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.dashboard_rounded,
-                    color: accentColor,
-                    size: 36,
-                  ),
-                  SpaceDivider(
-                    isVertical: true,
-                  ),
-                  Text(
-                      selectedCategory != null
-                          ? selectedCategory!.key
-                          : "Selecciona una categoria",
-                      style: inputStyle())
-                ],
-              )),
-        ),
+        child: Container(
+            height: buttonHeight,
+            padding: EdgeInsets.only(left: customMargin, right: customMargin),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.dashboard_rounded,
+                  color: accentColor,
+                  size: 36,
+                ),
+                SpaceDivider(
+                  isVertical: true,
+                ),
+                Expanded(
+                    child: DropdownButton<Category>(
+                        isExpanded: true,
+                        hint: Text(
+                          "Selecciona una categoría",
+                          style: inputStyle(),
+                        ),
+                        dropdownColor: themeColor.withOpacity(0.5),
+                        elevation: 0,
+                        iconDisabledColor: accentColor,
+                        iconEnabledColor: accentColor,
+                        value:
+                            selectedCategory != null ? selectedCategory : null,
+                        onChanged: (value) {
+                          setState(() {
+                            selectedCategory = value;
+                          });
+                        },
+                        style: inputStyle(),
+                        underline: SizedBox(),
+                        items: categoryList
+                            .map((e) => DropdownMenuItem<Category>(
+                                value: e, child: Text(e.name)))
+                            .toList()))
+              ],
+            )),
       ),
     );
   }
@@ -351,7 +385,188 @@ class _IncomeViewState extends State<IncomeView> {
         ));
   }
 
-  Future<void> insertIncome() async {}
+  Future<void> checkData(
+      MovementsChangeNotifier movementsChangeNotifier) async {
+    if (valueController.text.isNotEmpty) {
+      if (titleController.text.isNotEmpty) {
+        if (Utils.validateStringDate(parsedDate)) {
+          if (createMode) {
+            switch (widget.movementType) {
+              case MovementType.INCOME:
+                await insertIncome(movementsChangeNotifier);
+                break;
+              case MovementType.EXPEND:
+                await insertExpend(movementsChangeNotifier);
+            }
+          } else {
+            switch (widget.movementType) {
+              case MovementType.INCOME:
+                await updateIncome(movementsChangeNotifier);
+                break;
+              case MovementType.EXPEND:
+                await updateExpend(movementsChangeNotifier);
+            }
+          }
+        } else {
+          BinancyInfoDialog(
+              context,
+              "La fecha introducida no es válida o esta en blanco",
+              [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
+        }
+      } else {
+        BinancyInfoDialog(context, "Debes introducir un nombre al movimiento",
+            [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
+      }
+    } else {
+      BinancyInfoDialog(context, "Debes introducir un valor al movimiento",
+          [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
+    }
+  }
 
-  Future<void> updateIncome() async {}
+  Future<void> insertIncome(MovementsChangeNotifier movementsProvider) async {
+    Income income = Income()
+      ..title = titleController.text
+      ..value = double.parse(valueController.text)
+      ..date = Utils.fromYMD(parsedDate)
+      ..idUser = userData['idUser']
+      ..description = noteController.text
+      ..category = selectedCategory;
+
+    await IncomesController.insertIncome(income).then((value) => {
+          if (value)
+            {
+              BinancyInfoDialog(context, "Ingreso añadido correctamente!", [
+                BinancyInfoDialogItem("Aceptar", () {
+                  movementsProvider.updateDashboard();
+                  gotoDashboard();
+                })
+              ])
+            }
+          else
+            {
+              BinancyInfoDialog(context, "Error al añadir el ingreso...", [
+                BinancyInfoDialogItem("Aceptar", () {
+                  Navigator.pop(context);
+                })
+              ])
+            }
+        });
+  }
+
+  Future<void> updateIncome(MovementsChangeNotifier movementsProvider) async {
+    Income income = Income()
+      ..title = titleController.text
+      ..value = double.parse(valueController.text)
+      ..date = Utils.fromYMD(parsedDate)
+      ..idUser = userData['idUser']
+      ..description = noteController.text
+      ..category = selectedCategory
+      ..idIncome = selectedMovement.idIncome;
+
+    await IncomesController.updateIncome(income).then((value) => {
+          if (value)
+            {
+              BinancyInfoDialog(context, "Ingreso actualizado correctamente!", [
+                BinancyInfoDialogItem("Aceptar", () {
+                  movementsProvider.updateDashboard();
+                  setState(() {
+                    allowEdit = false;
+                  });
+                })
+              ])
+            }
+          else
+            {
+              BinancyInfoDialog(context, "Error al actualizar el ingreso...", [
+                BinancyInfoDialogItem("Aceptar", () {
+                  Navigator.pop(context);
+                })
+              ])
+            }
+        });
+  }
+
+  Future<void> insertExpend(MovementsChangeNotifier movementsProvider) async {
+    Expend expend = Expend()
+      ..title = titleController.text
+      ..value = double.parse(valueController.text)
+      ..date = Utils.fromYMD(parsedDate)
+      ..idUser = userData['idUser']
+      ..description = noteController.text
+      ..category = selectedCategory;
+
+    await ExpensesController.insertExpend(expend).then((value) => {
+          if (value)
+            {
+              BinancyInfoDialog(context, "Gasto añadido correctamente!", [
+                BinancyInfoDialogItem("Aceptar", () {
+                  movementsProvider.updateDashboard();
+                  gotoDashboard();
+                })
+              ])
+            }
+          else
+            {
+              BinancyInfoDialog(context, "Error al añadir el gasto...", [
+                BinancyInfoDialogItem("Aceptar", () {
+                  Navigator.pop(context);
+                })
+              ])
+            }
+        });
+  }
+
+  Future<void> updateExpend(MovementsChangeNotifier movementsProvider) async {
+    Expend expend = Expend()
+      ..title = titleController.text
+      ..value = double.parse(valueController.text)
+      ..date = Utils.fromYMD(parsedDate)
+      ..idUser = userData['idUser']
+      ..description = noteController.text
+      ..category = selectedCategory
+      ..idExpend = selectedMovement.idExpend;
+
+    await ExpensesController.updateExpend(expend).then((value) => {
+          if (value)
+            {
+              BinancyInfoDialog(context, "Ingreso actualizado correctamente!", [
+                BinancyInfoDialogItem("Aceptar", () {
+                  movementsProvider.updateDashboard();
+                  setState(() {
+                    allowEdit = false;
+                  });
+                })
+              ])
+            }
+          else
+            {
+              BinancyInfoDialog(context, "Error al actualizar el ingreso...", [
+                BinancyInfoDialogItem("Aceptar", () {
+                  Navigator.pop(context);
+                })
+              ])
+            }
+        });
+  }
+
+  void checkMovement() {
+    if (selectedMovement != null) {
+      createMode = false;
+      selectedCategory = selectedMovement.category;
+
+      titleController.text = selectedMovement.title;
+      valueController.text =
+          (selectedMovement.value as double).toStringAsFixed(2);
+      noteController.text = selectedMovement.description;
+
+      parsedDate = Utils.toISOStandard(selectedMovement.date);
+    } else {
+      createMode = true;
+    }
+  }
+
+  void gotoDashboard() {
+    Navigator.pop(context);
+    Navigator.pop(context);
+  }
 }

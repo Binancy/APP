@@ -7,6 +7,7 @@ import 'dart:convert';
 import 'dart:math' as math;
 
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 
 class Utils {
   static List<AdviceCard> adviceCardList = [
@@ -61,6 +62,34 @@ class Utils {
   static Future<bool> isOnSecureStorage(String key) async {
     var storage = FlutterSecureStorage();
     return await storage.containsKey(key: key);
+  }
+
+  // DATES
+
+  static DateTime fromISOStandard(String date) {
+    return DateFormat("yyyy-MM-ddTHH:mm:ss").parse(date);
+  }
+
+  static String toISOStandard(DateTime date) {
+    return DateFormat("yyyy-MM-ddTHH:mm:ss").format(date);
+  }
+
+  static DateTime fromYMD(String date) {
+    return DateFormat.yMd().parse(date);
+  }
+
+  static String toYMD(DateTime date) {
+    return DateFormat.yMd().format(date);
+  }
+
+  static bool validateStringDate(String date) {
+    try {
+      DateFormat.yMd().parse(date);
+    } catch (e) {
+      return false;
+    }
+
+    return true;
   }
 }
 

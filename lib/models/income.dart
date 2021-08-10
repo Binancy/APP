@@ -1,4 +1,4 @@
-import 'package:intl/intl.dart';
+import 'package:binancy/utils/utils.dart';
 
 import 'category.dart';
 
@@ -6,8 +6,9 @@ class Income {
   int idIncome = 0;
   int idUser = 0;
   dynamic value = 0;
-  String description = "";
-  Category category = Category();
+  String title = "";
+  String? description = "";
+  Category? category = Category();
   DateTime date = DateTime.now();
 
   Income();
@@ -16,14 +17,16 @@ class Income {
       : idIncome = json['idIncome'],
         idUser = json['idUser'],
         value = json['value'],
+        title = json['title'],
         description = json['description'],
-        date = DateFormat("yyyy-MM-ddTHH:mm:ss").parse(json['date']);
+        date = Utils.fromISOStandard(json['date']);
 
   Map<String, dynamic> toJson() => {
         'idIncome': idIncome,
         'idUser': idUser,
         'value': value,
+        'title': title,
         'description': description,
-        'date': date.toIso8601String()
+        'date': Utils.toISOStandard(date)
       };
 }

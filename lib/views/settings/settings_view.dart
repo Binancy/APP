@@ -1,5 +1,5 @@
 import 'package:binancy/globals.dart';
-import 'package:binancy/utils/dialogs.dart';
+import 'package:binancy/utils/dialogs/info_dialog.dart';
 import 'package:binancy/utils/styles.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/widgets.dart';
@@ -36,10 +36,11 @@ class SettingsView extends StatelessWidget {
               context: context,
               text: "Cerrar sesión",
               action: () async {
-                CustomDialog(
+                BinancyInfoDialog(
                     context, "¿Estas seguro que quieres cerrar tu sesión?", [
-                  CustomDialogItem("Cancelar", () => Navigator.pop(context)),
-                  CustomDialogItem("Cerrar sesión", () {
+                  BinancyInfoDialogItem(
+                      "Cancelar", () => Navigator.pop(context)),
+                  BinancyInfoDialogItem("Cerrar sesión", () {
                     Navigator.pop(context);
                     Utils.clearSecureStorage();
                     Navigator.pushAndRemoveUntil(

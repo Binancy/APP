@@ -1,4 +1,4 @@
-import 'package:binancy/controllers/providers/dashboard_change_notifier.dart';
+import 'package:binancy/controllers/providers/movements_change_notifier.dart';
 import 'package:binancy/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -7,7 +7,7 @@ import 'package:binancy/utils/styles.dart';
 class DashboardHeaderRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer<DashboardChangeNotifier>(
+    return Consumer<MovementsChangeNotifier>(
         builder: (context, provider, child) {
       List<Widget> rowItems = [
         rowWidget(provider.totalHeritage, "Ver patrimonio", () {}),
