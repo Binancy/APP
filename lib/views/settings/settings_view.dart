@@ -61,9 +61,9 @@ class SettingsView extends StatelessWidget {
     List<Widget> widgetList = [
       SettingsHeaderRow(text: "Mis datos"),
       LinearDivider(),
-      SettingsDataRow(title: "Nombre", data: "John Doe"),
+      SettingsDataRow(title: "Nombre", data: userData['nameUser'] ?? "-"),
       LinearDivider(),
-      SettingsDataRow(title: "Email", data: "john.doe@gmail.com"),
+      SettingsDataRow(title: "Email", data: userData['email'] ?? "-"),
       LinearDivider(),
       SettingsDataRow(title: "Plan actual", data: "Free"),
       LinearDivider(),

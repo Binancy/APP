@@ -10,6 +10,7 @@ String testURL = "http://localhost:5000";
 // USER GLOBALS
 Map<String, dynamic> userData = {};
 List<Category> categoryList = [];
+int? userPayDay = 28;
 
 // WIDGET GLOBALS
 double customBorderRadius = 10;

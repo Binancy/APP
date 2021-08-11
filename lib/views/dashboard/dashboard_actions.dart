@@ -2,6 +2,7 @@ import 'package:binancy/controllers/providers/categories_change_notifier.dart';
 import 'package:binancy/controllers/providers/movements_change_notifier.dart';
 import 'package:binancy/globals.dart';
 import 'package:binancy/utils/styles.dart';
+import 'package:binancy/views/movements/all_movements_view.dart';
 import 'package:binancy/views/movements/movements_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -101,8 +102,26 @@ class DashboardActionsCard extends StatelessWidget {
                         context,
                         SvgPicture.asset(
                             "assets/svg/dashboard_see_movements.svg"),
-                        "Añade un ingreso",
-                        () {}),
+                        "Todos tus movimientos",
+                        () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => MultiProvider(
+                                providers: [
+                                  ChangeNotifierProvider(
+                                    create: (_) =>
+                                        Provider.of<MovementsChangeNotifier>(
+                                            context),
+                                  ),
+                                  ChangeNotifierProvider(
+                                    create: (_) =>
+                                        Provider.of<CategoriesChangeNotifier>(
+                                            context),
+                                  )
+                                ],
+                                child: AllMovementView(),
+                              ),
+                            ))),
                     buildActionWidget(
                         context,
                         SvgPicture.asset("assets/svg/dashboard_advices.svg"),

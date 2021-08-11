@@ -54,14 +54,14 @@ class _SplashScreenState extends State<SplashScreen> {
     return false;
   }
 
-  void gotoDashboard() {
+  void gotoDashboard() async {
     MovementsChangeNotifier dashboardChangeNotifier = MovementsChangeNotifier();
-    dashboardChangeNotifier.updateDashboard();
+    await dashboardChangeNotifier.updateDashboard();
 
     CategoriesChangeNotifier categoriesChangeNotifier =
         CategoriesChangeNotifier();
 
-    categoriesChangeNotifier.updateCategories();
+    await categoriesChangeNotifier.updateCategories();
     Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
             builder: (_) => MultiProvider(providers: [

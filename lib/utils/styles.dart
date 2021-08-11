@@ -36,7 +36,7 @@ TextStyle accentTitleStyle() {
 }
 
 TextStyle semititleStyle() {
-  return TextStyle(color: textColor, fontSize: 15);
+  return TextStyle(color: textColor, fontSize: 15, fontWeight: FontWeight.w500);
 }
 
 TextStyle balanceValueStyle() {
@@ -44,7 +44,7 @@ TextStyle balanceValueStyle() {
 }
 
 TextStyle detailStyle() {
-  return TextStyle(color: textColor, fontSize: 15);
+  return TextStyle(color: accentColor, fontSize: 15);
 }
 
 TextStyle dashboardDateStyle() {

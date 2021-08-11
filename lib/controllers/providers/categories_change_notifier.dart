@@ -9,14 +9,8 @@ class CategoriesChangeNotifier extends ChangeNotifier {
   @override
   void dispose() {}
 
-  void updateCategories() async {
-    isUpdating(true);
+  Future<void> updateCategories() async {
     await getCategories();
-    isUpdating(false);
-  }
-
-  void isUpdating(bool isUpdating) {
-    updating = isUpdating;
     notifyListeners();
   }
 

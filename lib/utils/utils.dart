@@ -74,12 +74,14 @@ class Utils {
     return DateFormat("yyyy-MM-ddTHH:mm:ss").format(date);
   }
 
-  static DateTime fromYMD(String date) {
-    return DateFormat.yMd().parse(date);
+  static DateTime fromYMD(String date, BuildContext context) {
+    return DateFormat.yMd(Localizations.localeOf(context).toLanguageTag())
+        .parse(date);
   }
 
-  static String toYMD(DateTime date) {
-    return DateFormat.yMd().format(date);
+  static String toYMD(DateTime date, BuildContext context) {
+    return DateFormat.yMd(Localizations.localeOf(context).toLanguageTag())
+        .format(date);
   }
 
   static bool validateStringDate(String date) {

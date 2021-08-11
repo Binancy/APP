@@ -1,5 +1,4 @@
 import 'package:binancy/build_configs.dart';
-import 'package:binancy/controllers/categories_controller.dart';
 import 'package:binancy/controllers/expenses_controller.dart';
 import 'package:binancy/controllers/incomes_controller.dart';
 import 'package:binancy/controllers/providers/categories_change_notifier.dart';
@@ -10,11 +9,9 @@ import 'package:binancy/models/expend.dart';
 import 'package:binancy/models/income.dart';
 import 'package:binancy/models/savings_plan.dart';
 import 'package:binancy/utils/dialogs/info_dialog.dart';
-import 'package:binancy/utils/dialogs/list_dialog.dart';
 import 'package:binancy/utils/styles.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/widgets.dart';
-import 'package:binancy/views/dashboard/dashboard_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -24,16 +21,21 @@ enum MovementType { INCOME, EXPEND }
 
 class MovementView extends StatefulWidget {
   final MovementType movementType;
-  final dynamic? selectedMovement;
+  final dynamic selectedMovement;
+  final bool allowEdit;
 
-  MovementView({required this.movementType, this.selectedMovement});
+  MovementView(
+      {required this.movementType,
+      this.selectedMovement,
+      this.allowEdit = false});
   @override
-  _MovementViewState createState() => _MovementViewState(selectedMovement);
+  _MovementViewState createState() =>
+      _MovementViewState(selectedMovement, allowEdit);
 }
 
 class _MovementViewState extends State<MovementView> {
-  bool allowEdit = true, createMode = false;
-  dynamic? selectedMovement;
+  bool allowEdit = false, createMode = false;
+  dynamic selectedMovement;
 
   TextEditingController valueController = TextEditingController();
   TextEditingController titleController = TextEditingController();
@@ -44,13 +46,15 @@ class _MovementViewState extends State<MovementView> {
   Category? selectedCategory;
   SavingsPlan? selectedSavingsPlan;
 
-  _MovementViewState(dynamic? selectedMovement) {
+  _MovementViewState(dynamic selectedMovement, bool allowEdit) {
     this.selectedMovement = selectedMovement;
-    checkMovement();
+    this.allowEdit = allowEdit;
   }
 
   @override
   Widget build(BuildContext context) {
+    checkMovement();
+
     return BinancyBackground(Consumer2<MovementsChangeNotifier,
             CategoriesChangeNotifier>(
         builder: (context, movementsProvider, categoriesProvider, child) =>
@@ -106,9 +110,7 @@ class _MovementViewState extends State<MovementView> {
                         ? widget.movementType.index == 0
                             ? "Añade un ingreso"
                             : "Añade un gasto"
-                        : widget.movementType.index == 0
-                            ? "[DEBUG] - Income title"
-                            : "[DEBUG] - Expend title",
+                        : selectedMovement.title,
                     style: appBarStyle()),
               ),
               backgroundColor: Colors.transparent,
@@ -427,7 +429,7 @@ class _MovementViewState extends State<MovementView> {
     Income income = Income()
       ..title = titleController.text
       ..value = double.parse(valueController.text)
-      ..date = Utils.fromYMD(parsedDate)
+      ..date = Utils.fromYMD(parsedDate, context)
       ..idUser = userData['idUser']
       ..description = noteController.text
       ..category = selectedCategory;
@@ -457,7 +459,7 @@ class _MovementViewState extends State<MovementView> {
     Income income = Income()
       ..title = titleController.text
       ..value = double.parse(valueController.text)
-      ..date = Utils.fromYMD(parsedDate)
+      ..date = Utils.fromYMD(parsedDate, context)
       ..idUser = userData['idUser']
       ..description = noteController.text
       ..category = selectedCategory
@@ -490,7 +492,7 @@ class _MovementViewState extends State<MovementView> {
     Expend expend = Expend()
       ..title = titleController.text
       ..value = double.parse(valueController.text)
-      ..date = Utils.fromYMD(parsedDate)
+      ..date = Utils.fromYMD(parsedDate, context)
       ..idUser = userData['idUser']
       ..description = noteController.text
       ..category = selectedCategory;
@@ -520,7 +522,7 @@ class _MovementViewState extends State<MovementView> {
     Expend expend = Expend()
       ..title = titleController.text
       ..value = double.parse(valueController.text)
-      ..date = Utils.fromYMD(parsedDate)
+      ..date = Utils.fromYMD(parsedDate, context)
       ..idUser = userData['idUser']
       ..description = noteController.text
       ..category = selectedCategory
@@ -555,11 +557,12 @@ class _MovementViewState extends State<MovementView> {
       selectedCategory = selectedMovement.category;
 
       titleController.text = selectedMovement.title;
-      valueController.text =
-          (selectedMovement.value as double).toStringAsFixed(2);
-      noteController.text = selectedMovement.description;
+      valueController.text = selectedMovement.value is int
+          ? selectedMovement.value.toString()
+          : (selectedMovement.value as double).toStringAsFixed(2);
+      noteController.text = selectedMovement.description ?? "";
 
-      parsedDate = Utils.toISOStandard(selectedMovement.date);
+      parsedDate = Utils.toYMD(selectedMovement.date, context);
     } else {
       createMode = true;
     }

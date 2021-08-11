@@ -7,8 +7,8 @@ class Income {
   int idUser = 0;
   dynamic value = 0;
   String title = "";
-  String? description = "";
-  Category? category = Category();
+  String? description;
+  Category? category;
   DateTime date = DateTime.now();
 
   Income();

@@ -81,7 +81,7 @@ class DashboardSummaryCard extends StatelessWidget {
                                     .ceilToDouble()
                                     .toStringAsFixed(0) +
                                 '€',
-                            style: detailStyle(),
+                            style: dashboardActionButtonStyle(),
                             textAlign: TextAlign.center,
                           ),
                         )
@@ -131,10 +131,10 @@ class DashboardSummaryCard extends StatelessWidget {
     } else if (totalExpenses == 0) {
       return 1;
     } else if (totalIncomes > totalExpenses) {
-      if (totalIncomes / totalExpenses >= summaryMaxDifference) {
+      if (totalIncomes / totalExpenses >= (summaryMaxDifference + 1)) {
         return 1;
       } else {
-        return (totalIncomes / totalExpenses) / summaryMaxDifference;
+        return (totalIncomes / totalExpenses) / (summaryMaxDifference + 1);
       }
     } else if (totalExpenses > totalIncomes) {
       return (totalIncomes / totalExpenses) / 2;

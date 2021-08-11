@@ -1,5 +1,7 @@
+import 'package:binancy/controllers/providers/categories_change_notifier.dart';
 import 'package:binancy/controllers/providers/movements_change_notifier.dart';
 import 'package:binancy/globals.dart';
+import 'package:binancy/views/movements/all_movements_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:binancy/utils/styles.dart';
@@ -11,8 +13,46 @@ class DashboardHeaderRow extends StatelessWidget {
         builder: (context, provider, child) {
       List<Widget> rowItems = [
         rowWidget(provider.totalHeritage, "Ver patrimonio", () {}),
-        rowWidget(provider.getThisMonthIncomes(), "Ver ingresos", () {}),
-        rowWidget(provider.getThisMonthExpenses(), "Ver gastos", () {})
+        rowWidget(
+            provider.getThisMonthIncomes(),
+            "Ver ingresos",
+            () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => MultiProvider(
+                    providers: [
+                      ChangeNotifierProvider(
+                        create: (_) =>
+                            Provider.of<MovementsChangeNotifier>(context),
+                      ),
+                      ChangeNotifierProvider(
+                        create: (_) =>
+                            Provider.of<CategoriesChangeNotifier>(context),
+                      )
+                    ],
+                    child: AllMovementView(initialPage: 0),
+                  ),
+                ))),
+        rowWidget(
+            provider.getThisMonthExpenses(),
+            "Ver gastos",
+            () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => MultiProvider(
+                    providers: [
+                      ChangeNotifierProvider(
+                        create: (_) =>
+                            Provider.of<MovementsChangeNotifier>(context),
+                      ),
+                      ChangeNotifierProvider(
+                        create: (_) =>
+                            Provider.of<CategoriesChangeNotifier>(context),
+                      )
+                    ],
+                    child: AllMovementView(initialPage: 1),
+                  ),
+                )))
       ];
       return Container(
           margin: EdgeInsets.only(top: 10, bottom: customMargin),

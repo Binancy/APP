@@ -1,6 +1,5 @@
 import 'package:binancy/globals.dart';
 import 'package:binancy/utils/styles.dart';
-import 'package:binancy/views/dashboard/dashboard_view.dart';
 import 'package:binancy/views/enroll/splash_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
