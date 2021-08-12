@@ -1,4 +1,9 @@
+import 'package:binancy/controllers/expenses_controller.dart';
+import 'package:binancy/controllers/incomes_controller.dart';
 import 'package:binancy/controllers/providers/categories_change_notifier.dart';
+import 'package:binancy/utils/dialogs/info_dialog.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+
 import 'package:binancy/controllers/providers/movements_change_notifier.dart';
 import 'package:binancy/globals.dart';
 import 'package:binancy/models/expend.dart';
@@ -6,9 +11,11 @@ import 'package:binancy/models/income.dart';
 import 'package:binancy/utils/styles.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/widgets.dart';
-import 'package:binancy/views/movements/movements_view.dart';
+import 'package:binancy/views/movements/movement_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'movements_card_widget.dart';
 
 class AllMovementView extends StatefulWidget {
   final int initialPage;
@@ -95,7 +102,7 @@ class _AllMovementViewState extends State<AllMovementView>
                         ))),
               ),
               onWillPop: () async {
-                movementsProvider.updateDashboard();
+                movementsProvider.updateMovements();
                 return true;
               },
             )));
@@ -173,6 +180,7 @@ class _AllMovementViewState extends State<AllMovementView>
       children: [
         headerWidget(incomeMovements.length, MovementType.INCOME),
         Container(
+          clipBehavior: Clip.antiAliasWithSaveLayer,
           height: 65,
           margin: EdgeInsets.only(left: customMargin, right: customMargin),
           decoration: BoxDecoration(
@@ -197,6 +205,7 @@ class _AllMovementViewState extends State<AllMovementView>
         ),
         Expanded(
             child: Container(
+          clipBehavior: Clip.antiAliasWithSaveLayer,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(customBorderRadius),
@@ -205,8 +214,10 @@ class _AllMovementViewState extends State<AllMovementView>
           margin: EdgeInsets.only(
               left: customMargin, right: customMargin, bottom: customMargin),
           child: ListView.separated(
-              itemBuilder: (context, index) =>
-                  MovementCard(movement: incomeMovements.elementAt(index)),
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              itemBuilder: (context, index) => MovementCard(
+                  movement: incomeMovements.elementAt(index),
+                  movementsProvider: movementsProvider),
               separatorBuilder: (context, index) => LinearDivider(),
               itemCount: incomeMovements.length),
         ))
@@ -223,6 +234,7 @@ class _AllMovementViewState extends State<AllMovementView>
       children: [
         headerWidget(expenseMovements.length, MovementType.EXPEND),
         Container(
+          clipBehavior: Clip.antiAliasWithSaveLayer,
           height: 65,
           margin: EdgeInsets.only(left: customMargin, right: customMargin),
           decoration: BoxDecoration(
@@ -247,6 +259,7 @@ class _AllMovementViewState extends State<AllMovementView>
         ),
         Expanded(
             child: Container(
+          clipBehavior: Clip.antiAliasWithSaveLayer,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(customBorderRadius),
@@ -255,8 +268,10 @@ class _AllMovementViewState extends State<AllMovementView>
           margin: EdgeInsets.only(
               left: customMargin, right: customMargin, bottom: customMargin),
           child: ListView.separated(
-              itemBuilder: (context, index) =>
-                  MovementCard(movement: expenseMovements.elementAt(index)),
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              itemBuilder: (context, index) => MovementCard(
+                  movement: expenseMovements.elementAt(index),
+                  movementsProvider: movementsProvider),
               separatorBuilder: (context, index) => LinearDivider(),
               itemCount: expenseMovements.length),
         ))
@@ -315,77 +330,5 @@ class _AllMovementViewState extends State<AllMovementView>
         }
         return expendList;
     }
-  }
-}
-
-class MovementCard extends StatelessWidget {
-  final dynamic movement;
-
-  const MovementCard({
-    required this.movement,
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      elevation: 0,
-      child: InkWell(
-        onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (_) => MultiProvider(
-                      providers: [
-                        ChangeNotifierProvider(
-                          create: (_) =>
-                              Provider.of<MovementsChangeNotifier>(context),
-                        ),
-                        ChangeNotifierProvider(
-                          create: (_) =>
-                              Provider.of<CategoriesChangeNotifier>(context),
-                        )
-                      ],
-                      child: MovementView(
-                        selectedMovement: movement,
-                        movementType: movement is Income
-                            ? MovementType.INCOME
-                            : MovementType.EXPEND,
-                      ),
-                    ))),
-        highlightColor: Colors.transparent,
-        splashColor: themeColor.withOpacity(0.1),
-        child: Container(
-          height: 75,
-          padding: EdgeInsets.only(left: customMargin, right: customMargin),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    movement.title,
-                    style: semititleStyle(),
-                  ),
-                  Text(Utils.toYMD(movement.date, context),
-                      style: detailStyle()),
-                  if (movement.category != null)
-                    Text(movement.category.name, style: detailStyle())
-                ],
-              ),
-              Text(
-                  (movement.value is int
-                          ? movement.value.toString()
-                          : (movement.value as double).toStringAsFixed(2)) +
-                      "€",
-                  style: accentTitleStyle())
-            ],
-          ),
-        ),
-      ),
-    );
   }
 }

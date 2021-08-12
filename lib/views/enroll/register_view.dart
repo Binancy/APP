@@ -218,7 +218,10 @@ class _RegisterViewState extends State<RegisterView> {
                 child: BinancyButton(
                     context: context,
                     text: "Iniciar sesión",
-                    action: () => Navigator.pop(context)))
+                    action: () {
+                      FocusScope.of(context).unfocus();
+                      Navigator.pop(context);
+                    }))
           ],
         )
       ],
@@ -289,18 +292,21 @@ class _RegisterViewState extends State<RegisterView> {
                 color: themeColor.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(customBorderRadius),
                 child: InkWell(
-                  onTap: () => showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(1970),
-                          lastDate: DateTime(DateTime.now().year + 1))
-                      .then((value) {
-                    setState(() {
-                      parsedDate = DateFormat.yMd(
-                              Localizations.localeOf(context).toLanguageTag())
-                          .format(value!);
+                  onTap: () {
+                    FocusScope.of(context).unfocus();
+                    showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(1970),
+                            lastDate: DateTime(DateTime.now().year + 1))
+                        .then((value) {
+                      setState(() {
+                        parsedDate = DateFormat.yMd(
+                                Localizations.localeOf(context).toLanguageTag())
+                            .format(value!);
+                      });
                     });
-                  }),
+                  },
                   borderRadius: BorderRadius.circular(customBorderRadius),
                   highlightColor: Colors.transparent,
                   splashColor: themeColor.withOpacity(0.1),
@@ -351,7 +357,7 @@ class _RegisterViewState extends State<RegisterView> {
                     onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => PrivacyAndTermsnView())),
+                            builder: (context) => PrivacyAndTermsView())),
                   )
                 ],
               ),
@@ -363,7 +369,10 @@ class _RegisterViewState extends State<RegisterView> {
           child: BinancyButton(
               context: context,
               text: "Registrate",
-              action: () => checkSecondStep()),
+              action: () {
+                FocusScope.of(context).unfocus();
+                checkSecondStep();
+              }),
         )
       ],
     );
@@ -430,22 +439,27 @@ class _RegisterViewState extends State<RegisterView> {
     String lastSurname = lastSurnameController.text;
 
     if (name.isNotEmpty && parsedDate.isNotEmpty) {
-      DateTime birthday =
-          DateFormat.yMd(Localizations.localeOf(context).toLanguageTag())
-              .parse(parsedDate);
+      if (termsPrivacyCheck) {
+        DateTime birthday =
+            DateFormat.yMd(Localizations.localeOf(context).toLanguageTag())
+                .parse(parsedDate);
 
-      String email = emailController.text;
-      String password = Utils.encrypt(passwordController.text);
+        String email = emailController.text;
+        String password = Utils.encrypt(passwordController.text);
 
-      await makeRegister({
-        "data": {
-          "email": email,
-          "password": password,
-          "name": name,
-          "firstSurname": firstSurname,
-          "lastSurname": lastSurname,
-        }
-      });
+        await makeRegister({
+          "data": {
+            "email": email,
+            "password": password,
+            "name": name,
+            "firstSurname": firstSurname,
+            "lastSurname": lastSurname,
+          }
+        });
+      } else {
+        BinancyInfoDialog(context, "Debes aceptar los términos y condiciones",
+            [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
+      }
     } else {
       BinancyInfoDialog(context, "Faltan datos por introducirse",
           [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);

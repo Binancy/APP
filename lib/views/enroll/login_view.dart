@@ -64,6 +64,7 @@ class _LoginViewState extends State<LoginView> {
                                   context: context,
                                   text: "Iniciar sesión",
                                   action: () async {
+                                    FocusScope.of(context).unfocus();
                                     await makeLogin();
                                   }),
                               SpaceDivider(),
@@ -78,11 +79,14 @@ class _LoginViewState extends State<LoginView> {
                               BinancyButton(
                                   context: context,
                                   text: "Registrate",
-                                  action: () => Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              RegisterView())))
+                                  action: () {
+                                    FocusScope.of(context).unfocus();
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                RegisterView()));
+                                  })
                             ],
                           ),
                         ))

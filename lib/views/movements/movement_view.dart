@@ -144,8 +144,17 @@ class _MovementViewState extends State<MovementView> {
                                       left: customMargin, right: customMargin),
                                   child: BinancyButton(
                                       context: context,
-                                      text: "Añadir ingreso",
+                                      text: createMode
+                                          ? widget.movementType ==
+                                                  MovementType.INCOME
+                                              ? "Añadir ingreso"
+                                              : "Añadir gasto"
+                                          : widget.movementType ==
+                                                  MovementType.INCOME
+                                              ? "Actualizar ingreso"
+                                              : "Actualizar gasto",
                                       action: () async {
+                                        FocusScope.of(context).unfocus();
                                         await checkData(movementsProvider);
                                       }))
                               : SizedBox()
@@ -211,20 +220,23 @@ class _MovementViewState extends State<MovementView> {
         color: themeColor.withOpacity(0.1),
         borderRadius: BorderRadius.circular(customBorderRadius),
         child: InkWell(
-          onTap: () => allowEdit
-              ? showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime(1970),
-                      lastDate: DateTime(DateTime.now().year + 1))
-                  .then((value) {
-                  setState(() {
-                    parsedDate = DateFormat.yMd(
-                            Localizations.localeOf(context).toLanguageTag())
-                        .format(value!);
-                  });
-                })
-              : null,
+          onTap: () {
+            FocusScope.of(context).unfocus();
+            allowEdit
+                ? showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(1970),
+                        lastDate: DateTime(DateTime.now().year + 1))
+                    .then((value) {
+                    setState(() {
+                      parsedDate = DateFormat.yMd(
+                              Localizations.localeOf(context).toLanguageTag())
+                          .format(value!);
+                    });
+                  })
+                : null;
+          },
           borderRadius: BorderRadius.circular(customBorderRadius),
           highlightColor: Colors.transparent,
           splashColor: themeColor.withOpacity(0.1),
@@ -275,6 +287,7 @@ class _MovementViewState extends State<MovementView> {
                           "Selecciona una categoría",
                           style: inputStyle(),
                         ),
+                        onTap: () => FocusScope.of(context).unfocus(),
                         dropdownColor: themeColor.withOpacity(0.5),
                         elevation: 0,
                         iconDisabledColor: accentColor,
@@ -439,7 +452,7 @@ class _MovementViewState extends State<MovementView> {
             {
               BinancyInfoDialog(context, "Ingreso añadido correctamente!", [
                 BinancyInfoDialogItem("Aceptar", () {
-                  movementsProvider.updateDashboard();
+                  movementsProvider.updateMovements();
                   gotoDashboard();
                 })
               ])
@@ -456,6 +469,8 @@ class _MovementViewState extends State<MovementView> {
   }
 
   Future<void> updateIncome(MovementsChangeNotifier movementsProvider) async {
+    print(selectedMovement.idIncome);
+
     Income income = Income()
       ..title = titleController.text
       ..value = double.parse(valueController.text)
@@ -470,10 +485,12 @@ class _MovementViewState extends State<MovementView> {
             {
               BinancyInfoDialog(context, "Ingreso actualizado correctamente!", [
                 BinancyInfoDialogItem("Aceptar", () {
-                  movementsProvider.updateDashboard();
+                  movementsProvider.updateMovements();
                   setState(() {
+                    selectedMovement = income;
                     allowEdit = false;
                   });
+                  Navigator.pop(context);
                 })
               ])
             }
@@ -502,7 +519,7 @@ class _MovementViewState extends State<MovementView> {
             {
               BinancyInfoDialog(context, "Gasto añadido correctamente!", [
                 BinancyInfoDialogItem("Aceptar", () {
-                  movementsProvider.updateDashboard();
+                  movementsProvider.updateMovements();
                   gotoDashboard();
                 })
               ])
@@ -519,6 +536,8 @@ class _MovementViewState extends State<MovementView> {
   }
 
   Future<void> updateExpend(MovementsChangeNotifier movementsProvider) async {
+    print(selectedMovement.idExpend);
+
     Expend expend = Expend()
       ..title = titleController.text
       ..value = double.parse(valueController.text)
@@ -533,10 +552,12 @@ class _MovementViewState extends State<MovementView> {
             {
               BinancyInfoDialog(context, "Ingreso actualizado correctamente!", [
                 BinancyInfoDialogItem("Aceptar", () {
-                  movementsProvider.updateDashboard();
+                  movementsProvider.updateMovements();
                   setState(() {
                     allowEdit = false;
+                    selectedMovement = expend;
                   });
+                  Navigator.pop(context);
                 })
               ])
             }

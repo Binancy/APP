@@ -2,8 +2,8 @@ import 'package:binancy/controllers/providers/categories_change_notifier.dart';
 import 'package:binancy/controllers/providers/movements_change_notifier.dart';
 import 'package:binancy/globals.dart';
 import 'package:binancy/utils/styles.dart';
-import 'package:binancy/views/movements/all_movements_view.dart';
-import 'package:binancy/views/movements/movements_view.dart';
+import 'package:binancy/views/movements/movements_all_view.dart';
+import 'package:binancy/views/movements/movement_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -54,9 +54,16 @@ class DashboardActionsCard extends StatelessWidget {
                                         )
                                       ],
                                       child: MovementView(
+                                        allowEdit: true,
                                         movementType: MovementType.INCOME,
                                       ),
                                     )))),
+                    buildActionWidget(
+                        context,
+                        SvgPicture.asset(
+                            "assets/svg/dashboard_check_balance.svg"),
+                        "Añade un ingreso",
+                        () {}),
                     buildActionWidget(
                         context,
                         SvgPicture.asset(
@@ -78,15 +85,10 @@ class DashboardActionsCard extends StatelessWidget {
                                         )
                                       ],
                                       child: MovementView(
+                                        allowEdit: true,
                                         movementType: MovementType.EXPEND,
                                       ),
-                                    )))),
-                    buildActionWidget(
-                        context,
-                        SvgPicture.asset(
-                            "assets/svg/dashboard_check_balance.svg"),
-                        "Añade un ingreso",
-                        () {}),
+                                    ))))
                   ],
                 ),
                 Row(

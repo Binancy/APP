@@ -16,4 +16,11 @@ class IncomesController {
     await connAPI.callAPI();
     return connAPI.getStatus() == 200;
   }
+
+  static Future<bool> deleteIncome(Income income) async {
+    ConnAPI connAPI = ConnAPI(
+        APIEndpoints.DELETE_INCOME, "DELETE", false, {"id": income.idIncome});
+    await connAPI.callAPI();
+    return connAPI.getStatus() == 200;
+  }
 }

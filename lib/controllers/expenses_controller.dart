@@ -16,4 +16,11 @@ class ExpensesController {
     await connAPI.callAPI();
     return connAPI.getStatus() == 200;
   }
+
+  static Future<bool> deleteExpend(Expend expend) async {
+    ConnAPI connAPI = ConnAPI(
+        APIEndpoints.DELETE_EXPEND, "DELETE", false, {"id": expend.idExpend});
+    await connAPI.callAPI();
+    return connAPI.getStatus() == 200;
+  }
 }

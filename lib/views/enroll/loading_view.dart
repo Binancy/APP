@@ -52,7 +52,7 @@ class LoadingView extends StatelessWidget {
     await Future.delayed(Duration(seconds: 3));
 
     MovementsChangeNotifier dashboardChangeNotifier = MovementsChangeNotifier();
-    await dashboardChangeNotifier.updateDashboard();
+    await dashboardChangeNotifier.updateMovements();
 
     CategoriesChangeNotifier categoriesChangeNotifier =
         CategoriesChangeNotifier();

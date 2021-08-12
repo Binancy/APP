@@ -56,7 +56,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void gotoDashboard() async {
     MovementsChangeNotifier dashboardChangeNotifier = MovementsChangeNotifier();
-    await dashboardChangeNotifier.updateDashboard();
+    await dashboardChangeNotifier.updateMovements();
 
     CategoriesChangeNotifier categoriesChangeNotifier =
         CategoriesChangeNotifier();

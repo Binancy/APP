@@ -14,7 +14,7 @@ class MovementsChangeNotifier extends ChangeNotifier {
   @override
   void dispose() {}
 
-  Future<void> updateDashboard() async {
+  Future<void> updateMovements() async {
     await getAllIncomes();
     await getAllExpenses();
     await getBalance();
