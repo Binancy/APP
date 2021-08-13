@@ -1,4 +1,5 @@
-import 'package:binancy/utils/styles.dart';
+import 'package:binancy/utils/ui/icons.dart';
+import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/widgets.dart';
 import 'package:binancy/views/dashboard/dashboard_actions.dart';
 import 'package:binancy/views/dashboard/dashboard_header_row.dart';
@@ -21,7 +22,7 @@ class _DashboardViewState extends State<DashboardView> {
           Scaffold(
               appBar: AppBar(
                 leading: IconButton(
-                    icon: Icon(Icons.settings_rounded),
+                    icon: Icon(BinancyIcons.settings),
                     onPressed: () => Navigator.push(
                         context,
                         MaterialPageRoute(

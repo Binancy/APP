@@ -1,6 +1,6 @@
 import 'package:binancy/globals.dart';
 import 'package:binancy/utils/dialogs/info_dialog.dart';
-import 'package:binancy/utils/styles.dart';
+import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/widgets.dart';
 import 'package:binancy/views/enroll/login_view.dart';

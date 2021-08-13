@@ -102,6 +102,9 @@ flutter:
           weight: 700
         - asset: assets/fonts/SegoeUI-Thin.ttf
           weight: 200
+    - family: BinancyIcons
+      fonts:
+        - asset: assets/fonts/BinancyIcons.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

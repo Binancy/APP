@@ -2,7 +2,8 @@ import 'package:binancy/globals.dart';
 import 'package:binancy/utils/api/conn_api.dart';
 import 'package:binancy/utils/api/endpoints.dart';
 import 'package:binancy/utils/dialogs/info_dialog.dart';
-import 'package:binancy/utils/styles.dart';
+import 'package:binancy/utils/ui/icons.dart';
+import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/widgets.dart';
 import 'package:binancy/views/enroll/loading_view.dart';
@@ -143,7 +144,7 @@ class _LoginViewState extends State<LoginView> {
         controller: emailController,
         style: inputStyle(),
         decoration:
-            customInputDecoration("Correo electrónico", Icons.email_outlined),
+            customInputDecoration("Correo electrónico", BinancyIcons.email),
       ),
     );
   }
@@ -166,13 +167,13 @@ class _LoginViewState extends State<LoginView> {
                 autocorrect: false,
                 enableSuggestions: false,
                 obscureText: showPass,
-                decoration: customInputDecoration(
-                    "Contraseña", Icons.radio_button_checked_outlined),
+                decoration:
+                    customInputDecoration("Contraseña", BinancyIcons.key),
               ),
             ),
             IconButton(
                 icon: Icon(
-                  Icons.visibility_rounded,
+                  BinancyIcons.eye,
                   color: accentColor,
                   size: 36,
                 ),

@@ -9,7 +9,8 @@ import 'package:binancy/models/expend.dart';
 import 'package:binancy/models/income.dart';
 import 'package:binancy/models/savings_plan.dart';
 import 'package:binancy/utils/dialogs/info_dialog.dart';
-import 'package:binancy/utils/styles.dart';
+import 'package:binancy/utils/ui/icons.dart';
+import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/widgets.dart';
 import 'package:flutter/material.dart';
@@ -246,7 +247,7 @@ class _MovementViewState extends State<MovementView> {
               child: Row(
                 children: [
                   Icon(
-                    Icons.calendar_today_outlined,
+                    BinancyIcons.calendar,
                     color: accentColor,
                     size: 36,
                   ),
@@ -273,7 +274,7 @@ class _MovementViewState extends State<MovementView> {
             child: Row(
               children: [
                 Icon(
-                  Icons.dashboard_rounded,
+                  BinancyIcons.folder,
                   color: accentColor,
                   size: 36,
                 ),

@@ -4,7 +4,7 @@ import 'package:binancy/globals.dart';
 import 'package:binancy/views/movements/movements_all_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:binancy/utils/styles.dart';
+import 'package:binancy/utils/ui/styles.dart';
 
 class DashboardHeaderRow extends StatelessWidget {
   @override

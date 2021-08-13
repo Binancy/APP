@@ -5,7 +5,7 @@ import 'package:binancy/controllers/providers/movements_change_notifier.dart';
 import 'package:binancy/models/expend.dart';
 import 'package:binancy/models/income.dart';
 import 'package:binancy/utils/dialogs/info_dialog.dart';
-import 'package:binancy/utils/styles.dart';
+import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';

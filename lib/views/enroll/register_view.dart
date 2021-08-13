@@ -2,7 +2,8 @@ import 'package:binancy/globals.dart';
 import 'package:binancy/utils/api/conn_api.dart';
 import 'package:binancy/utils/api/endpoints.dart';
 import 'package:binancy/utils/dialogs/info_dialog.dart';
-import 'package:binancy/utils/styles.dart';
+import 'package:binancy/utils/ui/icons.dart';
+import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/widgets.dart';
 import 'package:binancy/views/advice/advice_card.dart';
@@ -119,10 +120,11 @@ class _RegisterViewState extends State<RegisterView> {
                   color: themeColor.withOpacity(0.1)),
               alignment: Alignment.center,
               child: TextField(
+                keyboardType: TextInputType.emailAddress,
                 controller: emailController,
                 style: inputStyle(),
                 decoration: customInputDecoration(
-                    "Correo electronico", Icons.email_outlined),
+                    "Correo electronico", BinancyIcons.email),
               ),
             ),
             SpaceDivider(),
@@ -145,12 +147,12 @@ class _RegisterViewState extends State<RegisterView> {
                       controller: passwordController,
                       obscureText: hidePass,
                       style: inputStyle(),
-                      decoration: customInputDecoration(
-                          "Contraseña", Icons.email_outlined),
+                      decoration:
+                          customInputDecoration("Contraseña", BinancyIcons.key),
                     )),
                     IconButton(
                         icon: Icon(
-                          Icons.visibility_rounded,
+                          BinancyIcons.eye,
                           color: accentColor,
                           size: 36,
                         ),
@@ -182,11 +184,11 @@ class _RegisterViewState extends State<RegisterView> {
                       obscureText: hideConfirmPass,
                       style: inputStyle(),
                       decoration: customInputDecoration(
-                          "Confirma tu contraseña", Icons.email_outlined),
+                          "Confirma tu contraseña", BinancyIcons.key),
                     )),
                     IconButton(
                         icon: Icon(
-                          Icons.visibility_rounded,
+                          BinancyIcons.eye,
                           color: accentColor,
                           size: 36,
                         ),
@@ -250,7 +252,7 @@ class _RegisterViewState extends State<RegisterView> {
                 controller: nameController,
                 style: inputStyle(),
                 decoration:
-                    customInputDecoration("Tu nombre", Icons.email_outlined),
+                    customInputDecoration("Tu nombre", BinancyIcons.user),
               ),
             ),
             SpaceDivider(),
@@ -266,7 +268,7 @@ class _RegisterViewState extends State<RegisterView> {
                 controller: firstSurnameController,
                 style: inputStyle(),
                 decoration: customInputDecoration(
-                    "Tu primer apellido", Icons.email_outlined),
+                    "Tu primer apellido", BinancyIcons.user),
               ),
             ),
             SpaceDivider(),
@@ -282,7 +284,7 @@ class _RegisterViewState extends State<RegisterView> {
                 controller: lastSurnameController,
                 style: inputStyle(),
                 decoration: customInputDecoration(
-                    "Tu segundo apellido", Icons.email_outlined),
+                    "Tu segundo apellido", BinancyIcons.user),
               ),
             ),
             SpaceDivider(),
@@ -317,7 +319,7 @@ class _RegisterViewState extends State<RegisterView> {
                       child: Row(
                         children: [
                           Icon(
-                            Icons.calendar_today_outlined,
+                            BinancyIcons.calendar,
                             color: accentColor,
                             size: 36,
                           ),
@@ -413,12 +415,21 @@ class _RegisterViewState extends State<RegisterView> {
     if (email.isNotEmpty && password.isNotEmpty && verifyPassword.isNotEmpty) {
       if (Utils.verifyEmail(email)) {
         if (password == verifyPassword) {
-          setState(() {
-            registerCurrentPage++;
-            registerPageController.animateToPage(registerCurrentPage,
-                duration: Duration(milliseconds: registerTransitionDuration),
-                curve: Curves.easeOut);
-          });
+          if (Utils.verifySecurityPassword(password)) {
+            setState(() {
+              registerCurrentPage++;
+              registerPageController.animateToPage(registerCurrentPage,
+                  duration: Duration(milliseconds: registerTransitionDuration),
+                  curve: Curves.easeOut);
+            });
+          } else {
+            BinancyInfoDialog(
+                context,
+                "La contraseña introducida no es válida.\n\nLa contraseña debe tener una longitud mínima de 8 carácteres y contener como mínimo 1 mayúscula, 1 minúscula, 1 numéro y 1 carácter especial",
+                [
+                  BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))
+                ]);
+          }
         } else {
           BinancyInfoDialog(context, "Las contraseñas no coinciden...",
               [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);

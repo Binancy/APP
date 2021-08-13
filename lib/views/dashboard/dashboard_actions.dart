@@ -1,7 +1,7 @@
 import 'package:binancy/controllers/providers/categories_change_notifier.dart';
 import 'package:binancy/controllers/providers/movements_change_notifier.dart';
 import 'package:binancy/globals.dart';
-import 'package:binancy/utils/styles.dart';
+import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/views/movements/movements_all_view.dart';
 import 'package:binancy/views/movements/movement_view.dart';
 import 'package:binancy/views/movements/movments_balance_view.dart';

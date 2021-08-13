@@ -1,4 +1,4 @@
-import 'package:binancy/utils/styles.dart';
+import 'package:binancy/utils/ui/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:binancy/globals.dart';
 import 'package:flutter_svg/svg.dart';

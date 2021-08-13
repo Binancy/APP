@@ -35,6 +35,12 @@ class Utils {
         .hasMatch(email);
   }
 
+  static bool verifySecurityPassword(String password) {
+    RegExp regEx = new RegExp(
+        r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+    return password.length >= 8 && regEx.hasMatch(password);
+  }
+
   static List<AdviceCard> getAllAdviceCards() {
     return adviceCardList;
   }
