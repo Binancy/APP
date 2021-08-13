@@ -67,7 +67,7 @@ class SettingsView extends StatelessWidget {
       LinearDivider(),
       SettingsDataRow(title: "Plan actual", data: "Free"),
       LinearDivider(),
-      SettingsDataRow(title: "Versión de Binancy", data: "1.184.25.1")
+      SettingsDataRow(title: "Versión de Binancy", data: appVersion)
     ];
 
     return Container(

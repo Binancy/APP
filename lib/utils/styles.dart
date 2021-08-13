@@ -7,15 +7,19 @@ Color textColor = Color(0xffffffff);
 Color themeColor = Colors.black;
 
 TextStyle dashboardHeaderItemTitleStyle() {
-  return TextStyle(fontSize: 22, color: textColor);
+  return TextStyle(fontSize: 22, color: textColor, fontFamily: "OpenSans");
 }
 
 TextStyle dashboardHeaderItemActionStyle() {
-  return TextStyle(fontSize: 13, color: accentColor);
+  return TextStyle(fontSize: 13, color: accentColor, fontFamily: "OpenSans");
 }
 
 TextStyle appBarStyle() {
-  return TextStyle(color: Colors.white, fontSize: 25);
+  return TextStyle(
+      color: Colors.white,
+      fontSize: 25,
+      fontFamily: "OpenSans",
+      fontWeight: FontWeight.bold);
 }
 
 TextStyle whiteButtonStyle() {
@@ -23,76 +27,75 @@ TextStyle whiteButtonStyle() {
 }
 
 TextStyle dashboardActionButtonStyle() {
-  return TextStyle(color: Colors.white, fontSize: 13);
+  return TextStyle(color: Colors.white, fontSize: 13, fontFamily: "OpenSans");
 }
 
 TextStyle titleCardStyle() {
-  return TextStyle(color: textColor, fontSize: 25, fontWeight: FontWeight.bold);
+  return TextStyle(
+      color: textColor,
+      fontSize: 25,
+      fontWeight: FontWeight.w600,
+      fontFamily: "OpenSans");
 }
 
 TextStyle accentTitleStyle() {
   return TextStyle(
-      color: accentColor, fontSize: 25, fontWeight: FontWeight.bold);
+      color: accentColor,
+      fontSize: 25,
+      fontWeight: FontWeight.bold,
+      fontFamily: "OpenSans");
 }
 
 TextStyle semititleStyle() {
-  return TextStyle(color: textColor, fontSize: 15, fontWeight: FontWeight.w500);
+  return TextStyle(
+      color: textColor,
+      fontSize: 15,
+      fontWeight: FontWeight.w500,
+      fontFamily: "OpenSans");
 }
 
 TextStyle balanceValueStyle() {
-  return TextStyle(color: textColor, fontSize: 70, fontWeight: FontWeight.bold);
+  return TextStyle(
+      color: textColor,
+      fontSize: 70,
+      fontWeight: FontWeight.bold,
+      fontFamily: "Segoe UI");
 }
 
 TextStyle detailStyle() {
-  return TextStyle(color: accentColor, fontSize: 15);
-}
-
-TextStyle dashboardDateStyle() {
-  return TextStyle(
-      color: primaryColor, fontSize: 12, fontWeight: FontWeight.w600);
-}
-
-TextStyle dashboardCategoryStyle() {
-  return TextStyle(
-      color: secondaryColor, fontSize: 12, fontWeight: FontWeight.w600);
-}
-
-TextStyle dashboardDescriptionStyle() {
-  return TextStyle(color: textColor, fontSize: 14);
-}
-
-TextStyle dashboardValueStyle() {
-  return TextStyle(
-      color: primaryColor, fontSize: 20, fontWeight: FontWeight.w600);
+  return TextStyle(color: accentColor, fontSize: 15, fontFamily: "OpenSans");
 }
 
 TextStyle settingsKeyStyle() {
-  return TextStyle(color: textColor, fontSize: 20);
+  return TextStyle(color: textColor, fontSize: 20, fontFamily: "OpenSans");
 }
 
 TextStyle settingsValueStyle() {
-  return TextStyle(color: accentColor, fontSize: 20);
+  return TextStyle(color: accentColor, fontSize: 20, fontFamily: "OpenSans");
 }
 
 TextStyle buttonStyle() {
   return TextStyle(
-      color: accentColor, fontSize: 25, fontWeight: FontWeight.bold);
+      color: accentColor,
+      fontSize: 25,
+      fontWeight: FontWeight.bold,
+      fontFamily: "OpenSans");
 }
 
 TextStyle inputStyle() {
-  return TextStyle(color: textColor, fontSize: 18);
+  return TextStyle(color: textColor, fontSize: 18, fontFamily: "OpenSans");
 }
 
 TextStyle accentStyle() {
-  return TextStyle(color: accentColor, fontSize: 18);
+  return TextStyle(color: accentColor, fontSize: 18, fontFamily: "OpenSans");
 }
 
 TextStyle miniInputStyle() {
-  return TextStyle(color: textColor, fontSize: 14);
+  return TextStyle(color: textColor, fontSize: 14, fontFamily: "OpenSans");
 }
 
 TextStyle miniAccentStyle() {
-  return TextStyle(color: accentColor, fontSize: 14);
+  return TextStyle(color: accentColor, fontSize: 14, fontFamily: "OpenSans");
 }
 
 InputDecoration customInputDecoration(String text, IconData icon) {

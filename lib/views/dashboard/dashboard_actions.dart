@@ -4,6 +4,7 @@ import 'package:binancy/globals.dart';
 import 'package:binancy/utils/styles.dart';
 import 'package:binancy/views/movements/movements_all_view.dart';
 import 'package:binancy/views/movements/movement_view.dart';
+import 'package:binancy/views/movements/movments_balance_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -60,10 +61,25 @@ class DashboardActionsCard extends StatelessWidget {
                                     )))),
                     buildActionWidget(
                         context,
-                        SvgPicture.asset(
-                            "assets/svg/dashboard_check_balance.svg"),
-                        "Añade un ingreso",
-                        () {}),
+                        SvgPicture.asset("assets/svg/dashboard_compare.svg"),
+                        "Mi cuenta",
+                        () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => MultiProvider(
+                                      providers: [
+                                        ChangeNotifierProvider(
+                                          create: (_) => Provider.of<
+                                              MovementsChangeNotifier>(context),
+                                        ),
+                                        ChangeNotifierProvider(
+                                          create: (_) => Provider.of<
+                                                  CategoriesChangeNotifier>(
+                                              context),
+                                        )
+                                      ],
+                                      child: MovementBalanceView(),
+                                    )))),
                     buildActionWidget(
                         context,
                         SvgPicture.asset(
@@ -97,14 +113,14 @@ class DashboardActionsCard extends StatelessWidget {
                   children: [
                     buildActionWidget(
                         context,
-                        SvgPicture.asset("assets/svg/dashboard_compare.svg"),
-                        "Añade un ingreso",
+                        SvgPicture.asset("assets/svg/dashboard_categories.svg"),
+                        "Ver categorías",
                         () {}),
                     buildActionWidget(
                         context,
                         SvgPicture.asset(
                             "assets/svg/dashboard_see_movements.svg"),
-                        "Todos tus movimientos",
+                        "Todos mis movimientos",
                         () => Navigator.push(
                             context,
                             MaterialPageRoute(

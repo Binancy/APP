@@ -21,6 +21,7 @@ class MyApp extends StatelessWidget {
         statusBarColor: Colors.transparent));
     return MaterialApp(
       theme: ThemeData(
+          splashColor: themeColor.withOpacity(0.1),
           toggleableActiveColor: Colors.transparent,
           unselectedWidgetColor: accentColor),
       builder: (context, child) =>

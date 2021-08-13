@@ -2,6 +2,7 @@
 import 'package:binancy/models/category.dart';
 
 String appName = "Binancy";
+String appVersion = "1.100.1";
 
 // API GLOBALS
 String apiURL = "https://binancy.herokuapp.com";
@@ -22,3 +23,4 @@ double animLoadingSize = 200;
 // UI GLOBALS
 int dashboardMaxNotifications = 3;
 int summaryMaxDifference = 5;
+int latestMovementsMaxCount = 3;

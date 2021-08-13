@@ -1,4 +1,3 @@
-import 'package:binancy/controllers/providers/movements_change_notifier.dart';
 import 'package:binancy/utils/styles.dart';
 import 'package:binancy/utils/widgets.dart';
 import 'package:binancy/views/dashboard/dashboard_actions.dart';
@@ -6,7 +5,6 @@ import 'package:binancy/views/dashboard/dashboard_header_row.dart';
 import 'package:binancy/views/dashboard/dashboard_summary_card.dart';
 import 'package:binancy/views/settings/settings_view.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DashboardView extends StatefulWidget {
   @override

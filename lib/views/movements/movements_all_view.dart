@@ -88,6 +88,7 @@ class _AllMovementViewState extends State<AllMovementView>
                     child: ScrollConfiguration(
                         behavior: MyBehavior(),
                         child: PageView(
+                          physics: NeverScrollableScrollPhysics(),
                           onPageChanged: (value) {
                             setState(() {
                               pageIndex = value;

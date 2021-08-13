@@ -48,23 +48,33 @@ class BinancyButton extends StatelessWidget {
       {Key? key,
       required this.context,
       required this.text,
-      required this.action})
+      required this.action,
+      this.wrapOnFinal = false})
       : super(key: key);
 
   final BuildContext context;
   final String text;
   final Function() action;
+  final bool wrapOnFinal;
 
   @override
   Widget build(BuildContext context) {
     return Material(
       color: themeColor.withOpacity(0.1),
       elevation: 0,
-      borderRadius: BorderRadius.circular(customBorderRadius),
+      borderRadius: wrapOnFinal
+          ? BorderRadius.only(
+              bottomLeft: Radius.circular(customBorderRadius),
+              bottomRight: Radius.circular(customBorderRadius))
+          : BorderRadius.circular(customBorderRadius),
       child: InkWell(
         onTap: action,
         highlightColor: Colors.transparent,
-        borderRadius: BorderRadius.circular(customBorderRadius),
+        borderRadius: wrapOnFinal
+            ? BorderRadius.only(
+                bottomLeft: Radius.circular(customBorderRadius),
+                bottomRight: Radius.circular(customBorderRadius))
+            : BorderRadius.circular(customBorderRadius),
         splashColor: themeColor.withOpacity(0.1),
         child: Container(
           height: buttonHeight,
