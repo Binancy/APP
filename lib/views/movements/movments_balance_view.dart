@@ -25,6 +25,8 @@ class MovementBalanceView extends StatelessWidget {
     "12/21"
   ];
 
+  final int swapAnimationDurationMS = 500;
+
   @override
   Widget build(BuildContext context) {
     return BinancyBackground(
@@ -105,68 +107,80 @@ class MovementBalanceView extends StatelessWidget {
     );
   }
 
-  Column barChart(BuildContext context) {
+  Widget barChart(BuildContext context) {
     return Column(
       children: [
         Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height / 3,
           padding: EdgeInsets.all(customMargin),
-          child: BarChart(BarChartData(
-              alignment: BarChartAlignment.center,
-              groupsSpace: 24,
-              borderData: FlBorderData(show: false),
-              titlesData: FlTitlesData(
-                  bottomTitles: SideTitles(
-                      getTitles: (value) => monthsList.elementAt(value.toInt()),
-                      getTextStyles: (value) =>
-                          TextStyle(fontSize: 11, fontFamily: "OpenSans"),
-                      showTitles: true),
-                  leftTitles: SideTitles(showTitles: false)),
-              barGroups: [
-                BarChartGroupData(x: 0, barRods: [
-                  BarChartRodData(y: 1517.79, colors: [accentColor], width: 15),
-                  BarChartRodData(
-                      y: 304.80,
-                      colors: [Colors.white.withOpacity(0.25)],
-                      width: 15)
+          child: BarChart(
+            BarChartData(
+                alignment: BarChartAlignment.center,
+                groupsSpace: 24,
+                borderData: FlBorderData(show: false),
+                titlesData: FlTitlesData(
+                    bottomTitles: SideTitles(
+                        getTitles: (value) =>
+                            monthsList.elementAt(value.toInt()),
+                        getTextStyles: (value) =>
+                            TextStyle(fontSize: 11, fontFamily: "OpenSans"),
+                        showTitles: true),
+                    leftTitles: SideTitles(showTitles: false)),
+                barGroups: [
+                  BarChartGroupData(x: 0, barRods: [
+                    BarChartRodData(
+                        y: 1517.79, colors: [accentColor], width: 15),
+                    BarChartRodData(
+                        y: 304.80,
+                        colors: [Colors.white.withOpacity(0.25)],
+                        width: 15)
+                  ]),
+                  BarChartGroupData(x: 1, barRods: [
+                    BarChartRodData(
+                        y: 1574.79, colors: [accentColor], width: 15),
+                    BarChartRodData(
+                        y: 1854.80,
+                        colors: [Colors.white.withOpacity(0.25)],
+                        width: 15)
+                  ]),
+                  BarChartGroupData(x: 2, barRods: [
+                    BarChartRodData(
+                        y: 1517.79, colors: [accentColor], width: 15),
+                    BarChartRodData(
+                        y: 954.80,
+                        colors: [Colors.white.withOpacity(0.25)],
+                        width: 15)
+                  ]),
+                  BarChartGroupData(x: 3, barRods: [
+                    BarChartRodData(
+                        y: 854.79, colors: [accentColor], width: 15),
+                    BarChartRodData(
+                        y: 151.80,
+                        colors: [Colors.white.withOpacity(0.25)],
+                        width: 15)
+                  ]),
+                  BarChartGroupData(x: 4, barRods: [
+                    BarChartRodData(
+                        y: 1254.79, colors: [accentColor], width: 15),
+                    BarChartRodData(
+                        y: 1000.80,
+                        colors: [Colors.white.withOpacity(0.25)],
+                        width: 15)
+                  ]),
+                  BarChartGroupData(x: 5, barRods: [
+                    BarChartRodData(
+                        y: 1200.79, colors: [accentColor], width: 15),
+                    BarChartRodData(
+                        y: 1300.80,
+                        colors: [Colors.white.withOpacity(0.25)],
+                        width: 15)
+                  ])
                 ]),
-                BarChartGroupData(x: 1, barRods: [
-                  BarChartRodData(y: 1574.79, colors: [accentColor], width: 15),
-                  BarChartRodData(
-                      y: 1854.80,
-                      colors: [Colors.white.withOpacity(0.25)],
-                      width: 15)
-                ]),
-                BarChartGroupData(x: 2, barRods: [
-                  BarChartRodData(y: 1517.79, colors: [accentColor], width: 15),
-                  BarChartRodData(
-                      y: 954.80,
-                      colors: [Colors.white.withOpacity(0.25)],
-                      width: 15)
-                ]),
-                BarChartGroupData(x: 3, barRods: [
-                  BarChartRodData(y: 854.79, colors: [accentColor], width: 15),
-                  BarChartRodData(
-                      y: 151.80,
-                      colors: [Colors.white.withOpacity(0.25)],
-                      width: 15)
-                ]),
-                BarChartGroupData(x: 4, barRods: [
-                  BarChartRodData(y: 1254.79, colors: [accentColor], width: 15),
-                  BarChartRodData(
-                      y: 1000.80,
-                      colors: [Colors.white.withOpacity(0.25)],
-                      width: 15)
-                ]),
-                BarChartGroupData(x: 5, barRods: [
-                  BarChartRodData(y: 1200.79, colors: [accentColor], width: 15),
-                  BarChartRodData(
-                      y: 1300.80,
-                      colors: [Colors.white.withOpacity(0.25)],
-                      width: 15)
-                ])
-              ])),
+            swapAnimationDuration:
+                Duration(milliseconds: swapAnimationDurationMS),
+            swapAnimationCurve: Curves.easeOut,
+          ),
         ),
         Padding(
             padding: EdgeInsets.only(left: customMargin, right: customMargin),

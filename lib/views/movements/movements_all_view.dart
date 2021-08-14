@@ -2,6 +2,7 @@ import 'package:binancy/controllers/providers/movements_change_notifier.dart';
 import 'package:binancy/globals.dart';
 import 'package:binancy/models/expend.dart';
 import 'package:binancy/models/income.dart';
+import 'package:binancy/utils/ui/icons.dart';
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/widgets.dart';
@@ -60,7 +61,7 @@ class _AllMovementViewState extends State<AllMovementView>
                   elevation: 0,
                   actions: [
                     IconButton(
-                        onPressed: () {}, icon: Icon(Icons.filter_alt_outlined))
+                        onPressed: () {}, icon: Icon(BinancyIcons.filter))
                   ],
                   title: Text("Todos tus movimientos", style: appBarStyle()),
                   bottom: TabBar(

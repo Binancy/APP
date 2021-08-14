@@ -2,6 +2,7 @@ import 'package:binancy/controllers/providers/categories_change_notifier.dart';
 import 'package:binancy/controllers/providers/movements_change_notifier.dart';
 import 'package:binancy/globals.dart';
 import 'package:binancy/views/movements/movements_all_view.dart';
+import 'package:binancy/views/movements/movments_balance_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:binancy/utils/ui/styles.dart';
@@ -12,7 +13,26 @@ class DashboardHeaderRow extends StatelessWidget {
     return Consumer<MovementsChangeNotifier>(
         builder: (context, provider, child) {
       List<Widget> rowItems = [
-        rowWidget(provider.totalHeritage, "Ver patrimonio", () {}),
+        rowWidget(
+            provider.totalHeritage,
+            "Ver patrimonio",
+            () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (_) => MultiProvider(
+                          providers: [
+                            ChangeNotifierProvider(
+                              create: (_) =>
+                                  Provider.of<MovementsChangeNotifier>(context),
+                            ),
+                            ChangeNotifierProvider(
+                              create: (_) =>
+                                  Provider.of<CategoriesChangeNotifier>(
+                                      context),
+                            )
+                          ],
+                          child: MovementBalanceView(),
+                        )))),
         rowWidget(
             provider.getThisMonthIncomes(),
             "Ver ingresos",
