@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:binancy/controllers/providers/categories_change_notifier.dart';
 import 'package:binancy/controllers/providers/movements_change_notifier.dart';
 import 'package:binancy/controllers/providers/subscriptions_change_notifier.dart';
+import 'package:binancy/controllers/subscriptions_controller.dart';
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/widgets.dart';
@@ -62,6 +63,17 @@ class LoadingView extends StatelessWidget {
     SubscriptionsChangeNotifier subscriptionsChangeNotifier =
         SubscriptionsChangeNotifier();
     await subscriptionsChangeNotifier.updateSubscriptions();
+
+    // Verifica si hay alguna suscripción por pagar, si es asi, añade el gasto a la
+    // DB, actualiza el ultimo mes de cobro de la suscripción y avisa a MovementsChangeNotifier
+    // que tiene que actualizarse de nuevo
+    await SubscriptionsController.checkSubscriptions(
+            subscriptionsChangeNotifier.subscriptionsList)
+        .then((value) async {
+      if (value) {
+        await dashboardChangeNotifier.updateMovements();
+      }
+    });
 
     Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(

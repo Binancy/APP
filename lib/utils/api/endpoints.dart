@@ -21,4 +21,5 @@ class APIEndpoints {
 
   // SUBSCRIPTIONS
   static const String READ_SUBSCRIPTIONS = "/api/subscriptions/read";
+  static const String UPDATE_SUBSCRIPTION = "/api/subscriptions/update";
 }
