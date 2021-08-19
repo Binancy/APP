@@ -1,5 +1,6 @@
 import 'package:binancy/controllers/providers/categories_change_notifier.dart';
 import 'package:binancy/controllers/providers/movements_change_notifier.dart';
+import 'package:binancy/controllers/providers/subscriptions_change_notifier.dart';
 import 'package:binancy/globals.dart';
 import 'package:binancy/views/movements/movements_all_view.dart';
 import 'package:binancy/views/movements/movments_balance_view.dart';
@@ -10,11 +11,11 @@ import 'package:binancy/utils/ui/styles.dart';
 class DashboardHeaderRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer<MovementsChangeNotifier>(
-        builder: (context, provider, child) {
+    return Consumer2<MovementsChangeNotifier, SubscriptionsChangeNotifier>(
+        builder: (context, movementsProvder, subscriptionsProvider, child) {
       List<Widget> rowItems = [
         rowWidget(
-            provider.totalHeritage,
+            movementsProvder.totalHeritage,
             "Ver patrimonio",
             () => Navigator.push(
                 context,
@@ -34,7 +35,7 @@ class DashboardHeaderRow extends StatelessWidget {
                           child: MovementBalanceView(),
                         )))),
         rowWidget(
-            provider.getThisMonthIncomes(),
+            movementsProvder.getThisMonthIncomes(),
             "Ver ingresos",
             () => Navigator.push(
                 context,
@@ -54,7 +55,7 @@ class DashboardHeaderRow extends StatelessWidget {
                   ),
                 ))),
         rowWidget(
-            provider.getThisMonthExpenses(),
+            movementsProvder.getThisMonthExpenses(),
             "Ver gastos",
             () => Navigator.push(
                 context,
@@ -72,7 +73,9 @@ class DashboardHeaderRow extends StatelessWidget {
                     ],
                     child: AllMovementView(initialPage: 1),
                   ),
-                )))
+                ))),
+        rowWidget(subscriptionsProvider.totalSubscriptionsValue,
+            "Ver suscripciones", () {})
       ];
       return Container(
           margin: EdgeInsets.only(top: 10, bottom: customMargin),

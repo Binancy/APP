@@ -18,4 +18,7 @@ class APIEndpoints {
 
   // CATEGORIES
   static const String READ_CATEGORIES = "/api/categories/read";
+
+  // SUBSCRIPTIONS
+  static const String READ_SUBSCRIPTIONS = "/api/subscriptions/read";
 }

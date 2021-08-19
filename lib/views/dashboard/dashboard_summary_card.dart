@@ -24,7 +24,6 @@ class DashboardSummaryCard extends StatelessWidget {
           provider.getThisMonthIncomes() - provider.getThisMonthExpenses();
       double barPercentage = _getTotalBalance(
           provider.getThisMonthIncomes(), provider.getThisMonthExpenses());
-      print(barPercentage);
       return Column(
         children: [
           Text(

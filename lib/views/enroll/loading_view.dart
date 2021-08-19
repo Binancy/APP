@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:binancy/controllers/providers/categories_change_notifier.dart';
 import 'package:binancy/controllers/providers/movements_change_notifier.dart';
+import 'package:binancy/controllers/providers/subscriptions_change_notifier.dart';
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/widgets.dart';
@@ -58,13 +59,20 @@ class LoadingView extends StatelessWidget {
         CategoriesChangeNotifier();
     await categoriesChangeNotifier.updateCategories();
 
+    SubscriptionsChangeNotifier subscriptionsChangeNotifier =
+        SubscriptionsChangeNotifier();
+    await subscriptionsChangeNotifier.updateSubscriptions();
+
     Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
             builder: (_) => MultiProvider(providers: [
                   ChangeNotifierProvider(
                       create: (context) => dashboardChangeNotifier),
                   ChangeNotifierProvider(
-                      create: (context) => categoriesChangeNotifier)
+                      create: (context) => categoriesChangeNotifier),
+                  ChangeNotifierProvider(
+                    create: (context) => subscriptionsChangeNotifier,
+                  )
                 ], child: DashboardView())),
         (route) => false);
   }
