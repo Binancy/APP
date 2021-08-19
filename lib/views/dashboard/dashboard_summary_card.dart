@@ -97,7 +97,7 @@ class DashboardSummaryCard extends StatelessWidget {
     });
   }
 
-  SfRadialGauge radialGauge(double barPercentage) {
+  Widget radialGauge(double barPercentage) {
     return SfRadialGauge(
       axes: [
         RadialAxis(
@@ -112,6 +112,10 @@ class DashboardSummaryCard extends StatelessWidget {
           ),
           pointers: [
             RangePointer(
+              pointerOffset: 0,
+              enableAnimation: true,
+              animationDuration: 1500,
+              animationType: AnimationType.ease,
               value: barPercentage,
               color: accentColor,
               cornerStyle: CornerStyle.bothCurve,
@@ -120,6 +124,7 @@ class DashboardSummaryCard extends StatelessWidget {
           ],
         )
       ],
+      enableLoadingAnimation: true,
     );
   }
 

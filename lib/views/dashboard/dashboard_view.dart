@@ -28,6 +28,10 @@ class _DashboardViewState extends State<DashboardView> {
                     child: BinancyBackground(
                   Scaffold(
                       appBar: AppBar(
+                        actions: [
+                          IconButton(
+                              icon: Icon(BinancyIcons.alert), onPressed: () {})
+                        ],
                         leading: IconButton(
                             icon: Icon(BinancyIcons.settings),
                             onPressed: () => Navigator.push(

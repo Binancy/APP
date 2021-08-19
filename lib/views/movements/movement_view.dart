@@ -168,18 +168,15 @@ class _MovementViewState extends State<MovementView> {
 
   Container movementHeader() {
     return Container(
-      height: 185,
       decoration: BoxDecoration(
           color: themeColor.withOpacity(0.1),
           borderRadius: BorderRadius.circular(customBorderRadius)),
       margin: EdgeInsets.all(customMargin),
-      padding: EdgeInsets.all(customMargin),
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [inputValue(), inputTitle()],
-        ),
+      padding: EdgeInsets.fromLTRB(customMargin, 0, customMargin, customMargin),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [inputValue(), inputTitle()],
       ),
     );
   }
@@ -193,6 +190,7 @@ class _MovementViewState extends State<MovementView> {
           borderRadius: BorderRadius.circular(customBorderRadius)),
       padding: EdgeInsets.all(customMargin),
       child: TextField(
+        textCapitalization: TextCapitalization.sentences,
         controller: noteController,
         readOnly: !allowEdit,
         expands: true,
@@ -364,6 +362,7 @@ class _MovementViewState extends State<MovementView> {
       readOnly: !allowEdit,
       inputFormatters: [LengthLimitingTextInputFormatter(30)],
       keyboardType: TextInputType.name,
+      textCapitalization: TextCapitalization.sentences,
       controller: titleController,
       cursorColor: accentColor,
       textAlign: TextAlign.center,
@@ -381,24 +380,23 @@ class _MovementViewState extends State<MovementView> {
 
   Container inputValue() {
     return Container(
-        height: 75,
         child: TextField(
-          readOnly: !allowEdit,
-          inputFormatters: [DecimalTextInputFormatter(decimalRange: 2)],
-          keyboardType: TextInputType.number,
-          controller: valueController,
-          cursorColor: Colors.white,
-          textAlign: TextAlign.center,
-          style: balanceValueStyle(),
-          decoration: InputDecoration(
-              border: InputBorder.none,
-              focusedBorder: InputBorder.none,
-              enabledBorder: InputBorder.none,
-              errorBorder: InputBorder.none,
-              disabledBorder: InputBorder.none,
-              hintStyle: balanceValueStyle(),
-              hintText: "0.00€"),
-        ));
+      readOnly: !allowEdit,
+      inputFormatters: [DecimalTextInputFormatter(decimalRange: 2)],
+      keyboardType: TextInputType.number,
+      controller: valueController,
+      cursorColor: Colors.white,
+      textAlign: TextAlign.center,
+      style: balanceValueStyle(),
+      decoration: InputDecoration(
+          border: InputBorder.none,
+          focusedBorder: InputBorder.none,
+          enabledBorder: InputBorder.none,
+          errorBorder: InputBorder.none,
+          disabledBorder: InputBorder.none,
+          hintStyle: balanceValueStyle(),
+          hintText: "0.00€"),
+    ));
   }
 
   Future<void> checkData(

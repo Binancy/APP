@@ -166,19 +166,21 @@ class DashboardActionsCard extends StatelessWidget {
         splashColor: themeColor.withOpacity(0.1),
         child: Container(
           height: (MediaQuery.of(context).size.height / 10) + 3,
-          width: (MediaQuery.of(context).size.height / 10),
+          width: (MediaQuery.of(context).size.height / 8),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(height: 40, width: 40, child: Center(child: icon)),
               SizedBox(height: 3),
-              Text(
-                text,
-                style: dashboardActionButtonStyle(),
-                maxLines: 2,
-                textAlign: TextAlign.center,
-              )
+              Padding(
+                  padding: EdgeInsets.only(left: 10, right: 10),
+                  child: Text(
+                    text,
+                    style: dashboardActionButtonStyle(),
+                    maxLines: 2,
+                    textAlign: TextAlign.center,
+                  ))
             ],
           ),
         ),
