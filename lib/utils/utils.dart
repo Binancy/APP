@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:binancy/views/advice/advice_card.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +27,8 @@ class Utils {
             "Binancy te permite visualizar tus movimientos de multiples formas y filtros.")
   ];
 
+  // ENROLLMENT
+
   static String encrypt(String text) {
     return md5.convert(utf8.encode(text)).toString();
   }
@@ -44,6 +48,8 @@ class Utils {
   static List<AdviceCard> getAllAdviceCards() {
     return adviceCardList;
   }
+
+  // SHARED STORAGE
 
   static Future<void> saveOnSecureStorage(String key, dynamic value) async {
     var storage = FlutterSecureStorage();
@@ -98,6 +104,13 @@ class Utils {
     }
 
     return true;
+  }
+
+  static double roundDown(double value, int precision) {
+    final isNegative = value.isNegative;
+    final mod = pow(10.0, precision);
+    final roundDown = (((value.abs() * mod).floor()) / mod);
+    return isNegative ? -roundDown : roundDown;
   }
 }
 

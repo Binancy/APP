@@ -1,6 +1,7 @@
 import 'package:binancy/controllers/providers/movements_change_notifier.dart';
 import 'package:binancy/globals.dart';
 import 'package:binancy/utils/ui/styles.dart';
+import 'package:binancy/utils/utils.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:flutter/material.dart';
@@ -58,11 +59,15 @@ class DashboardSummaryCard extends StatelessWidget {
                       children: [
                         totalBalance >= 1000 || totalBalance <= -1000
                             ? Text(
-                                totalBalance.toStringAsFixed(0) + "€",
+                                Utils.roundDown(totalBalance, 0)
+                                        .toStringAsFixed(0) +
+                                    "€",
                                 style: balanceValueStyle(),
                               )
                             : Text(
-                                totalBalance.toStringAsFixed(2) + "€",
+                                Utils.roundDown(totalBalance, 2)
+                                        .toStringAsFixed(2) +
+                                    "€",
                                 style: balanceValueStyle(),
                               ),
                         Padding(
@@ -71,14 +76,12 @@ class DashboardSummaryCard extends StatelessWidget {
                               right: MediaQuery.of(context).size.width / 5),
                           child: Text(
                             'En Julio has ingresado ' +
-                                provider
-                                    .getThisMonthIncomes()
-                                    .ceilToDouble()
+                                Utils.roundDown(
+                                        provider.getThisMonthIncomes(), 0)
                                     .toStringAsFixed(0) +
                                 '€ y has gastado ' +
-                                provider
-                                    .getThisMonthExpenses()
-                                    .ceilToDouble()
+                                Utils.roundDown(
+                                        provider.getThisMonthExpenses(), 0)
                                     .toStringAsFixed(0) +
                                 '€',
                             style: dashboardActionButtonStyle(),
