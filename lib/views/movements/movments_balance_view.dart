@@ -1,9 +1,9 @@
 import 'package:binancy/controllers/providers/categories_change_notifier.dart';
 import 'package:binancy/controllers/providers/movements_change_notifier.dart';
 import 'package:binancy/globals.dart';
+import 'package:binancy/utils/enums.dart';
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/widgets.dart';
-import 'package:binancy/views/movements/movement_view.dart';
 import 'package:binancy/views/movements/movements_card_widget.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';

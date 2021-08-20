@@ -13,3 +13,5 @@ enum Month {
   NOVEMBER,
   DECEMEBER
 }
+
+enum MovementType { INCOME, EXPEND }

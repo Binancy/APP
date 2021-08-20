@@ -465,6 +465,7 @@ class _RegisterViewState extends State<RegisterView> {
             "name": name,
             "firstSurname": firstSurname,
             "lastSurname": lastSurname,
+            "birthday": Utils.toISOStandard(birthday)
           }
         });
       } else {

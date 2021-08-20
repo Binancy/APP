@@ -34,7 +34,7 @@ class DashboardSummaryCard extends StatelessWidget {
             height: customMargin,
           ),
           Container(
-            height: (MediaQuery.of(context).size.height / 10 * 3.65),
+            height: (MediaQuery.of(context).size.height / 10 * 3.5),
             margin: EdgeInsets.only(
               left: customMargin,
               right: customMargin,
@@ -42,10 +42,10 @@ class DashboardSummaryCard extends StatelessWidget {
             child: Stack(
               children: [
                 Positioned(
-                    height: (MediaQuery.of(context).size.height / 10 * 4),
+                    height: (MediaQuery.of(context).size.height / 10 * 3.8),
                     width: MediaQuery.of(context).size.width - 42,
                     child: Container(
-                      height: (MediaQuery.of(context).size.height / 10 * 4),
+                      height: (MediaQuery.of(context).size.height / 10 * 3.8),
                       child: radialGauge(barPercentage),
                     )),
                 Positioned(

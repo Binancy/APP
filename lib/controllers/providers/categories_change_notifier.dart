@@ -1,6 +1,5 @@
 import 'package:binancy/controllers/categories_controller.dart';
 import 'package:binancy/globals.dart';
-import 'package:binancy/models/category.dart';
 import 'package:flutter/material.dart';
 
 class CategoriesChangeNotifier extends ChangeNotifier {

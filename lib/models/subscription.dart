@@ -1,5 +1,4 @@
 import 'package:binancy/utils/enums.dart';
-import 'package:binancy/utils/utils.dart';
 
 class Subscription {
   int idSubscription = 0;
