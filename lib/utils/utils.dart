@@ -96,6 +96,16 @@ class Utils {
         .format(date);
   }
 
+  static DateTime fromMD(String date, BuildContext context) {
+    return DateFormat.Md(Localizations.localeOf(context).toLanguageTag())
+        .parse(date);
+  }
+
+  static String toMMD(DateTime date, BuildContext context) {
+    return DateFormat.Md(Localizations.localeOf(context).toLanguageTag())
+        .format(date);
+  }
+
   static bool validateStringDate(String date) {
     try {
       DateFormat.yMd().parse(date);

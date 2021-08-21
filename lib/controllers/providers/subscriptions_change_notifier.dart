@@ -1,5 +1,6 @@
 import 'package:binancy/controllers/subscriptions_controller.dart';
 import 'package:binancy/models/subscription.dart';
+import 'package:binancy/utils/enums.dart';
 import 'package:flutter/material.dart';
 
 class SubscriptionsChangeNotifier extends ChangeNotifier {
@@ -20,5 +21,41 @@ class SubscriptionsChangeNotifier extends ChangeNotifier {
     for (var subscription in subscriptionsList) {
       totalSubscriptionsValue += subscription.value;
     }
+  }
+
+  Subscription? getNextSubscriptionToPay() {
+    DateTime today = DateTime.now();
+    Subscription nextSubscriptionToPay = Subscription()
+      ..payDay = 0
+      ..latestMonth = Month.NONE;
+
+    for (var subscription in subscriptionsList) {
+      if (subscription.latestMonth.index < today.month) {
+        if (subscription.payDay > today.day &&
+                subscription.payDay > nextSubscriptionToPay.payDay ||
+            nextSubscriptionToPay.payDay == 0) {
+          nextSubscriptionToPay = subscription;
+        }
+      } else if (subscription.latestMonth.index == 12 && today.month == 1) {
+        if (subscription.payDay < today.day &&
+                subscription.payDay < nextSubscriptionToPay.payDay ||
+            nextSubscriptionToPay.payDay == 0) {
+          nextSubscriptionToPay = subscription;
+        }
+      } else if (subscription.latestMonth.index == today.month) {
+        if (subscription.payDay > today.day &&
+                subscription.payDay < nextSubscriptionToPay.payDay ||
+            nextSubscriptionToPay.payDay == 0) {
+          nextSubscriptionToPay = subscription;
+        }
+      }
+    }
+
+    if (nextSubscriptionToPay.payDay == 0 &&
+        nextSubscriptionToPay.latestMonth == Month.NONE) {
+      return null;
+    }
+
+    return nextSubscriptionToPay;
   }
 }
