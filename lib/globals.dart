@@ -19,6 +19,7 @@ double customMargin = 20;
 double settingsRowHeight = 62;
 double buttonHeight = 70;
 double animLoadingSize = 200;
+double movementCardSize = 75;
 
 // UI GLOBALS
 int dashboardMaxNotifications = 3;

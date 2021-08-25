@@ -56,7 +56,7 @@ class MovementCard extends StatelessWidget {
           highlightColor: Colors.transparent,
           splashColor: themeColor.withOpacity(0.1),
           child: Container(
-            height: 75,
+            height: movementCardSize,
             padding: EdgeInsets.only(left: customMargin, right: customMargin),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

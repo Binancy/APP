@@ -5,6 +5,7 @@ import 'package:binancy/utils/enums.dart';
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/widgets.dart';
 import 'package:binancy/views/movements/movements_card_widget.dart';
+import 'package:binancy/views/movements/movements_empty_card_widget.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -264,23 +265,27 @@ class MovementBalanceView extends StatelessWidget {
         child: Text(movementType == MovementType.INCOME ? "Ingresos" : "Gastos",
             style: titleCardStyle())));
     listMovementsWidget.add(LinearDivider());
-    if (providerList.length > 3) {
-      for (var i = 0; i < latestMovementsMaxCount; i++) {
-        listMovementsWidget.add(MovementCard(
-            movement: providerList.elementAt(i),
-            movementsProvider: movementsChangeNotifier));
-        if (i != latestMovementsMaxCount - 1) {
-          listMovementsWidget.add(LinearDivider());
-        }
-      }
+    if (providerList.isEmpty) {
+      listMovementsWidget.add(MovememntEmptyCard(movementType));
     } else {
-      for (var i = 0; i < providerList.length; i++) {
+      if (providerList.length > 3) {
         for (var i = 0; i < latestMovementsMaxCount; i++) {
           listMovementsWidget.add(MovementCard(
               movement: providerList.elementAt(i),
               movementsProvider: movementsChangeNotifier));
-          if (i != providerList.length - 1) {
+          if (i != latestMovementsMaxCount - 1) {
             listMovementsWidget.add(LinearDivider());
+          }
+        }
+      } else {
+        for (var i = 0; i < providerList.length; i++) {
+          for (var i = 0; i < latestMovementsMaxCount; i++) {
+            listMovementsWidget.add(MovementCard(
+                movement: providerList.elementAt(i),
+                movementsProvider: movementsChangeNotifier));
+            if (i != providerList.length - 1) {
+              listMovementsWidget.add(LinearDivider());
+            }
           }
         }
       }

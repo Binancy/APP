@@ -7,7 +7,7 @@ import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/views/movements/movements_all_view.dart';
 import 'package:binancy/views/movements/movement_view.dart';
 import 'package:binancy/views/movements/movments_balance_view.dart';
-import 'package:binancy/views/subscriptions/subscriptions_view.dart';
+import 'package:binancy/views/subscriptions/subscriptions_all_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';

@@ -7,6 +7,7 @@ import 'package:binancy/utils/ui/icons.dart';
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/widgets.dart';
+import 'package:binancy/views/movements/movements_empty_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'movements_card_widget.dart';
@@ -208,13 +209,15 @@ class _AllMovementViewState extends State<AllMovementView>
               color: themeColor.withOpacity(0.1)),
           margin: EdgeInsets.only(
               left: customMargin, right: customMargin, bottom: customMargin),
-          child: ListView.separated(
-              clipBehavior: Clip.antiAliasWithSaveLayer,
-              itemBuilder: (context, index) => MovementCard(
-                  movement: incomeMovements.elementAt(index),
-                  movementsProvider: movementsProvider),
-              separatorBuilder: (context, index) => LinearDivider(),
-              itemCount: incomeMovements.length),
+          child: movementsProvider.incomeList.isEmpty
+              ? MovememntEmptyCard(MovementType.INCOME, isExpanded: true)
+              : ListView.separated(
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                  itemBuilder: (context, index) => MovementCard(
+                      movement: incomeMovements.elementAt(index),
+                      movementsProvider: movementsProvider),
+                  separatorBuilder: (context, index) => LinearDivider(),
+                  itemCount: incomeMovements.length),
         ))
       ],
     );
@@ -262,13 +265,15 @@ class _AllMovementViewState extends State<AllMovementView>
               color: themeColor.withOpacity(0.1)),
           margin: EdgeInsets.only(
               left: customMargin, right: customMargin, bottom: customMargin),
-          child: ListView.separated(
-              clipBehavior: Clip.antiAliasWithSaveLayer,
-              itemBuilder: (context, index) => MovementCard(
-                  movement: expenseMovements.elementAt(index),
-                  movementsProvider: movementsProvider),
-              separatorBuilder: (context, index) => LinearDivider(),
-              itemCount: expenseMovements.length),
+          child: movementsProvider.expendList.isEmpty
+              ? MovememntEmptyCard(MovementType.EXPEND, isExpanded: true)
+              : ListView.separated(
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                  itemBuilder: (context, index) => MovementCard(
+                      movement: expenseMovements.elementAt(index),
+                      movementsProvider: movementsProvider),
+                  separatorBuilder: (context, index) => LinearDivider(),
+                  itemCount: expenseMovements.length),
         ))
       ],
     );
