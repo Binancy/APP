@@ -4,6 +4,7 @@ import 'package:binancy/controllers/providers/subscriptions_change_notifier.dart
 import 'package:binancy/controllers/subscriptions_controller.dart';
 import 'package:binancy/utils/api/conn_api.dart';
 import 'package:binancy/utils/api/endpoints.dart';
+import 'package:binancy/utils/dialogs/info_dialog.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/widgets.dart';
 import 'package:binancy/views/dashboard/dashboard_view.dart';
@@ -46,8 +47,12 @@ class _SplashScreenState extends State<SplashScreen> {
       ConnAPI connAPI = ConnAPI(
           APIEndpoints.LOGIN_WITH_TOKEN, "POST", false, {"token": token});
       await connAPI.callAPI();
-      List<dynamic>? response = connAPI.getResponse();
-      if (response != null) {
+      dynamic response = connAPI.getResponse();
+      if (response is BinancyException) {
+        BinancyException exception = response;
+        BinancyInfoDialog(context, exception.description,
+            [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
+      } else {
         userData = response[0];
         return true;
       }

@@ -7,23 +7,21 @@ class Subscription {
   int idUser = 0;
   String name = "";
   String description = "";
-  double value = 0;
+  dynamic value = 0;
   int payDay = 0;
   Month latestMonth = Month.NONE;
 
   Subscription();
 
   String getNextPayDay(BuildContext context) {
-    return name +
-        " - " +
-        Utils.toMMD(
-            DateTime(
-                2021,
-                latestMonth.index == 12
-                    ? Month.JANUARY.index
-                    : latestMonth.index + 1,
-                payDay),
-            context);
+    return Utils.toMMD(
+        DateTime(
+            2021,
+            latestMonth.index == 12
+                ? Month.JANUARY.index
+                : latestMonth.index + 1,
+            payDay),
+        context);
   }
 
   Subscription.fromJson(Map<String, dynamic> json)

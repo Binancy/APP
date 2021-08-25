@@ -106,18 +106,23 @@ class _LoginViewState extends State<LoginView> {
         ConnAPI connAPI = ConnAPI(APIEndpoints.LOGIN, "POST", false,
             {'email': email, 'pass': password});
         await connAPI.callAPI();
-        List<dynamic>? response = connAPI.getResponse();
-        if (response != null) {
-          userData = response[0];
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => LoadingView()),
-              (route) => false);
-        } else {
-          BinancyInfoDialog(
-              context,
-              "El correo electrónico o la contraseña son incorretos.",
+        dynamic response = connAPI.getResponse();
+        if (response is BinancyException) {
+          BinancyException exception = response;
+          BinancyInfoDialog(context, exception.description,
               [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
+        } else {
+          int statusResponse = connAPI.getStatus();
+          switch (statusResponse) {
+            case 200:
+              userData = response[0];
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoadingView()),
+                  (route) => false);
+              break;
+            default:
+          }
         }
       } else {
         BinancyInfoDialog(

@@ -158,4 +158,11 @@ class SubscriptionsController {
 
     return notifyListeners;
   }
+
+  static Future<bool> deleteSubscription(Subscription subscription) async {
+    ConnAPI connAPI = ConnAPI(APIEndpoints.DELETE_SUBSCRIPTION, "DELETE", false,
+        {"id": subscription.idSubscription});
+    await connAPI.callAPI();
+    return connAPI.getStatus() == 200;
+  }
 }

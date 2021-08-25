@@ -12,6 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
+import 'dashboard_action_button_widget.dart';
+
 class DashboardActionsCard extends StatefulWidget {
   @override
   _DashboardActionsCardState createState() => _DashboardActionsCardState();
@@ -76,11 +78,11 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            buildActionWidget(
-                context,
-                SvgPicture.asset("assets/svg/dashboard_add_income.svg"),
-                "Añade un ingreso",
-                () => Navigator.push(
+            ActionButtonWidget(
+                context: context,
+                icon: SvgPicture.asset("assets/svg/dashboard_add_income.svg"),
+                text: "Añade un ingreso",
+                action: () => Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (_) => MultiProvider(
@@ -101,11 +103,11 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
                                 movementType: MovementType.INCOME,
                               ),
                             )))),
-            buildActionWidget(
-                context,
-                SvgPicture.asset("assets/svg/dashboard_compare.svg"),
-                "Mi cuenta",
-                () => Navigator.push(
+            ActionButtonWidget(
+                context: context,
+                icon: SvgPicture.asset("assets/svg/dashboard_compare.svg"),
+                text: "Mi cuenta",
+                action: () => Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (_) => MultiProvider(
@@ -123,11 +125,11 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
                               ],
                               child: MovementBalanceView(),
                             )))),
-            buildActionWidget(
-                context,
-                SvgPicture.asset("assets/svg/dashboard_add_expense.svg"),
-                "Añade un gasto",
-                () => Navigator.push(
+            ActionButtonWidget(
+                context: context,
+                icon: SvgPicture.asset("assets/svg/dashboard_add_expense.svg"),
+                text: "Añade un gasto",
+                action: () => Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (_) => MultiProvider(
@@ -154,16 +156,17 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            buildActionWidget(
-                context,
-                SvgPicture.asset("assets/svg/dashboard_categories.svg"),
-                "Ver categorías",
-                () {}),
-            buildActionWidget(
-                context,
-                SvgPicture.asset("assets/svg/dashboard_see_movements.svg"),
-                "Todos mis movimientos",
-                () => Navigator.push(
+            ActionButtonWidget(
+                context: context,
+                icon: SvgPicture.asset("assets/svg/dashboard_categories.svg"),
+                text: "Ver categorías",
+                action: () {}),
+            ActionButtonWidget(
+                context: context,
+                icon:
+                    SvgPicture.asset("assets/svg/dashboard_see_movements.svg"),
+                text: "Todos mis movimientos",
+                action: () => Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (_) => MultiProvider(
@@ -180,11 +183,11 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
                         child: AllMovementView(),
                       ),
                     ))),
-            buildActionWidget(
-                context,
-                SvgPicture.asset("assets/svg/dashboard_advices.svg"),
-                "Añade un ingreso",
-                () {}),
+            ActionButtonWidget(
+                context: context,
+                icon: SvgPicture.asset("assets/svg/dashboard_advices.svg"),
+                text: "Añade un ingreso",
+                action: () {}),
           ],
         )
       ],
@@ -199,11 +202,11 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            buildActionWidget(
-                context,
-                SvgPicture.asset("assets/svg/dashboard_historial.svg"),
-                "Tus suscripciones",
-                () => Navigator.push(
+            ActionButtonWidget(
+                context: context,
+                icon: SvgPicture.asset("assets/svg/dashboard_historial.svg"),
+                text: "Tus suscripciones",
+                action: () => Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (_) => MultiProvider(
@@ -230,41 +233,6 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
           ],
         )
       ],
-    );
-  }
-
-  Widget buildActionWidget(
-      BuildContext context, Widget icon, String text, Function() action) {
-    return Material(
-      borderRadius: BorderRadius.circular(customBorderRadius),
-      color: Colors.transparent,
-      elevation: 0,
-      child: InkWell(
-        borderRadius: BorderRadius.circular(customBorderRadius),
-        onTap: action,
-        highlightColor: Colors.transparent,
-        splashColor: themeColor.withOpacity(0.1),
-        child: Container(
-          height: (MediaQuery.of(context).size.height / 10) + 3,
-          width: (MediaQuery.of(context).size.height / 8),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(height: 40, width: 40, child: Center(child: icon)),
-              SizedBox(height: 3),
-              Padding(
-                  padding: EdgeInsets.only(left: 10, right: 10),
-                  child: Text(
-                    text,
-                    style: dashboardActionButtonStyle(),
-                    maxLines: 2,
-                    textAlign: TextAlign.center,
-                  ))
-            ],
-          ),
-        ),
-      ),
     );
   }
 

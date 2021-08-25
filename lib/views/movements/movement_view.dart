@@ -220,20 +220,20 @@ class _MovementViewState extends State<MovementView> {
         child: InkWell(
           onTap: () {
             FocusScope.of(context).unfocus();
-            allowEdit
-                ? showDatePicker(
-                        context: context,
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime(1970),
-                        lastDate: DateTime(DateTime.now().year + 1))
-                    .then((value) {
-                    setState(() {
-                      parsedDate = DateFormat.yMd(
-                              Localizations.localeOf(context).toLanguageTag())
-                          .format(value!);
-                    });
-                  })
-                : null;
+            if (allowEdit) {
+              showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(1970),
+                      lastDate: DateTime(DateTime.now().year + 1))
+                  .then((value) {
+                setState(() {
+                  parsedDate = DateFormat.yMd(
+                          Localizations.localeOf(context).toLanguageTag())
+                      .format(value!);
+                });
+              });
+            }
           },
           borderRadius: BorderRadius.circular(customBorderRadius),
           highlightColor: Colors.transparent,

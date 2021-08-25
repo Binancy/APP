@@ -45,7 +45,9 @@ class _RegisterViewState extends State<RegisterView> {
 
   @override
   Widget build(BuildContext context) {
-    singletonAutoPass ? null : autoForwardAdvices();
+    if (!singletonAutoPass) {
+      autoForwardAdvices();
+    }
     List<Widget> registerPageList = [
       registerFirstStep(context),
       registerSecondStep(context)
