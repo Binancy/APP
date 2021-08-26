@@ -68,6 +68,8 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/svg/binancy_icon.svg
+    - assets/icons/binancy_icon.png
+    - assets/icons/binancy_signature.png
     - assets/svg/dashboard_add_income.svg
     - assets/svg/dashboard_add_expense.svg
     - assets/svg/dashboard_advices.svg
@@ -78,6 +80,7 @@ flutter:
     - assets/svg/dashboard_historial.svg
     - assets/svg/dashboard_pie_chart.svg
     - assets/lottie/loading_view_anim.json
+    - assets/svg/dashboard_vault.svg
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

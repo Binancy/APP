@@ -20,6 +20,8 @@ class _LoginViewState extends State<LoginView> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
+  FocusNode passwordFocusNode = FocusNode();
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -112,8 +114,14 @@ class _LoginViewState extends State<LoginView> {
           BinancyInfoDialog(context, exception.description,
               [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
         } else {
-          int statusResponse = connAPI.getStatus();
+          int? statusResponse = connAPI.getStatus();
           switch (statusResponse) {
+            case null:
+              BinancyException exception = connAPI.getException()!;
+              BinancyInfoDialog(context, exception.description, [
+                BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))
+              ]);
+              break;
             case 200:
               userData = response[0];
               Navigator.pushAndRemoveUntil(
@@ -121,7 +129,6 @@ class _LoginViewState extends State<LoginView> {
                   MaterialPageRoute(builder: (context) => LoadingView()),
                   (route) => false);
               break;
-            default:
           }
         }
       } else {
@@ -145,6 +152,8 @@ class _LoginViewState extends State<LoginView> {
           color: themeColor.withOpacity(0.1)),
       alignment: Alignment.center,
       child: TextField(
+        textInputAction: TextInputAction.next,
+        onSubmitted: (value) => passwordFocusNode.requestFocus(),
         keyboardType: TextInputType.emailAddress,
         controller: emailController,
         style: inputStyle(),
@@ -166,6 +175,7 @@ class _LoginViewState extends State<LoginView> {
           children: [
             Expanded(
               child: TextField(
+                focusNode: passwordFocusNode,
                 onSubmitted: (value) async => await makeLogin(),
                 controller: passwordController,
                 style: inputStyle(),

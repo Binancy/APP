@@ -4,7 +4,6 @@ import 'package:binancy/controllers/providers/subscriptions_change_notifier.dart
 import 'package:binancy/controllers/subscriptions_controller.dart';
 import 'package:binancy/utils/api/conn_api.dart';
 import 'package:binancy/utils/api/endpoints.dart';
-import 'package:binancy/utils/dialogs/info_dialog.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/widgets.dart';
 import 'package:binancy/views/dashboard/dashboard_view.dart';
@@ -15,6 +14,8 @@ import 'package:provider/provider.dart';
 import '../../globals.dart';
 
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({Key? key}) : super(key: key);
+
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
@@ -22,21 +23,36 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
-    startSplashScreen();
+    startSplashScreen(context);
     return BinancyBackground(Scaffold(
-      backgroundColor: Colors.transparent,
-      body: Center(
-        child: FlutterLogo(),
-      ),
-    ));
+        backgroundColor: Colors.transparent,
+        body: Stack(
+          children: [
+            Positioned(
+                child: Center(
+              child: BinancyIcon(),
+            )),
+            Positioned(
+                child: Container(
+              alignment: Alignment.bottomCenter,
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: Image.asset(
+                  "assets/icons/binancy_signature.png",
+                  scale: .5,
+                ),
+              ),
+            ))
+          ],
+        )));
   }
 
-  void startSplashScreen() async {
+  void startSplashScreen(BuildContext context) async {
     await Future.delayed(Duration(seconds: 3));
     if (await checkLoginWithToken()) {
-      gotoDashboard();
+      gotoDashboard(context);
     } else {
-      gotoLogin();
+      gotoLogin(context);
     }
   }
 
@@ -47,21 +63,15 @@ class _SplashScreenState extends State<SplashScreen> {
       ConnAPI connAPI = ConnAPI(
           APIEndpoints.LOGIN_WITH_TOKEN, "POST", false, {"token": token});
       await connAPI.callAPI();
-      dynamic response = connAPI.getResponse();
-      if (response is BinancyException) {
-        BinancyException exception = response;
-        BinancyInfoDialog(context, exception.description,
-            [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
-      } else {
-        userData = response[0];
+      if (connAPI.getStatus() == 200) {
+        userData = connAPI.getResponse()![0];
         return true;
       }
     }
-
     return false;
   }
 
-  void gotoDashboard() async {
+  void gotoDashboard(BuildContext context) async {
     MovementsChangeNotifier dashboardChangeNotifier = MovementsChangeNotifier();
     await dashboardChangeNotifier.updateMovements();
 
@@ -98,8 +108,30 @@ class _SplashScreenState extends State<SplashScreen> {
         (route) => false);
   }
 
-  void gotoLogin() {
+  void gotoLogin(BuildContext context) {
     Navigator.pushAndRemoveUntil(context,
         MaterialPageRoute(builder: (context) => LoginView()), (route) => false);
+  }
+}
+
+class BinancyIcon extends StatelessWidget {
+  const BinancyIcon({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+        width: MediaQuery.of(context).size.width,
+        child: Padding(
+            padding: EdgeInsets.all(customMargin),
+            child: Center(
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Image.asset(
+                  "assets/icons/binancy_icon.png",
+                ),
+              ],
+            ))));
   }
 }

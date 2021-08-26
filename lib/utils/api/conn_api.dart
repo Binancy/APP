@@ -25,7 +25,7 @@ class ConnAPI {
   }
 
   Future<void> callAPI() async {
-    hasConnection().timeout(timeout).then((value) async {
+    await hasConnection().timeout(timeout).then((value) async {
       if (value) {
         try {
           switch (method) {
@@ -108,20 +108,28 @@ class ConnAPI {
     return connectivityResult != ConnectivityResult.none;
   }
 
-  int getStatus() {
-    return response.statusCode;
+  int? getStatus() {
+    if (response.runtimeType == BinancyException) {
+      return null;
+    } else {
+      return response.statusCode;
+    }
   }
 
-  dynamic getResponse() {
-    print(response.runtimeType);
-    if (response.runtimeType == BinancyException) {
-      return response;
+  List<dynamic>? getResponse() {
+    if (response.runtimeType == BinancyException ||
+        response.statusCode != 200) {
+      return null;
     } else {
-      if (response.statusCode == 200) {
-        return List<dynamic>.from(jsonDecode(response.body)['data']);
-      } else {
-        return getStatus();
-      }
+      return List<dynamic>.from(jsonDecode(response.body)['data']);
+    }
+  }
+
+  BinancyException? getException() {
+    if (response.runtimeType != BinancyException) {
+      return null;
+    } else {
+      return response;
     }
   }
 }

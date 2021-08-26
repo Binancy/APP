@@ -219,7 +219,23 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
                               ],
                               child: SubscriptionsView(),
                             )))),
-            buildEmptyActionWidget(context),
+            ActionButtonWidget(
+                context: context,
+                icon: SvgPicture.asset("assets/svg/dashboard_vault.svg"),
+                text: "Planes de ahorro",
+                action: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => MultiProvider(
+                              providers: [
+                                ChangeNotifierProvider(
+                                  create: (_) =>
+                                      Provider.of<SubscriptionsChangeNotifier>(
+                                          context),
+                                )
+                              ],
+                              child: SubscriptionsView(),
+                            )))),
             buildEmptyActionWidget(context)
           ],
         ),
