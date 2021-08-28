@@ -3,6 +3,7 @@ import 'package:binancy/globals.dart';
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/widgets.dart';
 import 'package:binancy/views/advice/advice_card.dart';
+import 'package:binancy/views/savings_plan/savings_plan_empty_widget.dart';
 import 'package:binancy/views/savings_plan/savings_plan_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -49,30 +50,49 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
               Center(
                   child: Text("Tus metas de ahorro", style: titleCardStyle())),
               SpaceDivider(),
-              showAllSavingsPlan
-                  ? Expanded(child: buildSavingsPlansWidgetList(provider))
-                  : buildSavingsPlansWidgetList(provider),
-              provider.savingsPlanList.length <= savingsPlanMaxCount
+              provider.savingsPlanList.isEmpty
+                  ? buildEmptySavingsPlanWidget()
+                  : showAllSavingsPlan
+                      ? Expanded(child: buildSavingsPlansWidgetList(provider))
+                      : buildSavingsPlansWidgetList(provider),
+              provider.savingsPlanList.isEmpty
                   ? SizedBox()
-                  : SpaceDivider(),
-              provider.savingsPlanList.length <= savingsPlanMaxCount
+                  : provider.savingsPlanList.length <= savingsPlanMaxCount
+                      ? SizedBox()
+                      : SpaceDivider(),
+              provider.savingsPlanList.isEmpty
                   ? SizedBox()
-                  : Padding(
-                      padding: EdgeInsets.only(
-                          left: customMargin, right: customMargin),
-                      child: BinancyButton(
-                          context: context,
-                          text: showAllSavingsPlan
-                              ? "Ver menos"
-                              : "Ver todas tus metas de ahorro",
-                          action: () => setState(() {
-                                showAllSavingsPlan = !showAllSavingsPlan;
-                              })))
+                  : provider.savingsPlanList.length <= savingsPlanMaxCount
+                      ? SizedBox()
+                      : Padding(
+                          padding: EdgeInsets.only(
+                              left: customMargin, right: customMargin),
+                          child: BinancyButton(
+                              context: context,
+                              text: showAllSavingsPlan
+                                  ? "Ver menos"
+                                  : "Ver todas tus metas de ahorro",
+                              action: () => setState(() {
+                                    showAllSavingsPlan = !showAllSavingsPlan;
+                                  })))
             ],
           ),
         );
       }),
     ));
+  }
+
+  Container buildEmptySavingsPlanWidget() {
+    return Container(
+      margin: EdgeInsets.only(left: customMargin, right: customMargin),
+      padding: EdgeInsets.all(customMargin),
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.width,
+      child: SavingsPlanEmptyWidget(isExpanded: true),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(customBorderRadius),
+          color: themeColor.withOpacity(0.1)),
+    );
   }
 
   Container buildSavingsPlansWidgetList(SavingsPlanChangeNotifier provider) {
