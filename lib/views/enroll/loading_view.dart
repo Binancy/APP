@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:binancy/controllers/providers/categories_change_notifier.dart';
 import 'package:binancy/controllers/providers/movements_change_notifier.dart';
+import 'package:binancy/controllers/providers/savings_plans_change_notifier.dart';
 import 'package:binancy/controllers/providers/subscriptions_change_notifier.dart';
 import 'package:binancy/controllers/subscriptions_controller.dart';
 import 'package:binancy/utils/ui/styles.dart';
@@ -64,6 +65,10 @@ class LoadingView extends StatelessWidget {
         SubscriptionsChangeNotifier();
     await subscriptionsChangeNotifier.updateSubscriptions();
 
+    SavingsPlanChangeNotifier savingsPlanChangeNotifier =
+        SavingsPlanChangeNotifier();
+    await savingsPlanChangeNotifier.updateSavingsPlan();
+
     // Verifica si hay alguna suscripción por pagar, si es asi, añade el gasto a la
     // DB, actualiza el ultimo mes de cobro de la suscripción y avisa a MovementsChangeNotifier
     // que tiene que actualizarse de nuevo
@@ -84,7 +89,9 @@ class LoadingView extends StatelessWidget {
                       create: (context) => categoriesChangeNotifier),
                   ChangeNotifierProvider(
                     create: (context) => subscriptionsChangeNotifier,
-                  )
+                  ),
+                  ChangeNotifierProvider(
+                      create: (context) => savingsPlanChangeNotifier)
                 ], child: DashboardView())),
         (route) => false);
   }

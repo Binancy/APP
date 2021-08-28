@@ -81,6 +81,7 @@ flutter:
     - assets/svg/dashboard_pie_chart.svg
     - assets/lottie/loading_view_anim.json
     - assets/svg/dashboard_vault.svg
+    - assets/svg/dashboard_settings.svg
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

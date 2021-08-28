@@ -33,7 +33,7 @@ TextStyle dashboardActionButtonStyle() {
 TextStyle titleCardStyle() {
   return TextStyle(
       color: textColor,
-      fontSize: 25,
+      fontSize: 22,
       fontWeight: FontWeight.w600,
       fontFamily: "OpenSans");
 }
@@ -41,7 +41,7 @@ TextStyle titleCardStyle() {
 TextStyle accentTitleStyle() {
   return TextStyle(
       color: accentColor,
-      fontSize: 25,
+      fontSize: 22,
       fontWeight: FontWeight.bold,
       fontFamily: "OpenSans");
 }
@@ -62,6 +62,14 @@ TextStyle balanceValueStyle() {
       fontFamily: "Segoe UI");
 }
 
+TextStyle savingsPlanTitleStyle(bool accent) {
+  return TextStyle(
+      color: accent ? accentColor : textColor,
+      fontWeight: FontWeight.bold,
+      fontFamily: "OpenSans",
+      fontSize: 20);
+}
+
 TextStyle detailStyle() {
   return TextStyle(color: accentColor, fontSize: 15, fontFamily: "OpenSans");
 }
@@ -77,7 +85,7 @@ TextStyle settingsValueStyle() {
 TextStyle buttonStyle() {
   return TextStyle(
       color: accentColor,
-      fontSize: 25,
+      fontSize: 22,
       fontWeight: FontWeight.bold,
       fontFamily: "OpenSans");
 }

@@ -1,5 +1,6 @@
 import 'package:binancy/controllers/providers/categories_change_notifier.dart';
 import 'package:binancy/controllers/providers/movements_change_notifier.dart';
+import 'package:binancy/controllers/providers/savings_plans_change_notifier.dart';
 import 'package:binancy/controllers/providers/subscriptions_change_notifier.dart';
 import 'package:binancy/globals.dart';
 import 'package:binancy/utils/enums.dart';
@@ -7,6 +8,8 @@ import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/views/movements/movements_all_view.dart';
 import 'package:binancy/views/movements/movement_view.dart';
 import 'package:binancy/views/movements/movments_balance_view.dart';
+import 'package:binancy/views/savings_plan/savings_plan_view.dart';
+import 'package:binancy/views/settings/settings_view.dart';
 import 'package:binancy/views/subscriptions/subscriptions_all_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -185,9 +188,21 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
                     ))),
             ActionButtonWidget(
                 context: context,
-                icon: SvgPicture.asset("assets/svg/dashboard_advices.svg"),
-                text: "Añade un ingreso",
-                action: () {}),
+                icon: SvgPicture.asset("assets/svg/dashboard_vault.svg"),
+                text: "Metas de ahorro",
+                action: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => MultiProvider(
+                              providers: [
+                                ChangeNotifierProvider(
+                                  create: (_) =>
+                                      Provider.of<SavingsPlanChangeNotifier>(
+                                          context),
+                                )
+                              ],
+                              child: SavingsPlanView(),
+                            )))),
           ],
         )
       ],
@@ -221,22 +236,15 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
                             )))),
             ActionButtonWidget(
                 context: context,
-                icon: SvgPicture.asset("assets/svg/dashboard_vault.svg"),
-                text: "Planes de ahorro",
-                action: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (_) => MultiProvider(
-                              providers: [
-                                ChangeNotifierProvider(
-                                  create: (_) =>
-                                      Provider.of<SubscriptionsChangeNotifier>(
-                                          context),
-                                )
-                              ],
-                              child: SubscriptionsView(),
-                            )))),
-            buildEmptyActionWidget(context)
+                icon: SvgPicture.asset("assets/svg/dashboard_advices.svg"),
+                text: "Añade un ingreso",
+                action: () {}),
+            ActionButtonWidget(
+                context: context,
+                icon: SvgPicture.asset("assets/svg/dashboard_settings.svg"),
+                text: "Ajustes",
+                action: () => Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SettingsView()))),
           ],
         ),
         Row(

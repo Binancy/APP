@@ -2,11 +2,9 @@ import 'package:binancy/controllers/providers/subscriptions_change_notifier.dart
 import 'package:binancy/globals.dart';
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/widgets.dart';
-import 'package:binancy/views/dashboard/dashboard_action_button_widget.dart';
 import 'package:binancy/views/subscriptions/subscription_card_widget.dart';
 import 'package:binancy/views/subscriptions/subscription_empty_card_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 class SubscriptionsView extends StatelessWidget {
@@ -32,72 +30,76 @@ class SubscriptionsView extends StatelessWidget {
                 padding: EdgeInsets.all(customMargin),
                 child: Column(
                   children: [
-                    provider.subscriptionsList.length == 0
-                        ? SizedBox()
-                        : Container(
-                            height: 100,
-                            width: MediaQuery.of(context).size.width,
-                            padding: EdgeInsets.only(
-                                left: customMargin, right: customMargin),
-                            decoration: BoxDecoration(
-                                color: themeColor.withOpacity(0.1),
-                                borderRadius:
-                                    BorderRadius.circular(customBorderRadius)),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  provider.subscriptionsList.length.toString(),
-                                  style: TextStyle(
-                                      color: accentColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 65),
-                                ),
-                                SpaceDivider(isVertical: true),
-                                Expanded(
-                                    child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Suscripciones activas",
-                                      style: titleCardStyle(),
-                                    ),
-                                  ],
-                                ))
-                              ],
-                            ),
-                          ),
-                    provider.subscriptionsList.length == 0
-                        ? SizedBox()
-                        : SpaceDivider(),
                     Container(
+                      height: 100,
                       width: MediaQuery.of(context).size.width,
+                      padding: EdgeInsets.only(
+                          left: customMargin, right: customMargin),
                       decoration: BoxDecoration(
                           color: themeColor.withOpacity(0.1),
                           borderRadius:
                               BorderRadius.circular(customBorderRadius)),
-                      padding: EdgeInsets.all(customMargin),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text("Tu próxima subscripción a renovar:",
-                              style: accentStyle()),
                           Text(
-                              provider.getNextSubscriptionToPay() != null
-                                  ? provider.getNextSubscriptionToPay()!.name +
-                                      " - " +
-                                      provider
-                                          .getNextSubscriptionToPay()!
-                                          .getNextPayDay(context)
-                                  : "No tienes ninguna suscripción",
-                              style: titleCardStyle())
+                            provider.subscriptionsList.length.toString(),
+                            style: TextStyle(
+                                color: accentColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 65),
+                          ),
+                          SpaceDivider(isVertical: true),
+                          Expanded(
+                              child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                provider.subscriptionsList.length == 1
+                                    ? "Suscripción activa"
+                                    : "Suscripciones activas",
+                                style: titleCardStyle(),
+                              ),
+                            ],
+                          ))
                         ],
                       ),
                     ),
                     SpaceDivider(),
+                    provider.subscriptionsList.length != 0
+                        ? Container(
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                                color: themeColor.withOpacity(0.1),
+                                borderRadius:
+                                    BorderRadius.circular(customBorderRadius)),
+                            padding: EdgeInsets.all(customMargin),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text("Tu próxima subscripción a renovar:",
+                                    style: accentStyle()),
+                                Text(
+                                    provider.getNextSubscriptionToPay() != null
+                                        ? provider
+                                                .getNextSubscriptionToPay()!
+                                                .name +
+                                            " - " +
+                                            provider
+                                                .getNextSubscriptionToPay()!
+                                                .getNextPayDay(context)
+                                        : "No tienes ninguna suscripción",
+                                    style: titleCardStyle())
+                              ],
+                            ),
+                          )
+                        : SizedBox(),
+                    provider.subscriptionsList.length != 0
+                        ? SpaceDivider()
+                        : SizedBox(),
                     Container(
                       clipBehavior: Clip.antiAliasWithSaveLayer,
                       height: 65,
@@ -146,37 +148,6 @@ class SubscriptionsView extends StatelessWidget {
                                   itemCount:
                                       provider.subscriptionsList.length)),
                     )),
-                    SpaceDivider(),
-                    Container(
-                        height: 100,
-                        width: MediaQuery.of(context).size.width,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            ActionButtonWidget(
-                              context: context,
-                              action: () {},
-                              icon: SvgPicture.asset(
-                                  "assets/svg/dashboard_historial.svg"),
-                              text: "Añade una suscripción",
-                            ),
-                            ActionButtonWidget(
-                              context: context,
-                              action: () {},
-                              icon: SvgPicture.asset(
-                                  "assets/svg/dashboard_historial.svg"),
-                              text: "Añade una suscripción",
-                            ),
-                            ActionButtonWidget(
-                              context: context,
-                              action: () {},
-                              icon: SvgPicture.asset(
-                                  "assets/svg/dashboard_historial.svg"),
-                              text: "Añade una suscripción",
-                            )
-                          ],
-                        )),
                   ],
                 ),
               ),

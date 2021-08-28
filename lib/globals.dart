@@ -26,6 +26,8 @@ double subscriptionCardSize = 75;
 int dashboardMaxNotifications = 3;
 int summaryMaxDifference = 5;
 int latestMovementsMaxCount = 3;
+int savingsPlanMaxCount = 3;
+int dashboardSavingsPlanMaxCount = 2;
 
 // ERROR CODES
 class BinancyErrorCodes {

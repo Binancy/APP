@@ -20,11 +20,16 @@ class LinearDivider extends StatelessWidget {
 }
 
 class SpaceDivider extends StatelessWidget {
-  const SpaceDivider({Key? key, this.customSpace = 0, this.isVertical = false})
+  const SpaceDivider(
+      {Key? key,
+      this.customSpace = 0,
+      this.isVertical = false,
+      this.addDivider = false})
       : super(key: key);
 
   final double customSpace;
   final bool isVertical;
+  final bool addDivider;
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +44,7 @@ class SpaceDivider extends StatelessWidget {
               ? customSpace
               : customMargin
           : 0,
+      child: addDivider ? Center(child: LinearDivider()) : SizedBox(),
     );
   }
 }
