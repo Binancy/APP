@@ -15,6 +15,13 @@ class SavingsPlanView extends StatefulWidget {
 
 class _SavingsPlanViewState extends State<SavingsPlanView> {
   bool showAllSavingsPlan = false;
+  bool firstRun = true;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance!.addPostFrameCallback((_) => firstRun = false);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,18 +52,22 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
               showAllSavingsPlan
                   ? Expanded(child: buildSavingsPlansWidgetList(provider))
                   : buildSavingsPlansWidgetList(provider),
-              SpaceDivider(),
-              Padding(
-                  padding:
-                      EdgeInsets.only(left: customMargin, right: customMargin),
-                  child: BinancyButton(
-                      context: context,
-                      text: showAllSavingsPlan
-                          ? "Ver menos"
-                          : "Ver todas tus metas de ahorro",
-                      action: () => setState(() {
-                            showAllSavingsPlan = !showAllSavingsPlan;
-                          })))
+              provider.savingsPlanList.length <= savingsPlanMaxCount
+                  ? SizedBox()
+                  : SpaceDivider(),
+              provider.savingsPlanList.length <= savingsPlanMaxCount
+                  ? SizedBox()
+                  : Padding(
+                      padding: EdgeInsets.only(
+                          left: customMargin, right: customMargin),
+                      child: BinancyButton(
+                          context: context,
+                          text: showAllSavingsPlan
+                              ? "Ver menos"
+                              : "Ver todas tus metas de ahorro",
+                          action: () => setState(() {
+                                showAllSavingsPlan = !showAllSavingsPlan;
+                              })))
             ],
           ),
         );
@@ -77,7 +88,8 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
               clipBehavior: Clip.antiAliasWithSaveLayer,
               shrinkWrap: !showAllSavingsPlan,
               itemBuilder: (context, index) => SavingsPlanWidget(
-                  provider.savingsPlanList.elementAt(index), provider),
+                  provider.savingsPlanList.elementAt(index), provider,
+                  animate: firstRun),
               separatorBuilder: (context, index) => LinearDivider(),
               itemCount: showAllSavingsPlan
                   ? provider.savingsPlanList.length

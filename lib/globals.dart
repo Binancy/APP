@@ -22,6 +22,9 @@ double animLoadingSize = 200;
 double movementCardSize = 75;
 double subscriptionCardSize = 75;
 
+// ANIMATION INTERVALS AND DURATION
+int savingsPlanProgressMS = 750;
+
 // UI GLOBALS
 int dashboardMaxNotifications = 3;
 int summaryMaxDifference = 5;

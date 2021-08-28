@@ -6,13 +6,42 @@ import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/widgets.dart';
 import 'package:flutter/material.dart';
 
-class SavingsPlanWidget extends StatelessWidget {
+class SavingsPlanWidget extends StatefulWidget {
   final SavingsPlan savingsPlan;
   final SavingsPlanChangeNotifier savingsPlanChangeNotifier;
-  final bool rightPadding;
+  final bool animate;
 
   SavingsPlanWidget(this.savingsPlan, this.savingsPlanChangeNotifier,
-      {this.rightPadding = false});
+      {this.animate = true});
+
+  @override
+  _SavingsPlanWidgetState createState() => _SavingsPlanWidgetState();
+}
+
+class _SavingsPlanWidgetState extends State<SavingsPlanWidget>
+    with SingleTickerProviderStateMixin {
+  late AnimationController animationController;
+  late Tween<double> valueTween;
+  late Animation<double> curve;
+
+  @override
+  void initState() {
+    super.initState();
+    this.valueTween = Tween<double>(
+        begin: 0, end: widget.savingsPlan.amount / widget.savingsPlan.total);
+    this.animationController = AnimationController(
+        vsync: this, duration: Duration(milliseconds: savingsPlanProgressMS))
+      ..value = 0
+      ..forward();
+    this.curve = CurvedAnimation(
+        parent: this.animationController, curve: Curves.easeInOut);
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +64,7 @@ class SavingsPlanWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Expanded(
-                      child: Text(savingsPlan.name,
+                      child: Text(widget.savingsPlan.name,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: savingsPlanTitleStyle(false))),
@@ -44,15 +73,22 @@ class SavingsPlanWidget extends StatelessWidget {
                 ],
               ),
               SpaceDivider(customSpace: 10),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(360),
-                child: LinearProgressIndicator(
-                  backgroundColor: Colors.white.withOpacity(0.5),
-                  color: accentColor,
-                  value: savingsPlan.amount / savingsPlan.total,
-                  minHeight: 12.5,
-                ),
-              ),
+              AnimatedBuilder(
+                  animation: this.curve,
+                  builder: (context, child) => ClipRRect(
+                        borderRadius: BorderRadius.circular(360),
+                        child: LinearProgressIndicator(
+                          backgroundColor: Colors.white.withOpacity(0.5),
+                          color: accentColor,
+                          value: widget.animate
+                              ? this
+                                  .valueTween
+                                  .evaluate(this.animationController)
+                              : widget.savingsPlan.amount /
+                                  widget.savingsPlan.total,
+                          minHeight: 12.5,
+                        ),
+                      )),
               SpaceDivider(customSpace: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -60,9 +96,9 @@ class SavingsPlanWidget extends StatelessWidget {
                 children: [
                   Expanded(
                       child: Text(
-                          savingsPlan.amount.toString() +
+                          widget.savingsPlan.amount.toString() +
                               "€ de " +
-                              savingsPlan.total.toString() +
+                              widget.savingsPlan.total.toString() +
                               "€",
                           style: newMethod())),
                   SpaceDivider(isVertical: true),
@@ -85,22 +121,24 @@ class SavingsPlanWidget extends StatelessWidget {
   }
 
   String getPercentage() {
-    double percentage = ((savingsPlan.amount / savingsPlan.total) * 100);
+    double percentage =
+        ((widget.savingsPlan.amount / widget.savingsPlan.total) * 100);
     return percentage.toStringAsFixed(0) + "%";
   }
 
   String getDaysToLimitDate() {
-    if (savingsPlan.limitDate != null) {
-      if (Utils.isAtSameDay(savingsPlan.limitDate!, DateTime.now())) {
+    if (widget.savingsPlan.limitDate != null) {
+      if (Utils.isAtSameDay(widget.savingsPlan.limitDate!, DateTime.now())) {
         return "Hoy";
-      } else if (savingsPlan.limitDate!
+      } else if (widget.savingsPlan.limitDate!
               .difference(DateTime(DateTime.now().year, DateTime.now().month,
                   DateTime.now().day))
               .inDays ==
           1) {
         return "Mañana";
       } else {
-        int days = savingsPlan.limitDate!.difference(DateTime.now()).inDays;
+        int days =
+            widget.savingsPlan.limitDate!.difference(DateTime.now()).inDays;
         if (days.isNegative) {
           return "Hace " + days.toString() + " días";
         } else {
