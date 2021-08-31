@@ -10,8 +10,10 @@ class SavingsPlanWidget extends StatefulWidget {
   final SavingsPlan savingsPlan;
   final SavingsPlanChangeNotifier savingsPlanChangeNotifier;
   final bool animate;
+  final dynamic currentAmount;
 
-  SavingsPlanWidget(this.savingsPlan, this.savingsPlanChangeNotifier,
+  SavingsPlanWidget(
+      this.savingsPlan, this.savingsPlanChangeNotifier, this.currentAmount,
       {this.animate = true});
 
   @override
@@ -28,7 +30,7 @@ class _SavingsPlanWidgetState extends State<SavingsPlanWidget>
   void initState() {
     super.initState();
     this.valueTween = Tween<double>(
-        begin: 0, end: widget.savingsPlan.amount / widget.savingsPlan.total);
+        begin: 0, end: widget.currentAmount / widget.savingsPlan.amount);
     this.animationController = AnimationController(
         vsync: this, duration: Duration(milliseconds: savingsPlanProgressMS))
       ..value = 0
@@ -84,8 +86,8 @@ class _SavingsPlanWidgetState extends State<SavingsPlanWidget>
                               ? this
                                   .valueTween
                                   .evaluate(this.animationController)
-                              : widget.savingsPlan.amount /
-                                  widget.savingsPlan.total,
+                              : widget.currentAmount /
+                                  widget.savingsPlan.amount,
                           minHeight: 12.5,
                         ),
                       )),
@@ -96,11 +98,15 @@ class _SavingsPlanWidgetState extends State<SavingsPlanWidget>
                 children: [
                   Expanded(
                       child: Text(
-                          widget.savingsPlan.amount.toString() +
-                              "€ de " +
-                              widget.savingsPlan.total.toString() +
-                              "€",
-                          style: newMethod())),
+                    widget.currentAmount is int
+                        ? widget.currentAmount.toString()
+                        : (widget.currentAmount as double).toStringAsFixed(2) +
+                            "€ de " +
+                            widget.savingsPlan.amount.toString() +
+                            "€",
+                    style: newMethod(),
+                    overflow: TextOverflow.ellipsis,
+                  )),
                   SpaceDivider(isVertical: true),
                   Text(getDaysToLimitDate(), style: newMethod())
                 ],
@@ -122,8 +128,8 @@ class _SavingsPlanWidgetState extends State<SavingsPlanWidget>
 
   String getPercentage() {
     double percentage =
-        ((widget.savingsPlan.amount / widget.savingsPlan.total) * 100);
-    return percentage.toStringAsFixed(0) + "%";
+        ((widget.currentAmount / widget.savingsPlan.amount) * 100);
+    return percentage >= 100 ? "100%" : percentage.toStringAsFixed(0) + "%";
   }
 
   String getDaysToLimitDate() {
@@ -140,7 +146,9 @@ class _SavingsPlanWidgetState extends State<SavingsPlanWidget>
         int days =
             widget.savingsPlan.limitDate!.difference(DateTime.now()).inDays;
         if (days.isNegative) {
-          return "Hace " + days.toString() + " días";
+          return "Finalizó hace " +
+              days.toString().replaceAll("-", "") +
+              " días";
         } else {
           return days.toString() + " días restatntes";
         }

@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:binancy/globals.dart';
 import 'package:binancy/views/advice/advice_card.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
@@ -114,6 +115,27 @@ class Utils {
     }
 
     return true;
+  }
+
+  static DateTime getTodayDate() {
+    DateTime today = DateTime.now();
+    return DateTime(today.year, today.month, today.day);
+  }
+
+  static DateTime getUserPayDay() {
+    DateTime today = DateTime.now();
+    return DateTime(today.year, today.month, userPayDay ?? 1);
+  }
+
+  static DateTime getLatestMonthPayDay() {
+    DateTime today = DateTime.now();
+    return DateTime(today.month == 1 ? today.year - 1 : today.year,
+        today.month == 1 ? 12 : today.month - 1, userPayDay ?? 1);
+  }
+
+  static String getMonthOfDate(DateTime date, BuildContext context) {
+    return DateFormat.MMMM(Localizations.localeOf(context).toLanguageTag())
+        .format(date);
   }
 
   static bool isAtSameDay(DateTime date1, DateTime date2) {

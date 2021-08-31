@@ -8,7 +8,7 @@ import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/views/movements/movements_all_view.dart';
 import 'package:binancy/views/movements/movement_view.dart';
 import 'package:binancy/views/movements/movments_balance_view.dart';
-import 'package:binancy/views/savings_plan/savings_plan_view.dart';
+import 'package:binancy/views/savings_plan/savings_plans_all_view.dart';
 import 'package:binancy/views/settings/settings_view.dart';
 import 'package:binancy/views/subscriptions/subscriptions_all_view.dart';
 import 'package:flutter/material.dart';
@@ -199,9 +199,14 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
                                   create: (_) =>
                                       Provider.of<SavingsPlanChangeNotifier>(
                                           context),
+                                ),
+                                ChangeNotifierProvider(
+                                  create: (_) =>
+                                      Provider.of<MovementsChangeNotifier>(
+                                          context),
                                 )
                               ],
-                              child: SavingsPlanView(),
+                              child: SavingsPlanAllView(),
                             )))),
           ],
         )

@@ -17,7 +17,7 @@ TextStyle dashboardHeaderItemActionStyle() {
 TextStyle appBarStyle() {
   return TextStyle(
       color: Colors.white,
-      fontSize: 25,
+      fontSize: 20,
       fontFamily: "OpenSans",
       fontWeight: FontWeight.bold);
 }

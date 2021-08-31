@@ -74,7 +74,7 @@ class DashboardSummaryCard extends StatelessWidget {
                               left: MediaQuery.of(context).size.width / 5,
                               right: MediaQuery.of(context).size.width / 5),
                           child: Text(
-                            'En Julio has ingresado ' +
+                            'Este mes has ingresado ' +
                                 Utils.roundDown(
                                         provider.getThisMonthIncomes(), 0)
                                     .toStringAsFixed(0) +

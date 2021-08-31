@@ -6,7 +6,7 @@ class Subscription {
   int idSubscription = 0;
   int idUser = 0;
   String name = "";
-  String description = "";
+  String? description;
   dynamic value = 0;
   int payDay = 0;
   Month latestMonth = Month.NONE;

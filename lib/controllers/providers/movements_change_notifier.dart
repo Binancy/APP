@@ -3,6 +3,7 @@ import 'package:binancy/models/expend.dart';
 import 'package:binancy/models/income.dart';
 import 'package:binancy/utils/api/conn_api.dart';
 import 'package:binancy/utils/api/endpoints.dart';
+import 'package:binancy/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 class MovementsChangeNotifier extends ChangeNotifier {
@@ -40,11 +41,18 @@ class MovementsChangeNotifier extends ChangeNotifier {
     double thisMonthIncomes = 0;
     incomeList.forEach((element) {
       if (userPayDay != null) {
-        if (element.date.isAfter(DateTime(DateTime.now().year,
-                DateTime.now().month - 1, userPayDay ?? 1)) ||
-            element.date.year == DateTime.now().year &&
-                element.date.month == DateTime.now().month &&
-                element.date.day == userPayDay) {
+        if (Utils.isAtSameDay(Utils.getTodayDate(), Utils.getUserPayDay())) {
+          if (element.date.isAfter(Utils.getUserPayDay()) &&
+              element.date.month == Utils.getTodayDate().month) {
+            thisMonthIncomes += element.value;
+          }
+        } else if (Utils.getTodayDate().isAfter(Utils.getUserPayDay())) {
+          if (element.date.isAfter(Utils.getUserPayDay()) &&
+              element.date.month == Utils.getTodayDate().month) {
+            thisMonthIncomes += element.value;
+          }
+        } else if (element.date.isAfter(Utils.getLatestMonthPayDay()) &&
+            element.date.isBefore(Utils.getUserPayDay())) {
           thisMonthIncomes += element.value;
         }
       } else {
@@ -65,11 +73,18 @@ class MovementsChangeNotifier extends ChangeNotifier {
     double thisMonthExpenses = 0;
     expendList.forEach((element) {
       if (userPayDay != null) {
-        if (element.date.isAfter(DateTime(DateTime.now().year,
-                DateTime.now().month - 1, userPayDay ?? 1)) ||
-            element.date.year == DateTime.now().year &&
-                element.date.month == DateTime.now().month &&
-                element.date.day == userPayDay) {
+        if (Utils.isAtSameDay(Utils.getTodayDate(), Utils.getUserPayDay())) {
+          if (element.date.isAfter(Utils.getUserPayDay()) &&
+              element.date.month == Utils.getTodayDate().month) {
+            thisMonthExpenses += element.value;
+          }
+        } else if (Utils.getTodayDate().isAfter(Utils.getUserPayDay())) {
+          if (element.date.isAfter(Utils.getUserPayDay()) &&
+              element.date.month == Utils.getTodayDate().month) {
+            thisMonthExpenses += element.value;
+          }
+        } else if (element.date.isAfter(Utils.getLatestMonthPayDay()) &&
+            element.date.isBefore(Utils.getUserPayDay())) {
           thisMonthExpenses += element.value;
         }
       } else {

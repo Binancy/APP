@@ -1,121 +1,228 @@
-import 'package:binancy/controllers/providers/savings_plans_change_notifier.dart';
 import 'package:binancy/globals.dart';
+import 'package:binancy/models/savings_plan.dart';
+import 'package:binancy/utils/ui/icons.dart';
 import 'package:binancy/utils/ui/styles.dart';
+import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/widgets.dart';
-import 'package:binancy/views/advice/advice_card.dart';
-import 'package:binancy/views/savings_plan/savings_plan_empty_widget.dart';
-import 'package:binancy/views/savings_plan/savings_plan_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 class SavingsPlanView extends StatefulWidget {
+  final SavingsPlan? selectedSavingsPlan;
+  final bool allowEdit;
+
+  SavingsPlanView({this.allowEdit = false, this.selectedSavingsPlan});
+
   @override
-  _SavingsPlanViewState createState() => _SavingsPlanViewState();
+  _SavingsPlanViewState createState() =>
+      _SavingsPlanViewState(selectedSavingsPlan, allowEdit);
 }
 
 class _SavingsPlanViewState extends State<SavingsPlanView> {
-  bool showAllSavingsPlan = false;
-  bool firstRun = true;
+  SavingsPlan? selectedSavingsPlan;
+  bool allowEdit = false, createMode = false;
+  String parsedDate = "Fecha límite";
 
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((_) => firstRun = false);
-  }
+  TextEditingController nameController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+  TextEditingController totalAmountController = TextEditingController();
+
+  _SavingsPlanViewState(this.selectedSavingsPlan, this.allowEdit);
 
   @override
   Widget build(BuildContext context) {
+    checkSavingsPlan();
     return BinancyBackground(Scaffold(
       backgroundColor: Colors.transparent,
       appBar: AppBar(
-          elevation: 0,
-          centerTitle: true,
-          brightness: Brightness.dark,
-          backgroundColor: Colors.transparent,
-          actions: [IconButton(onPressed: () {}, icon: Icon(Icons.add))],
-          title: Text("Metas de ahorro", style: appBarStyle())),
-      body: Consumer<SavingsPlanChangeNotifier>(
-          builder: (context, provider, child) {
-        print(provider.savingsPlanList.length);
-        return Container(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        brightness: Brightness.dark,
+        actions: [
+          createMode
+              ? SizedBox()
+              : IconButton(
+                  onPressed: () {}, icon: Icon(Icons.more_horiz_rounded))
+        ],
+      ),
+      body: Container(
           child: Column(
-            children: [
-              SpaceDivider(),
-              AdviceCard(
-                  icon: SvgPicture.asset("assets/svg/dashboard_vault.svg"),
-                  text:
-                      "Establece metas de ahorro para cumplir en un tiempo determinado"),
-              SpaceDivider(),
-              Center(
-                  child: Text("Tus metas de ahorro", style: titleCardStyle())),
-              SpaceDivider(),
-              provider.savingsPlanList.isEmpty
-                  ? buildEmptySavingsPlanWidget()
-                  : showAllSavingsPlan
-                      ? Expanded(child: buildSavingsPlansWidgetList(provider))
-                      : buildSavingsPlansWidgetList(provider),
-              provider.savingsPlanList.isEmpty
-                  ? SizedBox()
-                  : provider.savingsPlanList.length <= savingsPlanMaxCount
-                      ? SizedBox()
-                      : SpaceDivider(),
-              provider.savingsPlanList.isEmpty
-                  ? SizedBox()
-                  : provider.savingsPlanList.length <= savingsPlanMaxCount
-                      ? SizedBox()
-                      : Padding(
-                          padding: EdgeInsets.only(
-                              left: customMargin, right: customMargin),
-                          child: BinancyButton(
-                              context: context,
-                              text: showAllSavingsPlan
-                                  ? "Ver menos"
-                                  : "Ver todas tus metas de ahorro",
-                              action: () => setState(() {
-                                    showAllSavingsPlan = !showAllSavingsPlan;
-                                  })))
-            ],
-          ),
-        );
-      }),
+        children: [
+          Expanded(
+              child: ScrollConfiguration(
+                  behavior: MyBehavior(),
+                  child: ListView(
+                    children: [
+                      Container(
+                          height: 175,
+                          alignment: Alignment.center,
+                          child: Text(
+                              createMode
+                                  ? "Añade una meta de ingresos"
+                                  : selectedSavingsPlan!.name,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: "OpenSans",
+                                  color: textColor,
+                                  fontSize: 30),
+                              textAlign: TextAlign.center)),
+                      nameInputWidget(),
+                      SpaceDivider(),
+                      amountInputWidget(),
+                      SpaceDivider(),
+                      datePicker(context),
+                      SpaceDivider(),
+                      descriptionInputWidget(),
+                    ],
+                  ))),
+          allowEdit ? SpaceDivider() : SizedBox(),
+          allowEdit
+              ? Padding(
+                  padding:
+                      EdgeInsets.only(left: customMargin, right: customMargin),
+                  child: BinancyButton(
+                      context: context,
+                      text: createMode
+                          ? "Añadir meta de ahorro"
+                          : "Actualizar meta de ahorro",
+                      action: () {}),
+                )
+              : SizedBox(),
+          SpaceDivider(),
+        ],
+      )),
     ));
   }
 
-  Container buildEmptySavingsPlanWidget() {
+  Widget nameInputWidget() {
     return Container(
       margin: EdgeInsets.only(left: customMargin, right: customMargin),
-      padding: EdgeInsets.all(customMargin),
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.width,
-      child: SavingsPlanEmptyWidget(isExpanded: true),
+      height: buttonHeight,
+      padding: EdgeInsets.only(left: customMargin, right: customMargin),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(customBorderRadius),
           color: themeColor.withOpacity(0.1)),
+      alignment: Alignment.center,
+      child: TextField(
+        textCapitalization: TextCapitalization.sentences,
+        textInputAction: TextInputAction.next,
+        readOnly: !allowEdit,
+        keyboardType: TextInputType.name,
+        controller: nameController,
+        style: inputStyle(),
+        decoration:
+            customInputDecoration("Título de la meta", BinancyIcons.email),
+      ),
     );
   }
 
-  Container buildSavingsPlansWidgetList(SavingsPlanChangeNotifier provider) {
+  Widget amountInputWidget() {
     return Container(
-      clipBehavior: Clip.antiAliasWithSaveLayer,
+      margin: EdgeInsets.only(left: customMargin, right: customMargin),
+      height: buttonHeight,
+      padding: EdgeInsets.only(left: customMargin, right: customMargin),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(customBorderRadius),
+          color: themeColor.withOpacity(0.1)),
+      alignment: Alignment.center,
+      child: TextField(
+        inputFormatters: [DecimalTextInputFormatter(decimalRange: 2)],
+        textInputAction: TextInputAction.next,
+        readOnly: !allowEdit,
+        keyboardType: TextInputType.number,
+        controller: totalAmountController,
+        style: inputStyle(),
+        decoration:
+            customInputDecoration("Cantidad a ahorrar", BinancyIcons.calendar),
+      ),
+    );
+  }
+
+  Container descriptionInputWidget() {
+    return Container(
+      height: 200,
       margin: EdgeInsets.only(left: customMargin, right: customMargin),
       decoration: BoxDecoration(
           color: themeColor.withOpacity(0.1),
           borderRadius: BorderRadius.circular(customBorderRadius)),
-      child: ScrollConfiguration(
-          behavior: MyBehavior(),
-          child: ListView.separated(
-              clipBehavior: Clip.antiAliasWithSaveLayer,
-              shrinkWrap: !showAllSavingsPlan,
-              itemBuilder: (context, index) => SavingsPlanWidget(
-                  provider.savingsPlanList.elementAt(index), provider,
-                  animate: firstRun),
-              separatorBuilder: (context, index) => LinearDivider(),
-              itemCount: showAllSavingsPlan
-                  ? provider.savingsPlanList.length
-                  : provider.savingsPlanList.length > savingsPlanMaxCount
-                      ? savingsPlanMaxCount
-                      : provider.savingsPlanList.length)),
+      padding: EdgeInsets.all(customMargin),
+      child: TextField(
+        textCapitalization: TextCapitalization.sentences,
+        controller: descriptionController,
+        readOnly: !allowEdit,
+        expands: true,
+        decoration: InputDecoration(
+            border: InputBorder.none,
+            focusedBorder: InputBorder.none,
+            enabledBorder: InputBorder.none,
+            errorBorder: InputBorder.none,
+            disabledBorder: InputBorder.none,
+            counterStyle: detailStyle(),
+            hintText: "Añade una descripción a esta meta",
+            hintStyle: inputStyle()),
+        style: inputStyle(),
+        maxLength: 300,
+        keyboardType: TextInputType.multiline,
+        maxLines: null,
+        minLines: null,
+      ),
     );
+  }
+
+  Widget datePicker(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(left: customMargin, right: customMargin),
+      child: Material(
+        color: themeColor.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(customBorderRadius),
+        child: InkWell(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+            if (allowEdit) {
+              showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(1970),
+                      lastDate: DateTime(DateTime.now().year + 1))
+                  .then((value) {
+                setState(() {
+                  parsedDate = DateFormat.yMd(
+                          Localizations.localeOf(context).toLanguageTag())
+                      .format(value!);
+                });
+              });
+            }
+          },
+          borderRadius: BorderRadius.circular(customBorderRadius),
+          highlightColor: Colors.transparent,
+          splashColor: themeColor.withOpacity(0.1),
+          child: Container(
+              height: buttonHeight,
+              padding: EdgeInsets.only(left: customMargin, right: customMargin),
+              child: Row(
+                children: [
+                  Icon(
+                    BinancyIcons.calendar,
+                    color: accentColor,
+                    size: 36,
+                  ),
+                  SpaceDivider(
+                    isVertical: true,
+                  ),
+                  Text(parsedDate, style: inputStyle())
+                ],
+              )),
+        ),
+      ),
+    );
+  }
+
+  void checkSavingsPlan() {
+    if (selectedSavingsPlan != null) {
+      createMode = false;
+    } else {
+      createMode = true;
+      allowEdit = true;
+    }
   }
 }

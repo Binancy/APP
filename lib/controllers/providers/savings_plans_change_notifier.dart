@@ -12,6 +12,11 @@ class SavingsPlanChangeNotifier extends ChangeNotifier {
   Future<void> updateSavingsPlan() async {
     savingsPlanList =
         await SavingsPlansController.getSavingsPlans(userData['idUser']);
+    savingsPlanList.sort((a, b) => a.limitDate == null
+        ? 1
+        : b.limitDate == null
+            ? -1
+            : a.limitDate!.compareTo(b.limitDate!));
     notifyListeners();
   }
 }

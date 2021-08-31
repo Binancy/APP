@@ -4,9 +4,8 @@ class SavingsPlan {
   int idSavingsPlan = 0;
   int idUser = 0;
   String name = "";
-  String description = "";
+  String? description;
   dynamic amount = 0;
-  dynamic total = 0;
   DateTime? limitDate;
 
   SavingsPlan();
@@ -17,8 +16,9 @@ class SavingsPlan {
         name = json['name'],
         description = json['description'],
         amount = json['amount'],
-        total = json['total'],
-        limitDate = Utils.fromISOStandard(json['limitDate']);
+        limitDate = json['limitDate'] == null
+            ? null
+            : Utils.fromISOStandard(json['limitDate']);
 
   Map<String, dynamic> toJson() => {
         'idSavingsPlan': idSavingsPlan,
@@ -26,7 +26,6 @@ class SavingsPlan {
         'name': name,
         'description': description,
         'amount': amount,
-        'total': total,
         'limitDate': Utils.toISOStandard(limitDate ?? DateTime.now())
       };
 }

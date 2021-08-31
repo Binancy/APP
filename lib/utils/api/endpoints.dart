@@ -24,4 +24,10 @@ class APIEndpoints {
   static const String READ_SUBSCRIPTIONS = "/api/subscriptions/read";
   static const String UPDATE_SUBSCRIPTION = "/api/subscriptions/update";
   static const String DELETE_SUBSCRIPTION = "/api/subscriptions/delete";
+
+  // SAVINGS PLANS
+  static const String CREATE_SAVINGS_PLAN = "/api/savingsPlans/create";
+  static const String READ_SAVINGS_PLAN = "/api/savingsPlans/read";
+  static const String UPDATE_SAVINGS_PLAN = "/api/savingsPlans/update";
+  static const String DELETE_SAVINGS_PLAN = "/api/savingsPlans/delete";
 }
