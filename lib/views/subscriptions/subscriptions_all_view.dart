@@ -13,6 +13,7 @@ class SubscriptionsView extends StatelessWidget {
     return BinancyBackground(Consumer<SubscriptionsChangeNotifier>(
         builder: (context, provider, child) => Scaffold(
               backgroundColor: Colors.transparent,
+              resizeToAvoidBottomInset: false,
               appBar: AppBar(
                 elevation: 0,
                 brightness: Brightness.dark,

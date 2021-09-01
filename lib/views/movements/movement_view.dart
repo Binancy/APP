@@ -77,11 +77,11 @@ class _MovementViewState extends State<MovementView> {
                 ],
                 leading: !allowEdit
                     ? IconButton(
-                        icon: Icon(Icons.arrow_back_ios_rounded),
+                        icon: Icon(Icons.arrow_back),
                         onPressed: () => Navigator.pop(context))
                     : createMode
                         ? IconButton(
-                            icon: Icon(Icons.arrow_back_ios_rounded),
+                            icon: Icon(Icons.arrow_back),
                             onPressed: () => BinancyInfoDialog(context,
                                     "¿Estas seguro que quieres salir?", [
                                   BinancyInfoDialogItem(
@@ -449,9 +449,9 @@ class _MovementViewState extends State<MovementView> {
           if (value)
             {
               BinancyInfoDialog(context, "Ingreso añadido correctamente!", [
-                BinancyInfoDialogItem("Aceptar", () {
-                  movementsProvider.updateMovements();
-                  gotoDashboard();
+                BinancyInfoDialogItem("Aceptar", () async {
+                  await movementsProvider.updateMovements();
+                  leaveScreen();
                 })
               ])
             }
@@ -467,8 +467,6 @@ class _MovementViewState extends State<MovementView> {
   }
 
   Future<void> updateIncome(MovementsChangeNotifier movementsProvider) async {
-    print(selectedMovement.idIncome);
-
     Income income = Income()
       ..title = titleController.text
       ..value = double.parse(valueController.text)
@@ -482,8 +480,8 @@ class _MovementViewState extends State<MovementView> {
           if (value)
             {
               BinancyInfoDialog(context, "Ingreso actualizado correctamente!", [
-                BinancyInfoDialogItem("Aceptar", () {
-                  movementsProvider.updateMovements();
+                BinancyInfoDialogItem("Aceptar", () async {
+                  await movementsProvider.updateMovements();
                   setState(() {
                     selectedMovement = income;
                     allowEdit = false;
@@ -516,9 +514,9 @@ class _MovementViewState extends State<MovementView> {
           if (value)
             {
               BinancyInfoDialog(context, "Gasto añadido correctamente!", [
-                BinancyInfoDialogItem("Aceptar", () {
-                  movementsProvider.updateMovements();
-                  gotoDashboard();
+                BinancyInfoDialogItem("Aceptar", () async {
+                  await movementsProvider.updateMovements();
+                  leaveScreen();
                 })
               ])
             }
@@ -549,8 +547,8 @@ class _MovementViewState extends State<MovementView> {
           if (value)
             {
               BinancyInfoDialog(context, "Ingreso actualizado correctamente!", [
-                BinancyInfoDialogItem("Aceptar", () {
-                  movementsProvider.updateMovements();
+                BinancyInfoDialogItem("Aceptar", () async {
+                  await movementsProvider.updateMovements();
                   setState(() {
                     allowEdit = false;
                     selectedMovement = expend;
@@ -587,7 +585,7 @@ class _MovementViewState extends State<MovementView> {
     }
   }
 
-  void gotoDashboard() {
+  void leaveScreen() {
     Navigator.pop(context);
     Navigator.pop(context);
   }

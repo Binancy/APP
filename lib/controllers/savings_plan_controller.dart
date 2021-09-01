@@ -19,27 +19,6 @@ class SavingsPlansController {
       print("[ERROR] - Error al obtener los savings plans");
     }
 
-    /* savingsPlanList.add(SavingsPlan()
-      ..amount = 30000
-      ..description = "This is an example savigns plan"
-      ..idUser = idUser
-      ..limitDate = DateTime(2021, 12, 10)
-      ..name = "Example Savings Plan");
-
-    savingsPlanList.add(SavingsPlan()
-      ..amount = 30000
-      ..description = "This is an example savigns plan"
-      ..idUser = idUser
-      ..limitDate = DateTime(2022, 01, 01)
-      ..name = "Example Savings Plan");
-
-    savingsPlanList.add(SavingsPlan()
-      ..amount = 30000
-      ..description = "This is an example savigns plan"
-      ..idUser = idUser
-      ..limitDate = DateTime(2021, 01, 01)
-      ..name = "Example Savings Plan"); */
-
     return savingsPlanList;
   }
 

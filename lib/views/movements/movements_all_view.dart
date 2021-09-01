@@ -53,6 +53,7 @@ class _AllMovementViewState extends State<AllMovementView>
     return BinancyBackground(Consumer<MovementsChangeNotifier>(
         builder: (context, movementsProvider, child) => WillPopScope(
               child: Scaffold(
+                resizeToAvoidBottomInset: false,
                 backgroundColor: Colors.transparent,
                 appBar: AppBar(
                   brightness: Brightness.dark,

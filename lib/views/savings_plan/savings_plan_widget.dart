@@ -1,10 +1,15 @@
 import 'package:binancy/controllers/providers/savings_plans_change_notifier.dart';
+import 'package:binancy/controllers/savings_plan_controller.dart';
 import 'package:binancy/globals.dart';
 import 'package:binancy/models/savings_plan.dart';
+import 'package:binancy/utils/dialogs/info_dialog.dart';
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/widgets.dart';
+import 'package:binancy/views/savings_plan/savings_plan_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:provider/provider.dart';
 
 class SavingsPlanWidget extends StatefulWidget {
   final SavingsPlan savingsPlan;
@@ -47,75 +52,144 @@ class _SavingsPlanWidgetState extends State<SavingsPlanWidget>
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: () {},
-        highlightColor: Colors.transparent,
-        splashColor: themeColor.withOpacity(0.1),
-        child: Container(
-          padding: EdgeInsets.all(customMargin),
-          width: MediaQuery.of(context).size.width,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Expanded(
-                      child: Text(widget.savingsPlan.name,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: savingsPlanTitleStyle(false))),
-                  SpaceDivider(isVertical: true),
-                  Text(getPercentage(), style: newMethod())
-                ],
-              ),
-              SpaceDivider(customSpace: 10),
-              AnimatedBuilder(
-                  animation: this.curve,
-                  builder: (context, child) => ClipRRect(
-                        borderRadius: BorderRadius.circular(360),
-                        child: LinearProgressIndicator(
-                          backgroundColor: Colors.white.withOpacity(0.5),
-                          color: accentColor,
-                          value: widget.animate
-                              ? this
-                                  .valueTween
-                                  .evaluate(this.animationController)
-                              : widget.currentAmount /
-                                  widget.savingsPlan.amount,
-                          minHeight: 12.5,
-                        ),
-                      )),
-              SpaceDivider(customSpace: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(
-                      child: Text(
-                    widget.currentAmount is int
-                        ? widget.currentAmount.toString()
-                        : (widget.currentAmount as double).toStringAsFixed(2) +
-                            "€ de " +
-                            widget.savingsPlan.amount.toString() +
-                            "€",
-                    style: newMethod(),
-                    overflow: TextOverflow.ellipsis,
-                  )),
-                  SpaceDivider(isVertical: true),
-                  Text(getDaysToLimitDate(), style: newMethod())
-                ],
-              )
-            ],
+    return Slidable(
+      child: Material(
+        color: Colors.transparent,
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => MultiProvider(
+                  providers: [
+                    ChangeNotifierProvider(
+                      create: (_) =>
+                          Provider.of<SavingsPlanChangeNotifier>(context),
+                    )
+                  ],
+                  child: SavingsPlanView(
+                      allowEdit: false,
+                      selectedSavingsPlan: widget.savingsPlan),
+                ),
+              )),
+          highlightColor: Colors.transparent,
+          splashColor: themeColor.withOpacity(0.1),
+          child: Container(
+            padding: EdgeInsets.all(customMargin),
+            width: MediaQuery.of(context).size.width,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Expanded(
+                        child: Text(widget.savingsPlan.name,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: savingsPlanTitleStyle(false))),
+                    SpaceDivider(isVertical: true),
+                    Text(getPercentage(), style: newMethod())
+                  ],
+                ),
+                SpaceDivider(customSpace: 10),
+                AnimatedBuilder(
+                    animation: this.curve,
+                    builder: (context, child) => ClipRRect(
+                          borderRadius: BorderRadius.circular(360),
+                          child: LinearProgressIndicator(
+                            backgroundColor: Colors.white.withOpacity(0.5),
+                            color: accentColor,
+                            value: widget.animate
+                                ? this
+                                    .valueTween
+                                    .evaluate(this.animationController)
+                                : widget.currentAmount /
+                                    widget.savingsPlan.amount,
+                            minHeight: 12.5,
+                          ),
+                        )),
+                SpaceDivider(customSpace: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Expanded(
+                        child: Text(
+                      widget.currentAmount is int
+                          ? widget.currentAmount.toString()
+                          : (widget.currentAmount as double)
+                                  .toStringAsFixed(2) +
+                              "€ de " +
+                              widget.savingsPlan.amount.toString() +
+                              "€",
+                      style: newMethod(),
+                      overflow: TextOverflow.ellipsis,
+                    )),
+                    SpaceDivider(isVertical: true),
+                    Text(getDaysToLimitDate(), style: newMethod())
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),
+      actionPane: SlidableDrawerActionPane(),
+      actionExtentRatio: 0.2,
+      actions: savingsPlansActions(),
+      secondaryActions: savingsPlansActions(),
     );
+  }
+
+  List<Widget> savingsPlansActions() {
+    return [
+      IconSlideAction(
+        caption: "Eliminar",
+        foregroundColor: accentColor,
+        color: Colors.transparent,
+        icon: Icons.delete,
+        onTap: () async =>
+            await SavingsPlansController.deleteSavingsPlan(widget.savingsPlan)
+                .then((value) async {
+          if (value) {
+            await widget.savingsPlanChangeNotifier.updateSavingsPlan();
+            BinancyInfoDialog(
+                context, "Meta de ahorros eliminada correctamente", [
+              BinancyInfoDialogItem("Aceptar", () {
+                Navigator.pop(context);
+              })
+            ]);
+          } else {
+            BinancyInfoDialog(context, "Error al eliminar la meta de ahorros", [
+              BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))
+            ]);
+          }
+        }),
+      ),
+      IconSlideAction(
+        caption: "Editar",
+        icon: Icons.edit,
+        foregroundColor: accentColor,
+        color: Colors.transparent,
+        onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => MultiProvider(
+                providers: [
+                  ChangeNotifierProvider(
+                    create: (_) =>
+                        Provider.of<SavingsPlanChangeNotifier>(context),
+                  )
+                ],
+                child: SavingsPlanView(
+                    allowEdit: true, selectedSavingsPlan: widget.savingsPlan),
+              ),
+            )),
+      )
+    ];
   }
 
   TextStyle newMethod() {

@@ -1,11 +1,15 @@
+import 'package:binancy/controllers/providers/savings_plans_change_notifier.dart';
+import 'package:binancy/controllers/savings_plan_controller.dart';
 import 'package:binancy/globals.dart';
 import 'package:binancy/models/savings_plan.dart';
+import 'package:binancy/utils/dialogs/info_dialog.dart';
 import 'package:binancy/utils/ui/icons.dart';
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class SavingsPlanView extends StatefulWidget {
   final SavingsPlan? selectedSavingsPlan;
@@ -32,66 +36,105 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
   @override
   Widget build(BuildContext context) {
     checkSavingsPlan();
-    return BinancyBackground(Scaffold(
-      backgroundColor: Colors.transparent,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        brightness: Brightness.dark,
-        actions: [
-          createMode
-              ? SizedBox()
-              : IconButton(
-                  onPressed: () {}, icon: Icon(Icons.more_horiz_rounded))
-        ],
-      ),
-      body: Container(
-          child: Column(
-        children: [
-          Expanded(
-              child: ScrollConfiguration(
-                  behavior: MyBehavior(),
-                  child: ListView(
-                    children: [
-                      Container(
-                          height: 175,
-                          alignment: Alignment.center,
-                          child: Text(
-                              createMode
-                                  ? "Añade una meta de ingresos"
-                                  : selectedSavingsPlan!.name,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: "OpenSans",
-                                  color: textColor,
-                                  fontSize: 30),
-                              textAlign: TextAlign.center)),
-                      nameInputWidget(),
-                      SpaceDivider(),
-                      amountInputWidget(),
-                      SpaceDivider(),
-                      datePicker(context),
-                      SpaceDivider(),
-                      descriptionInputWidget(),
-                    ],
-                  ))),
-          allowEdit ? SpaceDivider() : SizedBox(),
-          allowEdit
-              ? Padding(
-                  padding:
-                      EdgeInsets.only(left: customMargin, right: customMargin),
-                  child: BinancyButton(
-                      context: context,
-                      text: createMode
-                          ? "Añadir meta de ahorro"
-                          : "Actualizar meta de ahorro",
-                      action: () {}),
-                )
-              : SizedBox(),
-          SpaceDivider(),
-        ],
-      )),
-    ));
+    return BinancyBackground(Consumer<SavingsPlanChangeNotifier>(
+        builder: (context, savingsPlanProvider, child) => Scaffold(
+              backgroundColor: Colors.transparent,
+              appBar: AppBar(
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                brightness: Brightness.dark,
+                actions: [
+                  !createMode && !allowEdit
+                      ? IconButton(
+                          onPressed: () {
+                            setState(() {
+                              allowEdit = true;
+                            });
+                          },
+                          icon: Icon(Icons.more_horiz_rounded))
+                      : SizedBox()
+                ],
+                leading: !allowEdit
+                    ? IconButton(
+                        icon: Icon(Icons.arrow_back),
+                        onPressed: () => Navigator.pop(context))
+                    : createMode
+                        ? IconButton(
+                            icon: Icon(Icons.arrow_back),
+                            onPressed: () => BinancyInfoDialog(context,
+                                    "¿Estas seguro que quieres salir?", [
+                                  BinancyInfoDialogItem(
+                                      "Cancelar", () => Navigator.pop(context)),
+                                  BinancyInfoDialogItem("Abortar", () {
+                                    Navigator.pop(context);
+                                    Navigator.pop(context);
+                                  })
+                                ]))
+                        : IconButton(
+                            icon: Icon(Icons.close_outlined),
+                            onPressed: () => BinancyInfoDialog(
+                                context, "Estas seguro que quieres salir?", [
+                              BinancyInfoDialogItem(
+                                  "Canelar", () => Navigator.pop(context)),
+                              BinancyInfoDialogItem("Abortar", () {
+                                Navigator.pop(context);
+                                setState(() {
+                                  allowEdit = false;
+                                });
+                              })
+                            ]),
+                          ),
+              ),
+              body: Container(
+                  child: Column(
+                children: [
+                  Expanded(
+                      child: ScrollConfiguration(
+                          behavior: MyBehavior(),
+                          child: ListView(
+                            children: [
+                              Container(
+                                  height: 125,
+                                  padding: EdgeInsets.all(customMargin),
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                      createMode
+                                          ? "Añade una meta de ingresos"
+                                          : selectedSavingsPlan!.name,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: "OpenSans",
+                                          color: textColor,
+                                          fontSize: 30),
+                                      textAlign: TextAlign.center)),
+                              nameInputWidget(),
+                              SpaceDivider(),
+                              amountInputWidget(),
+                              SpaceDivider(),
+                              datePicker(context),
+                              SpaceDivider(),
+                              descriptionInputWidget(),
+                            ],
+                          ))),
+                  allowEdit ? SpaceDivider() : SizedBox(),
+                  allowEdit
+                      ? Padding(
+                          padding: EdgeInsets.only(
+                              left: customMargin, right: customMargin),
+                          child: BinancyButton(
+                              context: context,
+                              text: createMode
+                                  ? "Añadir meta de ahorro"
+                                  : "Actualizar meta de ahorro",
+                              action: () async {
+                                await checkData(savingsPlanProvider);
+                              }),
+                        )
+                      : SizedBox(),
+                  SpaceDivider(),
+                ],
+              )),
+            )));
   }
 
   Widget nameInputWidget() {
@@ -138,7 +181,7 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
     );
   }
 
-  Container descriptionInputWidget() {
+  Widget descriptionInputWidget() {
     return Container(
       height: 200,
       margin: EdgeInsets.only(left: customMargin, right: customMargin),
@@ -220,9 +263,109 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
   void checkSavingsPlan() {
     if (selectedSavingsPlan != null) {
       createMode = false;
+      nameController.text = selectedSavingsPlan!.name;
+      totalAmountController.text = selectedSavingsPlan!.amount.toString();
+      if (selectedSavingsPlan!.limitDate != null) {
+        parsedDate = Utils.toYMD(
+            selectedSavingsPlan!.limitDate ?? DateTime.now(), context);
+      }
+
+      if (selectedSavingsPlan!.description != null) {
+        descriptionController.text = selectedSavingsPlan!.description!;
+      }
     } else {
       createMode = true;
       allowEdit = true;
     }
+  }
+
+  Future<void> checkData(
+      SavingsPlanChangeNotifier savingsPlanChangeNotifier) async {
+    if (nameController.text.isNotEmpty) {
+      if (totalAmountController.text.isNotEmpty) {
+        if (createMode) {
+          await insertSavingsPlan(savingsPlanChangeNotifier);
+        } else {
+          await updateSavingsPlan(savingsPlanChangeNotifier);
+        }
+      } else {
+        BinancyInfoDialog(
+            context,
+            "La meta de ahorros debe tener un valor objetivo",
+            [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
+      }
+    } else {
+      BinancyInfoDialog(context, "Debes introducir un titulo a la meta",
+          [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
+    }
+  }
+
+  Future<void> insertSavingsPlan(
+      SavingsPlanChangeNotifier savingsPlanChangeNotifier) async {
+    SavingsPlan savingsPlan = SavingsPlan()
+      ..name = nameController.text
+      ..description = descriptionController.text
+      ..amount = double.parse(totalAmountController.text)
+      ..idUser = userData['idUser']
+      ..limitDate = Utils.isValidDateYMD(parsedDate, context)
+          ? Utils.fromYMD(parsedDate, context)
+          : null;
+
+    await SavingsPlansController.addSavingsPlan(savingsPlan).then((value) {
+      if (value) {
+        BinancyInfoDialog(context, "Meta de ahorro añadida correctamente!", [
+          BinancyInfoDialogItem("Aceptar", () async {
+            await savingsPlanChangeNotifier.updateSavingsPlan();
+            leaveScreen();
+          })
+        ]);
+      } else {
+        BinancyInfoDialog(context, "Error al añadir la meta de ahorro...", [
+          BinancyInfoDialogItem("Aceptar", () {
+            Navigator.pop(context);
+          })
+        ]);
+      }
+    });
+  }
+
+  Future<void> updateSavingsPlan(
+      SavingsPlanChangeNotifier savingsPlanChangeNotifier) async {
+    SavingsPlan savingsPlan = SavingsPlan()
+      ..name = nameController.text
+      ..description = descriptionController.text
+      ..amount = double.parse(totalAmountController.text)
+      ..idUser = userData['idUser']
+      ..idSavingsPlan = selectedSavingsPlan!.idSavingsPlan
+      ..limitDate = Utils.isValidDateYMD(parsedDate, context)
+          ? Utils.fromYMD(parsedDate, context)
+          : null;
+
+    await SavingsPlansController.updateSavingsPlan(savingsPlan).then((value) {
+      if (value) {
+        BinancyInfoDialog(
+            context, "Meta de ahorro actualizada correctamente!", [
+          BinancyInfoDialogItem("Aceptar", () async {
+            await savingsPlanChangeNotifier.updateSavingsPlan();
+            setState(() {
+              selectedSavingsPlan = savingsPlan;
+              allowEdit = false;
+            });
+            Navigator.pop(context);
+          })
+        ]);
+      } else {
+        BinancyInfoDialog(context, "Error al actualizar la meta de ahorro...", [
+          BinancyInfoDialogItem("Aceptar", () {
+            Navigator.pop(context);
+          })
+        ]);
+      }
+    });
+  }
+
+  void leaveScreen() {
+    Navigator.pop(context);
+    Navigator.pop(context);
   }
 }

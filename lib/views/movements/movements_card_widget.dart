@@ -89,154 +89,82 @@ class MovementCard extends StatelessWidget {
       ),
       actionPane: SlidableDrawerActionPane(),
       actionExtentRatio: 0.2,
-      actions: [
-        IconSlideAction(
-          caption: "Eliminar",
-          foregroundColor: accentColor,
-          color: Colors.transparent,
-          icon: Icons.delete,
-          onTap: () async {
-            if (movement is Income) {
-              await IncomesController.deleteIncome(movement as Income)
-                  .then((value) {
-                if (value) {
-                  BinancyInfoDialog(
-                      context, "Ingreso eliminado correctamente", [
-                    BinancyInfoDialogItem("Aceptar", () async {
-                      await movementsProvider.updateMovements();
-                      Navigator.pop(context);
-                    })
-                  ]);
-                } else {
-                  BinancyInfoDialog(context, "Error al eliminar el ingreso", [
-                    BinancyInfoDialogItem(
-                        "Aceptar", () => Navigator.pop(context))
-                  ]);
-                }
-              });
-            } else if (movement is Expend) {
-              await ExpensesController.deleteExpend(movement as Expend)
-                  .then((value) {
-                if (value) {
-                  BinancyInfoDialog(context, "Gasto eliminado correctamente", [
-                    BinancyInfoDialogItem("Aceptar", () async {
-                      await movementsProvider.updateMovements();
-                      Navigator.pop(context);
-                    })
-                  ]);
-                } else {
-                  BinancyInfoDialog(context, "Error al eliminar el gasto", [
-                    BinancyInfoDialogItem(
-                        "Aceptar", () => Navigator.pop(context))
-                  ]);
-                }
-              });
-            }
-          },
-        ),
-        IconSlideAction(
-          caption: "Editar",
-          icon: Icons.edit,
-          foregroundColor: accentColor,
-          color: Colors.transparent,
-          onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (_) => MultiProvider(
-                        providers: [
-                          ChangeNotifierProvider(
-                            create: (_) =>
-                                Provider.of<MovementsChangeNotifier>(context),
-                          ),
-                          ChangeNotifierProvider(
-                            create: (_) =>
-                                Provider.of<CategoriesChangeNotifier>(context),
-                          )
-                        ],
-                        child: MovementView(
-                          allowEdit: true,
-                          selectedMovement: movement,
-                          movementType: movement is Income
-                              ? MovementType.INCOME
-                              : MovementType.EXPEND,
-                        ),
-                      ))),
-        )
-      ],
-      secondaryActions: [
-        IconSlideAction(
-          caption: "Eliminar",
-          foregroundColor: accentColor,
-          color: Colors.transparent,
-          icon: Icons.delete,
-          onTap: () async {
-            if (movement is Income) {
-              await IncomesController.deleteIncome(movement as Income)
-                  .then((value) {
-                if (value) {
-                  BinancyInfoDialog(
-                      context, "Ingreso eliminado correctamente", [
-                    BinancyInfoDialogItem("Aceptar", () async {
-                      await movementsProvider.updateMovements();
-                      Navigator.pop(context);
-                    })
-                  ]);
-                } else {
-                  BinancyInfoDialog(context, "Error al eliminar el ingreso", [
-                    BinancyInfoDialogItem(
-                        "Aceptar", () => Navigator.pop(context))
-                  ]);
-                }
-              });
-            } else if (movement is Expend) {
-              await ExpensesController.deleteExpend(movement as Expend)
-                  .then((value) {
-                if (value) {
-                  BinancyInfoDialog(context, "Gasto eliminado correctamente", [
-                    BinancyInfoDialogItem("Aceptar", () async {
-                      await movementsProvider.updateMovements();
-                      Navigator.pop(context);
-                    })
-                  ]);
-                } else {
-                  BinancyInfoDialog(context, "Error al eliminar el gasto", [
-                    BinancyInfoDialogItem(
-                        "Aceptar", () => Navigator.pop(context))
-                  ]);
-                }
-              });
-            }
-          },
-        ),
-        IconSlideAction(
-          caption: "Editar",
-          icon: Icons.edit,
-          foregroundColor: accentColor,
-          color: Colors.transparent,
-          onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (_) => MultiProvider(
-                        providers: [
-                          ChangeNotifierProvider(
-                            create: (_) =>
-                                Provider.of<MovementsChangeNotifier>(context),
-                          ),
-                          ChangeNotifierProvider(
-                            create: (_) =>
-                                Provider.of<CategoriesChangeNotifier>(context),
-                          )
-                        ],
-                        child: MovementView(
-                          allowEdit: true,
-                          selectedMovement: movement,
-                          movementType: movement is Income
-                              ? MovementType.INCOME
-                              : MovementType.EXPEND,
-                        ),
-                      ))),
-        )
-      ],
+      actions: movementsActions(context),
+      secondaryActions: movementsActions(context),
     );
+  }
+
+  List<Widget> movementsActions(BuildContext context) {
+    return [
+      IconSlideAction(
+        caption: "Eliminar",
+        foregroundColor: accentColor,
+        color: Colors.transparent,
+        icon: Icons.delete,
+        onTap: () async {
+          if (movement is Income) {
+            await IncomesController.deleteIncome(movement as Income)
+                .then((value) async {
+              if (value) {
+                await movementsProvider.updateMovements();
+                BinancyInfoDialog(context, "Ingreso eliminado correctamente", [
+                  BinancyInfoDialogItem("Aceptar", () {
+                    Navigator.pop(context);
+                  })
+                ]);
+              } else {
+                BinancyInfoDialog(context, "Error al eliminar el ingreso", [
+                  BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))
+                ]);
+              }
+            });
+          } else if (movement is Expend) {
+            await ExpensesController.deleteExpend(movement as Expend)
+                .then((value) async {
+              if (value) {
+                await movementsProvider.updateMovements();
+                BinancyInfoDialog(context, "Gasto eliminado correctamente", [
+                  BinancyInfoDialogItem("Aceptar", () {
+                    Navigator.pop(context);
+                  })
+                ]);
+              } else {
+                BinancyInfoDialog(context, "Error al eliminar el gasto", [
+                  BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))
+                ]);
+              }
+            });
+          }
+        },
+      ),
+      IconSlideAction(
+        caption: "Editar",
+        icon: Icons.edit,
+        foregroundColor: accentColor,
+        color: Colors.transparent,
+        onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (_) => MultiProvider(
+                      providers: [
+                        ChangeNotifierProvider(
+                          create: (_) =>
+                              Provider.of<MovementsChangeNotifier>(context),
+                        ),
+                        ChangeNotifierProvider(
+                          create: (_) =>
+                              Provider.of<CategoriesChangeNotifier>(context),
+                        )
+                      ],
+                      child: MovementView(
+                        allowEdit: true,
+                        selectedMovement: movement,
+                        movementType: movement is Income
+                            ? MovementType.INCOME
+                            : MovementType.EXPEND,
+                      ),
+                    ))),
+      )
+    ];
   }
 }

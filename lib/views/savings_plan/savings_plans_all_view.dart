@@ -30,6 +30,7 @@ class _SavingsPlanAllViewState extends State<SavingsPlanAllView> {
   Widget build(BuildContext context) {
     return BinancyBackground(Scaffold(
       backgroundColor: Colors.transparent,
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
           elevation: 0,
           centerTitle: true,

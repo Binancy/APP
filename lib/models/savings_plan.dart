@@ -26,6 +26,8 @@ class SavingsPlan {
         'name': name,
         'description': description,
         'amount': amount,
-        'limitDate': Utils.toISOStandard(limitDate ?? DateTime.now())
+        'limitDate': limitDate != null
+            ? Utils.toISOStandard(limitDate ?? DateTime.now())
+            : null
       };
 }

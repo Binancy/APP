@@ -22,70 +22,62 @@ class _DashboardViewState extends State<DashboardView> {
   @override
   Widget build(BuildContext context) {
     return Consumer<MovementsChangeNotifier>(
-        builder: (context, provider, child) => Stack(
-              children: [
-                Positioned(
-                    child: BinancyBackground(
-                  Scaffold(
-                      appBar: AppBar(
-                        actions: [
-                          IconButton(
-                              icon: Icon(BinancyIcons.alert), onPressed: () {})
-                        ],
-                        leading: IconButton(
-                            icon: Icon(BinancyIcons.settings),
-                            onPressed: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SettingsView()))),
-                        automaticallyImplyLeading: false,
-                        title: Text('Mi resumen', style: appBarStyle()),
-                        centerTitle: true,
-                        backgroundColor: Colors.transparent,
-                        elevation: 0,
-                        brightness: Brightness.dark,
-                      ),
-                      backgroundColor: Colors.transparent,
-                      body: ScrollConfiguration(
-                          behavior: MyBehavior(),
-                          child: SmartRefresher(
-                            header: ClassicHeader(
-                              textStyle: inputStyle(),
-                              idleIcon: Icon(Icons.arrow_downward,
-                                  color: accentColor),
-                              releaseIcon: Icon(Icons.refresh_rounded,
-                                  color: accentColor),
-                              refreshingIcon: SizedBox(
-                                  height: 20,
-                                  width: 20,
-                                  child: CircularProgressIndicator(
-                                      backgroundColor: Colors.transparent,
-                                      valueColor: AlwaysStoppedAnimation<Color>(
-                                          accentColor),
-                                      strokeWidth: 1)),
-                              completeIcon:
-                                  Icon(Icons.check, color: accentColor),
-                              refreshingText: "Actualizando...",
-                              completeText: "Datos actualizados",
-                              releaseText: "Suelta para actualizar",
-                              idleText: "Desliza para actualizar",
-                            ),
-                            controller: _refreshController,
-                            onRefresh: () async {
-                              await provider.updateMovements().then((value) {
-                                _refreshController.refreshCompleted();
-                              });
-                            },
-                            child: Column(
-                              children: [
-                                DashboardHeaderRow(),
-                                DashboardSummaryCard(),
-                                DashboardActionsCard()
-                              ],
-                            ),
-                          ))),
-                )),
+      builder: (context, provider, child) => BinancyBackground(
+        Scaffold(
+            appBar: AppBar(
+              actions: [
+                IconButton(icon: Icon(BinancyIcons.alert), onPressed: () {})
               ],
-            ));
+              leading: IconButton(
+                  icon: Icon(BinancyIcons.settings),
+                  onPressed: () => Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SettingsView()))),
+              automaticallyImplyLeading: false,
+              title: Text('Mi resumen', style: appBarStyle()),
+              centerTitle: true,
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              brightness: Brightness.dark,
+            ),
+            backgroundColor: Colors.transparent,
+            resizeToAvoidBottomInset: false,
+            body: ScrollConfiguration(
+                behavior: MyBehavior(),
+                child: SmartRefresher(
+                  header: ClassicHeader(
+                    textStyle: inputStyle(),
+                    idleIcon: Icon(Icons.arrow_downward, color: accentColor),
+                    releaseIcon:
+                        Icon(Icons.refresh_rounded, color: accentColor),
+                    refreshingIcon: SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator(
+                            backgroundColor: Colors.transparent,
+                            valueColor:
+                                AlwaysStoppedAnimation<Color>(accentColor),
+                            strokeWidth: 1)),
+                    completeIcon: Icon(Icons.check, color: accentColor),
+                    refreshingText: "Actualizando...",
+                    completeText: "Datos actualizados",
+                    releaseText: "Suelta para actualizar",
+                    idleText: "Desliza para actualizar",
+                  ),
+                  controller: _refreshController,
+                  onRefresh: () async {
+                    await provider.updateMovements().then((value) {
+                      _refreshController.refreshCompleted();
+                    });
+                  },
+                  child: Column(
+                    children: [
+                      DashboardHeaderRow(),
+                      DashboardSummaryCard(),
+                      DashboardActionsCard()
+                    ],
+                  ),
+                ))),
+      ),
+    );
   }
 }

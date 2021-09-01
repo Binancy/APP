@@ -87,6 +87,15 @@ class Utils {
     return DateFormat("yyyy-MM-ddTHH:mm:ss").format(date);
   }
 
+  static bool isValidDateYMD(String date, BuildContext context) {
+    try {
+      fromYMD(date, context);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   static DateTime fromYMD(String date, BuildContext context) {
     return DateFormat.yMd(Localizations.localeOf(context).toLanguageTag())
         .parse(date);
