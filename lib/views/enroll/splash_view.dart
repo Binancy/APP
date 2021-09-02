@@ -31,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
           children: [
             Positioned(
                 child: Center(
-              child: BinancyIcon(),
+              child: BinancyIconVertical(),
             )),
             Positioned(
                 child: Container(
@@ -118,27 +118,5 @@ class _SplashScreenState extends State<SplashScreen> {
   void gotoLogin(BuildContext context) {
     Navigator.pushAndRemoveUntil(context,
         MaterialPageRoute(builder: (context) => LoginView()), (route) => false);
-  }
-}
-
-class BinancyIcon extends StatelessWidget {
-  const BinancyIcon({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-        width: MediaQuery.of(context).size.width,
-        child: Padding(
-            padding: EdgeInsets.all(customMargin),
-            child: Center(
-                child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Image.asset(
-                  "assets/icons/binancy_icon.png",
-                ),
-              ],
-            ))));
   }
 }

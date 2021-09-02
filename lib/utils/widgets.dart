@@ -144,3 +144,47 @@ class BinancyLogoVert extends StatelessWidget {
     ));
   }
 }
+
+class BinancyIconVertical extends StatelessWidget {
+  const BinancyIconVertical({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+        width: MediaQuery.of(context).size.width,
+        child: Padding(
+            padding: EdgeInsets.all(customMargin),
+            child: Center(
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Image.asset(
+                  "assets/icons/binancy_icon.png",
+                ),
+              ],
+            ))));
+  }
+}
+
+class BinancyIconHorizontal extends StatelessWidget {
+  const BinancyIconHorizontal({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+        width: MediaQuery.of(context).size.width,
+        child: Padding(
+            padding: EdgeInsets.all(customMargin),
+            child: Center(
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Image.asset(
+                  "assets/icons/binancy_icon_h.png",
+                ),
+              ],
+            ))));
+  }
+}

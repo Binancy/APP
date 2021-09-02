@@ -4,6 +4,7 @@ import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/widgets.dart';
 import 'package:binancy/views/enroll/login_view.dart';
+import 'package:binancy/views/settings/settings_user_info.dart';
 import 'package:flutter/material.dart';
 
 class SettingsView extends StatelessWidget {
@@ -22,38 +23,41 @@ class SettingsView extends StatelessWidget {
         brightness: Brightness.dark,
       ),
       body: Container(
+          margin: EdgeInsets.only(left: customMargin, right: customMargin),
           child: ScrollConfiguration(
-        behavior: MyBehavior(),
-        child: ListView(
-          padding:
-              EdgeInsets.fromLTRB(customMargin, customMargin, customMargin, 0),
-          children: [
-            myDataCard(context),
-            SpaceDivider(),
-            actionsCard(context),
-            SpaceDivider(),
-            BinancyButton(
-              context: context,
-              text: "Cerrar sesión",
-              action: () async {
-                BinancyInfoDialog(
-                    context, "¿Estas seguro que quieres cerrar tu sesión?", [
-                  BinancyInfoDialogItem(
-                      "Cancelar", () => Navigator.pop(context)),
-                  BinancyInfoDialogItem("Cerrar sesión", () {
-                    Navigator.pop(context);
-                    Utils.clearSecureStorage();
-                    Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(builder: (context) => LoginView()),
-                        (route) => false);
-                  }),
-                ]);
-              },
-            )
-          ],
-        ),
-      )),
+            behavior: MyBehavior(),
+            child: CustomScrollView(
+              slivers: [
+                SliverToBoxAdapter(child: BinancyIconHorizontal()),
+                SliverToBoxAdapter(child: myDataCard(context)),
+                SliverToBoxAdapter(child: SpaceDivider()),
+                SliverToBoxAdapter(child: actionsCard(context)),
+                SliverToBoxAdapter(child: SpaceDivider()),
+                SliverToBoxAdapter(
+                    child: BinancyButton(
+                  context: context,
+                  text: "Cerrar sesión",
+                  action: () async {
+                    BinancyInfoDialog(context,
+                        "¿Estas seguro que quieres cerrar tu sesión?", [
+                      BinancyInfoDialogItem(
+                          "Cancelar", () => Navigator.pop(context)),
+                      BinancyInfoDialogItem("Cerrar sesión", () {
+                        Navigator.pop(context);
+                        Utils.clearSecureStorage();
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LoginView()),
+                            (route) => false);
+                      }),
+                    ]);
+                  },
+                )),
+                SliverToBoxAdapter(child: SpaceDivider()),
+              ],
+            ),
+          )),
     ));
   }
 
@@ -83,11 +87,14 @@ class SettingsView extends StatelessWidget {
     List<Widget> widgetList = [
       SettingsHeaderRow(text: "Acciones"),
       LinearDivider(),
+      SettingsActionRow(
+          text: "Información de usuario",
+          action: () => Navigator.push(context,
+              MaterialPageRoute(builder: (context) => SettingsUserDataView()))),
+      LinearDivider(),
       SettingsActionRow(text: "Notificaciones", action: () => null),
       LinearDivider(),
       SettingsActionRow(text: "Seguridad", action: () => null),
-      LinearDivider(),
-      SettingsActionRow(text: "Información de usuario", action: () => null),
       LinearDivider(),
       SettingsActionRow(
         text: "Cambiar de plan",
@@ -125,7 +132,7 @@ class SettingsHeaderRow extends StatelessWidget {
         children: [
           Text(
             text,
-            style: titleCardStyle(),
+            style: settingsHeaderTitleStyle(),
           )
         ],
       ),

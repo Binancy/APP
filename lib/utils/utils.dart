@@ -159,6 +159,24 @@ class Utils {
     final roundDown = (((value.abs() * mod).floor()) / mod);
     return isNegative ? -roundDown : roundDown;
   }
+
+  static String getFullUsername() {
+    String name = userData['nameUser'];
+    String firstSurname = userData['firstSurname'] ?? "";
+    String lastSurname = userData['lastSurname'] ?? "";
+
+    String fullName = name;
+
+    if (firstSurname.isNotEmpty) {
+      fullName += " " + firstSurname;
+    }
+
+    if (lastSurname.isNotEmpty) {
+      fullName += " " + lastSurname;
+    }
+
+    return fullName;
+  }
 }
 
 class DecimalTextInputFormatter extends TextInputFormatter {

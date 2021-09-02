@@ -2,7 +2,7 @@
 import 'package:binancy/models/category.dart';
 
 String appName = "Binancy";
-String appVersion = "1.100.1";
+String appVersion = "1.1.1";
 
 // API GLOBALS
 String apiURL = "https://binancy.herokuapp.com";
@@ -16,7 +16,7 @@ int? userPayDay = 28;
 // WIDGET GLOBALS
 double customBorderRadius = 10;
 double customMargin = 20;
-double settingsRowHeight = 62;
+double settingsRowHeight = 55;
 double buttonHeight = 70;
 double animLoadingSize = 200;
 double movementCardSize = 75;

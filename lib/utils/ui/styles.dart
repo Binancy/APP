@@ -38,6 +38,14 @@ TextStyle titleCardStyle() {
       fontFamily: "OpenSans");
 }
 
+TextStyle settingsHeaderTitleStyle() {
+  return TextStyle(
+      color: accentColor,
+      fontSize: 22,
+      fontWeight: FontWeight.w600,
+      fontFamily: "OpenSans");
+}
+
 TextStyle accentTitleStyle() {
   return TextStyle(
       color: accentColor,
@@ -75,11 +83,15 @@ TextStyle detailStyle() {
 }
 
 TextStyle settingsKeyStyle() {
-  return TextStyle(color: textColor, fontSize: 20, fontFamily: "OpenSans");
+  return TextStyle(
+      color: textColor,
+      fontSize: 18,
+      fontFamily: "OpenSans",
+      fontWeight: FontWeight.bold);
 }
 
 TextStyle settingsValueStyle() {
-  return TextStyle(color: accentColor, fontSize: 20, fontFamily: "OpenSans");
+  return TextStyle(color: accentColor, fontSize: 18, fontFamily: "OpenSans");
 }
 
 TextStyle buttonStyle() {
