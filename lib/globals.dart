@@ -21,6 +21,7 @@ double buttonHeight = 70;
 double animLoadingSize = 200;
 double movementCardSize = 75;
 double subscriptionCardSize = 75;
+double adviceCardMinHeight = 125;
 
 // ANIMATION INTERVALS AND DURATION
 int savingsPlanProgressMS = 750;

@@ -13,12 +13,12 @@ class AdviceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      constraints: BoxConstraints(minHeight: adviceCardMinHeight),
       width: MediaQuery.of(context).size.width,
       margin: EdgeInsets.only(left: customMargin, right: customMargin),
       decoration: BoxDecoration(
           color: themeColor.withOpacity(0.1),
           borderRadius: BorderRadius.circular(customBorderRadius)),
-      height: 125,
       padding: EdgeInsets.all(20),
       child: Row(
         children: [

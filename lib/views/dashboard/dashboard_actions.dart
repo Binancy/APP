@@ -1,10 +1,12 @@
 import 'package:binancy/controllers/providers/categories_change_notifier.dart';
+import 'package:binancy/controllers/providers/microexpenses_change_notifier.dart';
 import 'package:binancy/controllers/providers/movements_change_notifier.dart';
 import 'package:binancy/controllers/providers/savings_plans_change_notifier.dart';
 import 'package:binancy/controllers/providers/subscriptions_change_notifier.dart';
 import 'package:binancy/globals.dart';
 import 'package:binancy/utils/enums.dart';
 import 'package:binancy/utils/ui/styles.dart';
+import 'package:binancy/views/microexpenses/microexpenses_view.dart';
 import 'package:binancy/views/movements/movements_all_view.dart';
 import 'package:binancy/views/movements/movement_view.dart';
 import 'package:binancy/views/movements/movments_balance_view.dart';
@@ -256,7 +258,26 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            buildEmptyActionWidget(context),
+            ActionButtonWidget(
+                context: context,
+                icon: SvgPicture.asset("assets/svg/dashboard_coins.svg"),
+                text: "Gastos rápidos",
+                action: () async {
+                  MicroExpensesChangeNotifier microExpensesChangeNotifier =
+                      MicroExpensesChangeNotifier();
+                  await microExpensesChangeNotifier.updateMicroExpenses();
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => MultiProvider(providers: [
+                                ChangeNotifierProvider(
+                                    create: (_) => microExpensesChangeNotifier),
+                                ChangeNotifierProvider(
+                                    create: (_) =>
+                                        Provider.of<MovementsChangeNotifier>(
+                                            context))
+                              ], child: MicroExpensesView())));
+                }),
             buildEmptyActionWidget(context),
             buildEmptyActionWidget(context)
           ],
