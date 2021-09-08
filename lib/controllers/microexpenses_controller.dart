@@ -23,7 +23,8 @@ class MicroExpensesController {
 
     microExpensesList.add(MicroExpend()
       ..amount = 150
-      ..title = "This is an exaple MicroExpend"
+      ..title = "Santboiana"
+      ..description = "Una barra de pan, pero de Sant Boi!"
       ..idUser = 0
       ..idMicroExpend = 0);
 

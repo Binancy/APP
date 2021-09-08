@@ -33,6 +33,7 @@ TextStyle dashboardActionButtonStyle() {
 TextStyle titleCardStyle() {
   return TextStyle(
       color: textColor,
+      decoration: TextDecoration.none,
       fontSize: 22,
       fontWeight: FontWeight.w600,
       fontFamily: "OpenSans");
@@ -50,6 +51,7 @@ TextStyle accentTitleStyle() {
   return TextStyle(
       color: accentColor,
       fontSize: 22,
+      decoration: TextDecoration.none,
       fontWeight: FontWeight.bold,
       fontFamily: "OpenSans");
 }
@@ -58,6 +60,7 @@ TextStyle semititleStyle() {
   return TextStyle(
       color: textColor,
       fontSize: 15,
+      decoration: TextDecoration.none,
       fontWeight: FontWeight.w500,
       fontFamily: "OpenSans");
 }

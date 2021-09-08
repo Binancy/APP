@@ -1,9 +1,17 @@
+import 'package:binancy/controllers/expenses_controller.dart';
 import 'package:binancy/controllers/providers/movements_change_notifier.dart';
 import 'package:binancy/globals.dart';
+import 'package:binancy/models/expend.dart';
 import 'package:binancy/models/microexpend.dart';
+import 'package:binancy/utils/dialogs/info_dialog.dart';
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/widgets.dart';
+import 'package:binancy/views/microexpenses/microexpend_view.dart';
 import 'package:flutter/material.dart';
+
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+
+import 'microexpenses_dialog_widget.dart';
 
 class MicroExpendCard extends StatelessWidget {
   final MicroExpend microExpend;
@@ -14,7 +22,6 @@ class MicroExpendCard extends StatelessWidget {
       required this.microExpend,
       required this.movementsChangeNotifier})
       : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -22,7 +29,11 @@ class MicroExpendCard extends StatelessWidget {
       elevation: 0,
       borderRadius: BorderRadius.circular(customBorderRadius),
       child: InkWell(
-        onTap: () {},
+        onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (_) => MicroExpendView(
+                    allowEdit: false, selectedMicroExpend: microExpend))),
         highlightColor: Colors.transparent,
         splashColor: themeColor.withOpacity(0.1),
         child: Container(
@@ -67,7 +78,40 @@ class MicroExpendCard extends StatelessWidget {
       elevation: 0,
       color: accentColor,
       child: InkWell(
-        onTap: () {},
+        onTap: () => showCustomModalBottomSheet(
+            context: context,
+            barrierColor: themeColor.withOpacity(0.65),
+            containerWidget: (context, animation, child) =>
+                MicroExpendDialogCard(
+                  microExpend: microExpend,
+                  action: () async {
+                    await ExpensesController.insertExpend(Expend()
+                          ..idUser = userData['idUser']
+                          ..title = microExpend.title
+                          ..value = microExpend.amount
+                          ..description = microExpend.description
+                          ..date = DateTime.now())
+                        .then((value) {
+                      if (value) {
+                        movementsChangeNotifier.updateMovements();
+                        BinancyInfoDialog(
+                            context, "Se ha añadido el gasto correctamente!", [
+                          BinancyInfoDialogItem("Aceptar", () {
+                            Navigator.pop(context);
+                            Navigator.pop(context);
+                          })
+                        ]);
+                      } else {
+                        BinancyInfoDialog(context,
+                            "Ha ocurrido un error al añadir el gasto...", [
+                          BinancyInfoDialogItem(
+                              "Aceptar", () => Navigator.pop(context))
+                        ]);
+                      }
+                    });
+                  },
+                ),
+            builder: (context) => Container()),
         highlightColor: Colors.transparent,
         splashColor: themeColor.withOpacity(0.1),
         borderRadius: BorderRadius.circular(customBorderRadius),
