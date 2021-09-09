@@ -65,6 +65,14 @@ TextStyle semititleStyle() {
       fontFamily: "OpenSans");
 }
 
+TextStyle headerItemView() {
+  return TextStyle(
+      fontWeight: FontWeight.bold,
+      fontFamily: "OpenSans",
+      color: textColor,
+      fontSize: 30);
+}
+
 TextStyle balanceValueStyle() {
   return TextStyle(
       color: textColor,

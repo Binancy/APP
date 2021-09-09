@@ -177,6 +177,22 @@ class Utils {
 
     return fullName;
   }
+
+  static String parseAmount(dynamic amount, {bool addCurreny = true}) {
+    String parsedAmount = "";
+
+    if (amount is int) {
+      parsedAmount = amount.toString();
+    } else if (amount is double) {
+      parsedAmount = amount.toStringAsFixed(2);
+    }
+
+    if (addCurreny) {
+      parsedAmount += "€";
+    }
+
+    return parsedAmount;
+  }
 }
 
 class DecimalTextInputFormatter extends TextInputFormatter {

@@ -32,8 +32,8 @@ class APIEndpoints {
   static const String DELETE_SAVINGS_PLAN = "/api/savingsPlans/delete";
 
   // MICROEXPENSES
-  static const String CREATE_MICROEXPEND = "/api/microExpenses/create";
-  static const String READ_MICROEXPENSES = "/api/microExpenses/read";
-  static const String UPDATE_MICROEXPEND = "/api/microExpenses/update";
-  static const String DELETE_MICROEXPEND = "/api/microExpenses/delete";
+  static const String CREATE_MICROEXPEND = "/api/microExpends/create";
+  static const String READ_MICROEXPENSES = "/api/microExpends/read";
+  static const String UPDATE_MICROEXPEND = "/api/microExpends/update";
+  static const String DELETE_MICROEXPEND = "/api/microExpends/delete";
 }

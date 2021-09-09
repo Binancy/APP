@@ -1,5 +1,6 @@
 import 'package:binancy/models/microexpend.dart';
 import 'package:binancy/utils/ui/styles.dart';
+import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -46,12 +47,7 @@ class _MicroExpendDialogCardState extends State<MicroExpendDialogCard> {
                 widget.microExpend.description != null
                     ? SpaceDivider(customSpace: 10)
                     : SizedBox(),
-                Text(
-                    widget.microExpend.amount is int
-                        ? widget.microExpend.amount.toString() + "€"
-                        : (widget.microExpend.amount as double)
-                                .toStringAsFixed(2) +
-                            "€",
+                Text(Utils.parseAmount(widget.microExpend.amount),
                     style: accentTitleStyle())
               ],
             ),

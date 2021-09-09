@@ -62,14 +62,17 @@ class MicroExpensesView extends StatelessWidget {
                                           behavior: MyBehavior(),
                                           child: StaggeredGridView.countBuilder(
                                             crossAxisCount: 2,
-                                            itemCount: 10,
+                                            itemCount: microExpensesProvider
+                                                .microExpensesList.length,
                                             mainAxisSpacing: customMargin,
                                             crossAxisSpacing: customMargin,
                                             itemBuilder: (context, index) =>
                                                 MicroExpendCard(
+                                              microExpensesChangeNotifier:
+                                                  microExpensesProvider,
                                               microExpend: microExpensesProvider
                                                   .microExpensesList
-                                                  .elementAt(0),
+                                                  .elementAt(index),
                                               movementsChangeNotifier:
                                                   movementsProvider,
                                             ),

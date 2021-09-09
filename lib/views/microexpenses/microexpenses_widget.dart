@@ -1,25 +1,30 @@
 import 'package:binancy/controllers/expenses_controller.dart';
+import 'package:binancy/controllers/providers/microexpenses_change_notifier.dart';
 import 'package:binancy/controllers/providers/movements_change_notifier.dart';
 import 'package:binancy/globals.dart';
 import 'package:binancy/models/expend.dart';
 import 'package:binancy/models/microexpend.dart';
 import 'package:binancy/utils/dialogs/info_dialog.dart';
 import 'package:binancy/utils/ui/styles.dart';
+import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/widgets.dart';
 import 'package:binancy/views/microexpenses/microexpend_view.dart';
 import 'package:flutter/material.dart';
 
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:provider/provider.dart';
 
 import 'microexpenses_dialog_widget.dart';
 
 class MicroExpendCard extends StatelessWidget {
   final MicroExpend microExpend;
+  final MicroExpensesChangeNotifier microExpensesChangeNotifier;
   final MovementsChangeNotifier movementsChangeNotifier;
 
   const MicroExpendCard(
       {Key? key,
       required this.microExpend,
+      required this.microExpensesChangeNotifier,
       required this.movementsChangeNotifier})
       : super(key: key);
   @override
@@ -32,8 +37,14 @@ class MicroExpendCard extends StatelessWidget {
         onTap: () => Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (_) => MicroExpendView(
-                    allowEdit: false, selectedMicroExpend: microExpend))),
+                builder: (_) => MultiProvider(
+                        providers: [
+                          ChangeNotifierProvider(
+                              create: (_) => microExpensesChangeNotifier)
+                        ],
+                        child: MicroExpendView(
+                            allowEdit: false,
+                            selectedMicroExpend: microExpend)))),
         highlightColor: Colors.transparent,
         splashColor: themeColor.withOpacity(0.1),
         child: Container(
@@ -57,12 +68,8 @@ class MicroExpendCard extends StatelessWidget {
               microExpend.description != null
                   ? SpaceDivider(customSpace: 10)
                   : SizedBox(),
-              Text(
-                  microExpend.amount is int
-                      ? microExpend.amount.toString() + "€"
-                      : (microExpend.amount as double).toStringAsFixed(2) + "€",
-                  style: detailStyle(),
-                  textAlign: TextAlign.center),
+              Text(Utils.parseAmount(microExpend.amount),
+                  style: detailStyle(), textAlign: TextAlign.center),
               SpaceDivider(customSpace: 10),
               addButton(context)
             ],

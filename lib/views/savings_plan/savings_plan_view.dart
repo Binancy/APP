@@ -101,11 +101,7 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
                                       createMode
                                           ? "Añade una meta de ingresos"
                                           : selectedSavingsPlan!.name,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontFamily: "OpenSans",
-                                          color: textColor,
-                                          fontSize: 30),
+                                      style: headerItemView(),
                                       textAlign: TextAlign.center)),
                               nameInputWidget(),
                               SpaceDivider(),
@@ -183,7 +179,7 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
 
   Widget descriptionInputWidget() {
     return Container(
-      height: 200,
+      height: descriptionWidgetHeight,
       margin: EdgeInsets.only(left: customMargin, right: customMargin),
       decoration: BoxDecoration(
           color: themeColor.withOpacity(0.1),

@@ -6,7 +6,7 @@ class MicroExpensesController {
   static Future<List<MicroExpend>> getMicroExpenses(int userID) async {
     List<MicroExpend> microExpensesList = [];
 
-    /* ConnAPI connAPI =
+    ConnAPI connAPI =
         ConnAPI(APIEndpoints.READ_MICROEXPENSES, "POST", false, {"id": userID});
     await connAPI.callAPI();
     if (connAPI.getStatus() == 200) {
@@ -18,28 +18,29 @@ class MicroExpensesController {
       }
     } else {
       print("[ERROR] - Error al obtener los microexpends del usuario...");
-      print(connAPI.getException()!.description);
-    } */
-
-    microExpensesList.add(MicroExpend()
-      ..amount = 150
-      ..title = "Santboiana"
-      ..description = "Una barra de pan, pero de Sant Boi!"
-      ..idUser = 0
-      ..idMicroExpend = 0);
-
-    microExpensesList.add(MicroExpend()
-      ..amount = 150
-      ..title = "This is an exaple MicroExpend"
-      ..idUser = 0
-      ..idMicroExpend = 0);
-
-    microExpensesList.add(MicroExpend()
-      ..amount = 150
-      ..title = "This is an exaple MicroExpend"
-      ..idUser = 0
-      ..idMicroExpend = 0);
+    }
 
     return microExpensesList;
+  }
+
+  static Future<bool> addMicroExpend(MicroExpend microExpend) async {
+    ConnAPI connAPI = ConnAPI(APIEndpoints.CREATE_MICROEXPEND, "POST", false,
+        {"data": microExpend.toJson()});
+    await connAPI.callAPI();
+    return connAPI.getStatus() == 200;
+  }
+
+  static Future<bool> updateMicroExpend(MicroExpend microExpend) async {
+    ConnAPI connAPI = ConnAPI(APIEndpoints.UPDATE_MICROEXPEND, "PUT", false,
+        {"data": microExpend.toJson()});
+    await connAPI.callAPI();
+    return connAPI.getStatus() == 200;
+  }
+
+  static Future<bool> deleteMicroExpend(MicroExpend microExpend) async {
+    ConnAPI connAPI = ConnAPI(APIEndpoints.DELETE_MICROEXPEND, "DELETE", false,
+        {"id": microExpend.idMicroExpend});
+    await connAPI.callAPI();
+    return connAPI.getStatus() == 200;
   }
 }
