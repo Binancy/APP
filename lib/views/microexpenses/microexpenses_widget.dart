@@ -1,4 +1,5 @@
 import 'package:binancy/controllers/expenses_controller.dart';
+import 'package:binancy/controllers/microexpenses_controller.dart';
 import 'package:binancy/controllers/providers/microexpenses_change_notifier.dart';
 import 'package:binancy/controllers/providers/movements_change_notifier.dart';
 import 'package:binancy/globals.dart';
@@ -9,7 +10,9 @@ import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/widgets.dart';
 import 'package:binancy/views/microexpenses/microexpend_view.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
@@ -32,6 +35,7 @@ class MicroExpendCard extends StatelessWidget {
     return Material(
       color: themeColor.withOpacity(0.1),
       elevation: 0,
+      clipBehavior: Clip.antiAliasWithSaveLayer,
       borderRadius: BorderRadius.circular(customBorderRadius),
       child: InkWell(
         onTap: () => Navigator.push(
@@ -40,40 +44,73 @@ class MicroExpendCard extends StatelessWidget {
                 builder: (_) => MultiProvider(
                         providers: [
                           ChangeNotifierProvider(
-                              create: (_) => microExpensesChangeNotifier)
+                              create: (_) => microExpensesChangeNotifier),
+                          ChangeNotifierProvider(
+                              create: (_) => movementsChangeNotifier)
                         ],
                         child: MicroExpendView(
                             allowEdit: false,
                             selectedMicroExpend: microExpend)))),
         highlightColor: Colors.transparent,
         splashColor: themeColor.withOpacity(0.1),
-        child: Container(
-          padding: EdgeInsets.all(customMargin),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(microExpend.title,
-                  style: appBarStyle(), textAlign: TextAlign.center),
-              SpaceDivider(customSpace: 10),
-              microExpend.description != null
-                  ? Text(
-                      microExpend.description ?? "",
-                      style: dashboardActionButtonStyle(),
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.center,
-                    )
-                  : SizedBox(),
-              microExpend.description != null
-                  ? SpaceDivider(customSpace: 10)
-                  : SizedBox(),
-              Text(Utils.parseAmount(microExpend.amount),
-                  style: detailStyle(), textAlign: TextAlign.center),
-              SpaceDivider(customSpace: 10),
-              addButton(context)
-            ],
+        child: Slidable(
+          child: Container(
+            padding: EdgeInsets.all(customMargin),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(microExpend.title,
+                    style: appBarStyle(), textAlign: TextAlign.center),
+                SpaceDivider(customSpace: 10),
+                microExpend.description != null
+                    ? Text(
+                        microExpend.description ?? "",
+                        style: dashboardActionButtonStyle(),
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.center,
+                      )
+                    : SizedBox(),
+                microExpend.description != null
+                    ? SpaceDivider(customSpace: 10)
+                    : SizedBox(),
+                Text(Utils.parseAmount(microExpend.amount),
+                    style: detailStyle(), textAlign: TextAlign.center),
+                SpaceDivider(customSpace: 10),
+                addButton(context)
+              ],
+            ),
           ),
+          actionPane: SlidableDrawerActionPane(),
+          actionExtentRatio: 1,
+          actions: [
+            IconSlideAction(
+              caption: "Eliminar",
+              onTap: () =>
+                  MicroExpensesController.deleteMicroExpend(microExpend)
+                      .then((value) async {
+                if (value) {
+                  await microExpensesChangeNotifier.updateMicroExpenses();
+                  BinancyInfoDialog(
+                      context, "Gasto frecuente eliminado correctamente", [
+                    BinancyInfoDialogItem("Aceptar", () {
+                      Navigator.of(context).pop();
+                    })
+                  ]);
+                } else {
+                  BinancyInfoDialog(
+                      context, "Error al eliminar el gasto frecuente", [
+                    BinancyInfoDialogItem(
+                        "Aceptar", () => Navigator.of(context).pop())
+                  ]);
+                }
+              }),
+              iconWidget: Icon(Icons.delete, size: 50, color: accentColor),
+              foregroundColor: accentColor,
+              color: Colors.transparent,
+            )
+          ],
         ),
       ),
     );
@@ -88,8 +125,7 @@ class MicroExpendCard extends StatelessWidget {
         onTap: () => showCustomModalBottomSheet(
             context: context,
             barrierColor: themeColor.withOpacity(0.65),
-            containerWidget: (context, animation, child) =>
-                MicroExpendDialogCard(
+            containerWidget: (_, animation, child) => MicroExpendDialogCard(
                   microExpend: microExpend,
                   action: () async {
                     await ExpensesController.insertExpend(Expend()
@@ -98,9 +134,8 @@ class MicroExpendCard extends StatelessWidget {
                           ..value = microExpend.amount
                           ..description = microExpend.description
                           ..date = DateTime.now())
-                        .then((value) {
+                        .then((value) async {
                       if (value) {
-                        movementsChangeNotifier.updateMovements();
                         BinancyInfoDialog(
                             context, "Se ha añadido el gasto correctamente!", [
                           BinancyInfoDialogItem("Aceptar", () {
@@ -115,6 +150,7 @@ class MicroExpendCard extends StatelessWidget {
                               "Aceptar", () => Navigator.pop(context))
                         ]);
                       }
+                      movementsChangeNotifier.updateMovements();
                     });
                   },
                 ),

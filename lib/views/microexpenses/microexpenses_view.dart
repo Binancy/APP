@@ -31,7 +31,12 @@ class MicroExpensesView extends StatelessWidget {
                           builder: (_) => MultiProvider(providers: [
                                 ChangeNotifierProvider(
                                     create: (_) => Provider.of<
-                                        MicroExpensesChangeNotifier>(context))
+                                        MicroExpensesChangeNotifier>(context)),
+                                ChangeNotifierProvider(
+                                    create: (_) =>
+                                        Provider.of<MovementsChangeNotifier>(
+                                            context,
+                                            listen: false))
                               ], child: MicroExpendView()))),
                   icon: Icon(Icons.add_rounded))
             ],

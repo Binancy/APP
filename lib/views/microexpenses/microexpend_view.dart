@@ -1,6 +1,9 @@
+import 'package:binancy/controllers/expenses_controller.dart';
 import 'package:binancy/controllers/microexpenses_controller.dart';
 import 'package:binancy/controllers/providers/microexpenses_change_notifier.dart';
+import 'package:binancy/controllers/providers/movements_change_notifier.dart';
 import 'package:binancy/globals.dart';
+import 'package:binancy/models/expend.dart';
 import 'package:binancy/models/microexpend.dart';
 import 'package:binancy/utils/dialogs/info_dialog.dart';
 import 'package:binancy/utils/ui/icons.dart';
@@ -113,20 +116,29 @@ class _MicroExpendViewState extends State<MicroExpendView> {
                               ],
                             ))),
                     allowEdit ? SpaceDivider() : SizedBox(),
-                    allowEdit
-                        ? Padding(
-                            padding: EdgeInsets.only(
-                                left: customMargin, right: customMargin),
-                            child: BinancyButton(
-                                context: context,
-                                text: createMode
-                                    ? "Añadir gasto frecuente"
-                                    : "Actualizar gasto frecuente",
-                                action: () async {
-                                  await checkData(microExpensesProvider);
-                                }),
-                          )
-                        : SizedBox(),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          left: customMargin, right: customMargin),
+                      child: !createMode && !allowEdit
+                          ? BinancyButton(
+                              context: context,
+                              text: "Añadir gasto",
+                              action: () async => await addExpend(context))
+                          : allowEdit
+                              ? Padding(
+                                  padding: EdgeInsets.only(
+                                      left: customMargin, right: customMargin),
+                                  child: BinancyButton(
+                                      context: context,
+                                      text: createMode
+                                          ? "Añadir gasto frecuente"
+                                          : "Actualizar gasto frecuente",
+                                      action: () async {
+                                        await checkData(microExpensesProvider);
+                                      }),
+                                )
+                              : SizedBox(),
+                    ),
                     SpaceDivider()
                   ],
                 ),
@@ -298,6 +310,33 @@ class _MicroExpendViewState extends State<MicroExpendView> {
       } else {
         BinancyInfoDialog(
             context, "Error al actualizar el gasto frecuente...", [
+          BinancyInfoDialogItem("Aceptar", () {
+            Navigator.pop(context);
+          })
+        ]);
+      }
+    });
+  }
+
+  Future<void> addExpend(BuildContext context) async {
+    Expend microExpend = Expend()
+      ..idUser = userData['idUser']
+      ..value = selectedMicroExpend!.amount
+      ..description = selectedMicroExpend!.description
+      ..date = DateTime.now()
+      ..title = selectedMicroExpend!.title;
+
+    ExpensesController.insertExpend(microExpend).then((value) {
+      if (value) {
+        BinancyInfoDialog(context, "Gasto frecuente añadido correctamente!", [
+          BinancyInfoDialogItem("Aceptar", () async {
+            await Provider.of<MovementsChangeNotifier>(context, listen: false)
+                .updateMovements();
+            leaveScreen();
+          })
+        ]);
+      } else {
+        BinancyInfoDialog(context, "Error al añadir el gasto frecuente...", [
           BinancyInfoDialogItem("Aceptar", () {
             Navigator.pop(context);
           })
