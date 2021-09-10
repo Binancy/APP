@@ -86,6 +86,7 @@ flutter:
     - assets/svg/dashboard_settings.svg
     - assets/icons/binancy_icon_h.png
     - assets/svg/dashboard_coins.svg
+    - assets/svg/dashboard_premium.svg
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

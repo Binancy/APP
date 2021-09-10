@@ -1,12 +1,17 @@
 // APP GLOBALS
 import 'package:binancy/models/category.dart';
 
-String appName = "Binancy";
-String appVersion = "1.1.1";
+const String appName = "Binancy";
+const String appVersion = "1.1.1";
 
 // API GLOBALS
-String apiURL = "https://binancy.herokuapp.com";
-String testURL = "http://localhost:5000";
+const String apiURL = "https://binancy.herokuapp.com";
+const String testURL = "http://localhost:5000";
+
+// PLANS
+const String MEMBER_PLAN = "member";
+const String BINANCY_PLAN = "binancy";
+const String FREE_PLAN = "free";
 
 // USER GLOBALS
 Map<String, dynamic> userData = {};

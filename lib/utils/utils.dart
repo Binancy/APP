@@ -28,6 +28,15 @@ class Utils {
             "Binancy te permite visualizar tus movimientos de multiples formas y filtros.")
   ];
 
+  // PLANS
+
+  static bool isPremium(String plan) {
+    if (plan == MEMBER_PLAN || plan == BINANCY_PLAN) {
+      return true;
+    }
+    return false;
+  }
+
   // ENROLLMENT
 
   static String encrypt(String text) {

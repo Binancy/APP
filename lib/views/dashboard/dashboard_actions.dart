@@ -6,10 +6,12 @@ import 'package:binancy/controllers/providers/subscriptions_change_notifier.dart
 import 'package:binancy/globals.dart';
 import 'package:binancy/utils/enums.dart';
 import 'package:binancy/utils/ui/styles.dart';
+import 'package:binancy/utils/utils.dart';
 import 'package:binancy/views/microexpenses/microexpenses_view.dart';
 import 'package:binancy/views/movements/movements_all_view.dart';
 import 'package:binancy/views/movements/movement_view.dart';
 import 'package:binancy/views/movements/movments_balance_view.dart';
+import 'package:binancy/views/premium/premium_plans_view.dart';
 import 'package:binancy/views/savings_plan/savings_plans_all_view.dart';
 import 'package:binancy/views/settings/settings_view.dart';
 import 'package:binancy/views/subscriptions/subscriptions_all_view.dart';
@@ -278,7 +280,14 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
                                             context))
                               ], child: MicroExpensesView())));
                 }),
-            buildEmptyActionWidget(context),
+            Utils.isPremium(userData['idPlan'])
+                ? buildEmptyActionWidget(context)
+                : ActionButtonWidget(
+                    context: context,
+                    icon: SvgPicture.asset("assets/svg/dashboard_premium.svg"),
+                    text: "Hazte premium",
+                    action: () => Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => PremiumPlansView()))),
             buildEmptyActionWidget(context)
           ],
         )
