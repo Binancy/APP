@@ -32,6 +32,13 @@ class PlansController {
   static Future<List<Announce>> getAvaiableAnnounces() async {
     List<Announce> announceList = [];
     announceList.add(Announce()
+      ..title = "Planes premium"
+      ..description =
+          "Mejora tu experiencia adquiriendo uno de los planes disponibles y desbloquea nuevas funciones"
+      ..icon = SvgPicture.asset("assets/svg/dashboard_premium.svg"));
+
+    announceList.add(Announce()
+      ..title = "Planes premium"
       ..description =
           "Mejora tu experiencia adquiriendo uno de los planes disponibles y desbloquea nuevas funciones"
       ..icon = SvgPicture.asset("assets/svg/dashboard_premium.svg"));

@@ -1,11 +1,14 @@
+import 'package:binancy/controllers/providers/plans_change_notifier.dart';
 import 'package:binancy/globals.dart';
 import 'package:binancy/utils/dialogs/info_dialog.dart';
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/widgets.dart';
 import 'package:binancy/views/enroll/login_view.dart';
+import 'package:binancy/views/premium/premium_plans_view.dart';
 import 'package:binancy/views/settings/settings_user_info.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SettingsView extends StatelessWidget {
   @override
@@ -68,12 +71,13 @@ class SettingsView extends StatelessWidget {
       LinearDivider(),
       SettingsDataRow(title: "Email", data: userData['email'] ?? "-"),
       LinearDivider(),
-      SettingsDataRow(title: "Plan actual", data: "Free"),
+      SettingsDataRow(title: "Plan actual", data: userData['planTitle']),
       LinearDivider(),
       SettingsDataRow(title: "Versión de Binancy", data: appVersion)
     ];
 
     return Container(
+        clipBehavior: Clip.antiAliasWithSaveLayer,
         decoration: BoxDecoration(
             color: themeColor.withOpacity(0.1),
             borderRadius: BorderRadius.circular(customBorderRadius)),
@@ -95,14 +99,23 @@ class SettingsView extends StatelessWidget {
       LinearDivider(),
       SettingsActionRow(text: "Seguridad", action: () => null),
       LinearDivider(),
-      SettingsActionRow(
-        text: "Cambiar de plan",
-        action: () => null,
-        isLast: true,
-      ),
+      Utils.currentPlanIsEqualOrLower(userData['idPlan'], "binancy")
+          ? SettingsActionRow(
+              text: "Cambiar de plan",
+              action: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => MultiProvider(providers: [
+                            ChangeNotifierProvider(
+                                create: (_) =>
+                                    Provider.of<PlansChangeNotifier>(context))
+                          ], child: PremiumPlansView()))),
+            )
+          : SizedBox(),
     ];
 
     return Container(
+        clipBehavior: Clip.antiAliasWithSaveLayer,
         decoration: BoxDecoration(
             color: themeColor.withOpacity(0.1),
             borderRadius: BorderRadius.circular(customBorderRadius)),
@@ -173,13 +186,11 @@ class SettingsDataRow extends StatelessWidget {
 }
 
 class SettingsActionRow extends StatelessWidget {
-  const SettingsActionRow(
-      {Key? key, required this.text, required this.action, this.isLast = false})
+  const SettingsActionRow({Key? key, required this.text, required this.action})
       : super(key: key);
 
   final String text;
   final Function() action;
-  final bool isLast;
 
   @override
   Widget build(BuildContext context) {
@@ -187,11 +198,6 @@ class SettingsActionRow extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         onTap: action,
-        borderRadius: isLast
-            ? BorderRadius.only(
-                bottomLeft: Radius.circular(customBorderRadius),
-                bottomRight: Radius.circular(customBorderRadius))
-            : BorderRadius.zero,
         highlightColor: Colors.transparent,
         splashColor: themeColor.withOpacity(0.1),
         child: Container(

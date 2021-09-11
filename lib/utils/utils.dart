@@ -51,8 +51,23 @@ class Utils {
       }
     }
 
-    print(posCurrentPlan <= posNeededPlan);
     return posCurrentPlan <= posNeededPlan;
+  }
+
+  static bool currentPlanIsEqualOrLower(String currentPlan, String maxPlan) {
+    int posCurrentPlan = 0, posMaxPlan = 0;
+
+    for (var plan in AvaiablePlans.values) {
+      if (plan.toShortString() == currentPlan) {
+        posCurrentPlan = plan.index;
+      }
+
+      if (plan.toShortString() == maxPlan) {
+        posMaxPlan = plan.index;
+      }
+    }
+
+    return posCurrentPlan >= posMaxPlan;
   }
 
   // ENROLLMENT

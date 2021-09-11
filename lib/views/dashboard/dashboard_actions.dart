@@ -1,6 +1,7 @@
 import 'package:binancy/controllers/providers/categories_change_notifier.dart';
 import 'package:binancy/controllers/providers/microexpenses_change_notifier.dart';
 import 'package:binancy/controllers/providers/movements_change_notifier.dart';
+import 'package:binancy/controllers/providers/plans_change_notifier.dart';
 import 'package:binancy/controllers/providers/savings_plans_change_notifier.dart';
 import 'package:binancy/controllers/providers/subscriptions_change_notifier.dart';
 import 'package:binancy/globals.dart';
@@ -252,8 +253,14 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
                 context: context,
                 icon: SvgPicture.asset("assets/svg/dashboard_settings.svg"),
                 text: "Ajustes",
-                action: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => SettingsView()))),
+                action: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => MultiProvider(providers: [
+                              ChangeNotifierProvider(
+                                  create: (_) =>
+                                      Provider.of<PlansChangeNotifier>(context))
+                            ], child: SettingsView())))),
           ],
         ),
         Row(
@@ -280,14 +287,21 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
                                             context))
                               ], child: MicroExpensesView())));
                 }),
-            Utils.isPremium(userData['idPlan'])
-                ? buildEmptyActionWidget(context)
-                : ActionButtonWidget(
+            Utils.currentPlanIsEqualOrLower(userData['idPlan'], "binancy")
+                ? ActionButtonWidget(
                     context: context,
                     icon: SvgPicture.asset("assets/svg/dashboard_premium.svg"),
                     text: "Hazte premium",
-                    action: () => Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => PremiumPlansView()))),
+                    action: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => MultiProvider(providers: [
+                                  ChangeNotifierProvider(
+                                      create: (_) =>
+                                          Provider.of<PlansChangeNotifier>(
+                                              context))
+                                ], child: PremiumPlansView()))))
+                : buildEmptyActionWidget(context),
             buildEmptyActionWidget(context)
           ],
         )

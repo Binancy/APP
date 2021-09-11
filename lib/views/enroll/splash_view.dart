@@ -1,5 +1,6 @@
 import 'package:binancy/controllers/providers/categories_change_notifier.dart';
 import 'package:binancy/controllers/providers/movements_change_notifier.dart';
+import 'package:binancy/controllers/providers/plans_change_notifier.dart';
 import 'package:binancy/controllers/providers/savings_plans_change_notifier.dart';
 import 'package:binancy/controllers/providers/subscriptions_change_notifier.dart';
 import 'package:binancy/controllers/subscriptions_controller.dart';
@@ -110,7 +111,11 @@ class _SplashScreenState extends State<SplashScreen> {
                     create: (context) => subscriptionsChangeNotifier,
                   ),
                   ChangeNotifierProvider(
-                      create: (context) => savingsPlanChangeNotifier)
+                      create: (context) => savingsPlanChangeNotifier),
+                  ChangeNotifierProvider(
+                      create: (_) => PlansChangeNotifier()
+                        ..updatePlans()
+                        ..updateCarousel())
                 ], child: DashboardView())),
         (route) => false);
   }

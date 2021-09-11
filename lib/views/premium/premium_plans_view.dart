@@ -16,22 +16,16 @@ class PremiumPlansView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BinancyBackground(Scaffold(
-      backgroundColor: Colors.transparent,
-      appBar: AppBar(
+    return BinancyBackground(
+      Scaffold(
         backgroundColor: Colors.transparent,
-        centerTitle: true,
-        elevation: 0,
-        title: Text("Hazte premium", style: appBarStyle()),
-      ),
-      body: MultiProvider(
-        providers: [
-          ChangeNotifierProvider(
-              create: (_) => PlansChangeNotifier()
-                ..updatePlans()
-                ..updateCarousel())
-        ],
-        child: Consumer<PlansChangeNotifier>(
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          centerTitle: true,
+          elevation: 0,
+          title: Text("Hazte premium", style: appBarStyle()),
+        ),
+        body: Consumer<PlansChangeNotifier>(
             builder: (context, provider, child) => Container(
                   padding: EdgeInsets.only(top: customMargin),
                   child: ScrollConfiguration(
@@ -43,11 +37,15 @@ class PremiumPlansView extends StatelessWidget {
                                   items: buildCarouselWidgets(
                                       provider.carouselList),
                                   options: CarouselOptions(
-                                      height:
-                                          MediaQuery.of(context).size.height /
-                                              3.5,
+                                      height: 275,
+                                      autoPlayInterval: Duration(
+                                          milliseconds:
+                                              plansCarouselIntervalMS),
                                       autoPlay: true,
-                                      enlargeCenterPage: true,
+                                      enableInfiniteScroll:
+                                          provider.carouselList.length > 1,
+                                      enlargeCenterPage:
+                                          provider.carouselList.length > 1,
                                       autoPlayCurve: Curves.easeInOut))
                               : SizedBox(),
                           provider.carouselList.length > 0
@@ -69,7 +67,7 @@ class PremiumPlansView extends StatelessWidget {
                       )),
                 )),
       ),
-    ));
+    );
   }
 
   List<Widget> buildPlansWidgets(List<Plan> plansList) {

@@ -67,7 +67,7 @@ class MovementCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      movement.planTitle,
+                      movement.title,
                       style: semititleStyle(),
                     ),
                     Text(Utils.toYMD(movement.date, context),

@@ -1,4 +1,5 @@
 import 'package:binancy/controllers/providers/movements_change_notifier.dart';
+import 'package:binancy/controllers/providers/plans_change_notifier.dart';
 import 'package:binancy/utils/ui/icons.dart';
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/widgets.dart';
@@ -30,8 +31,15 @@ class _DashboardViewState extends State<DashboardView> {
               ],
               leading: IconButton(
                   icon: Icon(BinancyIcons.settings),
-                  onPressed: () => Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => SettingsView()))),
+                  onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => MultiProvider(providers: [
+                                ChangeNotifierProvider(
+                                    create: (_) =>
+                                        Provider.of<PlansChangeNotifier>(
+                                            context))
+                              ], child: SettingsView())))),
               automaticallyImplyLeading: false,
               title: Text('Mi resumen', style: appBarStyle()),
               centerTitle: true,

@@ -98,11 +98,11 @@ class _SettingsUserDataViewState extends State<SettingsUserDataView> {
       SettingsActionRow(
         text: "Eliminar cuenta",
         action: () => null,
-        isLast: true,
       ),
     ];
 
     return Container(
+        clipBehavior: Clip.antiAliasWithSaveLayer,
         decoration: BoxDecoration(
             color: themeColor.withOpacity(0.1),
             borderRadius: BorderRadius.circular(customBorderRadius)),
