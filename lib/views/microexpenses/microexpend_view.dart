@@ -11,6 +11,7 @@ import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class MicroExpendView extends StatefulWidget {
@@ -45,7 +46,6 @@ class _MicroExpendViewState extends State<MicroExpendView> {
                 elevation: 0,
                 centerTitle: true,
                 backgroundColor: Colors.transparent,
-                brightness: Brightness.dark,
                 actions: [
                   !createMode && !allowEdit
                       ? IconButton(

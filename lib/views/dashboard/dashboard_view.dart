@@ -5,6 +5,7 @@ import 'package:binancy/utils/widgets.dart';
 import 'package:binancy/views/dashboard/dashboard_actions.dart';
 import 'package:binancy/views/dashboard/dashboard_header_row.dart';
 import 'package:binancy/views/dashboard/dashboard_summary_card.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:binancy/views/settings/settings_view.dart';
@@ -37,7 +38,6 @@ class _DashboardViewState extends State<DashboardView> {
               centerTitle: true,
               backgroundColor: Colors.transparent,
               elevation: 0,
-              brightness: Brightness.dark,
             ),
             backgroundColor: Colors.transparent,
             resizeToAvoidBottomInset: false,

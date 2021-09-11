@@ -61,7 +61,6 @@ class _MovementViewState extends State<MovementView> {
             Scaffold(
               appBar: AppBar(
                 elevation: 0,
-                brightness: Brightness.dark,
                 backgroundColor: Colors.transparent,
                 centerTitle: true,
                 actions: [

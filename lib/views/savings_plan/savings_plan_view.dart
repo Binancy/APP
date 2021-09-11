@@ -8,6 +8,7 @@ import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -42,7 +43,6 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
               appBar: AppBar(
                 backgroundColor: Colors.transparent,
                 elevation: 0,
-                brightness: Brightness.dark,
                 actions: [
                   !createMode && !allowEdit
                       ? IconButton(

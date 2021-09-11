@@ -6,6 +6,7 @@ import 'package:binancy/utils/widgets.dart';
 import 'package:binancy/views/enroll/login_view.dart';
 import 'package:binancy/views/settings/settings_user_info.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class SettingsView extends StatelessWidget {
   @override
@@ -20,7 +21,6 @@ class SettingsView extends StatelessWidget {
         ),
         centerTitle: true,
         elevation: 0,
-        brightness: Brightness.dark,
       ),
       body: Container(
           margin: EdgeInsets.only(left: customMargin, right: customMargin),

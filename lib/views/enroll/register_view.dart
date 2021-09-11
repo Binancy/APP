@@ -10,6 +10,7 @@ import 'package:binancy/views/advice/advice_card.dart';
 import 'package:binancy/views/enroll/loading_view.dart';
 import 'package:binancy/views/enroll/privacy_terms_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 class RegisterView extends StatefulWidget {
@@ -80,7 +81,6 @@ class _RegisterViewState extends State<RegisterView> {
             pinned: false,
             snap: true,
             floating: true,
-            brightness: Brightness.dark,
           ),
           SliverToBoxAdapter(child: adviceSlider(context)),
           SliverToBoxAdapter(

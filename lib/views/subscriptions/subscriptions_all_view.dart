@@ -16,7 +16,6 @@ class SubscriptionsView extends StatelessWidget {
               resizeToAvoidBottomInset: false,
               appBar: AppBar(
                 elevation: 0,
-                brightness: Brightness.dark,
                 centerTitle: true,
                 title: Text("Tus suscripciones", style: appBarStyle()),
                 backgroundColor: Colors.transparent,
