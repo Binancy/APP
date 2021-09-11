@@ -2,6 +2,7 @@ import 'package:binancy/controllers/providers/categories_change_notifier.dart';
 import 'package:binancy/controllers/providers/movements_change_notifier.dart';
 import 'package:binancy/controllers/providers/subscriptions_change_notifier.dart';
 import 'package:binancy/globals.dart';
+import 'package:binancy/utils/utils.dart';
 import 'package:binancy/views/movements/movements_all_view.dart';
 import 'package:binancy/views/movements/movments_balance_view.dart';
 import 'package:binancy/views/subscriptions/subscriptions_all_view.dart';
@@ -123,13 +124,8 @@ class DashboardHeaderRow extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  value >= 10000
-                      ? Text(
-                          value.toInt().toString() + "€",
-                          style: dashboardHeaderItemTitleStyle(),
-                        )
-                      : Text(value.toStringAsFixed(2) + "€",
-                          style: dashboardHeaderItemTitleStyle()),
+                  Text(Utils.parseAmount(value, amountToRound: 10000),
+                      style: dashboardHeaderItemTitleStyle()),
                   Text(placeholder, style: dashboardHeaderItemActionStyle())
                 ],
               ),

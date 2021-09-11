@@ -8,6 +8,7 @@ import 'package:binancy/globals.dart';
 import 'package:binancy/utils/enums.dart';
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/utils.dart';
+import 'package:binancy/utils/widgets.dart';
 import 'package:binancy/views/microexpenses/microexpenses_view.dart';
 import 'package:binancy/views/movements/movements_all_view.dart';
 import 'package:binancy/views/movements/movement_view.dart';
@@ -16,8 +17,11 @@ import 'package:binancy/views/premium/premium_plans_view.dart';
 import 'package:binancy/views/savings_plan/savings_plans_all_view.dart';
 import 'package:binancy/views/settings/settings_view.dart';
 import 'package:binancy/views/subscriptions/subscriptions_all_view.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 
 import 'dashboard_action_button_widget.dart';
@@ -230,56 +234,66 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
         icon: SvgPicture.asset("assets/svg/dashboard_coins.svg"),
         text: "Gastos rápidos",
         action: () async {
-          MicroExpensesChangeNotifier microExpensesChangeNotifier =
-              MicroExpensesChangeNotifier();
-          await microExpensesChangeNotifier.updateMicroExpenses();
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (_) => MultiProvider(providers: [
-                        ChangeNotifierProvider(
-                            create: (_) => microExpensesChangeNotifier),
-                        ChangeNotifierProvider(
-                            create: (_) =>
-                                Provider.of<MovementsChangeNotifier>(context))
-                      ], child: MicroExpensesView())));
+          if (Utils.isPremium()) {
+            MicroExpensesChangeNotifier microExpensesChangeNotifier =
+                MicroExpensesChangeNotifier();
+            await microExpensesChangeNotifier.updateMicroExpenses();
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (_) => MultiProvider(providers: [
+                          ChangeNotifierProvider(
+                              create: (_) => microExpensesChangeNotifier),
+                          ChangeNotifierProvider(
+                              create: (_) =>
+                                  Provider.of<MovementsChangeNotifier>(context))
+                        ], child: MicroExpensesView())));
+          } else {
+            lockedAction();
+          }
         }));
     actionsList.add(ActionButtonWidget(
         context: context,
         icon: SvgPicture.asset("assets/svg/dashboard_vault.svg"),
         text: "Metas de ahorro",
-        action: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (_) => MultiProvider(
-                      providers: [
-                        ChangeNotifierProvider(
-                          create: (_) =>
-                              Provider.of<SavingsPlanChangeNotifier>(context),
-                        ),
-                        ChangeNotifierProvider(
-                          create: (_) =>
-                              Provider.of<MovementsChangeNotifier>(context),
-                        )
-                      ],
-                      child: SavingsPlanAllView(),
-                    )))));
+        action: () => Utils.isPremium()
+            ? Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (_) => MultiProvider(
+                          providers: [
+                            ChangeNotifierProvider(
+                              create: (_) =>
+                                  Provider.of<SavingsPlanChangeNotifier>(
+                                      context),
+                            ),
+                            ChangeNotifierProvider(
+                              create: (_) =>
+                                  Provider.of<MovementsChangeNotifier>(context),
+                            )
+                          ],
+                          child: SavingsPlanAllView(),
+                        )))
+            : lockedAction()));
     actionsList.add(ActionButtonWidget(
         context: context,
         icon: SvgPicture.asset("assets/svg/dashboard_historial.svg"),
         text: "Tus suscripciones",
-        action: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (_) => MultiProvider(
-                      providers: [
-                        ChangeNotifierProvider(
-                          create: (_) =>
-                              Provider.of<SubscriptionsChangeNotifier>(context),
-                        )
-                      ],
-                      child: SubscriptionsView(),
-                    )))));
+        action: () => Utils.isPremium()
+            ? Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (_) => MultiProvider(
+                          providers: [
+                            ChangeNotifierProvider(
+                              create: (_) =>
+                                  Provider.of<SubscriptionsChangeNotifier>(
+                                      context),
+                            )
+                          ],
+                          child: SubscriptionsView(),
+                        )))
+            : lockedAction()));
     actionsList.add(ActionButtonWidget(
         context: context,
         icon: SvgPicture.asset("assets/svg/dashboard_advices.svg"),
@@ -311,6 +325,59 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
                           create: (_) =>
                               Provider.of<PlansChangeNotifier>(context))
                     ], child: SettingsView())))));
+  }
+
+  Future<dynamic> lockedAction() {
+    return showCupertinoModalBottomSheet(
+        context: context,
+        barrierColor: themeColor.withOpacity(0.65),
+        builder: (_) => Container(
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      colors: [primaryColor, secondaryColor],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter)),
+              padding: EdgeInsets.all(customMargin),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                      child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text("Esta es una función premium",
+                          style: headerItemView(), textAlign: TextAlign.center),
+                      SpaceDivider(),
+                      Text(
+                          "Para utilizar esta función debes adquirir uno de los planes premium que Binancy obtiene",
+                          style: accentStyle(),
+                          textAlign: TextAlign.center)
+                    ],
+                  )),
+                  SpaceDivider(),
+                  BinancyButton(
+                      context: context,
+                      text: "Hazte premium",
+                      action: () {
+                        Navigator.pop(context);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => MultiProvider(providers: [
+                                      ChangeNotifierProvider(
+                                          create: (_) =>
+                                              Provider.of<PlansChangeNotifier>(
+                                                  context))
+                                    ], child: PremiumPlansView())));
+                      })
+                ],
+              ),
+            ));
   }
 
   void buildPointers() {

@@ -71,6 +71,7 @@ TextStyle headerItemView() {
       fontWeight: FontWeight.bold,
       fontFamily: "OpenSans",
       color: textColor,
+      decoration: TextDecoration.none,
       fontSize: 30);
 }
 
@@ -127,7 +128,12 @@ TextStyle plansButtonStyle() {
 }
 
 TextStyle accentStyle() {
-  return TextStyle(color: accentColor, fontSize: 18, fontFamily: "OpenSans");
+  return TextStyle(
+      color: accentColor,
+      fontSize: 18,
+      fontWeight: FontWeight.normal,
+      fontFamily: "OpenSans",
+      decoration: TextDecoration.none);
 }
 
 TextStyle miniInputStyle() {

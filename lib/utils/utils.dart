@@ -30,7 +30,8 @@ class Utils {
 
   // PLANS
 
-  static bool isPremium(String plan) {
+  static bool isPremium() {
+    String plan = userData['idPlan'];
     if (plan == MEMBER_PLAN || plan == BINANCY_PLAN) {
       return true;
     }
@@ -220,13 +221,16 @@ class Utils {
     return fullName;
   }
 
-  static String parseAmount(dynamic amount, {bool addCurreny = true}) {
+  static String parseAmount(dynamic amount,
+      {bool addCurreny = true, int amountToRound = 10000}) {
     String parsedAmount = "";
 
     if (amount is int) {
       parsedAmount = amount.toString();
     } else if (amount is double) {
-      parsedAmount = amount.toStringAsFixed(2);
+      parsedAmount = amount >= amountToRound
+          ? amount.toStringAsFixed(0)
+          : amount.toStringAsFixed(2);
     }
 
     if (addCurreny) {
