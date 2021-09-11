@@ -37,6 +37,24 @@ class Utils {
     return false;
   }
 
+  static bool currentPlanIsEqualOrGreater(
+      String currentPlan, String neededPlan) {
+    int posCurrentPlan = 0, posNeededPlan = 0;
+
+    for (var plan in AvaiablePlans.values) {
+      if (plan.toShortString() == currentPlan) {
+        posCurrentPlan = plan.index;
+      }
+
+      if (plan.toShortString() == neededPlan) {
+        posNeededPlan = plan.index;
+      }
+    }
+
+    print(posCurrentPlan <= posNeededPlan);
+    return posCurrentPlan <= posNeededPlan;
+  }
+
   // ENROLLMENT
 
   static String encrypt(String text) {

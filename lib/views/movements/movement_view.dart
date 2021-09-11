@@ -109,7 +109,7 @@ class _MovementViewState extends State<MovementView> {
                         ? widget.movementType.index == 0
                             ? "Añade un ingreso"
                             : "Añade un gasto"
-                        : selectedMovement.title,
+                        : selectedMovement.planTitle,
                     style: appBarStyle()),
               ),
               backgroundColor: Colors.transparent,
@@ -572,11 +572,11 @@ class _MovementViewState extends State<MovementView> {
       createMode = false;
       selectedCategory = selectedMovement.category;
 
-      titleController.text = selectedMovement.title;
+      titleController.text = selectedMovement.planTitle;
       valueController.text = selectedMovement.value is int
           ? selectedMovement.value.toString()
           : (selectedMovement.value as double).toStringAsFixed(2);
-      noteController.text = selectedMovement.description ?? "";
+      noteController.text = selectedMovement.planDescription ?? "";
 
       parsedDate = Utils.toYMD(selectedMovement.date, context);
     } else {

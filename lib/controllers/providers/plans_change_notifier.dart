@@ -10,6 +10,7 @@ class PlansChangeNotifier extends ChangeNotifier {
 
   Future<void> updatePlans() async {
     plansList = await PlansController.getAvaiablePlans();
+    plansList.sort((a, b) => b.planAmount.compareTo(a.planAmount));
     notifyListeners();
   }
 

@@ -12,57 +12,77 @@ class PremiumPlanCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      borderRadius: BorderRadius.circular(customBorderRadius),
-      elevation: 0,
-      clipBehavior: Clip.antiAliasWithSaveLayer,
-      color: themeColor.withOpacity(0.1),
-      child: InkWell(
-        onTap: () {},
-        borderRadius: BorderRadius.circular(customBorderRadius),
-        highlightColor: Colors.transparent,
-        splashColor: themeColor.withOpacity(0.1),
-        child: Container(
-          padding: EdgeInsets.all(customMargin),
-          child: Row(
-            children: [
-              Expanded(
-                  child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
+    return Opacity(
+        opacity:
+            !Utils.currentPlanIsEqualOrGreater(userData['idPlan'], plan.idPlan)
+                ? 1
+                : 0.65,
+        child: Material(
+          borderRadius: BorderRadius.circular(customBorderRadius),
+          elevation: 0,
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          color: themeColor.withOpacity(0.1),
+          child: InkWell(
+            onTap: () {},
+            borderRadius: BorderRadius.circular(customBorderRadius),
+            highlightColor: Colors.transparent,
+            splashColor: themeColor.withOpacity(0.1),
+            child: Container(
+              padding: EdgeInsets.all(customMargin),
+              child: Row(
                 children: [
-                  Text(plan.title, style: titleCardStyle()),
-                  Text(
-                      "Obtiene todas las funciones en todos los productos de Appxs, un solo pago y de por vida",
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                      style: miniAccentStyle())
-                ],
-              )),
-              SpaceDivider(isVertical: true),
-              Material(
-                borderRadius: BorderRadius.circular(customBorderRadius),
-                elevation: 0,
-                color: accentColor,
-                child: InkWell(
-                  onTap: () {},
-                  borderRadius: BorderRadius.circular(customBorderRadius),
-                  highlightColor: Colors.transparent,
-                  splashColor: themeColor.withOpacity(0.1),
-                  child: Container(
-                    padding: EdgeInsets.fromLTRB(customMargin * 1.5,
-                        customMargin / 2, customMargin * 1.5, customMargin / 2),
-                    child: Center(
-                      child: Text(Utils.parseAmount(plan.amount),
-                          style: plansButtonStyle()),
+                  Expanded(
+                      child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(plan.planTitle, style: titleCardStyle()),
+                      Text(getDescriptionOfPlan(),
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                          style: miniAccentStyle())
+                    ],
+                  )),
+                  SpaceDivider(isVertical: true),
+                  Material(
+                    borderRadius: BorderRadius.circular(customBorderRadius),
+                    elevation: 0,
+                    color: accentColor,
+                    child: InkWell(
+                      onTap: () {},
+                      borderRadius: BorderRadius.circular(customBorderRadius),
+                      highlightColor: Colors.transparent,
+                      splashColor: themeColor.withOpacity(0.1),
+                      child: Container(
+                        padding: EdgeInsets.all(customMargin / 1.5),
+                        child: Center(
+                          child: Text(
+                              !Utils.currentPlanIsEqualOrGreater(
+                                      userData['idPlan'], plan.idPlan)
+                                  ? Utils.parseAmount(plan.planAmount)
+                                  : "Adquirido",
+                              style: plansButtonStyle()),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              )
-            ],
+                  )
+                ],
+              ),
+            ),
           ),
-        ),
-      ),
-    );
+        ));
+  }
+
+  String getDescriptionOfPlan() {
+    switch (plan.idPlan) {
+      case "member":
+        return "Obtiene todas las funciones en todos los productos de Appxs. Un solo pago y de por vida";
+      case "binancy":
+        return "Obtiene todas las funciones disponibles de Binancy. Un solo pago y de por vida";
+      case "free":
+        return "Plan estándard, algunas funciones están bloqueadas";
+      default:
+        return "";
+    }
   }
 }

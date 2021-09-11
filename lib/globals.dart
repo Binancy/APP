@@ -13,6 +13,14 @@ const String MEMBER_PLAN = "member";
 const String BINANCY_PLAN = "binancy";
 const String FREE_PLAN = "free";
 
+enum AvaiablePlans { member, binancy, free }
+
+extension ParseToString on AvaiablePlans {
+  String toShortString() {
+    return this.toString().split('.').last;
+  }
+}
+
 // USER GLOBALS
 Map<String, dynamic> userData = {};
 List<Category> categoryList = [];

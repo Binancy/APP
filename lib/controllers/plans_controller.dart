@@ -1,18 +1,27 @@
 import 'package:binancy/models/announce.dart';
 import 'package:binancy/models/offert.dart';
 import 'package:binancy/models/plan.dart';
+import 'package:binancy/utils/api/conn_api.dart';
+import 'package:binancy/utils/api/endpoints.dart';
 import 'package:flutter_svg/svg.dart';
 
 class PlansController {
   static Future<List<Plan>> getAvaiablePlans() async {
     List<Plan> plansList = [];
-    for (var i = 0; i < 3; i++) {
-      plansList.add(Plan()
-        ..amount = 3.99
-        ..title = "Example Plan"
-        ..description = "This is an example plan"
-        ..idPlan = "example_plan");
+
+    ConnAPI connAPI = ConnAPI(APIEndpoints.READ_PLANS, "POST", false, {});
+    await connAPI.callAPI();
+    if (connAPI.getStatus() == 200) {
+      List<dynamic>? responseJSON = connAPI.getResponse();
+      if (responseJSON != null) {
+        for (var plan in responseJSON) {
+          plansList.add(Plan.fromJson(plan));
+        }
+      }
+    } else {
+      print("[ERROR] - Unable to get plans");
     }
+
     return plansList;
   }
 
