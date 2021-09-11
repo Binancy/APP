@@ -8,7 +8,6 @@ import 'package:binancy/views/savings_plan/savings_plan_empty_widget.dart';
 import 'package:binancy/views/savings_plan/savings_plan_view.dart';
 import 'package:binancy/views/savings_plan/savings_plan_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 

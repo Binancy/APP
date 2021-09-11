@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 Color primaryColor = Color(0xff012457);
@@ -115,6 +116,14 @@ TextStyle buttonStyle() {
 
 TextStyle inputStyle() {
   return TextStyle(color: textColor, fontSize: 18, fontFamily: "OpenSans");
+}
+
+TextStyle plansButtonStyle() {
+  return TextStyle(
+      color: themeColor,
+      fontSize: 18,
+      fontWeight: FontWeight.bold,
+      fontFamily: "OpenSans");
 }
 
 TextStyle accentStyle() {

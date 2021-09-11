@@ -5,7 +5,6 @@ import 'package:binancy/utils/widgets.dart';
 import 'package:binancy/views/settings/settings_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class SettingsUserDataView extends StatefulWidget {
   const SettingsUserDataView({Key? key}) : super(key: key);

@@ -8,7 +8,6 @@ import 'package:binancy/views/movements/movements_card_widget.dart';
 import 'package:binancy/views/movements/movements_empty_card_widget.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class MovementBalanceView extends StatelessWidget {
