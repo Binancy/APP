@@ -28,20 +28,17 @@ class DashboardActionsCard extends StatefulWidget {
 }
 
 class _DashboardActionsCardState extends State<DashboardActionsCard> {
-  List<double> opacityValueList = [1, 0.25];
+  List<double> opacityValueList = [];
   List<Widget> pointersList = [];
-  int opacityAnimationDurationMS = 500;
+  List<ActionButtonWidget> actionsList = [];
+  List<Widget> pageList = [];
 
   @override
   Widget build(BuildContext context) {
-    pointersList.clear();
-    for (var i = 0; i < opacityValueList.length; i++) {
-      pointersList.add(AnimatedOpacity(
-          opacity: opacityValueList[i],
-          duration: Duration(milliseconds: opacityAnimationDurationMS),
-          child: Icon(Icons.circle, color: Colors.white, size: 10)));
-    }
-
+    clearLists();
+    buildActions();
+    buildPageList(context);
+    buildPointers();
     return Column(
       children: [
         Text(
@@ -64,7 +61,7 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
                     height: (MediaQuery.of(context).size.height / 10 * 2.5),
                     child: PageView(
                       onPageChanged: (value) => updatePointers(value),
-                      children: [firstPage(context), secondPage(context)],
+                      children: pageList,
                     )),
                 Padding(
                     padding: EdgeInsets.only(left: 150, right: 150),
@@ -74,237 +71,6 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
                     ))
               ],
             ))
-      ],
-    );
-  }
-
-  Widget firstPage(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            ActionButtonWidget(
-                context: context,
-                icon: SvgPicture.asset("assets/svg/dashboard_add_income.svg"),
-                text: "Añade un ingreso",
-                action: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (_) => MultiProvider(
-                              providers: [
-                                ChangeNotifierProvider(
-                                  create: (_) =>
-                                      Provider.of<MovementsChangeNotifier>(
-                                          context),
-                                ),
-                                ChangeNotifierProvider(
-                                  create: (_) =>
-                                      Provider.of<CategoriesChangeNotifier>(
-                                          context),
-                                )
-                              ],
-                              child: MovementView(
-                                allowEdit: true,
-                                movementType: MovementType.INCOME,
-                              ),
-                            )))),
-            ActionButtonWidget(
-                context: context,
-                icon: SvgPicture.asset("assets/svg/dashboard_compare.svg"),
-                text: "Mi cuenta",
-                action: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (_) => MultiProvider(
-                              providers: [
-                                ChangeNotifierProvider(
-                                  create: (_) =>
-                                      Provider.of<MovementsChangeNotifier>(
-                                          context),
-                                ),
-                                ChangeNotifierProvider(
-                                  create: (_) =>
-                                      Provider.of<CategoriesChangeNotifier>(
-                                          context),
-                                )
-                              ],
-                              child: MovementBalanceView(),
-                            )))),
-            ActionButtonWidget(
-                context: context,
-                icon: SvgPicture.asset("assets/svg/dashboard_add_expense.svg"),
-                text: "Añade un gasto",
-                action: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (_) => MultiProvider(
-                              providers: [
-                                ChangeNotifierProvider(
-                                  create: (_) =>
-                                      Provider.of<MovementsChangeNotifier>(
-                                          context),
-                                ),
-                                ChangeNotifierProvider(
-                                  create: (_) =>
-                                      Provider.of<CategoriesChangeNotifier>(
-                                          context),
-                                )
-                              ],
-                              child: MovementView(
-                                allowEdit: true,
-                                movementType: MovementType.EXPEND,
-                              ),
-                            ))))
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            ActionButtonWidget(
-                context: context,
-                icon: SvgPicture.asset("assets/svg/dashboard_categories.svg"),
-                text: "Ver categorías",
-                action: () {}),
-            ActionButtonWidget(
-                context: context,
-                icon:
-                    SvgPicture.asset("assets/svg/dashboard_see_movements.svg"),
-                text: "Todos mis movimientos",
-                action: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => MultiProvider(
-                        providers: [
-                          ChangeNotifierProvider(
-                            create: (_) =>
-                                Provider.of<MovementsChangeNotifier>(context),
-                          ),
-                          ChangeNotifierProvider(
-                            create: (_) =>
-                                Provider.of<CategoriesChangeNotifier>(context),
-                          )
-                        ],
-                        child: AllMovementView(),
-                      ),
-                    ))),
-            ActionButtonWidget(
-                context: context,
-                icon: SvgPicture.asset("assets/svg/dashboard_vault.svg"),
-                text: "Metas de ahorro",
-                action: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (_) => MultiProvider(
-                              providers: [
-                                ChangeNotifierProvider(
-                                  create: (_) =>
-                                      Provider.of<SavingsPlanChangeNotifier>(
-                                          context),
-                                ),
-                                ChangeNotifierProvider(
-                                  create: (_) =>
-                                      Provider.of<MovementsChangeNotifier>(
-                                          context),
-                                )
-                              ],
-                              child: SavingsPlanAllView(),
-                            )))),
-          ],
-        )
-      ],
-    );
-  }
-
-  Widget secondPage(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            ActionButtonWidget(
-                context: context,
-                icon: SvgPicture.asset("assets/svg/dashboard_historial.svg"),
-                text: "Tus suscripciones",
-                action: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (_) => MultiProvider(
-                              providers: [
-                                ChangeNotifierProvider(
-                                  create: (_) =>
-                                      Provider.of<SubscriptionsChangeNotifier>(
-                                          context),
-                                )
-                              ],
-                              child: SubscriptionsView(),
-                            )))),
-            ActionButtonWidget(
-                context: context,
-                icon: SvgPicture.asset("assets/svg/dashboard_advices.svg"),
-                text: "Añade un ingreso",
-                action: () {}),
-            ActionButtonWidget(
-                context: context,
-                icon: SvgPicture.asset("assets/svg/dashboard_settings.svg"),
-                text: "Ajustes",
-                action: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (_) => MultiProvider(providers: [
-                              ChangeNotifierProvider(
-                                  create: (_) =>
-                                      Provider.of<PlansChangeNotifier>(context))
-                            ], child: SettingsView())))),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            ActionButtonWidget(
-                context: context,
-                icon: SvgPicture.asset("assets/svg/dashboard_coins.svg"),
-                text: "Gastos rápidos",
-                action: () async {
-                  MicroExpensesChangeNotifier microExpensesChangeNotifier =
-                      MicroExpensesChangeNotifier();
-                  await microExpensesChangeNotifier.updateMicroExpenses();
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (_) => MultiProvider(providers: [
-                                ChangeNotifierProvider(
-                                    create: (_) => microExpensesChangeNotifier),
-                                ChangeNotifierProvider(
-                                    create: (_) =>
-                                        Provider.of<MovementsChangeNotifier>(
-                                            context))
-                              ], child: MicroExpensesView())));
-                }),
-            Utils.currentPlanIsEqualOrLower(userData['idPlan'], "binancy")
-                ? ActionButtonWidget(
-                    context: context,
-                    icon: SvgPicture.asset("assets/svg/dashboard_premium.svg"),
-                    text: "Hazte premium",
-                    action: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (_) => MultiProvider(providers: [
-                                  ChangeNotifierProvider(
-                                      create: (_) =>
-                                          Provider.of<PlansChangeNotifier>(
-                                              context))
-                                ], child: PremiumPlansView()))))
-                : buildEmptyActionWidget(context),
-            buildEmptyActionWidget(context)
-          ],
-        )
       ],
     );
   }
@@ -323,5 +89,244 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
     setState(() {
       opacityValueList[value] = 1;
     });
+  }
+
+  void buildPageList(BuildContext context) {
+    double numPages = Utils.roundDown(actionsList.length / 6, 0);
+    if (actionsList.length % 6 != 0) {
+      numPages++;
+    }
+
+    for (var i = 0; i < numPages; i++) {
+      List<Widget> pageActions = [];
+      for (var j = 0; j < 6; j++) {
+        try {
+          pageActions.add(actionsList.elementAt((6 * i) + j));
+        } catch (e) {
+          pageActions.add(buildEmptyActionWidget(context));
+        }
+      }
+      pageList.add(Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              pageActions.elementAt(0),
+              pageActions.elementAt(1),
+              pageActions.elementAt(2)
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              pageActions.elementAt(3),
+              pageActions.elementAt(4),
+              pageActions.elementAt(5)
+            ],
+          )
+        ],
+      ));
+    }
+  }
+
+  void buildActions() {
+    actionsList.add(ActionButtonWidget(
+        context: context,
+        icon: SvgPicture.asset("assets/svg/dashboard_add_income.svg"),
+        text: "Añade un ingreso",
+        action: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (_) => MultiProvider(
+                      providers: [
+                        ChangeNotifierProvider(
+                          create: (_) =>
+                              Provider.of<MovementsChangeNotifier>(context),
+                        ),
+                        ChangeNotifierProvider(
+                          create: (_) =>
+                              Provider.of<CategoriesChangeNotifier>(context),
+                        )
+                      ],
+                      child: MovementView(
+                        allowEdit: true,
+                        movementType: MovementType.INCOME,
+                      ),
+                    )))));
+    actionsList.add(ActionButtonWidget(
+        context: context,
+        icon: SvgPicture.asset("assets/svg/dashboard_compare.svg"),
+        text: "Mi cuenta",
+        action: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (_) => MultiProvider(
+                      providers: [
+                        ChangeNotifierProvider(
+                          create: (_) =>
+                              Provider.of<MovementsChangeNotifier>(context),
+                        ),
+                        ChangeNotifierProvider(
+                          create: (_) =>
+                              Provider.of<CategoriesChangeNotifier>(context),
+                        )
+                      ],
+                      child: MovementBalanceView(),
+                    )))));
+    actionsList.add(ActionButtonWidget(
+        context: context,
+        icon: SvgPicture.asset("assets/svg/dashboard_add_expense.svg"),
+        text: "Añade un gasto",
+        action: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (_) => MultiProvider(
+                      providers: [
+                        ChangeNotifierProvider(
+                          create: (_) =>
+                              Provider.of<MovementsChangeNotifier>(context),
+                        ),
+                        ChangeNotifierProvider(
+                          create: (_) =>
+                              Provider.of<CategoriesChangeNotifier>(context),
+                        )
+                      ],
+                      child: MovementView(
+                        allowEdit: true,
+                        movementType: MovementType.EXPEND,
+                      ),
+                    )))));
+    actionsList.add(ActionButtonWidget(
+        context: context,
+        icon: SvgPicture.asset("assets/svg/dashboard_categories.svg"),
+        text: "Ver categorías",
+        action: () {}));
+    actionsList.add(ActionButtonWidget(
+        context: context,
+        icon: SvgPicture.asset("assets/svg/dashboard_see_movements.svg"),
+        text: "Todos mis movimientos",
+        action: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => MultiProvider(
+                providers: [
+                  ChangeNotifierProvider(
+                    create: (_) =>
+                        Provider.of<MovementsChangeNotifier>(context),
+                  ),
+                  ChangeNotifierProvider(
+                    create: (_) =>
+                        Provider.of<CategoriesChangeNotifier>(context),
+                  )
+                ],
+                child: AllMovementView(),
+              ),
+            ))));
+    actionsList.add(ActionButtonWidget(
+        context: context,
+        icon: SvgPicture.asset("assets/svg/dashboard_coins.svg"),
+        text: "Gastos rápidos",
+        action: () async {
+          MicroExpensesChangeNotifier microExpensesChangeNotifier =
+              MicroExpensesChangeNotifier();
+          await microExpensesChangeNotifier.updateMicroExpenses();
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (_) => MultiProvider(providers: [
+                        ChangeNotifierProvider(
+                            create: (_) => microExpensesChangeNotifier),
+                        ChangeNotifierProvider(
+                            create: (_) =>
+                                Provider.of<MovementsChangeNotifier>(context))
+                      ], child: MicroExpensesView())));
+        }));
+    actionsList.add(ActionButtonWidget(
+        context: context,
+        icon: SvgPicture.asset("assets/svg/dashboard_vault.svg"),
+        text: "Metas de ahorro",
+        action: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (_) => MultiProvider(
+                      providers: [
+                        ChangeNotifierProvider(
+                          create: (_) =>
+                              Provider.of<SavingsPlanChangeNotifier>(context),
+                        ),
+                        ChangeNotifierProvider(
+                          create: (_) =>
+                              Provider.of<MovementsChangeNotifier>(context),
+                        )
+                      ],
+                      child: SavingsPlanAllView(),
+                    )))));
+    actionsList.add(ActionButtonWidget(
+        context: context,
+        icon: SvgPicture.asset("assets/svg/dashboard_historial.svg"),
+        text: "Tus suscripciones",
+        action: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (_) => MultiProvider(
+                      providers: [
+                        ChangeNotifierProvider(
+                          create: (_) =>
+                              Provider.of<SubscriptionsChangeNotifier>(context),
+                        )
+                      ],
+                      child: SubscriptionsView(),
+                    )))));
+    actionsList.add(ActionButtonWidget(
+        context: context,
+        icon: SvgPicture.asset("assets/svg/dashboard_advices.svg"),
+        text: "Ayudas y consejos",
+        action: () {}));
+    if (Utils.currentPlanIsEqualOrLower(userData['idPlan'], "binancy")) {
+      ActionButtonWidget(
+          context: context,
+          icon: SvgPicture.asset("assets/svg/dashboard_premium.svg"),
+          text: "Hazte premium",
+          action: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (_) => MultiProvider(providers: [
+                        ChangeNotifierProvider(
+                            create: (_) =>
+                                Provider.of<PlansChangeNotifier>(context))
+                      ], child: PremiumPlansView()))));
+    }
+    actionsList.add(ActionButtonWidget(
+        context: context,
+        icon: SvgPicture.asset("assets/svg/dashboard_settings.svg"),
+        text: "Ajustes",
+        action: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (_) => MultiProvider(providers: [
+                      ChangeNotifierProvider(
+                          create: (_) =>
+                              Provider.of<PlansChangeNotifier>(context))
+                    ], child: SettingsView())))));
+  }
+
+  void buildPointers() {
+    opacityValueList = List.filled(pageList.length, 0.25);
+    opacityValueList[0] = 1;
+    for (var i = 0; i < pageList.length; i++) {
+      pointersList.add(AnimatedOpacity(
+          opacity: opacityValueList[i],
+          duration: Duration(milliseconds: opacityAnimationDurationMS),
+          child: Icon(Icons.circle, color: Colors.white, size: 10)));
+    }
+  }
+
+  void clearLists() {
+    actionsList.clear();
+    pageList.clear();
+    pointersList.clear();
   }
 }
