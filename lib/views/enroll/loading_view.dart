@@ -10,6 +10,7 @@ import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/widgets.dart';
 import 'package:binancy/views/dashboard/dashboard_view.dart';
+import 'package:binancy/views/enroll/splash_view.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
@@ -50,55 +51,6 @@ class LoadingView extends StatelessWidget {
   void initializeApp(BuildContext context) async {
     await storeToken();
     gotoDashboard(context);
-  }
-
-  void gotoDashboard(BuildContext context) async {
-    await Future.delayed(Duration(seconds: 3));
-
-    MovementsChangeNotifier dashboardChangeNotifier = MovementsChangeNotifier();
-    await dashboardChangeNotifier.updateMovements();
-
-    CategoriesChangeNotifier categoriesChangeNotifier =
-        CategoriesChangeNotifier();
-    await categoriesChangeNotifier.updateCategories();
-
-    SubscriptionsChangeNotifier subscriptionsChangeNotifier =
-        SubscriptionsChangeNotifier();
-    await subscriptionsChangeNotifier.updateSubscriptions();
-
-    SavingsPlanChangeNotifier savingsPlanChangeNotifier =
-        SavingsPlanChangeNotifier();
-    await savingsPlanChangeNotifier.updateSavingsPlan();
-
-    // Verifica si hay alguna suscripción por pagar, si es asi, añade el gasto a la
-    // DB, actualiza el ultimo mes de cobro de la suscripción y avisa a MovementsChangeNotifier
-    // que tiene que actualizarse de nuevo
-    await SubscriptionsController.checkSubscriptions(
-            subscriptionsChangeNotifier.subscriptionsList)
-        .then((value) async {
-      if (value) {
-        await dashboardChangeNotifier.updateMovements();
-      }
-    });
-
-    Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(
-            builder: (_) => MultiProvider(providers: [
-                  ChangeNotifierProvider(
-                      create: (context) => dashboardChangeNotifier),
-                  ChangeNotifierProvider(
-                      create: (context) => categoriesChangeNotifier),
-                  ChangeNotifierProvider(
-                    create: (context) => subscriptionsChangeNotifier,
-                  ),
-                  ChangeNotifierProvider(
-                      create: (context) => savingsPlanChangeNotifier),
-                  ChangeNotifierProvider(
-                      create: (_) => PlansChangeNotifier()
-                        ..updatePlans()
-                        ..updateCarousel())
-                ], child: DashboardView())),
-        (route) => false);
   }
 
   Future<void> storeToken() async {

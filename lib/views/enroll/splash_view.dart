@@ -50,7 +50,6 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void startSplashScreen(BuildContext context) async {
-    await Future.delayed(Duration(seconds: 3));
     if (await checkLoginWithToken()) {
       gotoDashboard(context);
     } else {
@@ -73,20 +72,28 @@ class _SplashScreenState extends State<SplashScreen> {
     return false;
   }
 
-  void gotoDashboard(BuildContext context) async {
-    MovementsChangeNotifier dashboardChangeNotifier = MovementsChangeNotifier();
-    await dashboardChangeNotifier.updateMovements();
+  void gotoLogin(BuildContext context) {
+    Navigator.pushAndRemoveUntil(context,
+        MaterialPageRoute(builder: (context) => LoginView()), (route) => false);
+  }
+}
 
-    CategoriesChangeNotifier categoriesChangeNotifier =
-        CategoriesChangeNotifier();
-    await categoriesChangeNotifier.updateCategories();
+void gotoDashboard(BuildContext context) async {
+  MovementsChangeNotifier dashboardChangeNotifier = MovementsChangeNotifier();
+  await dashboardChangeNotifier.updateMovements();
 
-    SubscriptionsChangeNotifier subscriptionsChangeNotifier =
-        SubscriptionsChangeNotifier();
+  CategoriesChangeNotifier categoriesChangeNotifier =
+      CategoriesChangeNotifier();
+  await categoriesChangeNotifier.updateCategories();
+
+  SubscriptionsChangeNotifier subscriptionsChangeNotifier =
+      SubscriptionsChangeNotifier();
+
+  SavingsPlanChangeNotifier savingsPlanChangeNotifier =
+      SavingsPlanChangeNotifier();
+
+  if (Utils.isPremium()) {
     await subscriptionsChangeNotifier.updateSubscriptions();
-
-    SavingsPlanChangeNotifier savingsPlanChangeNotifier =
-        SavingsPlanChangeNotifier();
     await savingsPlanChangeNotifier.updateSavingsPlan();
 
     // Verifica si hay alguna suscripción por pagar, si es asi, añade el gasto a la
@@ -99,29 +106,24 @@ class _SplashScreenState extends State<SplashScreen> {
         await dashboardChangeNotifier.updateMovements();
       }
     });
-
-    Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(
-            builder: (_) => MultiProvider(providers: [
-                  ChangeNotifierProvider(
-                      create: (context) => dashboardChangeNotifier),
-                  ChangeNotifierProvider(
-                      create: (context) => categoriesChangeNotifier),
-                  ChangeNotifierProvider(
-                    create: (context) => subscriptionsChangeNotifier,
-                  ),
-                  ChangeNotifierProvider(
-                      create: (context) => savingsPlanChangeNotifier),
-                  ChangeNotifierProvider(
-                      create: (_) => PlansChangeNotifier()
-                        ..updatePlans()
-                        ..updateCarousel())
-                ], child: DashboardView())),
-        (route) => false);
   }
 
-  void gotoLogin(BuildContext context) {
-    Navigator.pushAndRemoveUntil(context,
-        MaterialPageRoute(builder: (context) => LoginView()), (route) => false);
-  }
+  Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(
+          builder: (_) => MultiProvider(providers: [
+                ChangeNotifierProvider(
+                    create: (context) => dashboardChangeNotifier),
+                ChangeNotifierProvider(
+                    create: (context) => categoriesChangeNotifier),
+                ChangeNotifierProvider(
+                  create: (context) => subscriptionsChangeNotifier,
+                ),
+                ChangeNotifierProvider(
+                    create: (context) => savingsPlanChangeNotifier),
+                ChangeNotifierProvider(
+                    create: (_) => PlansChangeNotifier()
+                      ..updatePlans()
+                      ..updateCarousel())
+              ], child: DashboardView())),
+      (route) => false);
 }
