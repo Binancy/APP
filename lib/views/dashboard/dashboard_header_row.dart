@@ -14,69 +14,10 @@ class DashboardHeaderRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer2<MovementsChangeNotifier, SubscriptionsChangeNotifier>(
-        builder: (context, movementsProvder, subscriptionsProvider, child) {
-      List<Widget> rowItems = [
-        rowWidget(
-            movementsProvder.totalHeritage,
-            "Ver patrimonio",
-            () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (_) => MultiProvider(
-                          providers: [
-                            ChangeNotifierProvider(
-                              create: (_) =>
-                                  Provider.of<MovementsChangeNotifier>(context),
-                            ),
-                            ChangeNotifierProvider(
-                              create: (_) =>
-                                  Provider.of<CategoriesChangeNotifier>(
-                                      context),
-                            )
-                          ],
-                          child: MovementBalanceView(),
-                        )))),
-        rowWidget(
-            movementsProvder.getThisMonthIncomes(),
-            "Ver ingresos",
-            () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => MultiProvider(
-                    providers: [
-                      ChangeNotifierProvider(
-                        create: (_) =>
-                            Provider.of<MovementsChangeNotifier>(context),
-                      ),
-                      ChangeNotifierProvider(
-                        create: (_) =>
-                            Provider.of<CategoriesChangeNotifier>(context),
-                      )
-                    ],
-                    child: AllMovementView(initialPage: 0),
-                  ),
-                ))),
-        rowWidget(
-            movementsProvder.getThisMonthExpenses(),
-            "Ver gastos",
-            () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => MultiProvider(
-                    providers: [
-                      ChangeNotifierProvider(
-                        create: (_) =>
-                            Provider.of<MovementsChangeNotifier>(context),
-                      ),
-                      ChangeNotifierProvider(
-                        create: (_) =>
-                            Provider.of<CategoriesChangeNotifier>(context),
-                      )
-                    ],
-                    child: AllMovementView(initialPage: 1),
-                  ),
-                ))),
-        rowWidget(
+        builder: (context, movementsProvider, subscriptionsProvider, child) {
+      List<Widget> rowItems = buildRowWidgets(context, movementsProvider);
+      if (Utils.isPremium()) {
+        rowItems.add(rowWidget(
             subscriptionsProvider.totalSubscriptionsValue,
             "Ver suscripciones",
             () => Navigator.push(
@@ -91,8 +32,9 @@ class DashboardHeaderRow extends StatelessWidget {
                             )
                           ],
                           child: SubscriptionsView(),
-                        ))))
-      ];
+                        )))));
+      }
+
       return Container(
           margin: EdgeInsets.only(top: 10, bottom: customMargin),
           height: (MediaQuery.of(context).size.height / 10),
@@ -132,5 +74,70 @@ class DashboardHeaderRow extends StatelessWidget {
             )),
       ),
     );
+  }
+
+  List<Widget> buildRowWidgets(
+      BuildContext context, MovementsChangeNotifier movementsProvider) {
+    return [
+      rowWidget(
+          movementsProvider.totalHeritage,
+          "Ver patrimonio",
+          () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (_) => MultiProvider(
+                        providers: [
+                          ChangeNotifierProvider(
+                            create: (_) =>
+                                Provider.of<MovementsChangeNotifier>(context),
+                          ),
+                          ChangeNotifierProvider(
+                            create: (_) =>
+                                Provider.of<CategoriesChangeNotifier>(context),
+                          )
+                        ],
+                        child: MovementBalanceView(),
+                      )))),
+      rowWidget(
+          movementsProvider.getThisMonthIncomes(),
+          "Ver ingresos",
+          () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => MultiProvider(
+                  providers: [
+                    ChangeNotifierProvider(
+                      create: (_) =>
+                          Provider.of<MovementsChangeNotifier>(context),
+                    ),
+                    ChangeNotifierProvider(
+                      create: (_) =>
+                          Provider.of<CategoriesChangeNotifier>(context),
+                    )
+                  ],
+                  child: AllMovementView(initialPage: 0),
+                ),
+              ))),
+      rowWidget(
+          movementsProvider.getThisMonthExpenses(),
+          "Ver gastos",
+          () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => MultiProvider(
+                  providers: [
+                    ChangeNotifierProvider(
+                      create: (_) =>
+                          Provider.of<MovementsChangeNotifier>(context),
+                    ),
+                    ChangeNotifierProvider(
+                      create: (_) =>
+                          Provider.of<CategoriesChangeNotifier>(context),
+                    )
+                  ],
+                  child: AllMovementView(initialPage: 1),
+                ),
+              ))),
+    ];
   }
 }
