@@ -1,4 +1,9 @@
 class APIEndpoints {
+  // ACCOUNT
+  static const String DELETE_ACCOUNT = "/api/account/deleteAccount";
+  static const String DELETE_USER_DATA = "/api/account/deleteData";
+  static const String CHANGE_PASSWORD = "/api/account/changePassword";
+
   // LOGIN & REGISTER
   static const String LOGIN = "/api/login";
   static const String REGISTER = "/api/register";

@@ -44,9 +44,9 @@ class SettingsView extends StatelessWidget {
                         "¿Estas seguro que quieres cerrar tu sesión?", [
                       BinancyInfoDialogItem(
                           "Cancelar", () => Navigator.pop(context)),
-                      BinancyInfoDialogItem("Cerrar sesión", () {
+                      BinancyInfoDialogItem("Cerrar sesión", () async {
                         Navigator.pop(context);
-                        Utils.clearSecureStorage();
+                        await Utils.clearSecureStorage();
                         Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(

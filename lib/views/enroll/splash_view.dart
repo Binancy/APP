@@ -71,11 +71,11 @@ class _SplashScreenState extends State<SplashScreen> {
     }
     return false;
   }
+}
 
-  void gotoLogin(BuildContext context) {
-    Navigator.pushAndRemoveUntil(context,
-        MaterialPageRoute(builder: (context) => LoginView()), (route) => false);
-  }
+void gotoLogin(BuildContext context) {
+  Navigator.pushAndRemoveUntil(context,
+      MaterialPageRoute(builder: (context) => LoginView()), (route) => false);
 }
 
 void gotoDashboard(BuildContext context) async {
