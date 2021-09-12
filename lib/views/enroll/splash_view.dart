@@ -86,6 +86,10 @@ void gotoDashboard(BuildContext context) async {
       CategoriesChangeNotifier();
   await categoriesChangeNotifier.updateCategories();
 
+  PlansChangeNotifier plansChangeNotifier = PlansChangeNotifier();
+  await plansChangeNotifier.updatePlans();
+  await plansChangeNotifier.updateCarousel();
+
   SubscriptionsChangeNotifier subscriptionsChangeNotifier =
       SubscriptionsChangeNotifier();
 
@@ -120,10 +124,7 @@ void gotoDashboard(BuildContext context) async {
                 ),
                 ChangeNotifierProvider(
                     create: (context) => savingsPlanChangeNotifier),
-                ChangeNotifierProvider(
-                    create: (_) => PlansChangeNotifier()
-                      ..updatePlans()
-                      ..updateCarousel())
+                ChangeNotifierProvider(create: (_) => plansChangeNotifier)
               ], child: DashboardView())),
       (route) => false);
 }

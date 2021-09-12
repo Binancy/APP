@@ -99,7 +99,7 @@ class SettingsView extends StatelessWidget {
       LinearDivider(),
       SettingsActionRow(text: "Seguridad", action: () => null),
       LinearDivider(),
-      Utils.currentPlanIsEqualOrLower(userData['idPlan'], "binancy")
+      Utils.showIfPlanIsEqualOrLower(userData['idPlan'], "binancy")
           ? SettingsActionRow(
               text: "Cambiar de plan",
               action: () => Navigator.push(

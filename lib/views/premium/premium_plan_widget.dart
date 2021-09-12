@@ -14,7 +14,7 @@ class PremiumPlanCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Opacity(
         opacity:
-            !Utils.currentPlanIsEqualOrGreater(userData['idPlan'], plan.idPlan)
+            !Utils.showIfPlanIsEqualOrHigher(userData['idPlan'], plan.idPlan)
                 ? 1
                 : 0.65,
         child: Material(
@@ -57,7 +57,7 @@ class PremiumPlanCard extends StatelessWidget {
                         padding: EdgeInsets.all(customMargin / 1.5),
                         child: Center(
                           child: Text(
-                              !Utils.currentPlanIsEqualOrGreater(
+                              !Utils.showIfPlanIsEqualOrHigher(
                                       userData['idPlan'], plan.idPlan)
                                   ? Utils.parseAmount(plan.planAmount)
                                   : "Adquirido",

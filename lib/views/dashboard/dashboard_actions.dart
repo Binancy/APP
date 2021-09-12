@@ -33,16 +33,27 @@ class DashboardActionsCard extends StatefulWidget {
 
 class _DashboardActionsCardState extends State<DashboardActionsCard> {
   List<double> opacityValueList = [];
-  List<Widget> pointersList = [];
   List<ActionButtonWidget> actionsList = [];
   List<Widget> pageList = [];
 
+  bool firstRun = true;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    clearLists();
-    buildActions();
-    buildPageList(context);
-    buildPointers();
+    if (firstRun) {
+      clearLists();
+      buildActions();
+      buildPageList(context);
+      opacityValueList = List.filled(pageList.length, 0.25);
+      opacityValueList[0] = 1;
+      firstRun = false;
+    }
+
     return Column(
       children: [
         Text(
@@ -71,7 +82,7 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
                     padding: EdgeInsets.only(left: 150, right: 150),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: pointersList,
+                      children: buildPointers(),
                     ))
               ],
             ))
@@ -299,8 +310,8 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
         icon: SvgPicture.asset("assets/svg/dashboard_advices.svg"),
         text: "Ayudas y consejos",
         action: () {}));
-    if (Utils.currentPlanIsEqualOrLower(userData['idPlan'], "binancy")) {
-      ActionButtonWidget(
+    if (Utils.showIfPlanIsEqualOrLower(userData['idPlan'], "binancy")) {
+      actionsList.add(ActionButtonWidget(
           context: context,
           icon: SvgPicture.asset("assets/svg/dashboard_premium.svg"),
           text: "Hazte premium",
@@ -311,7 +322,7 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
                         ChangeNotifierProvider(
                             create: (_) =>
                                 Provider.of<PlansChangeNotifier>(context))
-                      ], child: PremiumPlansView()))));
+                      ], child: PremiumPlansView())))));
     }
     actionsList.add(ActionButtonWidget(
         context: context,
@@ -380,20 +391,21 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
             ));
   }
 
-  void buildPointers() {
-    opacityValueList = List.filled(pageList.length, 0.25);
-    opacityValueList[0] = 1;
+  List<Widget> buildPointers() {
+    List<Widget> pointersList = [];
     for (var i = 0; i < pageList.length; i++) {
       pointersList.add(AnimatedOpacity(
           opacity: opacityValueList[i],
+          curve: Curves.easeInOut,
           duration: Duration(milliseconds: opacityAnimationDurationMS),
           child: Icon(Icons.circle, color: Colors.white, size: 10)));
     }
+
+    return pointersList;
   }
 
   void clearLists() {
     actionsList.clear();
     pageList.clear();
-    pointersList.clear();
   }
 }

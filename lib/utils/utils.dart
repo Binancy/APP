@@ -38,8 +38,7 @@ class Utils {
     return false;
   }
 
-  static bool currentPlanIsEqualOrGreater(
-      String currentPlan, String neededPlan) {
+  static bool showIfPlanIsEqualOrHigher(String currentPlan, String neededPlan) {
     int posCurrentPlan = 0, posNeededPlan = 0;
 
     for (var plan in AvaiablePlans.values) {
@@ -55,7 +54,7 @@ class Utils {
     return posCurrentPlan <= posNeededPlan;
   }
 
-  static bool currentPlanIsEqualOrLower(String currentPlan, String maxPlan) {
+  static bool showIfPlanIsEqualOrLower(String currentPlan, String maxPlan) {
     int posCurrentPlan = 0, posMaxPlan = 0;
 
     for (var plan in AvaiablePlans.values) {

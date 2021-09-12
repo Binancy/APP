@@ -18,7 +18,10 @@ class PlansChangeNotifier extends ChangeNotifier {
 
   Future<void> updateCarousel() async {
     carouselList = await PlansController.getAvaiableAnnounces();
-    carouselList += await PlansController.getAvaiableOfferts();
+    List<dynamic> offertsList = await PlansController.getAvaiableOfferts();
+    for (var offert in offertsList) {
+      carouselList.add(offert);
+    }
     notifyListeners();
   }
 }

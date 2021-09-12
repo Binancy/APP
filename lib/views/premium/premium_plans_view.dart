@@ -3,12 +3,10 @@ import 'package:binancy/globals.dart';
 import 'package:binancy/models/plan.dart';
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/widgets.dart';
-import 'package:binancy/views/advice/advice_card.dart';
 import 'package:binancy/views/premium/premium_carousel_widget.dart';
 import 'package:binancy/views/premium/premium_plan_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 class PremiumPlansView extends StatelessWidget {

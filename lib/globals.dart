@@ -40,7 +40,7 @@ double descriptionWidgetHeight = 250;
 // ANIMATION INTERVALS AND DURATION
 int savingsPlanProgressMS = 750;
 int plansCarouselIntervalMS = 7500;
-int opacityAnimationDurationMS = 500;
+int opacityAnimationDurationMS = 250;
 
 // UI GLOBALS
 int dashboardMaxNotifications = 3;
