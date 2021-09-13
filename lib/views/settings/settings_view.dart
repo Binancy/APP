@@ -5,7 +5,7 @@ import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/widgets.dart';
 import 'package:binancy/views/enroll/login_view.dart';
-import 'package:binancy/views/premium/premium_plans_view.dart';
+import 'package:binancy/views/payments/premium_plans_view.dart';
 import 'package:binancy/views/settings/settings_user_info.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

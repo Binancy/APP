@@ -70,6 +70,10 @@ class Utils {
     return posCurrentPlan >= posMaxPlan;
   }
 
+  static bool showIfPlanIsEqual(String currentPlan, String toComparePlan) {
+    return currentPlan == toComparePlan;
+  }
+
   // ENROLLMENT
 
   static String encrypt(String text) {
