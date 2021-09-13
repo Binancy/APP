@@ -11,6 +11,8 @@ import 'package:binancy/utils/widgets.dart';
 import 'package:binancy/views/dashboard/dashboard_view.dart';
 import 'package:binancy/views/enroll/login_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../globals.dart';
@@ -50,6 +52,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void startSplashScreen(BuildContext context) async {
+    await precacheSvg(context);
     if (await checkLoginWithToken()) {
       gotoDashboard(context);
     } else {
@@ -70,6 +73,67 @@ class _SplashScreenState extends State<SplashScreen> {
       }
     }
     return false;
+  }
+
+  Future<void> precacheSvg(BuildContext context) async {
+    Future.wait([
+      precachePicture(
+          ExactAssetPicture(
+              SvgPicture.svgStringDecoder, "assets/svg/dashboard_vault.svg"),
+          null),
+      precachePicture(
+          ExactAssetPicture(SvgPicture.svgStringDecoder,
+              "assets/svg/dashboard_add_expense.svg"),
+          null),
+      precachePicture(
+          ExactAssetPicture(SvgPicture.svgStringDecoder,
+              "assets/svg/dashboard_add_income.svg"),
+          null),
+      precachePicture(
+          ExactAssetPicture(
+              SvgPicture.svgStringDecoder, "assets/svg/dashboard_advices.svg"),
+          null),
+      precachePicture(
+          ExactAssetPicture(SvgPicture.svgStringDecoder,
+              "assets/svg/dashboard_categories.svg"),
+          null),
+      precachePicture(
+          ExactAssetPicture(SvgPicture.svgStringDecoder,
+              "assets/svg/dashboard_check_balance.svg"),
+          null),
+      precachePicture(
+          ExactAssetPicture(
+              SvgPicture.svgStringDecoder, "assets/svg/dashboard_coins.svg"),
+          null),
+      precachePicture(
+          ExactAssetPicture(
+              SvgPicture.svgStringDecoder, "assets/svg/dashboard_compare.svg"),
+          null),
+      precachePicture(
+          ExactAssetPicture(SvgPicture.svgStringDecoder,
+              "assets/svg/dashboard_historial.svg"),
+          null),
+      precachePicture(
+          ExactAssetPicture(SvgPicture.svgStringDecoder,
+              "assets/svg/dashboard_pie_chart.svg"),
+          null),
+      precachePicture(
+          ExactAssetPicture(
+              SvgPicture.svgStringDecoder, "assets/svg/dashboard_premium.svg"),
+          null),
+      precachePicture(
+          ExactAssetPicture(SvgPicture.svgStringDecoder,
+              "assets/svg/dashboard_see_movements.svg"),
+          null),
+      precachePicture(
+          ExactAssetPicture(SvgPicture.svgStringDecoder,
+              "assets/svg/dashboard_see_movements.svg"),
+          null),
+      precachePicture(
+          ExactAssetPicture(
+              SvgPicture.svgStringDecoder, "assets/svg/dashboard_settings.svg"),
+          null),
+    ]);
   }
 }
 
