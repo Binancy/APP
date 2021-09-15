@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 
 Color primaryColor = const Color(0xff012457);
 Color secondaryColor = const Color(0xff054CCB);
 Color accentColor = const Color(0xffFDCB32);
 Color textColor = const Color(0xffffffff);
 Color themeColor = Colors.black;
+Color dialogColor = const Color(0xff242424);
 
 TextStyle dashboardHeaderItemTitleStyle() {
   return TextStyle(fontSize: 22, color: textColor, fontFamily: "OpenSans");
@@ -118,6 +120,14 @@ TextStyle buttonStyle() {
 
 TextStyle inputStyle() {
   return TextStyle(color: textColor, fontSize: 18, fontFamily: "OpenSans");
+}
+
+TextStyle dialogStyle() {
+  return TextStyle(
+      color: themeColor,
+      fontSize: 18,
+      fontFamily: "OpenSans",
+      fontWeight: FontWeight.bold);
 }
 
 TextStyle plansButtonStyle() {

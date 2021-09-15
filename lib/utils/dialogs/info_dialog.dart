@@ -11,8 +11,7 @@ class BinancyInfoDialog {
   String text = "";
   List<BinancyInfoDialogItem> listItems = [];
 
-  BinancyInfoDialog(
-      this.context, this.text, List<BinancyInfoDialogItem> listItems) {
+  BinancyInfoDialog(this.context, this.text, this.listItems) {
     listItems = listItems;
     showCustomDialog();
   }

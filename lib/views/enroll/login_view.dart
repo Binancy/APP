@@ -2,6 +2,7 @@ import 'package:binancy/globals.dart';
 import 'package:binancy/utils/api/conn_api.dart';
 import 'package:binancy/utils/api/endpoints.dart';
 import 'package:binancy/utils/dialogs/info_dialog.dart';
+import 'package:binancy/utils/dialogs/progress_dialog.dart';
 import 'package:binancy/utils/ui/icons.dart';
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/utils.dart';
@@ -107,8 +108,11 @@ class _LoginViewState extends State<LoginView> {
       if (Utils.verifyEmail(email)) {
         ConnAPI connAPI = ConnAPI(APIEndpoints.LOGIN, "POST", false,
             {'email': email, 'pass': password});
+        BinancyProgressDialog progressDialog =
+            BinancyProgressDialog(context: context)..showProgressDialog();
         await connAPI.callAPI();
         dynamic response = connAPI.getResponse();
+        progressDialog.dismissDialog();
         if (response is BinancyException) {
           BinancyException exception = response;
           BinancyInfoDialog(context, exception.description,
