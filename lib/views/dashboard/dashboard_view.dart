@@ -17,7 +17,7 @@ class DashboardView extends StatefulWidget {
 }
 
 class _DashboardViewState extends State<DashboardView> {
-  RefreshController _refreshController =
+  final RefreshController _refreshController =
       RefreshController(initialRefresh: false);
 
   @override
@@ -27,10 +27,11 @@ class _DashboardViewState extends State<DashboardView> {
         Scaffold(
             appBar: AppBar(
               actions: [
-                IconButton(icon: Icon(BinancyIcons.alert), onPressed: () {})
+                IconButton(
+                    icon: const Icon(BinancyIcons.alert), onPressed: () {})
               ],
               leading: IconButton(
-                  icon: Icon(BinancyIcons.settings),
+                  icon: const Icon(BinancyIcons.settings),
                   onPressed: () => Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -79,7 +80,7 @@ class _DashboardViewState extends State<DashboardView> {
                   child: Column(
                     children: [
                       DashboardHeaderRow(),
-                      DashboardSummaryCard(),
+                      const DashboardSummaryCard(),
                       DashboardActionsCard()
                     ],
                   ),

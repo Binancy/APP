@@ -15,8 +15,7 @@ class LoadingView extends StatelessWidget {
     return WillPopScope(
         child: BinancyBackground(Scaffold(
             backgroundColor: Colors.transparent,
-            body: Container(
-                child: Center(
+            body: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -26,17 +25,17 @@ class LoadingView extends StatelessWidget {
                     width: animLoadingSize,
                     child: Lottie.asset("assets/lottie/loading_view_anim.json"),
                   ),
-                  SpaceDivider(),
+                  const SpaceDivider(),
                   Text(
                     appName + " esta cargando...",
                     style: titleCardStyle(),
                   ),
-                  SpaceDivider(),
+                  const SpaceDivider(),
                   Utils.getAllAdviceCards()[
                       Random().nextInt(Utils.getAllAdviceCards().length)]
                 ],
               ),
-            )))),
+            ))),
         onWillPop: () async => false);
   }
 

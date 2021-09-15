@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 class DashboardSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return DashboardSummaryCard();
+    return const DashboardSummaryCard();
   }
 }
 
@@ -30,12 +30,12 @@ class DashboardSummaryCard extends StatelessWidget {
             "Tu balance mensual",
             style: titleCardStyle(),
           ),
-          SizedBox(
+          const SizedBox(
             height: customMargin,
           ),
           Container(
             height: (MediaQuery.of(context).size.height / 10 * 3.5),
-            margin: EdgeInsets.only(
+            margin: const EdgeInsets.only(
               left: customMargin,
               right: customMargin,
             ),
@@ -44,7 +44,7 @@ class DashboardSummaryCard extends StatelessWidget {
                 Positioned(
                     height: (MediaQuery.of(context).size.height / 10 * 3.8),
                     width: MediaQuery.of(context).size.width - 42,
-                    child: Container(
+                    child: SizedBox(
                       height: (MediaQuery.of(context).size.height / 10 * 3.8),
                       child: radialGauge(barPercentage),
                     )),

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class SubscriptionView extends StatefulWidget {
   final bool allowEdit;
   final Subscription? selectedSubscription;
-  SubscriptionView({this.selectedSubscription, this.allowEdit = false});
+  const SubscriptionView({this.selectedSubscription, this.allowEdit = false});
 
   @override
   _SubscriptionViewState createState() => _SubscriptionViewState();

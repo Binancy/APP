@@ -48,58 +48,53 @@ class _SavingsPlanAllViewState extends State<SavingsPlanAllView> {
                                           context),
                                 )
                               ],
-                              child: SavingsPlanView(),
+                              child: const SavingsPlanView(),
                             ))),
-                icon: Icon(Icons.add))
+                icon: const Icon(Icons.add))
           ],
           title: Text("Metas de ahorro", style: appBarStyle())),
       body: Consumer2<SavingsPlanChangeNotifier, MovementsChangeNotifier>(
           builder: (context, savingsProvider, movementsProvider, child) {
         print(savingsProvider.savingsPlanList.length);
-        return Container(
-          child: Column(
-            children: [
-              SpaceDivider(),
-              AdviceCard(
-                  icon: SvgPicture.asset("assets/svg/dashboard_vault.svg"),
-                  text:
-                      "Establece metas de ahorro para cumplir en un tiempo determinado"),
-              SpaceDivider(),
-              Center(
-                  child: Text("Tus metas de ahorro", style: titleCardStyle())),
-              SpaceDivider(),
-              savingsProvider.savingsPlanList.isEmpty
-                  ? buildEmptySavingsPlanWidget()
-                  : showAllSavingsPlan
-                      ? Expanded(
-                          child: buildSavingsPlansWidgetList(
-                              savingsProvider, movementsProvider))
-                      : buildSavingsPlansWidgetList(
-                          savingsProvider, movementsProvider),
-              savingsProvider.savingsPlanList.isEmpty
-                  ? SizedBox()
-                  : savingsProvider.savingsPlanList.length <=
-                          savingsPlanMaxCount
-                      ? SizedBox()
-                      : SpaceDivider(),
-              savingsProvider.savingsPlanList.isEmpty
-                  ? SizedBox()
-                  : savingsProvider.savingsPlanList.length <=
-                          savingsPlanMaxCount
-                      ? SizedBox()
-                      : Padding(
-                          padding: EdgeInsets.only(
-                              left: customMargin, right: customMargin),
-                          child: BinancyButton(
-                              context: context,
-                              text: showAllSavingsPlan
-                                  ? "Ver menos"
-                                  : "Ver todas tus metas de ahorro",
-                              action: () => setState(() {
-                                    showAllSavingsPlan = !showAllSavingsPlan;
-                                  })))
-            ],
-          ),
+        return Column(
+          children: [
+            const SpaceDivider(),
+            AdviceCard(
+                icon: SvgPicture.asset("assets/svg/dashboard_vault.svg"),
+                text:
+                    "Establece metas de ahorro para cumplir en un tiempo determinado"),
+            const SpaceDivider(),
+            Center(child: Text("Tus metas de ahorro", style: titleCardStyle())),
+            const SpaceDivider(),
+            savingsProvider.savingsPlanList.isEmpty
+                ? buildEmptySavingsPlanWidget()
+                : showAllSavingsPlan
+                    ? Expanded(
+                        child: buildSavingsPlansWidgetList(
+                            savingsProvider, movementsProvider))
+                    : buildSavingsPlansWidgetList(
+                        savingsProvider, movementsProvider),
+            savingsProvider.savingsPlanList.isEmpty
+                ? const SizedBox()
+                : savingsProvider.savingsPlanList.length <= savingsPlanMaxCount
+                    ? const SizedBox()
+                    : const SpaceDivider(),
+            savingsProvider.savingsPlanList.isEmpty
+                ? const SizedBox()
+                : savingsProvider.savingsPlanList.length <= savingsPlanMaxCount
+                    ? const SizedBox()
+                    : Padding(
+                        padding: const EdgeInsets.only(
+                            left: customMargin, right: customMargin),
+                        child: BinancyButton(
+                            context: context,
+                            text: showAllSavingsPlan
+                                ? "Ver menos"
+                                : "Ver todas tus metas de ahorro",
+                            action: () => setState(() {
+                                  showAllSavingsPlan = !showAllSavingsPlan;
+                                })))
+          ],
         );
       }),
     ));
@@ -107,11 +102,11 @@ class _SavingsPlanAllViewState extends State<SavingsPlanAllView> {
 
   Container buildEmptySavingsPlanWidget() {
     return Container(
-      margin: EdgeInsets.only(left: customMargin, right: customMargin),
-      padding: EdgeInsets.all(customMargin),
+      margin: const EdgeInsets.only(left: customMargin, right: customMargin),
+      padding: const EdgeInsets.all(customMargin),
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.width,
-      child: SavingsPlanEmptyWidget(isExpanded: true),
+      child: const SavingsPlanEmptyWidget(isExpanded: true),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(customBorderRadius),
           color: themeColor.withOpacity(0.1)),
@@ -123,7 +118,7 @@ class _SavingsPlanAllViewState extends State<SavingsPlanAllView> {
       MovementsChangeNotifier movementsProvider) {
     return Container(
       clipBehavior: Clip.antiAliasWithSaveLayer,
-      margin: EdgeInsets.only(left: customMargin, right: customMargin),
+      margin: const EdgeInsets.only(left: customMargin, right: customMargin),
       decoration: BoxDecoration(
           color: themeColor.withOpacity(0.1),
           borderRadius: BorderRadius.circular(customBorderRadius)),
@@ -137,7 +132,7 @@ class _SavingsPlanAllViewState extends State<SavingsPlanAllView> {
                   savingsProvider,
                   movementsProvider.totalHeritage,
                   animate: firstRun),
-              separatorBuilder: (context, index) => LinearDivider(),
+              separatorBuilder: (context, index) => const LinearDivider(),
               itemCount: showAllSavingsPlan
                   ? savingsProvider.savingsPlanList.length
                   : savingsProvider.savingsPlanList.length > savingsPlanMaxCount

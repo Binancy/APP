@@ -41,33 +41,31 @@ class MovementBalanceView extends StatelessWidget {
                     centerTitle: true,
                     title: Text("Mi cuenta", style: appBarStyle()),
                   ),
-                  body: Container(
-                    child: ScrollConfiguration(
-                        behavior: MyBehavior(),
-                        child: ListView(
-                          padding: EdgeInsets.only(
-                              top: customMargin, bottom: customMargin),
-                          children: [
-                            Center(
-                                child: Text(
-                                    "Buenos días, " + userData['nameUser'],
-                                    style: titleCardStyle())),
-                            headerCard(context, movementsProvider),
-                            SpaceDivider(),
-                            Center(
-                                child: Text("Tus últimos balances",
-                                    style: titleCardStyle())),
-                            barChart(context),
-                            SpaceDivider(),
-                            Center(
-                                child: Text("Tus últimos movimientos",
-                                    style: titleCardStyle())),
-                            SpaceDivider(),
-                            latestsIncomes(context, movementsProvider),
-                            latestsExpenses(context, movementsProvider)
-                          ],
-                        )),
-                  ),
+                  body: ScrollConfiguration(
+                      behavior: MyBehavior(),
+                      child: ListView(
+                        padding: const EdgeInsets.only(
+                            top: customMargin, bottom: customMargin),
+                        children: [
+                          Center(
+                              child: Text(
+                                  "Buenos días, " + userData['nameUser'],
+                                  style: titleCardStyle())),
+                          headerCard(context, movementsProvider),
+                          const SpaceDivider(),
+                          Center(
+                              child: Text("Tus últimos balances",
+                                  style: titleCardStyle())),
+                          barChart(context),
+                          const SpaceDivider(),
+                          Center(
+                              child: Text("Tus últimos movimientos",
+                                  style: titleCardStyle())),
+                          const SpaceDivider(),
+                          latestsIncomes(context, movementsProvider),
+                          latestsExpenses(context, movementsProvider)
+                        ],
+                      )),
                 )));
   }
 
@@ -75,7 +73,8 @@ class MovementBalanceView extends StatelessWidget {
       BuildContext context, MovementsChangeNotifier movementsProvider) {
     return Container(
       clipBehavior: Clip.antiAliasWithSaveLayer,
-      margin: EdgeInsets.fromLTRB(customMargin, customMargin, customMargin, 0),
+      margin: const EdgeInsets.fromLTRB(
+          customMargin, customMargin, customMargin, 0),
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(customBorderRadius),
@@ -93,7 +92,8 @@ class MovementBalanceView extends StatelessWidget {
       BuildContext context, MovementsChangeNotifier movementsProvider) {
     return Container(
       clipBehavior: Clip.antiAliasWithSaveLayer,
-      margin: EdgeInsets.fromLTRB(customMargin, customMargin, customMargin, 0),
+      margin: const EdgeInsets.fromLTRB(
+          customMargin, customMargin, customMargin, 0),
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(customBorderRadius),
@@ -113,7 +113,7 @@ class MovementBalanceView extends StatelessWidget {
         Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height / 3,
-          padding: EdgeInsets.all(customMargin),
+          padding: const EdgeInsets.all(customMargin),
           child: BarChart(
             BarChartData(
                 alignment: BarChartAlignment.center,
@@ -123,8 +123,8 @@ class MovementBalanceView extends StatelessWidget {
                     bottomTitles: SideTitles(
                         getTitles: (value) =>
                             monthsList.elementAt(value.toInt()),
-                        getTextStyles: (value) =>
-                            TextStyle(fontSize: 11, fontFamily: "OpenSans"),
+                        getTextStyles: (value) => const TextStyle(
+                            fontSize: 11, fontFamily: "OpenSans"),
                         showTitles: true),
                     leftTitles: SideTitles(showTitles: false)),
                 barGroups: [
@@ -183,7 +183,8 @@ class MovementBalanceView extends StatelessWidget {
           ),
         ),
         Padding(
-            padding: EdgeInsets.only(left: customMargin, right: customMargin),
+            padding:
+                const EdgeInsets.only(left: customMargin, right: customMargin),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -191,7 +192,7 @@ class MovementBalanceView extends StatelessWidget {
                 Row(
                   children: [
                     Icon(Icons.circle, color: accentColor),
-                    SpaceDivider(isVertical: true, customSpace: 10),
+                    const SpaceDivider(isVertical: true, customSpace: 10),
                     Text(
                       "Ingresos",
                       style: inputStyle(),
@@ -201,7 +202,7 @@ class MovementBalanceView extends StatelessWidget {
                 Row(
                   children: [
                     Icon(Icons.circle, color: Colors.white.withOpacity(0.25)),
-                    SpaceDivider(isVertical: true, customSpace: 10),
+                    const SpaceDivider(isVertical: true, customSpace: 10),
                     Text(
                       "Gastos",
                       style: inputStyle(),
@@ -220,13 +221,13 @@ class MovementBalanceView extends StatelessWidget {
       children: [
         Container(
           width: MediaQuery.of(context).size.width,
-          margin:
-              EdgeInsets.fromLTRB(customMargin, customMargin, customMargin, 0),
-          padding:
-              EdgeInsets.fromLTRB(customMargin, customMargin, customMargin, 0),
+          margin: const EdgeInsets.fromLTRB(
+              customMargin, customMargin, customMargin, 0),
+          padding: const EdgeInsets.fromLTRB(
+              customMargin, customMargin, customMargin, 0),
           decoration: BoxDecoration(
               color: themeColor.withOpacity(0.1),
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(customBorderRadius),
                   topRight: Radius.circular(customBorderRadius))),
           child: Column(
@@ -240,7 +241,8 @@ class MovementBalanceView extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(left: customMargin, right: customMargin),
+          padding:
+              const EdgeInsets.only(left: customMargin, right: customMargin),
           child: BinancyButton(
               wrapOnFinal: true,
               context: context,
@@ -259,11 +261,11 @@ class MovementBalanceView extends StatelessWidget {
         : movementsChangeNotifier.expendList;
 
     listMovementsWidget.add(Padding(
-        padding: EdgeInsets.only(
+        padding: const EdgeInsets.only(
             top: customMargin, left: customMargin, bottom: customMargin),
         child: Text(movementType == MovementType.INCOME ? "Ingresos" : "Gastos",
             style: titleCardStyle())));
-    listMovementsWidget.add(LinearDivider());
+    listMovementsWidget.add(const LinearDivider());
     if (providerList.isEmpty) {
       listMovementsWidget.add(MovememntEmptyCard(movementType));
     } else {
@@ -273,7 +275,7 @@ class MovementBalanceView extends StatelessWidget {
               movement: providerList.elementAt(i),
               movementsProvider: movementsChangeNotifier));
           if (i != latestMovementsMaxCount - 1) {
-            listMovementsWidget.add(LinearDivider());
+            listMovementsWidget.add(const LinearDivider());
           }
         }
       } else {
@@ -283,7 +285,7 @@ class MovementBalanceView extends StatelessWidget {
                 movement: providerList.elementAt(i),
                 movementsProvider: movementsChangeNotifier));
             if (i != providerList.length - 1) {
-              listMovementsWidget.add(LinearDivider());
+              listMovementsWidget.add(const LinearDivider());
             }
           }
         }

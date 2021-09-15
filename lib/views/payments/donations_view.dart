@@ -6,7 +6,7 @@ class DonationView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BinancyBackground(Scaffold(
+    return const BinancyBackground(Scaffold(
       backgroundColor: Colors.transparent,
     ));
   }

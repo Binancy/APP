@@ -25,16 +25,17 @@ class SettingsView extends StatelessWidget {
         elevation: 0,
       ),
       body: Container(
-          margin: EdgeInsets.only(left: customMargin, right: customMargin),
+          margin:
+              const EdgeInsets.only(left: customMargin, right: customMargin),
           child: ScrollConfiguration(
             behavior: MyBehavior(),
             child: CustomScrollView(
               slivers: [
-                SliverToBoxAdapter(child: BinancyIconHorizontal()),
+                const SliverToBoxAdapter(child: BinancyIconHorizontal()),
                 SliverToBoxAdapter(child: myDataCard(context)),
-                SliverToBoxAdapter(child: SpaceDivider()),
+                const SliverToBoxAdapter(child: SpaceDivider()),
                 SliverToBoxAdapter(child: actionsCard(context)),
-                SliverToBoxAdapter(child: SpaceDivider()),
+                const SliverToBoxAdapter(child: SpaceDivider()),
                 SliverToBoxAdapter(
                     child: BinancyButton(
                   context: context,
@@ -56,7 +57,7 @@ class SettingsView extends StatelessWidget {
                     ]);
                   },
                 )),
-                SliverToBoxAdapter(child: SpaceDivider()),
+                const SliverToBoxAdapter(child: SpaceDivider()),
               ],
             ),
           )),
@@ -65,15 +66,15 @@ class SettingsView extends StatelessWidget {
 
   Widget myDataCard(BuildContext context) {
     List<Widget> widgetList = [
-      SettingsHeaderRow(text: "Mis datos"),
-      LinearDivider(),
+      const SettingsHeaderRow(text: "Mis datos"),
+      const LinearDivider(),
       SettingsDataRow(title: "Nombre", data: userData['nameUser'] ?? "-"),
-      LinearDivider(),
+      const LinearDivider(),
       SettingsDataRow(title: "Email", data: userData['email'] ?? "-"),
-      LinearDivider(),
+      const LinearDivider(),
       SettingsDataRow(title: "Plan actual", data: userData['planTitle']),
-      LinearDivider(),
-      SettingsDataRow(title: "Versión de Binancy", data: appVersion)
+      const LinearDivider(),
+      const SettingsDataRow(title: "Versión de Binancy", data: appVersion)
     ];
 
     return Container(
@@ -88,17 +89,19 @@ class SettingsView extends StatelessWidget {
 
   Widget actionsCard(BuildContext context) {
     List<Widget> widgetList = [
-      SettingsHeaderRow(text: "Acciones"),
-      LinearDivider(),
+      const SettingsHeaderRow(text: "Acciones"),
+      const LinearDivider(),
       SettingsActionRow(
           text: "Información de usuario",
-          action: () => Navigator.push(context,
-              MaterialPageRoute(builder: (context) => SettingsUserDataView()))),
-      LinearDivider(),
+          action: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const SettingsUserDataView()))),
+      const LinearDivider(),
       SettingsActionRow(text: "Notificaciones", action: () => null),
-      LinearDivider(),
+      const LinearDivider(),
       SettingsActionRow(text: "Seguridad", action: () => null),
-      LinearDivider(),
+      const LinearDivider(),
       Utils.showIfPlanIsEqualOrLower(userData['idPlan'], "binancy")
           ? SettingsActionRow(
               text: "Cambiar de plan",
@@ -109,9 +112,9 @@ class SettingsView extends StatelessWidget {
                             ChangeNotifierProvider(
                                 create: (_) =>
                                     Provider.of<PlansChangeNotifier>(context))
-                          ], child: PremiumPlansView()))),
+                          ], child: const PremiumPlansView()))),
             )
-          : SizedBox(),
+          : const SizedBox(),
     ];
 
     return Container(
@@ -137,7 +140,7 @@ class SettingsHeaderRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: settingsRowHeight,
-      padding: EdgeInsets.only(left: customMargin, right: customMargin),
+      padding: const EdgeInsets.only(left: customMargin, right: customMargin),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -166,7 +169,7 @@ class SettingsDataRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: settingsRowHeight,
-      padding: EdgeInsets.only(left: customMargin, right: customMargin),
+      padding: const EdgeInsets.only(left: customMargin, right: customMargin),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -202,7 +205,8 @@ class SettingsActionRow extends StatelessWidget {
         splashColor: themeColor.withOpacity(0.1),
         child: Container(
           height: settingsRowHeight,
-          padding: EdgeInsets.only(left: customMargin, right: customMargin),
+          padding:
+              const EdgeInsets.only(left: customMargin, right: customMargin),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,

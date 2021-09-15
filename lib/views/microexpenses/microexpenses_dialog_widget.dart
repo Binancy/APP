@@ -23,13 +23,13 @@ class _MicroExpendDialogCardState extends State<MicroExpendDialogCard> {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.all(customMargin),
+      padding: const EdgeInsets.all(customMargin),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            constraints: BoxConstraints(minHeight: 65 * 2),
-            padding: EdgeInsets.all(customMargin),
+            constraints: const BoxConstraints(minHeight: 65 * 2),
+            padding: const EdgeInsets.all(customMargin),
             width: MediaQuery.of(context).size.width,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -37,16 +37,16 @@ class _MicroExpendDialogCardState extends State<MicroExpendDialogCard> {
               children: [
                 Text(widget.microExpend.title,
                     style: titleCardStyle(), textAlign: TextAlign.center),
-                SpaceDivider(customSpace: 10),
+                const SpaceDivider(customSpace: 10),
                 widget.microExpend.description != null
                     ? Text(widget.microExpend.description ?? "",
                         style: semititleStyle(),
                         maxLines: 5,
                         textAlign: TextAlign.center)
-                    : SizedBox(),
+                    : const SizedBox(),
                 widget.microExpend.description != null
-                    ? SpaceDivider(customSpace: 10)
-                    : SizedBox(),
+                    ? const SpaceDivider(customSpace: 10)
+                    : const SizedBox(),
                 Text(Utils.parseAmount(widget.microExpend.amount),
                     style: accentTitleStyle())
               ],
@@ -55,7 +55,7 @@ class _MicroExpendDialogCardState extends State<MicroExpendDialogCard> {
                 borderRadius: BorderRadius.circular(customBorderRadius),
                 color: themeColor.withOpacity(0.1)),
           ),
-          SpaceDivider(),
+          const SpaceDivider(),
           BinancyButton(
               context: context, text: "Añadir gasto", action: widget.action)
         ],
@@ -65,7 +65,7 @@ class _MicroExpendDialogCardState extends State<MicroExpendDialogCard> {
               colors: [primaryColor, secondaryColor],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter),
-          borderRadius: BorderRadius.only(
+          borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(customBorderRadius),
               topRight: Radius.circular(customBorderRadius))),
     );

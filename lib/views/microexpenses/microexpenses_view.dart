@@ -36,57 +36,54 @@ class MicroExpensesView extends StatelessWidget {
                                         Provider.of<MovementsChangeNotifier>(
                                             context,
                                             listen: false))
-                              ], child: MicroExpendView()))),
-                  icon: Icon(Icons.add_rounded))
+                              ], child: const MicroExpendView()))),
+                  icon: const Icon(Icons.add_rounded))
             ],
           ),
-          body: Container(
-            child:
-                Consumer2<MicroExpensesChangeNotifier, MovementsChangeNotifier>(
-                    builder: (context, microExpensesProvider, movementsProvider,
-                            child) =>
-                        Column(
-                          children: [
-                            AdviceCard(
-                                icon: SvgPicture.asset(
-                                    "assets/svg/dashboard_add_expense.svg"),
-                                text:
-                                    "Aqui podrás establecer movimientos que realizes con frequencia y poder añadirlos más rápidamente."),
-                            SpaceDivider(),
-                            Center(
-                                child: Text("Tus gastos rápidos",
-                                    style: titleCardStyle())),
-                            Expanded(
-                                child: Container(
-                                    margin: EdgeInsets.all(customMargin),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(
-                                          customBorderRadius),
-                                      child: ScrollConfiguration(
-                                          behavior: MyBehavior(),
-                                          child: StaggeredGridView.countBuilder(
-                                            crossAxisCount: 2,
-                                            itemCount: microExpensesProvider
-                                                .microExpensesList.length,
-                                            mainAxisSpacing: customMargin,
-                                            crossAxisSpacing: customMargin,
-                                            itemBuilder: (context, index) =>
-                                                MicroExpendCard(
-                                              microExpensesChangeNotifier:
-                                                  microExpensesProvider,
-                                              microExpend: microExpensesProvider
-                                                  .microExpensesList
-                                                  .elementAt(index),
-                                              movementsChangeNotifier:
-                                                  movementsProvider,
-                                            ),
-                                            staggeredTileBuilder: (index) =>
-                                                StaggeredTile.fit(1),
-                                          )),
-                                    )))
-                          ],
-                        )),
-          )),
+          body: Consumer2<MicroExpensesChangeNotifier, MovementsChangeNotifier>(
+              builder: (context, microExpensesProvider, movementsProvider,
+                      child) =>
+                  Column(
+                    children: [
+                      AdviceCard(
+                          icon: SvgPicture.asset(
+                              "assets/svg/dashboard_add_expense.svg"),
+                          text:
+                              "Aqui podrás establecer movimientos que realizes con frequencia y poder añadirlos más rápidamente."),
+                      const SpaceDivider(),
+                      Center(
+                          child: Text("Tus gastos rápidos",
+                              style: titleCardStyle())),
+                      Expanded(
+                          child: Container(
+                              margin: const EdgeInsets.all(customMargin),
+                              child: ClipRRect(
+                                borderRadius:
+                                    BorderRadius.circular(customBorderRadius),
+                                child: ScrollConfiguration(
+                                    behavior: MyBehavior(),
+                                    child: StaggeredGridView.countBuilder(
+                                      crossAxisCount: 2,
+                                      itemCount: microExpensesProvider
+                                          .microExpensesList.length,
+                                      mainAxisSpacing: customMargin,
+                                      crossAxisSpacing: customMargin,
+                                      itemBuilder: (context, index) =>
+                                          MicroExpendCard(
+                                        microExpensesChangeNotifier:
+                                            microExpensesProvider,
+                                        microExpend: microExpensesProvider
+                                            .microExpensesList
+                                            .elementAt(index),
+                                        movementsChangeNotifier:
+                                            movementsProvider,
+                                      ),
+                                      staggeredTileBuilder: (index) =>
+                                          const StaggeredTile.fit(1),
+                                    )),
+                              )))
+                    ],
+                  ))),
     );
   }
 }

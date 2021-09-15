@@ -6,7 +6,7 @@ import '../../globals.dart';
 
 class SubscriptionEmptyCard extends StatelessWidget {
   final bool isExpanded;
-  SubscriptionEmptyCard({this.isExpanded = false});
+  const SubscriptionEmptyCard({this.isExpanded = false});
 
   @override
   Widget build(BuildContext context) {
@@ -18,13 +18,13 @@ class SubscriptionEmptyCard extends StatelessWidget {
   Widget expandedSubscriptionEmptyCard(BuildContext context) {
     return GestureDetector(
       onTap: () => gotoAddSubscription(context),
-      child: Container(
+      child: SizedBox(
         width: MediaQuery.of(context).size.width,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(
+            const SizedBox(
                 height: 100,
                 width: 100,
                 child: Icon(
@@ -36,7 +36,7 @@ class SubscriptionEmptyCard extends StatelessWidget {
                 style: accentStyle(), textAlign: TextAlign.center),
             Text("Toca para añadir una",
                 style: accentStyle(), textAlign: TextAlign.center),
-            SizedBox(
+            const SizedBox(
               height: 100,
               width: 100,
             ),
@@ -56,13 +56,14 @@ class SubscriptionEmptyCard extends StatelessWidget {
         splashColor: themeColor.withOpacity(0.1),
         child: Container(
           height: subscriptionCardSize,
-          padding: EdgeInsets.only(left: customMargin, right: customMargin),
+          padding:
+              const EdgeInsets.only(left: customMargin, right: customMargin),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Icon(Icons.add_rounded, color: Colors.white, size: 50),
-              SpaceDivider(isVertical: true),
+              const Icon(Icons.add_rounded, color: Colors.white, size: 50),
+              const SpaceDivider(isVertical: true),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,

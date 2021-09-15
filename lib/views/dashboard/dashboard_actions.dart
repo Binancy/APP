@@ -61,7 +61,7 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
           '¿Que quieres hacer?',
           style: titleCardStyle(),
         ),
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
         Container(
@@ -70,17 +70,18 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
               borderRadius: BorderRadius.circular(customBorderRadius),
               color: themeColor.withOpacity(0.1),
             ),
-            margin: EdgeInsets.only(left: customMargin, right: customMargin),
+            margin:
+                const EdgeInsets.only(left: customMargin, right: customMargin),
             child: Column(
               children: [
-                Container(
+                SizedBox(
                     height: (MediaQuery.of(context).size.height / 10 * 2.5),
                     child: PageView(
                       onPageChanged: (value) => updatePointers(value),
                       children: pageList,
                     )),
                 Padding(
-                    padding: EdgeInsets.only(left: 150, right: 150),
+                    padding: const EdgeInsets.only(left: 150, right: 150),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: buildPointers(),
@@ -92,7 +93,7 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
   }
 
   Widget buildEmptyActionWidget(BuildContext context) {
-    return Container(
+    return SizedBox(
         height: (MediaQuery.of(context).size.height / 10) + 3,
         width: (MediaQuery.of(context).size.height / 8));
   }
@@ -167,7 +168,7 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
                               Provider.of<CategoriesChangeNotifier>(context),
                         )
                       ],
-                      child: MovementView(
+                      child: const MovementView(
                         allowEdit: true,
                         movementType: MovementType.INCOME,
                       ),
@@ -210,7 +211,7 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
                               Provider.of<CategoriesChangeNotifier>(context),
                         )
                       ],
-                      child: MovementView(
+                      child: const MovementView(
                         allowEdit: true,
                         movementType: MovementType.EXPEND,
                       ),
@@ -238,7 +239,7 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
                         Provider.of<CategoriesChangeNotifier>(context),
                   )
                 ],
-                child: AllMovementView(),
+                child: const AllMovementView(),
               ),
             ))));
     actionsList.add(ActionButtonWidget(
@@ -323,7 +324,7 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
                         ChangeNotifierProvider(
                             create: (_) =>
                                 Provider.of<PlansChangeNotifier>(context))
-                      ], child: PremiumPlansView())))));
+                      ], child: const PremiumPlansView())))));
     } else {
       actionsList.add(ActionButtonWidget(
           context: context,
@@ -336,7 +337,7 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
                         ChangeNotifierProvider(
                             create: (_) =>
                                 Provider.of<PlansChangeNotifier>(context))
-                      ], child: DonationView())))));
+                      ], child: const DonationView())))));
     }
     actionsList.add(ActionButtonWidget(
         context: context,
@@ -363,28 +364,27 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
                       colors: [primaryColor, secondaryColor],
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter)),
-              padding: EdgeInsets.all(customMargin),
+              padding: const EdgeInsets.all(customMargin),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container(
-                      child: Column(
+                  Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text("Esta es una función premium",
                           style: headerItemView(), textAlign: TextAlign.center),
-                      SpaceDivider(),
+                      const SpaceDivider(),
                       Text(
                           "Para utilizar esta función debes adquirir uno de los planes premium que Binancy obtiene",
                           style: accentStyle(),
                           textAlign: TextAlign.center)
                     ],
-                  )),
-                  SpaceDivider(),
+                  ),
+                  const SpaceDivider(),
                   BinancyButton(
                       context: context,
                       text: "Hazte premium",
@@ -398,7 +398,7 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
                                           create: (_) =>
                                               Provider.of<PlansChangeNotifier>(
                                                   context))
-                                    ], child: PremiumPlansView())));
+                                    ], child: const PremiumPlansView())));
                       })
                 ],
               ),
@@ -411,8 +411,8 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
       pointersList.add(AnimatedOpacity(
           opacity: opacityValueList[i],
           curve: Curves.easeInOut,
-          duration: Duration(milliseconds: opacityAnimationDurationMS),
-          child: Icon(Icons.circle, color: Colors.white, size: 10)));
+          duration: const Duration(milliseconds: opacityAnimationDurationMS),
+          child: const Icon(Icons.circle, color: Colors.white, size: 10)));
     }
 
     return pointersList;

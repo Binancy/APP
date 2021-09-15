@@ -32,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
         backgroundColor: Colors.transparent,
         body: Stack(
           children: [
-            Positioned(
+            const Positioned(
                 child: Center(
               child: BinancyIconVertical(),
             )),

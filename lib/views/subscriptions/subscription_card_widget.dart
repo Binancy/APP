@@ -13,7 +13,7 @@ import '../../globals.dart';
 class SubscriptionCard extends StatelessWidget {
   final Subscription subscription;
   final SubscriptionsChangeNotifier subscriptionsChangeNotifier;
-  SubscriptionCard(
+  const SubscriptionCard(
       {required this.subscription, required this.subscriptionsChangeNotifier});
 
   @override
@@ -42,7 +42,8 @@ class SubscriptionCard extends StatelessWidget {
           splashColor: themeColor.withOpacity(0.1),
           child: Container(
             height: subscriptionCardSize,
-            padding: EdgeInsets.only(left: customMargin, right: customMargin),
+            padding:
+                const EdgeInsets.only(left: customMargin, right: customMargin),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -71,7 +72,7 @@ class SubscriptionCard extends StatelessWidget {
           ),
         ),
       ),
-      actionPane: SlidableDrawerActionPane(),
+      actionPane: const SlidableDrawerActionPane(),
       actionExtentRatio: 0.2,
       actions: [
         IconSlideAction(

@@ -87,8 +87,8 @@ class Utils {
   }
 
   static bool verifySecurityPassword(String password) {
-    RegExp regEx = new RegExp(
-        r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+    RegExp regEx =
+        RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
     return password.length >= 8 && regEx.hasMatch(password);
   }
 
@@ -99,27 +99,27 @@ class Utils {
   // SHARED STORAGE
 
   static Future<void> saveOnSecureStorage(String key, dynamic value) async {
-    var storage = FlutterSecureStorage();
+    var storage = const FlutterSecureStorage();
     await storage.write(key: key, value: value);
   }
 
   static Future<void> removeFromSecureStorage(String key) async {
-    var storage = FlutterSecureStorage();
+    var storage = const FlutterSecureStorage();
     await storage.delete(key: key);
   }
 
   static Future<void> clearSecureStorage() async {
-    var storage = FlutterSecureStorage();
+    var storage = const FlutterSecureStorage();
     await storage.deleteAll();
   }
 
   static Future<String> getFromSecureStorage(String key) async {
-    var storage = FlutterSecureStorage();
+    var storage = const FlutterSecureStorage();
     return await storage.read(key: key) ?? "";
   }
 
   static Future<bool> isOnSecureStorage(String key) async {
-    var storage = FlutterSecureStorage();
+    var storage = const FlutterSecureStorage();
     return await storage.containsKey(key: key);
   }
 

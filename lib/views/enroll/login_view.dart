@@ -29,7 +29,7 @@ class _LoginViewState extends State<LoginView> {
       child: BinancyBackground(Scaffold(
           backgroundColor: Colors.transparent,
           body: Padding(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               child: Center(
                 child: ScrollConfiguration(
                     behavior: MyBehavior(),
@@ -42,12 +42,12 @@ class _LoginViewState extends State<LoginView> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              BinancyLogoVert(),
-                              SpaceDivider(),
+                              const BinancyLogoVert(),
+                              const SpaceDivider(),
                               inputEmailWidget(),
-                              SpaceDivider(),
+                              const SpaceDivider(),
                               inputPasswordWidget(),
-                              SpaceDivider(),
+                              const SpaceDivider(),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -62,7 +62,7 @@ class _LoginViewState extends State<LoginView> {
                                   )
                                 ],
                               ),
-                              SpaceDivider(),
+                              const SpaceDivider(),
                               BinancyButton(
                                   context: context,
                                   text: "Iniciar sesión",
@@ -70,15 +70,15 @@ class _LoginViewState extends State<LoginView> {
                                     FocusScope.of(context).unfocus();
                                     await makeLogin();
                                   }),
-                              SpaceDivider(),
-                              SpaceDivider(),
+                              const SpaceDivider(),
+                              const SpaceDivider(),
                               Center(
                                 child: Text(
                                   "¿Todavía no tienes cuenta?",
                                   style: inputStyle(),
                                 ),
                               ),
-                              SpaceDivider(),
+                              const SpaceDivider(),
                               BinancyButton(
                                   context: context,
                                   text: "Registrate",
@@ -146,7 +146,7 @@ class _LoginViewState extends State<LoginView> {
   Widget inputEmailWidget() {
     return Container(
       height: buttonHeight,
-      padding: EdgeInsets.only(left: customMargin, right: customMargin),
+      padding: const EdgeInsets.only(left: customMargin, right: customMargin),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(customBorderRadius),
           color: themeColor.withOpacity(0.1)),
@@ -166,7 +166,7 @@ class _LoginViewState extends State<LoginView> {
   Widget inputPasswordWidget() {
     return Container(
         height: buttonHeight,
-        padding: EdgeInsets.only(left: customMargin, right: customMargin),
+        padding: const EdgeInsets.only(left: customMargin, right: customMargin),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(customBorderRadius),
             color: themeColor.withOpacity(0.1)),

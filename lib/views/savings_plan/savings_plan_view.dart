@@ -16,10 +16,11 @@ class SavingsPlanView extends StatefulWidget {
   final SavingsPlan? selectedSavingsPlan;
   final bool allowEdit;
 
-  SavingsPlanView({this.allowEdit = false, this.selectedSavingsPlan});
+  const SavingsPlanView({this.allowEdit = false, this.selectedSavingsPlan});
 
   @override
   _SavingsPlanViewState createState() =>
+      // ignore: no_logic_in_create_state
       _SavingsPlanViewState(selectedSavingsPlan, allowEdit);
 }
 
@@ -51,16 +52,16 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
                               allowEdit = true;
                             });
                           },
-                          icon: Icon(Icons.more_horiz_rounded))
-                      : SizedBox()
+                          icon: const Icon(Icons.more_horiz_rounded))
+                      : const SizedBox()
                 ],
                 leading: !allowEdit
                     ? IconButton(
-                        icon: Icon(Icons.arrow_back),
+                        icon: const Icon(Icons.arrow_back),
                         onPressed: () => Navigator.pop(context))
                     : createMode
                         ? IconButton(
-                            icon: Icon(Icons.arrow_back),
+                            icon: const Icon(Icons.arrow_back),
                             onPressed: () => BinancyInfoDialog(context,
                                     "¿Estas seguro que quieres salir?", [
                                   BinancyInfoDialogItem(
@@ -71,7 +72,7 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
                                   })
                                 ]))
                         : IconButton(
-                            icon: Icon(Icons.close_outlined),
+                            icon: const Icon(Icons.close_outlined),
                             onPressed: () => BinancyInfoDialog(
                                 context, "Estas seguro que quieres salir?", [
                               BinancyInfoDialogItem(
@@ -85,8 +86,7 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
                             ]),
                           ),
               ),
-              body: Container(
-                  child: Column(
+              body: Column(
                 children: [
                   Expanded(
                       child: ScrollConfiguration(
@@ -95,7 +95,7 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
                             children: [
                               Container(
                                   height: 125,
-                                  padding: EdgeInsets.all(customMargin),
+                                  padding: const EdgeInsets.all(customMargin),
                                   alignment: Alignment.center,
                                   child: Text(
                                       createMode
@@ -104,18 +104,18 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
                                       style: headerItemView(),
                                       textAlign: TextAlign.center)),
                               nameInputWidget(),
-                              SpaceDivider(),
+                              const SpaceDivider(),
                               amountInputWidget(),
-                              SpaceDivider(),
+                              const SpaceDivider(),
                               datePicker(context),
-                              SpaceDivider(),
+                              const SpaceDivider(),
                               descriptionInputWidget(),
                             ],
                           ))),
-                  allowEdit ? SpaceDivider() : SizedBox(),
+                  allowEdit ? const SpaceDivider() : const SizedBox(),
                   allowEdit
                       ? Padding(
-                          padding: EdgeInsets.only(
+                          padding: const EdgeInsets.only(
                               left: customMargin, right: customMargin),
                           child: BinancyButton(
                               context: context,
@@ -126,18 +126,18 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
                                 await checkData(savingsPlanProvider);
                               }),
                         )
-                      : SizedBox(),
-                  SpaceDivider(),
+                      : const SizedBox(),
+                  const SpaceDivider(),
                 ],
-              )),
+              ),
             )));
   }
 
   Widget nameInputWidget() {
     return Container(
-      margin: EdgeInsets.only(left: customMargin, right: customMargin),
+      margin: const EdgeInsets.only(left: customMargin, right: customMargin),
       height: buttonHeight,
-      padding: EdgeInsets.only(left: customMargin, right: customMargin),
+      padding: const EdgeInsets.only(left: customMargin, right: customMargin),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(customBorderRadius),
           color: themeColor.withOpacity(0.1)),
@@ -157,9 +157,9 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
 
   Widget amountInputWidget() {
     return Container(
-      margin: EdgeInsets.only(left: customMargin, right: customMargin),
+      margin: const EdgeInsets.only(left: customMargin, right: customMargin),
       height: buttonHeight,
-      padding: EdgeInsets.only(left: customMargin, right: customMargin),
+      padding: const EdgeInsets.only(left: customMargin, right: customMargin),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(customBorderRadius),
           color: themeColor.withOpacity(0.1)),
@@ -180,11 +180,11 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
   Widget descriptionInputWidget() {
     return Container(
       height: descriptionWidgetHeight,
-      margin: EdgeInsets.only(left: customMargin, right: customMargin),
+      margin: const EdgeInsets.only(left: customMargin, right: customMargin),
       decoration: BoxDecoration(
           color: themeColor.withOpacity(0.1),
           borderRadius: BorderRadius.circular(customBorderRadius)),
-      padding: EdgeInsets.all(customMargin),
+      padding: const EdgeInsets.all(customMargin),
       child: TextField(
         textCapitalization: TextCapitalization.sentences,
         controller: descriptionController,
@@ -210,7 +210,7 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
 
   Widget datePicker(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: customMargin, right: customMargin),
+      padding: const EdgeInsets.only(left: customMargin, right: customMargin),
       child: Material(
         color: themeColor.withOpacity(0.1),
         borderRadius: BorderRadius.circular(customBorderRadius),
@@ -237,7 +237,8 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
           splashColor: themeColor.withOpacity(0.1),
           child: Container(
               height: buttonHeight,
-              padding: EdgeInsets.only(left: customMargin, right: customMargin),
+              padding: const EdgeInsets.only(
+                  left: customMargin, right: customMargin),
               child: Row(
                 children: [
                   Icon(
@@ -245,7 +246,7 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
                     color: accentColor,
                     size: 36,
                   ),
-                  SpaceDivider(
+                  const SpaceDivider(
                     isVertical: true,
                   ),
                   Text(parsedDate, style: inputStyle())

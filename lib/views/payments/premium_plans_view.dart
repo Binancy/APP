@@ -25,18 +25,18 @@ class PremiumPlansView extends StatelessWidget {
         ),
         body: Consumer<PlansChangeNotifier>(
             builder: (context, provider, child) => Container(
-                  padding: EdgeInsets.only(top: customMargin),
+                  padding: const EdgeInsets.only(top: customMargin),
                   child: ScrollConfiguration(
                       behavior: MyBehavior(),
                       child: ListView(
                         children: [
-                          provider.carouselList.length > 0
+                          provider.carouselList.isNotEmpty
                               ? CarouselSlider(
                                   items: buildCarouselWidgets(
                                       provider.carouselList),
                                   options: CarouselOptions(
                                       height: 275,
-                                      autoPlayInterval: Duration(
+                                      autoPlayInterval: const Duration(
                                           milliseconds:
                                               plansCarouselIntervalMS),
                                       autoPlay: true,
@@ -45,21 +45,21 @@ class PremiumPlansView extends StatelessWidget {
                                       enlargeCenterPage:
                                           provider.carouselList.length > 1,
                                       autoPlayCurve: Curves.easeInOut))
-                              : SizedBox(),
-                          provider.carouselList.length > 0
-                              ? SpaceDivider()
-                              : SizedBox(),
+                              : const SizedBox(),
+                          provider.carouselList.isNotEmpty
+                              ? const SpaceDivider()
+                              : const SizedBox(),
                           Center(
                               child: Text("Planes disponibles",
                                   style: titleCardStyle())),
                           ListView.separated(
                               shrinkWrap: true,
-                              padding: EdgeInsets.all(customMargin),
-                              physics: NeverScrollableScrollPhysics(),
+                              padding: const EdgeInsets.all(customMargin),
+                              physics: const NeverScrollableScrollPhysics(),
                               itemBuilder: (context, index) => PremiumPlanCard(
                                   plan: provider.plansList.elementAt(index)),
                               separatorBuilder: (context, index) =>
-                                  SpaceDivider(),
+                                  const SpaceDivider(),
                               itemCount: provider.plansList.length)
                         ],
                       )),

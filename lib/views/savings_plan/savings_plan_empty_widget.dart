@@ -7,7 +7,7 @@ import '../../globals.dart';
 class SavingsPlanEmptyWidget extends StatelessWidget {
   final bool isExpanded;
 
-  SavingsPlanEmptyWidget({this.isExpanded = false});
+  const SavingsPlanEmptyWidget({this.isExpanded = false});
 
   @override
   Widget build(BuildContext context) {
@@ -19,13 +19,13 @@ class SavingsPlanEmptyWidget extends StatelessWidget {
   Widget expandedSavingsPlanEmptyWidget(BuildContext context) {
     return GestureDetector(
       onTap: () => gotoAddSavingsPlan(context),
-      child: Container(
+      child: SizedBox(
         width: MediaQuery.of(context).size.width,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(
+            const SizedBox(
                 height: 100,
                 width: 100,
                 child: Icon(
@@ -37,7 +37,7 @@ class SavingsPlanEmptyWidget extends StatelessWidget {
                 style: accentStyle(), textAlign: TextAlign.center),
             Text("Toca para añadir una",
                 style: accentStyle(), textAlign: TextAlign.center),
-            SizedBox(
+            const SizedBox(
               height: 100,
               width: 100,
             ),
@@ -57,13 +57,14 @@ class SavingsPlanEmptyWidget extends StatelessWidget {
         splashColor: themeColor.withOpacity(0.1),
         child: Container(
           height: subscriptionCardSize,
-          padding: EdgeInsets.only(left: customMargin, right: customMargin),
+          padding:
+              const EdgeInsets.only(left: customMargin, right: customMargin),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Icon(Icons.add_rounded, color: Colors.white, size: 50),
-              SpaceDivider(isVertical: true),
+              const Icon(Icons.add_rounded, color: Colors.white, size: 50),
+              const SpaceDivider(isVertical: true),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,

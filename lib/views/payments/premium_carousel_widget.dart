@@ -19,7 +19,7 @@ class PlansCarouselWidget extends StatelessWidget {
       return buildAnnounceWidget(context);
     }
 
-    return SizedBox();
+    return const SizedBox();
   }
 
   Widget buildOffertWidget(BuildContext context) {
@@ -32,7 +32,7 @@ class PlansCarouselWidget extends StatelessWidget {
 
   Widget buildAnnounceWidget(BuildContext context) {
     return Container(
-      padding: EdgeInsets.fromLTRB(customMargin, 0, customMargin, 0),
+      padding: const EdgeInsets.fromLTRB(customMargin, 0, customMargin, 0),
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
           color: themeColor.withOpacity(0.1),
@@ -42,13 +42,13 @@ class PlansCarouselWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(height: 75, width: 75, child: carouselWidget.icon),
-          SpaceDivider(customSpace: 5),
+          const SpaceDivider(customSpace: 5),
           Text(carouselWidget.title,
               style: accentTitleStyle(),
               textAlign: TextAlign.center,
               maxLines: 2,
               overflow: TextOverflow.ellipsis),
-          SpaceDivider(customSpace: 5),
+          const SpaceDivider(customSpace: 5),
           Text(
             carouselWidget.description,
             style: miniInputStyle(),

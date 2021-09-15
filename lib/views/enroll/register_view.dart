@@ -66,7 +66,7 @@ class _RegisterViewState extends State<RegisterView> {
                 registerPageList.length.toString()),
             leading: registerCurrentPage != 0
                 ? IconButton(
-                    icon: Icon(Icons.arrow_back),
+                    icon: const Icon(Icons.arrow_back),
                     onPressed: () {
                       setState(() {
                         registerCurrentPage--;
@@ -76,7 +76,7 @@ class _RegisterViewState extends State<RegisterView> {
                               milliseconds: registerTransitionDuration),
                           curve: Curves.easeOut);
                     })
-                : SizedBox(),
+                : const SizedBox(),
             backgroundColor: Colors.transparent,
             pinned: false,
             snap: true,
@@ -87,14 +87,14 @@ class _RegisterViewState extends State<RegisterView> {
               child: Center(
                   child: Text("Crea tu cuenta", style: titleCardStyle()))),
           SliverToBoxAdapter(
-              child: Container(
+              child: SizedBox(
             height: MediaQuery.of(context).size.height -
                 (MediaQuery.of(context).padding.top +
                     MediaQuery.of(context).padding.bottom +
                     kToolbarHeight +
                     210),
             child: PageView(
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               controller: registerPageController,
               onPageChanged: (value) => registerCurrentPage = value,
               children: registerPageList,
@@ -112,11 +112,13 @@ class _RegisterViewState extends State<RegisterView> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SpaceDivider(),
+            const SpaceDivider(),
             Container(
-              margin: EdgeInsets.only(left: customMargin, right: customMargin),
+              margin: const EdgeInsets.only(
+                  left: customMargin, right: customMargin),
               height: buttonHeight,
-              padding: EdgeInsets.only(left: customMargin, right: customMargin),
+              padding: const EdgeInsets.only(
+                  left: customMargin, right: customMargin),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(customBorderRadius),
                   color: themeColor.withOpacity(0.1)),
@@ -129,13 +131,13 @@ class _RegisterViewState extends State<RegisterView> {
                     "Correo electronico", BinancyIcons.email),
               ),
             ),
-            SpaceDivider(),
+            const SpaceDivider(),
             Container(
-                margin:
-                    EdgeInsets.only(left: customMargin, right: customMargin),
+                margin: const EdgeInsets.only(
+                    left: customMargin, right: customMargin),
                 height: buttonHeight,
-                padding:
-                    EdgeInsets.only(left: customMargin, right: customMargin),
+                padding: const EdgeInsets.only(
+                    left: customMargin, right: customMargin),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(customBorderRadius),
                     color: themeColor.withOpacity(0.1)),
@@ -165,13 +167,13 @@ class _RegisterViewState extends State<RegisterView> {
                         })
                   ],
                 )),
-            SpaceDivider(),
+            const SpaceDivider(),
             Container(
-                margin:
-                    EdgeInsets.only(left: customMargin, right: customMargin),
+                margin: const EdgeInsets.only(
+                    left: customMargin, right: customMargin),
                 height: buttonHeight,
-                padding:
-                    EdgeInsets.only(left: customMargin, right: customMargin),
+                padding: const EdgeInsets.only(
+                    left: customMargin, right: customMargin),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(customBorderRadius),
                     color: themeColor.withOpacity(0.1)),
@@ -201,8 +203,8 @@ class _RegisterViewState extends State<RegisterView> {
                         })
                   ],
                 )),
-            SpaceDivider(),
-            Container(
+            const SpaceDivider(),
+            SizedBox(
               height: buttonHeight,
               width: MediaQuery.of(context).size.width - (customMargin * 2),
               child: BinancyButton(
@@ -215,10 +217,10 @@ class _RegisterViewState extends State<RegisterView> {
         Column(
           children: [
             Text("¿Ya tienes cuenta?", style: inputStyle()),
-            SpaceDivider(),
+            const SpaceDivider(),
             Padding(
-                padding:
-                    EdgeInsets.only(left: customMargin, right: customMargin),
+                padding: const EdgeInsets.only(
+                    left: customMargin, right: customMargin),
                 child: BinancyButton(
                     context: context,
                     text: "Iniciar sesión",
@@ -241,11 +243,13 @@ class _RegisterViewState extends State<RegisterView> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SpaceDivider(),
+            const SpaceDivider(),
             Container(
-              margin: EdgeInsets.only(left: customMargin, right: customMargin),
+              margin: const EdgeInsets.only(
+                  left: customMargin, right: customMargin),
               height: buttonHeight,
-              padding: EdgeInsets.only(left: customMargin, right: customMargin),
+              padding: const EdgeInsets.only(
+                  left: customMargin, right: customMargin),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(customBorderRadius),
                   color: themeColor.withOpacity(0.1)),
@@ -257,11 +261,13 @@ class _RegisterViewState extends State<RegisterView> {
                     customInputDecoration("Tu nombre", BinancyIcons.user),
               ),
             ),
-            SpaceDivider(),
+            const SpaceDivider(),
             Container(
-              margin: EdgeInsets.only(left: customMargin, right: customMargin),
+              margin: const EdgeInsets.only(
+                  left: customMargin, right: customMargin),
               height: buttonHeight,
-              padding: EdgeInsets.only(left: customMargin, right: customMargin),
+              padding: const EdgeInsets.only(
+                  left: customMargin, right: customMargin),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(customBorderRadius),
                   color: themeColor.withOpacity(0.1)),
@@ -273,11 +279,13 @@ class _RegisterViewState extends State<RegisterView> {
                     "Tu primer apellido", BinancyIcons.user),
               ),
             ),
-            SpaceDivider(),
+            const SpaceDivider(),
             Container(
-              margin: EdgeInsets.only(left: customMargin, right: customMargin),
+              margin: const EdgeInsets.only(
+                  left: customMargin, right: customMargin),
               height: buttonHeight,
-              padding: EdgeInsets.only(left: customMargin, right: customMargin),
+              padding: const EdgeInsets.only(
+                  left: customMargin, right: customMargin),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(customBorderRadius),
                   color: themeColor.withOpacity(0.1)),
@@ -289,9 +297,10 @@ class _RegisterViewState extends State<RegisterView> {
                     "Tu segundo apellido", BinancyIcons.user),
               ),
             ),
-            SpaceDivider(),
+            const SpaceDivider(),
             Padding(
-              padding: EdgeInsets.only(left: customMargin, right: customMargin),
+              padding: const EdgeInsets.only(
+                  left: customMargin, right: customMargin),
               child: Material(
                 color: themeColor.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(customBorderRadius),
@@ -316,7 +325,7 @@ class _RegisterViewState extends State<RegisterView> {
                   splashColor: themeColor.withOpacity(0.1),
                   child: Container(
                       height: buttonHeight,
-                      padding: EdgeInsets.only(
+                      padding: const EdgeInsets.only(
                           left: customMargin, right: customMargin),
                       child: Row(
                         children: [
@@ -325,7 +334,7 @@ class _RegisterViewState extends State<RegisterView> {
                             color: accentColor,
                             size: 36,
                           ),
-                          SpaceDivider(
+                          const SpaceDivider(
                             isVertical: true,
                           ),
                           Text(parsedDate, style: inputStyle())
@@ -334,9 +343,10 @@ class _RegisterViewState extends State<RegisterView> {
                 ),
               ),
             ),
-            SpaceDivider(),
+            const SpaceDivider(),
             Padding(
-              padding: EdgeInsets.only(left: customMargin, right: customMargin),
+              padding: const EdgeInsets.only(
+                  left: customMargin, right: customMargin),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -361,7 +371,7 @@ class _RegisterViewState extends State<RegisterView> {
                     onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => PrivacyAndTermsView())),
+                            builder: (context) => const PrivacyAndTermsView())),
                   )
                 ],
               ),
@@ -369,7 +379,8 @@ class _RegisterViewState extends State<RegisterView> {
           ],
         ),
         Padding(
-          padding: EdgeInsets.only(left: customMargin, right: customMargin),
+          padding:
+              const EdgeInsets.only(left: customMargin, right: customMargin),
           child: BinancyButton(
               context: context,
               text: "Registrate",
@@ -384,7 +395,7 @@ class _RegisterViewState extends State<RegisterView> {
 
   Widget adviceSlider(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: customMargin, bottom: customMargin),
+      margin: const EdgeInsets.only(top: customMargin, bottom: customMargin),
       height: 125,
       width: MediaQuery.of(context).size.width,
       child: PageView(

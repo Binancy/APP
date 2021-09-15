@@ -18,11 +18,13 @@ class MicroExpendView extends StatefulWidget {
   final MicroExpend? selectedMicroExpend;
   final bool allowEdit;
 
-  MicroExpendView({Key? key, this.allowEdit = false, this.selectedMicroExpend})
+  const MicroExpendView(
+      {Key? key, this.allowEdit = false, this.selectedMicroExpend})
       : super(key: key);
 
   @override
   _MicroExpendViewState createState() =>
+      // ignore: no_logic_in_create_state
       _MicroExpendViewState(selectedMicroExpend, allowEdit);
 }
 
@@ -54,16 +56,16 @@ class _MicroExpendViewState extends State<MicroExpendView> {
                               allowEdit = true;
                             });
                           },
-                          icon: Icon(Icons.more_horiz_rounded))
-                      : SizedBox()
+                          icon: const Icon(Icons.more_horiz_rounded))
+                      : const SizedBox()
                 ],
                 leading: !allowEdit
                     ? IconButton(
-                        icon: Icon(Icons.arrow_back),
+                        icon: const Icon(Icons.arrow_back),
                         onPressed: () => Navigator.pop(context))
                     : createMode
                         ? IconButton(
-                            icon: Icon(Icons.arrow_back),
+                            icon: const Icon(Icons.arrow_back),
                             onPressed: () => BinancyInfoDialog(context,
                                     "¿Estas seguro que quieres salir?", [
                                   BinancyInfoDialogItem(
@@ -74,7 +76,7 @@ class _MicroExpendViewState extends State<MicroExpendView> {
                                   })
                                 ]))
                         : IconButton(
-                            icon: Icon(Icons.close_outlined),
+                            icon: const Icon(Icons.close_outlined),
                             onPressed: () => BinancyInfoDialog(
                                 context, "Estas seguro que quieres salir?", [
                               BinancyInfoDialogItem(
@@ -88,69 +90,67 @@ class _MicroExpendViewState extends State<MicroExpendView> {
                             ]),
                           ),
               ),
-              body: Container(
-                child: Column(
-                  children: [
-                    Expanded(
-                        child: ScrollConfiguration(
-                            behavior: MyBehavior(),
-                            child: ListView(
-                              children: [
-                                Container(
-                                  height: 125,
-                                  padding: EdgeInsets.all(customMargin),
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    createMode
-                                        ? "Añade un gasto frecuente"
-                                        : selectedMicroExpend!.title,
-                                    style: headerItemView(),
-                                    textAlign: TextAlign.center,
-                                  ),
+              body: Column(
+                children: [
+                  Expanded(
+                      child: ScrollConfiguration(
+                          behavior: MyBehavior(),
+                          child: ListView(
+                            children: [
+                              Container(
+                                height: 125,
+                                padding: const EdgeInsets.all(customMargin),
+                                alignment: Alignment.center,
+                                child: Text(
+                                  createMode
+                                      ? "Añade un gasto frecuente"
+                                      : selectedMicroExpend!.title,
+                                  style: headerItemView(),
+                                  textAlign: TextAlign.center,
                                 ),
-                                titleInputWidget(),
-                                SpaceDivider(),
-                                amountInputWidget(),
-                                SpaceDivider(),
-                                descriptionInputWidget(),
-                              ],
-                            ))),
-                    allowEdit ? SpaceDivider() : SizedBox(),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          left: customMargin, right: customMargin),
-                      child: !createMode && !allowEdit
-                          ? BinancyButton(
-                              context: context,
-                              text: "Añadir gasto",
-                              action: () async => await addExpend(context))
-                          : allowEdit
-                              ? Padding(
-                                  padding: EdgeInsets.only(
-                                      left: customMargin, right: customMargin),
-                                  child: BinancyButton(
-                                      context: context,
-                                      text: createMode
-                                          ? "Añadir gasto frecuente"
-                                          : "Actualizar gasto frecuente",
-                                      action: () async {
-                                        await checkData(microExpensesProvider);
-                                      }),
-                                )
-                              : SizedBox(),
-                    ),
-                    SpaceDivider()
-                  ],
-                ),
+                              ),
+                              titleInputWidget(),
+                              const SpaceDivider(),
+                              amountInputWidget(),
+                              const SpaceDivider(),
+                              descriptionInputWidget(),
+                            ],
+                          ))),
+                  allowEdit ? const SpaceDivider() : const SizedBox(),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: customMargin, right: customMargin),
+                    child: !createMode && !allowEdit
+                        ? BinancyButton(
+                            context: context,
+                            text: "Añadir gasto",
+                            action: () async => await addExpend(context))
+                        : allowEdit
+                            ? Padding(
+                                padding: const EdgeInsets.only(
+                                    left: customMargin, right: customMargin),
+                                child: BinancyButton(
+                                    context: context,
+                                    text: createMode
+                                        ? "Añadir gasto frecuente"
+                                        : "Actualizar gasto frecuente",
+                                    action: () async {
+                                      await checkData(microExpensesProvider);
+                                    }),
+                              )
+                            : const SizedBox(),
+                  ),
+                  const SpaceDivider()
+                ],
               ),
             )));
   }
 
   Widget titleInputWidget() {
     return Container(
-      margin: EdgeInsets.only(left: customMargin, right: customMargin),
+      margin: const EdgeInsets.only(left: customMargin, right: customMargin),
       height: buttonHeight,
-      padding: EdgeInsets.only(left: customMargin, right: customMargin),
+      padding: const EdgeInsets.only(left: customMargin, right: customMargin),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(customBorderRadius),
           color: themeColor.withOpacity(0.1)),
@@ -170,9 +170,9 @@ class _MicroExpendViewState extends State<MicroExpendView> {
 
   Widget amountInputWidget() {
     return Container(
-      margin: EdgeInsets.only(left: customMargin, right: customMargin),
+      margin: const EdgeInsets.only(left: customMargin, right: customMargin),
       height: buttonHeight,
-      padding: EdgeInsets.only(left: customMargin, right: customMargin),
+      padding: const EdgeInsets.only(left: customMargin, right: customMargin),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(customBorderRadius),
           color: themeColor.withOpacity(0.1)),
@@ -193,11 +193,11 @@ class _MicroExpendViewState extends State<MicroExpendView> {
   Widget descriptionInputWidget() {
     return Container(
       height: descriptionWidgetHeight,
-      margin: EdgeInsets.only(left: customMargin, right: customMargin),
+      margin: const EdgeInsets.only(left: customMargin, right: customMargin),
       decoration: BoxDecoration(
           color: themeColor.withOpacity(0.1),
           borderRadius: BorderRadius.circular(customBorderRadius)),
-      padding: EdgeInsets.all(customMargin),
+      padding: const EdgeInsets.all(customMargin),
       child: TextField(
         textCapitalization: TextCapitalization.sentences,
         controller: descriptionController,

@@ -13,7 +13,7 @@ class MovememntEmptyCard extends StatelessWidget {
   final MovementType movementType;
   final bool isExpanded;
 
-  MovememntEmptyCard(this.movementType, {this.isExpanded = false});
+  const MovememntEmptyCard(this.movementType, {this.isExpanded = false});
 
   @override
   Widget build(BuildContext context) {
@@ -25,13 +25,13 @@ class MovememntEmptyCard extends StatelessWidget {
   Widget expandedMovementEmptyCard(BuildContext context) {
     return GestureDetector(
       onTap: () => gotoAddMovement(context),
-      child: Container(
+      child: SizedBox(
         width: MediaQuery.of(context).size.width,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(
+            const SizedBox(
                 height: 100,
                 width: 100,
                 child: Icon(
@@ -47,7 +47,7 @@ class MovememntEmptyCard extends StatelessWidget {
                 textAlign: TextAlign.center),
             Text("Toca para añadir uno",
                 style: accentStyle(), textAlign: TextAlign.center),
-            SizedBox(
+            const SizedBox(
               height: 100,
               width: 100,
             ),
@@ -67,13 +67,14 @@ class MovememntEmptyCard extends StatelessWidget {
         splashColor: themeColor.withOpacity(0.1),
         child: Container(
           height: movementCardSize,
-          padding: EdgeInsets.only(left: customMargin, right: customMargin),
+          padding:
+              const EdgeInsets.only(left: customMargin, right: customMargin),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Icon(Icons.add_rounded, color: Colors.white, size: 50),
-              SpaceDivider(isVertical: true),
+              const Icon(Icons.add_rounded, color: Colors.white, size: 50),
+              const SpaceDivider(isVertical: true),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -111,7 +112,7 @@ class MovememntEmptyCard extends StatelessWidget {
                               Provider.of<CategoriesChangeNotifier>(context),
                         )
                       ],
-                      child: MovementView(
+                      child: const MovementView(
                         allowEdit: true,
                         movementType: MovementType.INCOME,
                       ),
@@ -130,7 +131,7 @@ class MovememntEmptyCard extends StatelessWidget {
                               Provider.of<CategoriesChangeNotifier>(context),
                         )
                       ],
-                      child: MovementView(
+                      child: const MovementView(
                         allowEdit: true,
                         movementType: MovementType.EXPEND,
                       ),

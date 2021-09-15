@@ -21,9 +21,9 @@ class CategoriesController {
 
   static List<String> toStringList(List<Category> categoryList) {
     List<String> parsedCategoryList = [];
-    categoryList.forEach((element) {
+    for (var element in categoryList) {
       parsedCategoryList.add(element.name);
-    });
+    }
     return parsedCategoryList;
   }
 }

@@ -43,17 +43,16 @@ class _SettingsUserDataViewState extends State<SettingsUserDataView> {
             title: Text("Tu información", style: appBarStyle())),
         body: ScrollConfiguration(
             behavior: MyBehavior(),
-            child: Container(
-                child: ListView(
-              padding: EdgeInsets.all(customMargin),
+            child: ListView(
+              padding: const EdgeInsets.all(customMargin),
               children: [
                 userDataCard(),
-                SpaceDivider(),
+                const SpaceDivider(),
                 myDataCard(context),
-                SpaceDivider(),
+                const SpaceDivider(),
                 actionsCard(context)
               ],
-            ))),
+            )),
       ),
     );
   }
@@ -61,7 +60,7 @@ class _SettingsUserDataViewState extends State<SettingsUserDataView> {
   Widget userDataCard() {
     return Container(
       height: 100,
-      padding: EdgeInsets.all(customMargin),
+      padding: const EdgeInsets.all(customMargin),
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
           color: themeColor.withOpacity(0.1),
@@ -87,11 +86,11 @@ class _SettingsUserDataViewState extends State<SettingsUserDataView> {
 
   Widget myDataCard(BuildContext context) {
     List<Widget> widgetList = [
-      SettingsHeaderRow(text: "Mi información"),
-      LinearDivider(),
-      SettingsDataRow(title: "Registrado desde", data: "09/2021"),
-      LinearDivider(),
-      SettingsDataRow(title: "Tu inicio de mes", data: "01"),
+      const SettingsHeaderRow(text: "Mi información"),
+      const LinearDivider(),
+      const SettingsDataRow(title: "Registrado desde", data: "09/2021"),
+      const LinearDivider(),
+      const SettingsDataRow(title: "Tu inicio de mes", data: "01"),
     ];
 
     return Container(
@@ -105,18 +104,18 @@ class _SettingsUserDataViewState extends State<SettingsUserDataView> {
 
   Widget actionsCard(BuildContext context) {
     List<Widget> widgetList = [
-      SettingsHeaderRow(text: "Acciones disponibles"),
-      LinearDivider(),
+      const SettingsHeaderRow(text: "Acciones disponibles"),
+      const LinearDivider(),
       SettingsActionRow(
         text: "Cambiar contraseña",
         action: () => changePasswordDialog(context),
       ),
-      LinearDivider(),
+      const LinearDivider(),
       SettingsActionRow(text: "Editar información", action: () => null),
-      LinearDivider(),
+      const LinearDivider(),
       SettingsActionRow(
           text: "Borrar tus datos", action: () => confirmDeleteUserData()),
-      LinearDivider(),
+      const LinearDivider(),
       SettingsActionRow(
         text: "Eliminar cuenta",
         action: () => confirmDeleteAccount(),
@@ -140,7 +139,7 @@ class _SettingsUserDataViewState extends State<SettingsUserDataView> {
                 MediaQuery.of(context).padding.top),
         barrierColor: themeColor.withOpacity(0.65),
         isScrollControlled: true,
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(customBorderRadius),
               topRight: Radius.circular(customBorderRadius)),
@@ -150,12 +149,12 @@ class _SettingsUserDataViewState extends State<SettingsUserDataView> {
             builder: (context, setModalState) => Material(
                 clipBehavior: Clip.antiAliasWithSaveLayer,
                 elevation: 0,
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(customBorderRadius),
                     topRight: Radius.circular(customBorderRadius)),
                 color: Colors.transparent,
                 child: Container(
-                  padding: EdgeInsets.all(customMargin),
+                  padding: const EdgeInsets.all(customMargin),
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
                       gradient: LinearGradient(
@@ -174,20 +173,20 @@ class _SettingsUserDataViewState extends State<SettingsUserDataView> {
                               child: Text("Cambia tu contrseña",
                                   style: titleCardStyle(),
                                   textAlign: TextAlign.center)),
-                          SpaceDivider(),
+                          const SpaceDivider(),
                           currentPasswordWidget(() => {
                                 setModalState(() {
                                   currentPasswordHidePass =
                                       !currentPasswordHidePass;
                                 })
                               }),
-                          SpaceDivider(),
+                          const SpaceDivider(),
                           newPassword1Widget(() => {
                                 setModalState(() {
                                   newPassword1HidePass = !newPassword1HidePass;
                                 })
                               }),
-                          SpaceDivider(),
+                          const SpaceDivider(),
                           newPassword2Widget(
                               () => {
                                     setModalState(() {
@@ -200,7 +199,7 @@ class _SettingsUserDataViewState extends State<SettingsUserDataView> {
                                     newPassword1Controller.text = "";
                                     newPassword2Controller.text = "";
                                   })),
-                          SpaceDivider(),
+                          const SpaceDivider(),
                           BinancyButton(
                               context: context,
                               text: "Cambiar contraseña",
@@ -283,7 +282,7 @@ class _SettingsUserDataViewState extends State<SettingsUserDataView> {
   Widget currentPasswordWidget(Function() onPressed) {
     return Container(
         height: buttonHeight,
-        padding: EdgeInsets.only(left: customMargin, right: customMargin),
+        padding: const EdgeInsets.only(left: customMargin, right: customMargin),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(customBorderRadius),
             color: themeColor.withOpacity(0.1)),
@@ -317,7 +316,7 @@ class _SettingsUserDataViewState extends State<SettingsUserDataView> {
   Widget newPassword1Widget(Function() onPressed) {
     return Container(
         height: buttonHeight,
-        padding: EdgeInsets.only(left: customMargin, right: customMargin),
+        padding: const EdgeInsets.only(left: customMargin, right: customMargin),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(customBorderRadius),
             color: themeColor.withOpacity(0.1)),
@@ -351,7 +350,7 @@ class _SettingsUserDataViewState extends State<SettingsUserDataView> {
   Widget newPassword2Widget(Function() onPressed, Function() setModalState) {
     return Container(
         height: buttonHeight,
-        padding: EdgeInsets.only(left: customMargin, right: customMargin),
+        padding: const EdgeInsets.only(left: customMargin, right: customMargin),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(customBorderRadius),
             color: themeColor.withOpacity(0.1)),

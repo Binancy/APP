@@ -21,19 +21,20 @@ class SubscriptionsView extends StatelessWidget {
                 backgroundColor: Colors.transparent,
                 actions: [
                   IconButton(
-                      icon: Icon(Icons.more_horiz_rounded, color: Colors.white),
+                      icon: const Icon(Icons.more_horiz_rounded,
+                          color: Colors.white),
                       onPressed: () {})
                 ],
               ),
               body: Container(
                 width: MediaQuery.of(context).size.width,
-                padding: EdgeInsets.all(customMargin),
+                padding: const EdgeInsets.all(customMargin),
                 child: Column(
                   children: [
                     Container(
                       height: 100,
                       width: MediaQuery.of(context).size.width,
-                      padding: EdgeInsets.only(
+                      padding: const EdgeInsets.only(
                           left: customMargin, right: customMargin),
                       decoration: BoxDecoration(
                           color: themeColor.withOpacity(0.1),
@@ -50,7 +51,7 @@ class SubscriptionsView extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                                 fontSize: 65),
                           ),
-                          SpaceDivider(isVertical: true),
+                          const SpaceDivider(isVertical: true),
                           Expanded(
                               child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -67,15 +68,15 @@ class SubscriptionsView extends StatelessWidget {
                         ],
                       ),
                     ),
-                    SpaceDivider(),
-                    provider.subscriptionsList.length != 0
+                    const SpaceDivider(),
+                    provider.subscriptionsList.isNotEmpty
                         ? Container(
                             width: MediaQuery.of(context).size.width,
                             decoration: BoxDecoration(
                                 color: themeColor.withOpacity(0.1),
                                 borderRadius:
                                     BorderRadius.circular(customBorderRadius)),
-                            padding: EdgeInsets.all(customMargin),
+                            padding: const EdgeInsets.all(customMargin),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -96,30 +97,31 @@ class SubscriptionsView extends StatelessWidget {
                               ],
                             ),
                           )
-                        : SizedBox(),
-                    provider.subscriptionsList.length != 0
-                        ? SpaceDivider()
-                        : SizedBox(),
+                        : const SizedBox(),
+                    provider.subscriptionsList.isNotEmpty
+                        ? const SpaceDivider()
+                        : const SizedBox(),
                     Container(
                       clipBehavior: Clip.antiAliasWithSaveLayer,
                       height: 65,
                       decoration: BoxDecoration(
                           color: themeColor.withOpacity(0.1),
-                          borderRadius: BorderRadius.only(
+                          borderRadius: const BorderRadius.only(
                               topLeft: Radius.circular(customBorderRadius),
                               topRight: Radius.circular(customBorderRadius))),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(),
+                          const SizedBox(),
                           Padding(
-                              padding: EdgeInsets.only(left: customMargin),
+                              padding:
+                                  const EdgeInsets.only(left: customMargin),
                               child: Text(
                                 "Todas tus suscripciones",
                                 style: titleCardStyle(),
                               )),
-                          LinearDivider()
+                          const LinearDivider()
                         ],
                       ),
                     ),
@@ -127,12 +129,12 @@ class SubscriptionsView extends StatelessWidget {
                         child: Container(
                       clipBehavior: Clip.antiAliasWithSaveLayer,
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
+                          borderRadius: const BorderRadius.only(
                               bottomLeft: Radius.circular(customBorderRadius),
                               bottomRight: Radius.circular(customBorderRadius)),
                           color: themeColor.withOpacity(0.1)),
                       child: provider.subscriptionsList.isEmpty
-                          ? SubscriptionEmptyCard(isExpanded: true)
+                          ? const SubscriptionEmptyCard(isExpanded: true)
                           : ScrollConfiguration(
                               behavior: MyBehavior(),
                               child: ListView.separated(
@@ -144,7 +146,7 @@ class SubscriptionsView extends StatelessWidget {
                                         subscriptionsChangeNotifier: provider,
                                       ),
                                   separatorBuilder: (context, index) =>
-                                      LinearDivider(),
+                                      const LinearDivider(),
                                   itemCount:
                                       provider.subscriptionsList.length)),
                     )),

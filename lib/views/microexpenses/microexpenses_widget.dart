@@ -55,14 +55,14 @@ class MicroExpendCard extends StatelessWidget {
         splashColor: themeColor.withOpacity(0.1),
         child: Slidable(
           child: Container(
-            padding: EdgeInsets.all(customMargin),
+            padding: const EdgeInsets.all(customMargin),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(microExpend.title,
                     style: appBarStyle(), textAlign: TextAlign.center),
-                SpaceDivider(customSpace: 10),
+                const SpaceDivider(customSpace: 10),
                 microExpend.description != null
                     ? Text(
                         microExpend.description ?? "",
@@ -71,18 +71,18 @@ class MicroExpendCard extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.center,
                       )
-                    : SizedBox(),
+                    : const SizedBox(),
                 microExpend.description != null
-                    ? SpaceDivider(customSpace: 10)
-                    : SizedBox(),
+                    ? const SpaceDivider(customSpace: 10)
+                    : const SizedBox(),
                 Text(Utils.parseAmount(microExpend.amount),
                     style: detailStyle(), textAlign: TextAlign.center),
-                SpaceDivider(customSpace: 10),
+                const SpaceDivider(customSpace: 10),
                 addButton(context)
               ],
             ),
           ),
-          actionPane: SlidableDrawerActionPane(),
+          actionPane: const SlidableDrawerActionPane(),
           actionExtentRatio: 1,
           actions: [
             IconSlideAction(
@@ -159,7 +159,7 @@ class MicroExpendCard extends StatelessWidget {
         splashColor: themeColor.withOpacity(0.1),
         borderRadius: BorderRadius.circular(customBorderRadius),
         child: Container(
-          padding: EdgeInsets.all(5),
+          padding: const EdgeInsets.all(5),
           width: MediaQuery.of(context).size.width,
           child: Center(
               child: Text(

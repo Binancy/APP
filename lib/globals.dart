@@ -17,7 +17,7 @@ enum AvaiablePlans { member, binancy, free }
 
 extension ParseToString on AvaiablePlans {
   String toShortString() {
-    return this.toString().split('.').last;
+    return toString().split('.').last;
   }
 }
 
@@ -27,27 +27,27 @@ List<Category> categoryList = [];
 int? userPayDay = 28;
 
 // WIDGET GLOBALS
-double customBorderRadius = 10;
-double customMargin = 20;
-double settingsRowHeight = 55;
-double buttonHeight = 70;
-double animLoadingSize = 200;
-double movementCardSize = 75;
-double subscriptionCardSize = 75;
-double adviceCardMinHeight = 125;
-double descriptionWidgetHeight = 250;
+const double customBorderRadius = 10;
+const double customMargin = 20;
+const double settingsRowHeight = 55;
+const double buttonHeight = 70;
+const double animLoadingSize = 200;
+const double movementCardSize = 75;
+const double subscriptionCardSize = 75;
+const double adviceCardMinHeight = 125;
+const double descriptionWidgetHeight = 250;
 
 // ANIMATION INTERVALS AND DURATION
-int savingsPlanProgressMS = 750;
-int plansCarouselIntervalMS = 7500;
-int opacityAnimationDurationMS = 250;
+const int savingsPlanProgressMS = 750;
+const int plansCarouselIntervalMS = 7500;
+const int opacityAnimationDurationMS = 250;
 
 // UI GLOBALS
-int dashboardMaxNotifications = 3;
-int summaryMaxDifference = 5;
-int latestMovementsMaxCount = 3;
-int savingsPlanMaxCount = 3;
-int dashboardSavingsPlanMaxCount = 2;
+const int dashboardMaxNotifications = 3;
+const int summaryMaxDifference = 5;
+const int latestMovementsMaxCount = 3;
+const int savingsPlanMaxCount = 3;
+const int dashboardSavingsPlanMaxCount = 2;
 
 // ERROR CODES
 class BinancyErrorCodes {

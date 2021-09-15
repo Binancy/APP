@@ -11,11 +11,9 @@ class BinancyInfoDialog {
   String text = "";
   List<BinancyInfoDialogItem> listItems = [];
 
-  BinancyInfoDialog(BuildContext context, String text,
-      List<BinancyInfoDialogItem> listItems) {
-    this.context = context;
-    this.text = text;
-    this.listItems = listItems;
+  BinancyInfoDialog(
+      this.context, this.text, List<BinancyInfoDialogItem> listItems) {
+    listItems = listItems;
     showCustomDialog();
   }
 
@@ -24,7 +22,7 @@ class BinancyInfoDialog {
       showCupertinoDialog(
           context: context,
           builder: (context) => CupertinoAlertDialog(
-                title: Text(appName),
+                title: const Text(appName),
                 content: Text(text),
                 actions: _parseActions(true),
               ));
@@ -35,7 +33,7 @@ class BinancyInfoDialog {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(customBorderRadius)),
                 elevation: 5,
-                title: Text(appName),
+                title: const Text(appName),
                 content: Text(text),
                 actions: _parseActions(false),
               ));

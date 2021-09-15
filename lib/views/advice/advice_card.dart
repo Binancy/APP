@@ -13,17 +13,17 @@ class AdviceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: BoxConstraints(minHeight: adviceCardMinHeight),
+      constraints: const BoxConstraints(minHeight: adviceCardMinHeight),
       width: MediaQuery.of(context).size.width,
-      margin: EdgeInsets.only(left: customMargin, right: customMargin),
+      margin: const EdgeInsets.only(left: customMargin, right: customMargin),
       decoration: BoxDecoration(
           color: themeColor.withOpacity(0.1),
           borderRadius: BorderRadius.circular(customBorderRadius)),
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       child: Row(
         children: [
           SizedBox(height: 60, width: 60, child: icon),
-          SpaceDivider(isVertical: true),
+          const SpaceDivider(isVertical: true),
           Expanded(child: Text(text, style: semititleStyle()))
         ],
       ),

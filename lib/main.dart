@@ -8,6 +8,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 void main() {
+  Paint.enableDithering = true;
   runApp(MyApp());
 }
 
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
         statusBarColor: Colors.transparent));
     return MaterialApp(
       theme: ThemeData(
-          appBarTheme: AppBarTheme(),
+          appBarTheme: const AppBarTheme(),
           splashColor: themeColor.withOpacity(0.1),
           toggleableActiveColor: Colors.transparent,
           unselectedWidgetColor: accentColor),
@@ -29,14 +30,14 @@ class MyApp extends StatelessWidget {
           ResponsiveWrapper.builder(child, defaultScale: true),
       title: appName,
       debugShowCheckedModeBanner: false,
-      home: SplashScreen(),
-      localizationsDelegates: [
+      home: const SplashScreen(),
+      localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: [
+      supportedLocales: const [
         Locale('en', ''),
         Locale('es', ''),
       ],

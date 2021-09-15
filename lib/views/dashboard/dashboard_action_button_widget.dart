@@ -28,7 +28,7 @@ class ActionButtonWidget extends StatelessWidget {
         onTap: action,
         highlightColor: Colors.transparent,
         splashColor: themeColor.withOpacity(0.1),
-        child: Container(
+        child: SizedBox(
           height: (MediaQuery.of(context).size.height / 10) + 3,
           width: (MediaQuery.of(context).size.height / 8),
           child: Column(
@@ -36,9 +36,9 @@ class ActionButtonWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(height: 40, width: 40, child: Center(child: icon)),
-              SizedBox(height: 3),
+              const SizedBox(height: 3),
               Padding(
-                  padding: EdgeInsets.only(left: 10, right: 10),
+                  padding: const EdgeInsets.only(left: 10, right: 10),
                   child: Text(
                     text,
                     style: dashboardActionButtonStyle(),

@@ -57,7 +57,8 @@ class MovementCard extends StatelessWidget {
           splashColor: themeColor.withOpacity(0.1),
           child: Container(
             height: movementCardSize,
-            padding: EdgeInsets.only(left: customMargin, right: customMargin),
+            padding:
+                const EdgeInsets.only(left: customMargin, right: customMargin),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -87,7 +88,7 @@ class MovementCard extends StatelessWidget {
           ),
         ),
       ),
-      actionPane: SlidableDrawerActionPane(),
+      actionPane: const SlidableDrawerActionPane(),
       actionExtentRatio: 0.2,
       actions: movementsActions(context),
       secondaryActions: movementsActions(context),

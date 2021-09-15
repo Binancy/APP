@@ -17,7 +17,7 @@ class SavingsPlanWidget extends StatefulWidget {
   final bool animate;
   final dynamic currentAmount;
 
-  SavingsPlanWidget(
+  const SavingsPlanWidget(
       this.savingsPlan, this.savingsPlanChangeNotifier, this.currentAmount,
       {this.animate = true});
 
@@ -34,14 +34,15 @@ class _SavingsPlanWidgetState extends State<SavingsPlanWidget>
   @override
   void initState() {
     super.initState();
-    this.valueTween = Tween<double>(
+    valueTween = Tween<double>(
         begin: 0, end: widget.currentAmount / widget.savingsPlan.amount);
-    this.animationController = AnimationController(
-        vsync: this, duration: Duration(milliseconds: savingsPlanProgressMS))
+    animationController = AnimationController(
+        vsync: this,
+        duration: const Duration(milliseconds: savingsPlanProgressMS))
       ..value = 0
       ..forward();
-    this.curve = CurvedAnimation(
-        parent: this.animationController, curve: Curves.easeInOut);
+    curve =
+        CurvedAnimation(parent: animationController, curve: Curves.easeInOut);
   }
 
   @override
@@ -75,7 +76,7 @@ class _SavingsPlanWidgetState extends State<SavingsPlanWidget>
           highlightColor: Colors.transparent,
           splashColor: themeColor.withOpacity(0.1),
           child: Container(
-            padding: EdgeInsets.all(customMargin),
+            padding: const EdgeInsets.all(customMargin),
             width: MediaQuery.of(context).size.width,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -90,28 +91,26 @@ class _SavingsPlanWidgetState extends State<SavingsPlanWidget>
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: savingsPlanTitleStyle(false))),
-                    SpaceDivider(isVertical: true),
+                    const SpaceDivider(isVertical: true),
                     Text(getPercentage(), style: newMethod())
                   ],
                 ),
-                SpaceDivider(customSpace: 10),
+                const SpaceDivider(customSpace: 10),
                 AnimatedBuilder(
-                    animation: this.curve,
+                    animation: curve,
                     builder: (context, child) => ClipRRect(
                           borderRadius: BorderRadius.circular(360),
                           child: LinearProgressIndicator(
                             backgroundColor: Colors.white.withOpacity(0.5),
                             color: accentColor,
                             value: widget.animate
-                                ? this
-                                    .valueTween
-                                    .evaluate(this.animationController)
+                                ? valueTween.evaluate(animationController)
                                 : widget.currentAmount /
                                     widget.savingsPlan.amount,
                             minHeight: 12.5,
                           ),
                         )),
-                SpaceDivider(customSpace: 10),
+                const SpaceDivider(customSpace: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -128,7 +127,7 @@ class _SavingsPlanWidgetState extends State<SavingsPlanWidget>
                       style: newMethod(),
                       overflow: TextOverflow.ellipsis,
                     )),
-                    SpaceDivider(isVertical: true),
+                    const SpaceDivider(isVertical: true),
                     Text(getDaysToLimitDate(), style: newMethod())
                   ],
                 )
@@ -137,7 +136,7 @@ class _SavingsPlanWidgetState extends State<SavingsPlanWidget>
           ),
         ),
       ),
-      actionPane: SlidableDrawerActionPane(),
+      actionPane: const SlidableDrawerActionPane(),
       actionExtentRatio: 0.2,
       actions: savingsPlansActions(),
       secondaryActions: savingsPlansActions(),

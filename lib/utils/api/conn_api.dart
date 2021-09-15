@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
@@ -14,15 +16,9 @@ class ConnAPI {
   var response;
   Map<String, String> headers = {"Content-Type": "application/json"};
 
-  Duration timeout = Duration(milliseconds: 3500);
+  Duration timeout = const Duration(milliseconds: 3500);
 
-  ConnAPI(String endpoint, String method, bool isTest,
-      Map<String, dynamic>? requestJSON) {
-    this.endpoint = endpoint;
-    this.method = method;
-    this.isTest = isTest;
-    this.requestJSON = requestJSON;
-  }
+  ConnAPI(this.endpoint, this.method, this.isTest, this.requestJSON);
 
   Future<void> callAPI() async {
     await hasConnection().timeout(timeout).then((value) async {

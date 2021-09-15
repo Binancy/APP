@@ -24,12 +24,13 @@ class MovementView extends StatefulWidget {
   final dynamic selectedMovement;
   final bool allowEdit;
 
-  MovementView(
+  const MovementView(
       {required this.movementType,
       this.selectedMovement,
       this.allowEdit = false});
   @override
   _MovementViewState createState() =>
+      // ignore: no_logic_in_create_state
       _MovementViewState(selectedMovement, allowEdit);
 }
 
@@ -46,10 +47,7 @@ class _MovementViewState extends State<MovementView> {
   Category? selectedCategory;
   SavingsPlan? selectedSavingsPlan;
 
-  _MovementViewState(dynamic selectedMovement, bool allowEdit) {
-    this.selectedMovement = selectedMovement;
-    this.allowEdit = allowEdit;
-  }
+  _MovementViewState(this.selectedMovement, this.allowEdit);
 
   @override
   Widget build(BuildContext context) {
@@ -66,21 +64,21 @@ class _MovementViewState extends State<MovementView> {
                 actions: [
                   !allowEdit && !createMode
                       ? IconButton(
-                          icon: Icon(Icons.more_horiz),
+                          icon: const Icon(Icons.more_horiz),
                           onPressed: () {
                             setState(() {
                               allowEdit = true;
                             });
                           })
-                      : SizedBox()
+                      : const SizedBox()
                 ],
                 leading: !allowEdit
                     ? IconButton(
-                        icon: Icon(Icons.arrow_back),
+                        icon: const Icon(Icons.arrow_back),
                         onPressed: () => Navigator.pop(context))
                     : createMode
                         ? IconButton(
-                            icon: Icon(Icons.arrow_back),
+                            icon: const Icon(Icons.arrow_back),
                             onPressed: () => BinancyInfoDialog(context,
                                     "¿Estas seguro que quieres salir?", [
                                   BinancyInfoDialogItem(
@@ -91,7 +89,7 @@ class _MovementViewState extends State<MovementView> {
                                   })
                                 ]))
                         : IconButton(
-                            icon: Icon(Icons.close_outlined),
+                            icon: const Icon(Icons.close_outlined),
                             onPressed: () => BinancyInfoDialog(
                                 context, "Estas seguro que quieres salir?", [
                               BinancyInfoDialogItem(
@@ -113,54 +111,52 @@ class _MovementViewState extends State<MovementView> {
                     style: appBarStyle()),
               ),
               backgroundColor: Colors.transparent,
-              body: Container(
-                child: ScrollConfiguration(
-                    behavior: MyBehavior(),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          movementHeader(),
-                          Text("Datos del movimiento", style: titleCardStyle()),
-                          SpaceDivider(),
-                          movementNotes(),
-                          SpaceDivider(),
-                          datePicker(context),
-                          SpaceDivider(),
-                          categorySelector(context),
-                          BuildConfigs.enableSavingsPlan
-                              ? SpaceDivider()
-                              : SizedBox(),
-                          BuildConfigs.enableSavingsPlan
-                              ? savingsPlanSelector(context)
-                              : SizedBox(),
-                          SpaceDivider(),
-                          SpaceDivider(),
-                          allowEdit
-                              ? Padding(
-                                  padding: EdgeInsets.only(
-                                      left: customMargin, right: customMargin),
-                                  child: BinancyButton(
-                                      context: context,
-                                      text: createMode
-                                          ? widget.movementType ==
-                                                  MovementType.INCOME
-                                              ? "Añadir ingreso"
-                                              : "Añadir gasto"
-                                          : widget.movementType ==
-                                                  MovementType.INCOME
-                                              ? "Actualizar ingreso"
-                                              : "Actualizar gasto",
-                                      action: () async {
-                                        FocusScope.of(context).unfocus();
-                                        await checkData(movementsProvider);
-                                      }))
-                              : SizedBox()
-                        ],
-                      ),
-                    )),
-              ),
+              body: ScrollConfiguration(
+                  behavior: MyBehavior(),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        movementHeader(),
+                        Text("Datos del movimiento", style: titleCardStyle()),
+                        const SpaceDivider(),
+                        movementNotes(),
+                        const SpaceDivider(),
+                        datePicker(context),
+                        const SpaceDivider(),
+                        categorySelector(context),
+                        BuildConfigs.enableSavingsPlan
+                            ? const SpaceDivider()
+                            : const SizedBox(),
+                        BuildConfigs.enableSavingsPlan
+                            ? savingsPlanSelector(context)
+                            : const SizedBox(),
+                        const SpaceDivider(),
+                        const SpaceDivider(),
+                        allowEdit
+                            ? Padding(
+                                padding: const EdgeInsets.only(
+                                    left: customMargin, right: customMargin),
+                                child: BinancyButton(
+                                    context: context,
+                                    text: createMode
+                                        ? widget.movementType ==
+                                                MovementType.INCOME
+                                            ? "Añadir ingreso"
+                                            : "Añadir gasto"
+                                        : widget.movementType ==
+                                                MovementType.INCOME
+                                            ? "Actualizar ingreso"
+                                            : "Actualizar gasto",
+                                    action: () async {
+                                      FocusScope.of(context).unfocus();
+                                      await checkData(movementsProvider);
+                                    }))
+                            : const SizedBox()
+                      ],
+                    ),
+                  )),
             )));
   }
 
@@ -169,8 +165,9 @@ class _MovementViewState extends State<MovementView> {
       decoration: BoxDecoration(
           color: themeColor.withOpacity(0.1),
           borderRadius: BorderRadius.circular(customBorderRadius)),
-      margin: EdgeInsets.all(customMargin),
-      padding: EdgeInsets.fromLTRB(customMargin, 0, customMargin, customMargin),
+      margin: const EdgeInsets.all(customMargin),
+      padding: const EdgeInsets.fromLTRB(
+          customMargin, 0, customMargin, customMargin),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -182,11 +179,11 @@ class _MovementViewState extends State<MovementView> {
   Container movementNotes() {
     return Container(
       height: 150,
-      margin: EdgeInsets.only(left: customMargin, right: customMargin),
+      margin: const EdgeInsets.only(left: customMargin, right: customMargin),
       decoration: BoxDecoration(
           color: themeColor.withOpacity(0.1),
           borderRadius: BorderRadius.circular(customBorderRadius)),
-      padding: EdgeInsets.all(customMargin),
+      padding: const EdgeInsets.all(customMargin),
       child: TextField(
         textCapitalization: TextCapitalization.sentences,
         controller: noteController,
@@ -212,7 +209,7 @@ class _MovementViewState extends State<MovementView> {
 
   Padding datePicker(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: customMargin, right: customMargin),
+      padding: const EdgeInsets.only(left: customMargin, right: customMargin),
       child: Material(
         color: themeColor.withOpacity(0.1),
         borderRadius: BorderRadius.circular(customBorderRadius),
@@ -239,7 +236,8 @@ class _MovementViewState extends State<MovementView> {
           splashColor: themeColor.withOpacity(0.1),
           child: Container(
               height: buttonHeight,
-              padding: EdgeInsets.only(left: customMargin, right: customMargin),
+              padding: const EdgeInsets.only(
+                  left: customMargin, right: customMargin),
               child: Row(
                 children: [
                   Icon(
@@ -247,7 +245,7 @@ class _MovementViewState extends State<MovementView> {
                     color: accentColor,
                     size: 36,
                   ),
-                  SpaceDivider(
+                  const SpaceDivider(
                     isVertical: true,
                   ),
                   Text(parsedDate, style: inputStyle())
@@ -260,13 +258,14 @@ class _MovementViewState extends State<MovementView> {
 
   Padding categorySelector(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: customMargin, right: customMargin),
+      padding: const EdgeInsets.only(left: customMargin, right: customMargin),
       child: Material(
         color: themeColor.withOpacity(0.1),
         borderRadius: BorderRadius.circular(customBorderRadius),
         child: Container(
             height: buttonHeight,
-            padding: EdgeInsets.only(left: customMargin, right: customMargin),
+            padding:
+                const EdgeInsets.only(left: customMargin, right: customMargin),
             child: Row(
               children: [
                 Icon(
@@ -274,7 +273,7 @@ class _MovementViewState extends State<MovementView> {
                   color: accentColor,
                   size: 36,
                 ),
-                SpaceDivider(
+                const SpaceDivider(
                   isVertical: true,
                 ),
                 Expanded(
@@ -289,15 +288,14 @@ class _MovementViewState extends State<MovementView> {
                         elevation: 0,
                         iconDisabledColor: accentColor,
                         iconEnabledColor: accentColor,
-                        value:
-                            selectedCategory != null ? selectedCategory : null,
+                        value: selectedCategory,
                         onChanged: (value) {
                           setState(() {
                             selectedCategory = value;
                           });
                         },
                         style: inputStyle(),
-                        underline: SizedBox(),
+                        underline: const SizedBox(),
                         items: categoryList
                             .map((e) => DropdownMenuItem<Category>(
                                 value: e, child: Text(e.name)))
@@ -310,7 +308,7 @@ class _MovementViewState extends State<MovementView> {
 
   Padding savingsPlanSelector(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: customMargin, right: customMargin),
+      padding: const EdgeInsets.only(left: customMargin, right: customMargin),
       child: Material(
         color: themeColor.withOpacity(0.1),
         borderRadius: BorderRadius.circular(customBorderRadius),
@@ -332,7 +330,8 @@ class _MovementViewState extends State<MovementView> {
           splashColor: themeColor.withOpacity(0.1),
           child: Container(
               height: buttonHeight,
-              padding: EdgeInsets.only(left: customMargin, right: customMargin),
+              padding: const EdgeInsets.only(
+                  left: customMargin, right: customMargin),
               child: Row(
                 children: [
                   Icon(
@@ -340,7 +339,7 @@ class _MovementViewState extends State<MovementView> {
                     color: accentColor,
                     size: 36,
                   ),
-                  SpaceDivider(
+                  const SpaceDivider(
                     isVertical: true,
                   ),
                   Text(
@@ -376,9 +375,8 @@ class _MovementViewState extends State<MovementView> {
     );
   }
 
-  Container inputValue() {
-    return Container(
-        child: TextField(
+  Widget inputValue() {
+    return TextField(
       readOnly: !allowEdit,
       inputFormatters: [DecimalTextInputFormatter(decimalRange: 2)],
       keyboardType: TextInputType.number,
@@ -394,7 +392,7 @@ class _MovementViewState extends State<MovementView> {
           disabledBorder: InputBorder.none,
           hintStyle: balanceValueStyle(),
           hintText: "0.00€"),
-    ));
+    );
   }
 
   Future<void> checkData(

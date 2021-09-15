@@ -36,14 +36,14 @@ class DashboardHeaderRow extends StatelessWidget {
       }
 
       return Container(
-          margin: EdgeInsets.only(top: 10, bottom: customMargin),
+          margin: const EdgeInsets.only(top: 10, bottom: customMargin),
           height: (MediaQuery.of(context).size.height / 10),
           child: ListView.separated(
-              padding: EdgeInsets.only(left: 20, right: 20),
-              physics: BouncingScrollPhysics(),
+              padding: const EdgeInsets.only(left: 20, right: 20),
+              physics: const BouncingScrollPhysics(),
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) => rowItems.elementAt(index),
-              separatorBuilder: (context, index) => SizedBox(width: 10),
+              separatorBuilder: (context, index) => const SizedBox(width: 10),
               itemCount: rowItems.length));
     });
   }
@@ -57,11 +57,12 @@ class DashboardHeaderRow extends StatelessWidget {
         highlightColor: Colors.transparent,
         splashColor: themeColor.withOpacity(0.1),
         onTap: action,
-        child: Container(
+        child: SizedBox(
             height: 75,
             width: 160,
             child: Padding(
-              padding: EdgeInsets.only(left: customMargin, right: customMargin),
+              padding: const EdgeInsets.only(
+                  left: customMargin, right: customMargin),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -115,7 +116,7 @@ class DashboardHeaderRow extends StatelessWidget {
                           Provider.of<CategoriesChangeNotifier>(context),
                     )
                   ],
-                  child: AllMovementView(initialPage: 0),
+                  child: const AllMovementView(initialPage: 0),
                 ),
               ))),
       rowWidget(
@@ -135,7 +136,7 @@ class DashboardHeaderRow extends StatelessWidget {
                           Provider.of<CategoriesChangeNotifier>(context),
                     )
                   ],
-                  child: AllMovementView(initialPage: 1),
+                  child: const AllMovementView(initialPage: 1),
                 ),
               ))),
     ];

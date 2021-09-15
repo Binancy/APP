@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-Color primaryColor = Color(0xff012457);
-Color secondaryColor = Color(0xff054CCB);
-Color accentColor = Color(0xffFDCB32);
-Color textColor = Color(0xffffffff);
+Color primaryColor = const Color(0xff012457);
+Color secondaryColor = const Color(0xff054CCB);
+Color accentColor = const Color(0xffFDCB32);
+Color textColor = const Color(0xffffffff);
 Color themeColor = Colors.black;
 
 TextStyle dashboardHeaderItemTitleStyle() {
@@ -16,7 +16,7 @@ TextStyle dashboardHeaderItemActionStyle() {
 }
 
 TextStyle appBarStyle() {
-  return TextStyle(
+  return const TextStyle(
       color: Colors.white,
       fontSize: 20,
       fontFamily: "OpenSans",
@@ -24,11 +24,12 @@ TextStyle appBarStyle() {
 }
 
 TextStyle whiteButtonStyle() {
-  return TextStyle(color: Colors.white, fontSize: 18);
+  return const TextStyle(color: Colors.white, fontSize: 18);
 }
 
 TextStyle dashboardActionButtonStyle() {
-  return TextStyle(color: Colors.white, fontSize: 13, fontFamily: "OpenSans");
+  return const TextStyle(
+      color: Colors.white, fontSize: 13, fontFamily: "OpenSans");
 }
 
 TextStyle titleCardStyle() {

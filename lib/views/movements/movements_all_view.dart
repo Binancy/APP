@@ -14,9 +14,10 @@ import 'movements_card_widget.dart';
 
 class AllMovementView extends StatefulWidget {
   final int initialPage;
-  AllMovementView({this.initialPage = 0});
+  const AllMovementView({this.initialPage = 0});
 
   @override
+  // ignore: no_logic_in_create_state
   _AllMovementViewState createState() => _AllMovementViewState(initialPage);
 }
 
@@ -61,7 +62,7 @@ class _AllMovementViewState extends State<AllMovementView>
                   elevation: 0,
                   actions: [
                     IconButton(
-                        onPressed: () {}, icon: Icon(BinancyIcons.filter))
+                        onPressed: () {}, icon: const Icon(BinancyIcons.filter))
                   ],
                   title: Text("Todos tus movimientos", style: appBarStyle()),
                   bottom: TabBar(
@@ -77,25 +78,24 @@ class _AllMovementViewState extends State<AllMovementView>
                       },
                       labelStyle: semititleStyle(),
                       indicatorColor: accentColor,
-                      tabs: [Tab(text: "Ingresos"), Tab(text: "Gastos")]),
+                      tabs: const [Tab(text: "Ingresos"), Tab(text: "Gastos")]),
                 ),
-                body: Container(
-                    child: ScrollConfiguration(
-                        behavior: MyBehavior(),
-                        child: PageView(
-                          physics: NeverScrollableScrollPhysics(),
-                          onPageChanged: (value) {
-                            setState(() {
-                              pageIndex = value;
-                            });
-                            tabController.animateTo(pageIndex);
-                          },
-                          controller: pageController,
-                          children: [
-                            incomesPage(movementsProvider),
-                            expensesPage(movementsProvider)
-                          ],
-                        ))),
+                body: ScrollConfiguration(
+                    behavior: MyBehavior(),
+                    child: PageView(
+                      physics: const NeverScrollableScrollPhysics(),
+                      onPageChanged: (value) {
+                        setState(() {
+                          pageIndex = value;
+                        });
+                        tabController.animateTo(pageIndex);
+                      },
+                      controller: pageController,
+                      children: [
+                        incomesPage(movementsProvider),
+                        expensesPage(movementsProvider)
+                      ],
+                    )),
               ),
               onWillPop: () async {
                 movementsProvider.updateMovements();
@@ -110,8 +110,9 @@ class _AllMovementViewState extends State<AllMovementView>
         Container(
           height: 100,
           width: MediaQuery.of(context).size.width,
-          margin: EdgeInsets.all(customMargin),
-          padding: EdgeInsets.only(left: customMargin, right: customMargin),
+          margin: const EdgeInsets.all(customMargin),
+          padding:
+              const EdgeInsets.only(left: customMargin, right: customMargin),
           decoration: BoxDecoration(
               color: themeColor.withOpacity(0.1),
               borderRadius: BorderRadius.circular(customBorderRadius)),
@@ -126,7 +127,7 @@ class _AllMovementViewState extends State<AllMovementView>
                     fontWeight: FontWeight.bold,
                     fontSize: 65),
               ),
-              SpaceDivider(isVertical: true),
+              const SpaceDivider(isVertical: true),
               Expanded(
                   child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -178,24 +179,25 @@ class _AllMovementViewState extends State<AllMovementView>
         Container(
           clipBehavior: Clip.antiAliasWithSaveLayer,
           height: 65,
-          margin: EdgeInsets.only(left: customMargin, right: customMargin),
+          margin:
+              const EdgeInsets.only(left: customMargin, right: customMargin),
           decoration: BoxDecoration(
               color: themeColor.withOpacity(0.1),
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(customBorderRadius),
                   topRight: Radius.circular(customBorderRadius))),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(),
+              const SizedBox(),
               Padding(
-                  padding: EdgeInsets.only(left: customMargin),
+                  padding: const EdgeInsets.only(left: customMargin),
                   child: Text(
                     "Ingresos",
                     style: titleCardStyle(),
                   )),
-              LinearDivider()
+              const LinearDivider()
             ],
           ),
         ),
@@ -203,20 +205,20 @@ class _AllMovementViewState extends State<AllMovementView>
             child: Container(
           clipBehavior: Clip.antiAliasWithSaveLayer,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(customBorderRadius),
                   bottomRight: Radius.circular(customBorderRadius)),
               color: themeColor.withOpacity(0.1)),
-          margin: EdgeInsets.only(
+          margin: const EdgeInsets.only(
               left: customMargin, right: customMargin, bottom: customMargin),
           child: movementsProvider.incomeList.isEmpty
-              ? MovememntEmptyCard(MovementType.INCOME, isExpanded: true)
+              ? const MovememntEmptyCard(MovementType.INCOME, isExpanded: true)
               : ListView.separated(
                   clipBehavior: Clip.antiAliasWithSaveLayer,
                   itemBuilder: (context, index) => MovementCard(
                       movement: incomeMovements.elementAt(index),
                       movementsProvider: movementsProvider),
-                  separatorBuilder: (context, index) => LinearDivider(),
+                  separatorBuilder: (context, index) => const LinearDivider(),
                   itemCount: incomeMovements.length),
         ))
       ],
@@ -234,24 +236,25 @@ class _AllMovementViewState extends State<AllMovementView>
         Container(
           clipBehavior: Clip.antiAliasWithSaveLayer,
           height: 65,
-          margin: EdgeInsets.only(left: customMargin, right: customMargin),
+          margin:
+              const EdgeInsets.only(left: customMargin, right: customMargin),
           decoration: BoxDecoration(
               color: themeColor.withOpacity(0.1),
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(customBorderRadius),
                   topRight: Radius.circular(customBorderRadius))),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(),
+              const SizedBox(),
               Padding(
-                  padding: EdgeInsets.only(left: customMargin),
+                  padding: const EdgeInsets.only(left: customMargin),
                   child: Text(
                     "Gastos",
                     style: titleCardStyle(),
                   )),
-              LinearDivider()
+              const LinearDivider()
             ],
           ),
         ),
@@ -259,20 +262,20 @@ class _AllMovementViewState extends State<AllMovementView>
             child: Container(
           clipBehavior: Clip.antiAliasWithSaveLayer,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(customBorderRadius),
                   bottomRight: Radius.circular(customBorderRadius)),
               color: themeColor.withOpacity(0.1)),
-          margin: EdgeInsets.only(
+          margin: const EdgeInsets.only(
               left: customMargin, right: customMargin, bottom: customMargin),
           child: movementsProvider.expendList.isEmpty
-              ? MovememntEmptyCard(MovementType.EXPEND, isExpanded: true)
+              ? const MovememntEmptyCard(MovementType.EXPEND, isExpanded: true)
               : ListView.separated(
                   clipBehavior: Clip.antiAliasWithSaveLayer,
                   itemBuilder: (context, index) => MovementCard(
                       movement: expenseMovements.elementAt(index),
                       movementsProvider: movementsProvider),
-                  separatorBuilder: (context, index) => LinearDivider(),
+                  separatorBuilder: (context, index) => const LinearDivider(),
                   itemCount: expenseMovements.length),
         ))
       ],

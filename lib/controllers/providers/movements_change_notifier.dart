@@ -39,7 +39,7 @@ class MovementsChangeNotifier extends ChangeNotifier {
 
   double getThisMonthIncomes() {
     double thisMonthIncomes = 0;
-    incomeList.forEach((element) {
+    for (var element in incomeList) {
       if (userPayDay != null) {
         if (Utils.isAtSameDay(Utils.getTodayDate(), Utils.getUserPayDay())) {
           if (element.date.isAfter(Utils.getUserPayDay()) &&
@@ -64,14 +64,14 @@ class MovementsChangeNotifier extends ChangeNotifier {
           thisMonthIncomes += element.value;
         }
       }
-    });
+    }
 
     return thisMonthIncomes;
   }
 
   double getThisMonthExpenses() {
     double thisMonthExpenses = 0;
-    expendList.forEach((element) {
+    for (var element in expendList) {
       if (userPayDay != null) {
         if (Utils.isAtSameDay(Utils.getTodayDate(), Utils.getUserPayDay())) {
           if (element.date.isAfter(Utils.getUserPayDay()) &&
@@ -96,7 +96,7 @@ class MovementsChangeNotifier extends ChangeNotifier {
           thisMonthExpenses += element.value;
         }
       }
-    });
+    }
     return thisMonthExpenses;
   }
 

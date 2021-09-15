@@ -11,7 +11,7 @@ class LinearDivider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.only(left: customMargin),
+        padding: const EdgeInsets.only(left: customMargin),
         child: Divider(
           color: Colors.white.withOpacity(0.1),
           height: 0,
@@ -44,7 +44,8 @@ class SpaceDivider extends StatelessWidget {
               ? customSpace
               : customMargin
           : 0,
-      child: addDivider ? Center(child: LinearDivider()) : SizedBox(),
+      child:
+          addDivider ? const Center(child: LinearDivider()) : const SizedBox(),
     );
   }
 }
@@ -69,7 +70,7 @@ class BinancyButton extends StatelessWidget {
       color: themeColor.withOpacity(0.1),
       elevation: 0,
       borderRadius: wrapOnFinal
-          ? BorderRadius.only(
+          ? const BorderRadius.only(
               bottomLeft: Radius.circular(customBorderRadius),
               bottomRight: Radius.circular(customBorderRadius))
           : BorderRadius.circular(customBorderRadius),
@@ -77,12 +78,12 @@ class BinancyButton extends StatelessWidget {
         onTap: action,
         highlightColor: Colors.transparent,
         borderRadius: wrapOnFinal
-            ? BorderRadius.only(
+            ? const BorderRadius.only(
                 bottomLeft: Radius.circular(customBorderRadius),
                 bottomRight: Radius.circular(customBorderRadius))
             : BorderRadius.circular(customBorderRadius),
         splashColor: themeColor.withOpacity(0.1),
-        child: Container(
+        child: SizedBox(
           height: buttonHeight,
           child: Center(
             child: Text(
@@ -153,7 +154,7 @@ class BinancyIconVertical extends StatelessWidget {
     return SizedBox(
         width: MediaQuery.of(context).size.width,
         child: Padding(
-            padding: EdgeInsets.all(customMargin),
+            padding: const EdgeInsets.all(customMargin),
             child: Center(
                 child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -175,7 +176,7 @@ class BinancyIconHorizontal extends StatelessWidget {
     return SizedBox(
         width: MediaQuery.of(context).size.width,
         child: Padding(
-            padding: EdgeInsets.all(customMargin),
+            padding: const EdgeInsets.all(customMargin),
             child: Center(
                 child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

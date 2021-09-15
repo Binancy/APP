@@ -28,7 +28,7 @@ class PremiumPlanCard extends StatelessWidget {
             highlightColor: Colors.transparent,
             splashColor: themeColor.withOpacity(0.1),
             child: Container(
-              padding: EdgeInsets.all(customMargin),
+              padding: const EdgeInsets.all(customMargin),
               child: Row(
                 children: [
                   Expanded(
@@ -43,7 +43,7 @@ class PremiumPlanCard extends StatelessWidget {
                           style: miniAccentStyle())
                     ],
                   )),
-                  SpaceDivider(isVertical: true),
+                  const SpaceDivider(isVertical: true),
                   Material(
                     borderRadius: BorderRadius.circular(customBorderRadius),
                     elevation: 0,
@@ -54,7 +54,7 @@ class PremiumPlanCard extends StatelessWidget {
                       highlightColor: Colors.transparent,
                       splashColor: themeColor.withOpacity(0.1),
                       child: Container(
-                        padding: EdgeInsets.all(customMargin / 1.5),
+                        padding: const EdgeInsets.all(customMargin / 1.5),
                         child: Center(
                           child: Text(
                               !Utils.showIfPlanIsEqualOrHigher(
