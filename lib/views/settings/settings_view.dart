@@ -1,6 +1,7 @@
 import 'package:binancy/controllers/providers/plans_change_notifier.dart';
 import 'package:binancy/globals.dart';
 import 'package:binancy/utils/dialogs/info_dialog.dart';
+import 'package:binancy/utils/dialogs/progress_dialog.dart';
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/widgets.dart';
@@ -47,7 +48,13 @@ class SettingsView extends StatelessWidget {
                           "Cancelar", () => Navigator.pop(context)),
                       BinancyInfoDialogItem("Cerrar sesión", () async {
                         Navigator.pop(context);
+                        BinancyProgressDialog progressDialog =
+                            BinancyProgressDialog(context: context)
+                              ..showProgressDialog();
+                        await Future.delayed(
+                            const Duration(milliseconds: logoutMinTimeMS));
                         await Utils.clearSecureStorage();
+                        progressDialog.dismissDialog();
                         Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
