@@ -30,7 +30,6 @@ class _AllMovementViewState extends State<AllMovementView>
   late TabController tabController;
 
   int pageIndex;
-  int pageSwapDurationMS = 500;
 
   _AllMovementViewState(this.pageIndex);
 
@@ -72,9 +71,9 @@ class _AllMovementViewState extends State<AllMovementView>
                           pageIndex = value;
                         });
                         pageController.animateToPage(pageIndex,
-                            duration:
-                                Duration(milliseconds: pageSwapDurationMS),
-                            curve: Curves.easeOut);
+                            duration: const Duration(
+                                milliseconds: pageSwapDurationMS),
+                            curve: Curves.fastLinearToSlowEaseIn);
                       },
                       labelStyle: semititleStyle(),
                       indicatorColor: accentColor,

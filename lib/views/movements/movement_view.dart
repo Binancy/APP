@@ -1,4 +1,3 @@
-import 'package:binancy/build_configs.dart';
 import 'package:binancy/controllers/expenses_controller.dart';
 import 'package:binancy/controllers/incomes_controller.dart';
 import 'package:binancy/controllers/providers/categories_change_notifier.dart';
@@ -7,7 +6,6 @@ import 'package:binancy/globals.dart';
 import 'package:binancy/models/category.dart';
 import 'package:binancy/models/expend.dart';
 import 'package:binancy/models/income.dart';
-import 'package:binancy/models/savings_plan.dart';
 import 'package:binancy/utils/dialogs/info_dialog.dart';
 import 'package:binancy/utils/enums.dart';
 import 'package:binancy/utils/ui/icons.dart';

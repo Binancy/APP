@@ -43,6 +43,7 @@ const int plansCarouselIntervalMS = 7500;
 const int opacityAnimationDurationMS = 250;
 const int progressDialogBlurAnimation = 250;
 const int logoutMinTimeMS = 3000;
+const int pageSwapDurationMS = 500;
 
 // UI GLOBALS
 const int dashboardMaxNotifications = 3;
