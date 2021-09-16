@@ -4,7 +4,6 @@ import 'package:binancy/views/enroll/splash_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 void main() {
@@ -25,6 +24,9 @@ class MyApp extends StatelessWidget {
           appBarTheme: const AppBarTheme(),
           splashColor: themeColor.withOpacity(0.1),
           toggleableActiveColor: Colors.transparent,
+          pageTransitionsTheme: const PageTransitionsTheme(builders: {
+            TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+          }),
           unselectedWidgetColor: accentColor),
       builder: (context, child) =>
           ResponsiveWrapper.builder(child, defaultScale: true),
@@ -32,7 +34,6 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: const SplashScreen(),
       localizationsDelegates: const [
-        AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,

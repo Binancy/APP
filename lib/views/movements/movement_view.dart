@@ -45,7 +45,6 @@ class _MovementViewState extends State<MovementView> {
   String parsedDate = "Fecha de realización";
 
   Category? selectedCategory;
-  SavingsPlan? selectedSavingsPlan;
 
   _MovementViewState(this.selectedMovement, this.allowEdit);
 
@@ -107,7 +106,7 @@ class _MovementViewState extends State<MovementView> {
                         ? widget.movementType.index == 0
                             ? "Añade un ingreso"
                             : "Añade un gasto"
-                        : selectedMovement.planTitle,
+                        : selectedMovement.title,
                     style: appBarStyle()),
               ),
               backgroundColor: Colors.transparent,
@@ -126,13 +125,6 @@ class _MovementViewState extends State<MovementView> {
                         datePicker(context),
                         const SpaceDivider(),
                         categorySelector(context),
-                        BuildConfigs.enableSavingsPlan
-                            ? const SpaceDivider()
-                            : const SizedBox(),
-                        BuildConfigs.enableSavingsPlan
-                            ? savingsPlanSelector(context)
-                            : const SizedBox(),
-                        const SpaceDivider(),
                         const SpaceDivider(),
                         allowEdit
                             ? Padding(
@@ -302,54 +294,6 @@ class _MovementViewState extends State<MovementView> {
                             .toList()))
               ],
             )),
-      ),
-    );
-  }
-
-  Padding savingsPlanSelector(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: customMargin, right: customMargin),
-      child: Material(
-        color: themeColor.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(customBorderRadius),
-        child: InkWell(
-          onTap: () => showDatePicker(
-                  context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime(1970),
-                  lastDate: DateTime(DateTime.now().year + 1))
-              .then((value) {
-            setState(() {
-              parsedDate = DateFormat.yMd(
-                      Localizations.localeOf(context).toLanguageTag())
-                  .format(value!);
-            });
-          }),
-          borderRadius: BorderRadius.circular(customBorderRadius),
-          highlightColor: Colors.transparent,
-          splashColor: themeColor.withOpacity(0.1),
-          child: Container(
-              height: buttonHeight,
-              padding: const EdgeInsets.only(
-                  left: customMargin, right: customMargin),
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.account_balance_outlined,
-                    color: accentColor,
-                    size: 36,
-                  ),
-                  const SpaceDivider(
-                    isVertical: true,
-                  ),
-                  Text(
-                      selectedSavingsPlan != null
-                          ? "[DEBUG] - Selected saving plan"
-                          : "No tienes ningún plan de ahorro",
-                      style: inputStyle())
-                ],
-              )),
-        ),
       ),
     );
   }
@@ -570,11 +514,11 @@ class _MovementViewState extends State<MovementView> {
       createMode = false;
       selectedCategory = selectedMovement.category;
 
-      titleController.text = selectedMovement.planTitle;
+      titleController.text = selectedMovement.title;
       valueController.text = selectedMovement.value is int
           ? selectedMovement.value.toString()
           : (selectedMovement.value as double).toStringAsFixed(2);
-      noteController.text = selectedMovement.planDescription ?? "";
+      noteController.text = selectedMovement.description ?? "";
 
       parsedDate = Utils.toYMD(selectedMovement.date, context);
     } else {

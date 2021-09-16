@@ -10,6 +10,7 @@ import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/widgets.dart';
 import 'package:binancy/views/dashboard/dashboard_view.dart';
 import 'package:binancy/views/enroll/login_view.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
@@ -52,6 +53,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void startSplashScreen(BuildContext context) async {
+    await initializeFirebase();
     await precacheSvg(context);
     if (await checkLoginWithToken()) {
       gotoDashboard(context);
@@ -134,6 +136,10 @@ class _SplashScreenState extends State<SplashScreen> {
               SvgPicture.svgStringDecoder, "assets/svg/dashboard_settings.svg"),
           null),
     ]);
+  }
+
+  Future<void> initializeFirebase() async {
+    await Firebase.initializeApp();
   }
 }
 
