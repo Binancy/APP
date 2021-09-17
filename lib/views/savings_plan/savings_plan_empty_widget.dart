@@ -53,7 +53,7 @@ class SavingsPlanEmptyWidget extends StatelessWidget {
       elevation: 0,
       child: InkWell(
         onTap: () => gotoAddSavingsPlan(context),
-        highlightColor: Colors.transparent,
+        highlightColor: themeColor.withOpacity(0.1),
         splashColor: themeColor.withOpacity(0.1),
         child: Container(
           height: subscriptionCardSize,

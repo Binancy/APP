@@ -25,7 +25,7 @@ class PremiumPlanCard extends StatelessWidget {
           child: InkWell(
             onTap: () {},
             borderRadius: BorderRadius.circular(customBorderRadius),
-            highlightColor: Colors.transparent,
+            highlightColor: themeColor.withOpacity(0.1),
             splashColor: themeColor.withOpacity(0.1),
             child: Container(
               padding: const EdgeInsets.all(customMargin),
@@ -51,7 +51,7 @@ class PremiumPlanCard extends StatelessWidget {
                     child: InkWell(
                       onTap: () {},
                       borderRadius: BorderRadius.circular(customBorderRadius),
-                      highlightColor: Colors.transparent,
+                      highlightColor: themeColor.withOpacity(0.1),
                       splashColor: themeColor.withOpacity(0.1),
                       child: Container(
                         padding: const EdgeInsets.all(customMargin / 1.5),

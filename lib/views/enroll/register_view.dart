@@ -321,7 +321,7 @@ class _RegisterViewState extends State<RegisterView> {
                     });
                   },
                   borderRadius: BorderRadius.circular(customBorderRadius),
-                  highlightColor: Colors.transparent,
+                  highlightColor: themeColor.withOpacity(0.1),
                   splashColor: themeColor.withOpacity(0.1),
                   child: Container(
                       height: buttonHeight,

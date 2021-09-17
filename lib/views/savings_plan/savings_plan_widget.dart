@@ -73,7 +73,7 @@ class _SavingsPlanWidgetState extends State<SavingsPlanWidget>
                       selectedSavingsPlan: widget.savingsPlan),
                 ),
               )),
-          highlightColor: Colors.transparent,
+          highlightColor: themeColor.withOpacity(0.1),
           splashColor: themeColor.withOpacity(0.1),
           child: Container(
             padding: const EdgeInsets.all(customMargin),

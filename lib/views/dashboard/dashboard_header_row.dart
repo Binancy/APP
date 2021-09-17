@@ -54,7 +54,7 @@ class DashboardHeaderRow extends StatelessWidget {
       borderRadius: BorderRadius.circular(customBorderRadius),
       child: InkWell(
         borderRadius: BorderRadius.circular(customBorderRadius),
-        highlightColor: Colors.transparent,
+        highlightColor: themeColor.withOpacity(0.1),
         splashColor: themeColor.withOpacity(0.1),
         onTap: action,
         child: SizedBox(

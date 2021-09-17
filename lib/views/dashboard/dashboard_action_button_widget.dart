@@ -26,7 +26,7 @@ class ActionButtonWidget extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(customBorderRadius),
         onTap: action,
-        highlightColor: Colors.transparent,
+        highlightColor: themeColor.withOpacity(0.1),
         splashColor: themeColor.withOpacity(0.1),
         child: SizedBox(
           height: (MediaQuery.of(context).size.height / 10) + 3,

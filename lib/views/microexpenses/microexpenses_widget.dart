@@ -51,7 +51,7 @@ class MicroExpendCard extends StatelessWidget {
                         child: MicroExpendView(
                             allowEdit: false,
                             selectedMicroExpend: microExpend)))),
-        highlightColor: Colors.transparent,
+        highlightColor: themeColor.withOpacity(0.1),
         splashColor: themeColor.withOpacity(0.1),
         child: Slidable(
           child: Container(
@@ -155,7 +155,7 @@ class MicroExpendCard extends StatelessWidget {
                   },
                 ),
             builder: (context) => Container()),
-        highlightColor: Colors.transparent,
+        highlightColor: themeColor.withOpacity(0.1),
         splashColor: themeColor.withOpacity(0.1),
         borderRadius: BorderRadius.circular(customBorderRadius),
         child: Container(

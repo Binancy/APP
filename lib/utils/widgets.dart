@@ -76,7 +76,7 @@ class BinancyButton extends StatelessWidget {
           : BorderRadius.circular(customBorderRadius),
       child: InkWell(
         onTap: action,
-        highlightColor: Colors.transparent,
+        highlightColor: themeColor.withOpacity(0.1),
         borderRadius: wrapOnFinal
             ? const BorderRadius.only(
                 bottomLeft: Radius.circular(customBorderRadius),
