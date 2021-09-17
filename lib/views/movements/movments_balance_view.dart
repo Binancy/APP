@@ -1,12 +1,19 @@
 import 'package:binancy/controllers/providers/categories_change_notifier.dart';
 import 'package:binancy/controllers/providers/movements_change_notifier.dart';
+import 'package:binancy/controllers/providers/savings_plans_change_notifier.dart';
+import 'package:binancy/controllers/providers/subscriptions_change_notifier.dart';
 import 'package:binancy/globals.dart';
+import 'package:binancy/models/savings_plan.dart';
+import 'package:binancy/models/subscription.dart';
 import 'package:binancy/utils/enums.dart';
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/widgets.dart';
 import 'package:binancy/views/movements/movements_card_widget.dart';
 import 'package:binancy/views/movements/movements_empty_card_widget.dart';
+import 'package:binancy/views/savings_plan/savings_plan_widget.dart';
+import 'package:binancy/views/subscriptions/subscription_card_widget.dart';
+import 'package:binancy/views/subscriptions/subscription_empty_card_widget.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -14,47 +21,52 @@ import 'package:provider/provider.dart';
 class MovementBalanceView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BinancyBackground(
-        Consumer2<MovementsChangeNotifier, CategoriesChangeNotifier>(
-            builder: (context, movementsProvider, categoriesProvider, child) =>
-                Scaffold(
-                  backgroundColor: Colors.transparent,
-                  appBar: AppBar(
-                    backgroundColor: Colors.transparent,
-                    elevation: 0,
-                    centerTitle: true,
-                    title: Text("Mi cuenta", style: appBarStyle()),
-                  ),
-                  body: ScrollConfiguration(
-                      behavior: MyBehavior(),
-                      child: ListView(
-                        padding: const EdgeInsets.only(bottom: customMargin),
-                        children: [
-                          headerCard(context, movementsProvider),
-                          const SpaceDivider(),
-                          movementsProvider.totalHeritage == 0
-                              ? const SizedBox()
-                              : Center(
-                                  child: Text("Tus últimos balances",
-                                      style: titleCardStyle())),
-                          movementsProvider.totalHeritage == 0
-                              ? const SizedBox()
-                              : barChart(context, movementsProvider),
-                          movementsProvider.totalHeritage == 0
-                              ? const SizedBox()
-                              : const SpaceDivider(),
-                          Center(
-                              child: Text("Tus últimos movimientos",
-                                  style: titleCardStyle())),
-                          const SpaceDivider(),
-                          latestsIncomes(context, movementsProvider),
-                          latestsExpenses(context, movementsProvider)
-                        ],
-                      )),
-                )));
+    return BinancyBackground(Consumer4<
+            MovementsChangeNotifier,
+            CategoriesChangeNotifier,
+            SubscriptionsChangeNotifier,
+            SavingsPlanChangeNotifier>(
+        builder: (context, movementsProvider, categoriesProvider,
+                subscriptionsProvider, savingsPlanProvider, child) =>
+            Scaffold(
+              backgroundColor: Colors.transparent,
+              appBar: AppBar(
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                centerTitle: true,
+                title: Text("Mi cuenta", style: appBarStyle()),
+              ),
+              body: ScrollConfiguration(
+                  behavior: MyBehavior(),
+                  child: ListView(
+                      padding: const EdgeInsets.only(bottom: customMargin),
+                      children: [
+                        headerCard(context, movementsProvider),
+                        const SpaceDivider(),
+                        movementsProvider.totalHeritage == 0
+                            ? const SizedBox()
+                            : Center(
+                                child: Text("Tus últimos balances",
+                                    style: titleCardStyle())),
+                        movementsProvider.totalHeritage == 0
+                            ? const SizedBox()
+                            : barChart(context, movementsProvider),
+                        movementsProvider.totalHeritage == 0
+                            ? const SizedBox()
+                            : const SpaceDivider(),
+                        Center(
+                            child: Text("Tus últimos movimientos",
+                                style: titleCardStyle())),
+                        latestsIncomes(context, movementsProvider),
+                        latestsExpenses(context, movementsProvider),
+                        for (var i in premiumWidgets(context, movementsProvider,
+                            subscriptionsProvider, savingsPlanProvider))
+                          Utils.isPremium() ? i : const SizedBox()
+                      ])),
+            )));
   }
 
-  Container latestsExpenses(
+  Widget latestsExpenses(
       BuildContext context, MovementsChangeNotifier movementsProvider) {
     return Container(
       clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -73,7 +85,7 @@ class MovementBalanceView extends StatelessWidget {
     );
   }
 
-  Container latestsIncomes(
+  Widget latestsIncomes(
       BuildContext context, MovementsChangeNotifier movementsProvider) {
     return Container(
       clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -192,6 +204,68 @@ class MovementBalanceView extends StatelessWidget {
     );
   }
 
+  Widget subscriptionsCard(BuildContext context,
+      SubscriptionsChangeNotifier subscriptionsChangeNotifier) {
+    return Container(
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      margin: const EdgeInsets.only(left: customMargin, right: customMargin),
+      width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+          color: themeColor.withOpacity(0.1),
+          borderRadius: BorderRadius.circular(customBorderRadius)),
+      child: ListView.separated(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemBuilder: (context, index) =>
+              getSubscriptions(subscriptionsChangeNotifier).elementAt(index),
+          separatorBuilder: (context, index) => const LinearDivider(),
+          itemCount: getSubscriptions(subscriptionsChangeNotifier).length),
+    );
+  }
+
+  Widget savingsPlanCard(
+      BuildContext context,
+      SavingsPlanChangeNotifier savingsPlanChangeNotifier,
+      double currentAmount) {
+    return Container(
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      margin: const EdgeInsets.only(left: customMargin, right: customMargin),
+      width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+          color: themeColor.withOpacity(0.1),
+          borderRadius: BorderRadius.circular(customBorderRadius)),
+      child: ListView.separated(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemBuilder: (context, index) =>
+              getSavingsPlan(savingsPlanChangeNotifier, currentAmount)
+                  .elementAt(index),
+          separatorBuilder: (context, index) => const LinearDivider(),
+          itemCount:
+              getSavingsPlan(savingsPlanChangeNotifier, currentAmount).length),
+    );
+  }
+
+  List<Widget> premiumWidgets(
+      BuildContext context,
+      MovementsChangeNotifier movementsChangeNotifier,
+      SubscriptionsChangeNotifier subscriptionsChangeNotifier,
+      SavingsPlanChangeNotifier savingsPlanChangeNotifier) {
+    List<Widget> premiumWidgetList = [];
+    premiumWidgetList.add(const SpaceDivider());
+    premiumWidgetList.add(Center(
+        child: Text("Características premium", style: titleCardStyle())));
+    premiumWidgetList.add(const SpaceDivider());
+
+    premiumWidgetList
+        .add(subscriptionsCard(context, subscriptionsChangeNotifier));
+    premiumWidgetList.add(const SpaceDivider());
+    premiumWidgetList.add(savingsPlanCard(context, savingsPlanChangeNotifier,
+        movementsChangeNotifier.totalHeritage));
+
+    return premiumWidgetList;
+  }
+
   List<Widget> getLatestMovements(MovementType movementType,
       MovementsChangeNotifier movementsChangeNotifier) {
     List<Widget> listMovementsWidget = [];
@@ -208,7 +282,7 @@ class MovementBalanceView extends StatelessWidget {
     if (providerList.isEmpty) {
       listMovementsWidget.add(MovememntEmptyCard(movementType));
     } else {
-      if (providerList.length > 3) {
+      if (providerList.length > balanceMaxItemsPerCategory) {
         for (var i = 0; i < latestMovementsMaxCount; i++) {
           listMovementsWidget.add(MovementCard(
               movement: providerList.elementAt(i),
@@ -268,5 +342,68 @@ class MovementBalanceView extends StatelessWidget {
       ]));
     }
     return List.from(barChartList.reversed);
+  }
+
+  List<Widget> getSubscriptions(
+      SubscriptionsChangeNotifier subscriptionsChangeNotifier) {
+    List<Widget> subscriptionsWidgetList = [];
+    subscriptionsWidgetList.add(Padding(
+        padding: const EdgeInsets.only(
+            top: customMargin, left: customMargin, bottom: customMargin),
+        child: Text("Suscripciones:", style: titleCardStyle())));
+    subscriptionsWidgetList.add(const LinearDivider());
+    if (subscriptionsChangeNotifier.subscriptionsList.isNotEmpty) {
+      if (subscriptionsChangeNotifier.subscriptionsList.length >
+          balanceMaxItemsPerCategory) {
+        for (var i = 0; i < balanceMaxItemsPerCategory; i++) {
+          Subscription subscription =
+              subscriptionsChangeNotifier.subscriptionsList.elementAt(i);
+          subscriptionsWidgetList.add(SubscriptionCard(
+              subscription: subscription,
+              subscriptionsChangeNotifier: subscriptionsChangeNotifier));
+        }
+      } else {
+        for (var subscription
+            in subscriptionsChangeNotifier.subscriptionsList) {
+          subscriptionsWidgetList.add(SubscriptionCard(
+              subscription: subscription,
+              subscriptionsChangeNotifier: subscriptionsChangeNotifier));
+        }
+      }
+    } else {
+      subscriptionsWidgetList.add(const SubscriptionEmptyCard());
+    }
+
+    return subscriptionsWidgetList;
+  }
+
+  List<Widget> getSavingsPlan(
+      SavingsPlanChangeNotifier savingsPlanChangeNotifier,
+      double currentAmount) {
+    List<Widget> savingsPlanWidgetList = [];
+    savingsPlanWidgetList.add(Padding(
+        padding: const EdgeInsets.only(
+            top: customMargin, left: customMargin, bottom: customMargin),
+        child: Text("Planes de ahorro:", style: titleCardStyle())));
+    savingsPlanWidgetList.add(const LinearDivider());
+    if (savingsPlanChangeNotifier.savingsPlanList.isNotEmpty) {
+      if (savingsPlanChangeNotifier.savingsPlanList.length >
+          balanceMaxItemsPerCategory) {
+        for (var i = 0; i < balanceMaxItemsPerCategory; i++) {
+          SavingsPlan savingsPlan =
+              savingsPlanChangeNotifier.savingsPlanList.elementAt(i);
+          savingsPlanWidgetList.add(SavingsPlanWidget(
+              savingsPlan, savingsPlanChangeNotifier, currentAmount));
+        }
+      } else {
+        for (var savingsPlan in savingsPlanChangeNotifier.savingsPlanList) {
+          savingsPlanWidgetList.add(SavingsPlanWidget(
+              savingsPlan, savingsPlanChangeNotifier, currentAmount));
+        }
+      }
+    } else {
+      savingsPlanWidgetList.add(const SubscriptionEmptyCard());
+    }
+    return savingsPlanWidgetList;
   }
 }

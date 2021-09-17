@@ -188,6 +188,14 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
                         ),
                         ChangeNotifierProvider(
                           create: (_) =>
+                              Provider.of<SubscriptionsChangeNotifier>(context),
+                        ),
+                        ChangeNotifierProvider(
+                          create: (_) =>
+                              Provider.of<SavingsPlanChangeNotifier>(context),
+                        ),
+                        ChangeNotifierProvider(
+                          create: (_) =>
                               Provider.of<CategoriesChangeNotifier>(context),
                         )
                       ],
