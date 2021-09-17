@@ -136,9 +136,10 @@ class MovementsChangeNotifier extends ChangeNotifier {
   double getMonthIncomes(DateTime month) {
     double monthIncomes = 0;
     for (var income in incomeList) {
-      if (income.date.isAfter(DateTime(month.year, month.month, 1, 0, 0, 0)) &&
-          income.date
-              .isBefore(DateTime(month.year, month.month + 1, 1, 0, 0, 0))) {
+      if (income.date.isAfter(DateTime(month.year, month.month - 1,
+              Utils.getUserPayDay().day, 0, 0, 0)) &&
+          income.date.isBefore(DateTime(
+              month.year, month.month, Utils.getUserPayDay().day, 0, 0, 0))) {
         monthIncomes += income.value;
       }
     }
@@ -148,9 +149,10 @@ class MovementsChangeNotifier extends ChangeNotifier {
   double getMonthExpends(DateTime month) {
     double monthExpends = 0;
     for (var expend in expendList) {
-      if (expend.date.isAfter(DateTime(month.year, month.month, 1, 0, 0, 0)) &&
-          expend.date
-              .isBefore(DateTime(month.year, month.month + 1, 1, 0, 0, 0))) {
+      if (expend.date.isAfter(DateTime(month.year, month.month - 1,
+              Utils.getUserPayDay().day, 0, 0, 0)) &&
+          expend.date.isBefore(DateTime(
+              month.year, month.month, Utils.getUserPayDay().day, 0, 0, 0))) {
         monthExpends += expend.value;
       }
     }

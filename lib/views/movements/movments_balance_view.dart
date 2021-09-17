@@ -116,7 +116,6 @@ class MovementBalanceView extends StatelessWidget {
             BarChartData(
                 alignment: BarChartAlignment.center,
                 groupsSpace: 24,
-                barTouchData: BarTouchData(enabled: false),
                 borderData: FlBorderData(show: false),
                 titlesData: FlTitlesData(
                     bottomTitles: SideTitles(
@@ -332,11 +331,9 @@ class MovementBalanceView extends StatelessWidget {
       if (monthIncomes != 0 && monthExpends != 0) {}
       barChartList.add(BarChartGroupData(x: i, barRods: [
         BarChartRodData(
-            y: monthIncomes != 0 ? monthIncomes : 1,
-            colors: [accentColor],
-            width: barChartWidth),
+            y: monthIncomes, colors: [accentColor], width: barChartWidth),
         BarChartRodData(
-            y: monthExpends != 0 ? monthExpends : 1,
+            y: monthExpends,
             colors: [Colors.white.withOpacity(0.25)],
             width: barChartWidth)
       ]));
