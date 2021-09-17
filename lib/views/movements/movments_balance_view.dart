@@ -3,6 +3,7 @@ import 'package:binancy/controllers/providers/movements_change_notifier.dart';
 import 'package:binancy/globals.dart';
 import 'package:binancy/utils/enums.dart';
 import 'package:binancy/utils/ui/styles.dart';
+import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/widgets.dart';
 import 'package:binancy/views/movements/movements_card_widget.dart';
 import 'package:binancy/views/movements/movements_empty_card_widget.dart';
@@ -11,23 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class MovementBalanceView extends StatelessWidget {
-  final List<String> monthsList = [
-    "01/21",
-    "02/21",
-    "03/21",
-    "04/21",
-    "05/21",
-    "06/21",
-    "07/21",
-    "08/21",
-    "09/21",
-    "10/21",
-    "11/21",
-    "12/21"
-  ];
-
-  final int swapAnimationDurationMS = 500;
-
   @override
   Widget build(BuildContext context) {
     return BinancyBackground(
@@ -44,20 +28,21 @@ class MovementBalanceView extends StatelessWidget {
                   body: ScrollConfiguration(
                       behavior: MyBehavior(),
                       child: ListView(
-                        padding: const EdgeInsets.only(
-                            top: customMargin, bottom: customMargin),
+                        padding: const EdgeInsets.only(bottom: customMargin),
                         children: [
-                          Center(
-                              child: Text(
-                                  "Buenos días, " + userData['nameUser'],
-                                  style: titleCardStyle())),
                           headerCard(context, movementsProvider),
                           const SpaceDivider(),
-                          Center(
-                              child: Text("Tus últimos balances",
-                                  style: titleCardStyle())),
-                          barChart(context),
-                          const SpaceDivider(),
+                          movementsProvider.totalHeritage == 0
+                              ? const SizedBox()
+                              : Center(
+                                  child: Text("Tus últimos balances",
+                                      style: titleCardStyle())),
+                          movementsProvider.totalHeritage == 0
+                              ? const SizedBox()
+                              : barChart(context, movementsProvider),
+                          movementsProvider.totalHeritage == 0
+                              ? const SizedBox()
+                              : const SpaceDivider(),
                           Center(
                               child: Text("Tus últimos movimientos",
                                   style: titleCardStyle())),
@@ -107,7 +92,8 @@ class MovementBalanceView extends StatelessWidget {
     );
   }
 
-  Widget barChart(BuildContext context) {
+  Widget barChart(
+      BuildContext context, MovementsChangeNotifier movementsChangeNotifier) {
     return Column(
       children: [
         Container(
@@ -118,67 +104,20 @@ class MovementBalanceView extends StatelessWidget {
             BarChartData(
                 alignment: BarChartAlignment.center,
                 groupsSpace: 24,
+                barTouchData: BarTouchData(enabled: false),
                 borderData: FlBorderData(show: false),
                 titlesData: FlTitlesData(
                     bottomTitles: SideTitles(
                         getTitles: (value) =>
-                            monthsList.elementAt(value.toInt()),
+                            generateBalanceChartTitles(context)
+                                .elementAt(value.toInt()),
                         getTextStyles: (value) => const TextStyle(
                             fontSize: 11, fontFamily: "OpenSans"),
                         showTitles: true),
                     leftTitles: SideTitles(showTitles: false)),
-                barGroups: [
-                  BarChartGroupData(x: 0, barRods: [
-                    BarChartRodData(
-                        y: 1517.79, colors: [accentColor], width: 15),
-                    BarChartRodData(
-                        y: 304.80,
-                        colors: [Colors.white.withOpacity(0.25)],
-                        width: 15)
-                  ]),
-                  BarChartGroupData(x: 1, barRods: [
-                    BarChartRodData(
-                        y: 1574.79, colors: [accentColor], width: 15),
-                    BarChartRodData(
-                        y: 1854.80,
-                        colors: [Colors.white.withOpacity(0.25)],
-                        width: 15)
-                  ]),
-                  BarChartGroupData(x: 2, barRods: [
-                    BarChartRodData(
-                        y: 1517.79, colors: [accentColor], width: 15),
-                    BarChartRodData(
-                        y: 954.80,
-                        colors: [Colors.white.withOpacity(0.25)],
-                        width: 15)
-                  ]),
-                  BarChartGroupData(x: 3, barRods: [
-                    BarChartRodData(
-                        y: 854.79, colors: [accentColor], width: 15),
-                    BarChartRodData(
-                        y: 151.80,
-                        colors: [Colors.white.withOpacity(0.25)],
-                        width: 15)
-                  ]),
-                  BarChartGroupData(x: 4, barRods: [
-                    BarChartRodData(
-                        y: 1254.79, colors: [accentColor], width: 15),
-                    BarChartRodData(
-                        y: 1000.80,
-                        colors: [Colors.white.withOpacity(0.25)],
-                        width: 15)
-                  ]),
-                  BarChartGroupData(x: 5, barRods: [
-                    BarChartRodData(
-                        y: 1200.79, colors: [accentColor], width: 15),
-                    BarChartRodData(
-                        y: 1300.80,
-                        colors: [Colors.white.withOpacity(0.25)],
-                        width: 15)
-                  ])
-                ]),
+                barGroups: buildBarCharts(context, movementsChangeNotifier)),
             swapAnimationDuration:
-                Duration(milliseconds: swapAnimationDurationMS),
+                const Duration(milliseconds: swapAnimationDurationMS),
             swapAnimationCurve: Curves.easeOut,
           ),
         ),
@@ -292,5 +231,42 @@ class MovementBalanceView extends StatelessWidget {
       }
     }
     return listMovementsWidget;
+  }
+
+  List<String> generateBalanceChartTitles(BuildContext context) {
+    List<String> chartTitles = [];
+    for (var i = 0; i < balanceChartMaxMonths; i++) {
+      DateTime previousMonth = DateTime(Utils.getTodayDate().year,
+          Utils.getTodayDate().month - (i), Utils.getTodayDate().day);
+      chartTitles.add(Utils.toMY(previousMonth, context));
+    }
+    return chartTitles;
+  }
+
+  List<BarChartGroupData> buildBarCharts(
+      BuildContext context, MovementsChangeNotifier movementsChangeNotifier) {
+    List<BarChartGroupData> barChartList = [];
+    for (var i = 0; i < balanceChartMaxMonths; i++) {
+      double monthIncomes = movementsChangeNotifier.getMonthIncomes(DateTime(
+          Utils.getTodayDate().year,
+          Utils.getTodayDate().month - i,
+          Utils.getTodayDate().day));
+      double monthExpends = movementsChangeNotifier.getMonthExpends(DateTime(
+          Utils.getTodayDate().year,
+          Utils.getTodayDate().month - i,
+          Utils.getTodayDate().day));
+      if (monthIncomes != 0 && monthExpends != 0) {}
+      barChartList.add(BarChartGroupData(x: i, barRods: [
+        BarChartRodData(
+            y: monthIncomes != 0 ? monthIncomes : 1,
+            colors: [accentColor],
+            width: barChartWidth),
+        BarChartRodData(
+            y: monthExpends != 0 ? monthExpends : 1,
+            colors: [Colors.white.withOpacity(0.25)],
+            width: barChartWidth)
+      ]));
+    }
+    return List.from(barChartList.reversed);
   }
 }

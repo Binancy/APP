@@ -157,8 +157,18 @@ class Utils {
         .parse(date);
   }
 
-  static String toMMD(DateTime date, BuildContext context) {
+  static String toMD(DateTime date, BuildContext context) {
     return DateFormat.Md(Localizations.localeOf(context).toLanguageTag())
+        .format(date);
+  }
+
+  static DateTime fromMY(String date, BuildContext context) {
+    return DateFormat("M/yy", Localizations.localeOf(context).toLanguageTag())
+        .parse(date);
+  }
+
+  static String toMY(DateTime date, BuildContext context) {
+    return DateFormat("M/yy", Localizations.localeOf(context).toLanguageTag())
         .format(date);
   }
 

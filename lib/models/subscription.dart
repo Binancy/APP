@@ -14,7 +14,7 @@ class Subscription {
   Subscription();
 
   String getNextPayDay(BuildContext context) {
-    return Utils.toMMD(
+    return Utils.toMD(
         DateTime(
             2021,
             latestMonth.index == 12

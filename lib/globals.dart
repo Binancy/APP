@@ -36,6 +36,7 @@ const double movementCardSize = 75;
 const double subscriptionCardSize = 75;
 const double adviceCardMinHeight = 125;
 const double descriptionWidgetHeight = 250;
+const double barChartWidth = 15;
 
 // ANIMATION INTERVALS AND DURATION
 const int savingsPlanProgressMS = 750;
@@ -44,6 +45,7 @@ const int opacityAnimationDurationMS = 250;
 const int progressDialogBlurAnimation = 250;
 const int logoutMinTimeMS = 3000;
 const int pageSwapDurationMS = 500;
+const int swapAnimationDurationMS = 500;
 
 // UI GLOBALS
 const int dashboardMaxNotifications = 3;
@@ -51,6 +53,7 @@ const int summaryMaxDifference = 5;
 const int latestMovementsMaxCount = 3;
 const int savingsPlanMaxCount = 3;
 const int dashboardSavingsPlanMaxCount = 2;
+const int balanceChartMaxMonths = 6;
 
 // ERROR CODES
 class BinancyErrorCodes {

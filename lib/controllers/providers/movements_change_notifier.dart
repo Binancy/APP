@@ -132,4 +132,28 @@ class MovementsChangeNotifier extends ChangeNotifier {
       print('Error, el JSON no tiene datos');
     }
   }
+
+  double getMonthIncomes(DateTime month) {
+    double monthIncomes = 0;
+    for (var income in incomeList) {
+      if (income.date.isAfter(DateTime(month.year, month.month, 1, 0, 0, 0)) &&
+          income.date
+              .isBefore(DateTime(month.year, month.month + 1, 1, 0, 0, 0))) {
+        monthIncomes += income.value;
+      }
+    }
+    return monthIncomes;
+  }
+
+  double getMonthExpends(DateTime month) {
+    double monthExpends = 0;
+    for (var expend in expendList) {
+      if (expend.date.isAfter(DateTime(month.year, month.month, 1, 0, 0, 0)) &&
+          expend.date
+              .isBefore(DateTime(month.year, month.month + 1, 1, 0, 0, 0))) {
+        monthExpends += expend.value;
+      }
+    }
+    return monthExpends;
+  }
 }
