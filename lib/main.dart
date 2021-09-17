@@ -19,6 +19,12 @@ class MyApp extends StatelessWidget {
         systemNavigationBarColor: secondaryColor,
         systemNavigationBarIconBrightness: Brightness.light,
         statusBarColor: Colors.transparent));
+
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+
     return MaterialApp(
       theme: ThemeData(
           appBarTheme: const AppBarTheme(),

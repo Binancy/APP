@@ -144,8 +144,8 @@ class _SplashScreenState extends State<SplashScreen> {
 }
 
 void gotoLogin(BuildContext context) {
-  Navigator.pushAndRemoveUntil(context,
-      MaterialPageRoute(builder: (context) => LoginView()), (route) => false);
+  Navigator.pushAndRemoveUntil(
+      context, FadeRoute(page: LoginView()), (route) => false);
 }
 
 void gotoDashboard(BuildContext context) async {
@@ -183,18 +183,15 @@ void gotoDashboard(BuildContext context) async {
   }
 
   Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(
-          builder: (_) => MultiProvider(providers: [
-                ChangeNotifierProvider(
-                    create: (context) => dashboardChangeNotifier),
-                ChangeNotifierProvider(
-                    create: (context) => categoriesChangeNotifier),
-                ChangeNotifierProvider(
-                  create: (context) => subscriptionsChangeNotifier,
-                ),
-                ChangeNotifierProvider(
-                    create: (context) => savingsPlanChangeNotifier),
-                ChangeNotifierProvider(create: (_) => plansChangeNotifier)
-              ], child: DashboardView())),
+      FadeRoute(
+          page: MultiProvider(providers: [
+        ChangeNotifierProvider(create: (context) => dashboardChangeNotifier),
+        ChangeNotifierProvider(create: (context) => categoriesChangeNotifier),
+        ChangeNotifierProvider(
+          create: (context) => subscriptionsChangeNotifier,
+        ),
+        ChangeNotifierProvider(create: (context) => savingsPlanChangeNotifier),
+        ChangeNotifierProvider(create: (_) => plansChangeNotifier)
+      ], child: DashboardView())),
       (route) => false);
 }

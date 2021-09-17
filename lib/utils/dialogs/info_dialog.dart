@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'dart:ui';
+import 'package:binancy/utils/ui/styles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -18,24 +20,52 @@ class BinancyInfoDialog {
 
   void showCustomDialog() {
     if (Platform.isIOS) {
-      showCupertinoDialog(
-          context: context,
-          builder: (context) => CupertinoAlertDialog(
-                title: const Text(appName),
-                content: Text(text),
-                actions: _parseActions(true),
-              ));
+      showGeneralDialog(
+        context: context,
+        barrierLabel: "",
+        barrierDismissible: true,
+        barrierColor: Colors.transparent,
+        transitionDuration:
+            const Duration(milliseconds: progressDialogBlurAnimation),
+        transitionBuilder: (context, anim1, anim2, child) => BackdropFilter(
+          filter: ImageFilter.blur(
+              sigmaX: 4 * anim1.value, sigmaY: 4 * anim1.value),
+          child: FadeTransition(
+            child: child,
+            opacity: anim1,
+          ),
+        ),
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            CupertinoAlertDialog(
+          content: Text(text),
+          actions: _parseActions(true),
+        ),
+      );
     } else {
-      showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(customBorderRadius)),
-                elevation: 5,
-                title: const Text(appName),
-                content: Text(text),
-                actions: _parseActions(false),
-              ));
+      showGeneralDialog(
+        context: context,
+        barrierLabel: "",
+        barrierDismissible: true,
+        barrierColor: Colors.transparent,
+        transitionDuration:
+            const Duration(milliseconds: progressDialogBlurAnimation),
+        transitionBuilder: (context, anim1, anim2, child) => BackdropFilter(
+          filter: ImageFilter.blur(
+              sigmaX: 4 * anim1.value, sigmaY: 4 * anim1.value),
+          child: FadeTransition(
+            child: child,
+            opacity: anim1,
+          ),
+        ),
+        pageBuilder: (context, animation, secondaryAnimation) => AlertDialog(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(customBorderRadius)),
+          elevation: 5,
+          contentPadding: const EdgeInsets.fromLTRB(24, 24, 24, 0),
+          content: Text(text, style: dialogStyle()),
+          actions: _parseActions(false),
+        ),
+      );
     }
   }
 
