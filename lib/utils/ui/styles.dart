@@ -20,7 +20,7 @@ TextStyle dashboardHeaderItemActionStyle() {
 TextStyle appBarStyle() {
   return const TextStyle(
       color: Colors.white,
-      fontSize: 20,
+      fontSize: 22,
       fontFamily: "OpenSans",
       fontWeight: FontWeight.bold);
 }

@@ -478,7 +478,8 @@ class _RegisterViewState extends State<RegisterView> {
             "name": name,
             "firstSurname": firstSurname,
             "lastSurname": lastSurname,
-            "birthday": Utils.toISOStandard(birthday)
+            "birthday": Utils.toISOStandard(birthday),
+            "registerDate": Utils.toISOStandard(Utils.getTodayDate())
           }
         });
       } else {

@@ -189,13 +189,13 @@ class Utils {
 
   static DateTime getUserPayDay() {
     DateTime today = DateTime.now();
-    return DateTime(today.year, today.month, userPayDay ?? 1);
+    return DateTime(today.year, today.month, userData['payDay'] ?? 1);
   }
 
   static DateTime getLatestMonthPayDay() {
     DateTime today = DateTime.now();
     return DateTime(today.month == 1 ? today.year - 1 : today.year,
-        today.month == 1 ? 12 : today.month - 1, userPayDay ?? 1);
+        today.month == 1 ? 12 : today.month - 1, userData['payDay'] ?? 1);
   }
 
   static String getMonthOfDate(DateTime date, BuildContext context) {

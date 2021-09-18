@@ -40,7 +40,7 @@ class MovementsChangeNotifier extends ChangeNotifier {
   double getThisMonthIncomes() {
     double thisMonthIncomes = 0;
     for (var element in incomeList) {
-      if (userPayDay != null) {
+      if (userData['payDay'] != null) {
         if (Utils.isAtSameDay(Utils.getTodayDate(), Utils.getUserPayDay())) {
           if (element.date.isAfter(Utils.getUserPayDay()) &&
               element.date.month == Utils.getTodayDate().month) {
@@ -72,7 +72,7 @@ class MovementsChangeNotifier extends ChangeNotifier {
   double getThisMonthExpenses() {
     double thisMonthExpenses = 0;
     for (var element in expendList) {
-      if (userPayDay != null) {
+      if (userData['payDay'] != null) {
         if (Utils.isAtSameDay(Utils.getTodayDate(), Utils.getUserPayDay())) {
           if (element.date.isAfter(Utils.getUserPayDay()) &&
               element.date.month == Utils.getTodayDate().month) {

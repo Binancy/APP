@@ -24,7 +24,6 @@ extension ParseToString on AvaiablePlans {
 // USER GLOBALS
 Map<String, dynamic> userData = {};
 List<Category> categoryList = [];
-int? userPayDay = 28;
 
 // WIDGET GLOBALS
 const double customBorderRadius = 10;
