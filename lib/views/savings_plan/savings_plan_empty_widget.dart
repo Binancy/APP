@@ -1,6 +1,9 @@
+import 'package:binancy/controllers/providers/savings_plans_change_notifier.dart';
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/widgets.dart';
+import 'package:binancy/views/savings_plan/savings_plan_view.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../globals.dart';
 
@@ -56,25 +59,18 @@ class SavingsPlanEmptyWidget extends StatelessWidget {
         highlightColor: themeColor.withOpacity(0.1),
         splashColor: themeColor.withOpacity(0.1),
         child: Container(
-          height: subscriptionCardSize,
-          padding:
-              const EdgeInsets.only(left: customMargin, right: customMargin),
+          padding: const EdgeInsets.all(customMargin),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const Icon(Icons.add_rounded, color: Colors.white, size: 50),
               const SpaceDivider(isVertical: true),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("No hay ninguna meta de ahorro registrada",
-                      style: accentStyle(), textAlign: TextAlign.center),
-                  Text("Toca para añadir una",
-                      style: accentStyle(), textAlign: TextAlign.center),
-                ],
-              )
+              Expanded(
+                  child: Text(
+                      "No hay ninguna meta de ahorro registrada. Toca para añadir una",
+                      style: accentStyle(),
+                      textAlign: TextAlign.start))
             ],
           ),
         ),
@@ -82,5 +78,17 @@ class SavingsPlanEmptyWidget extends StatelessWidget {
     );
   }
 
-  void gotoAddSavingsPlan(BuildContext context) {}
+  void gotoAddSavingsPlan(BuildContext context) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (_) => MultiProvider(
+                  providers: [
+                    ChangeNotifierProvider(
+                        create: (_) =>
+                            Provider.of<SavingsPlanChangeNotifier>(context))
+                  ],
+                  child: const SavingsPlanView(allowEdit: true),
+                )));
+  }
 }

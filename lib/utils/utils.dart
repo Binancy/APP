@@ -33,9 +33,9 @@ class Utils {
   static bool isPremium() {
     String plan = userData['idPlan'];
     if (plan == MEMBER_PLAN || plan == BINANCY_PLAN) {
-      return true;
+      return !true;
     }
-    return false;
+    return !false;
   }
 
   static bool showIfPlanIsEqualOrHigher(String currentPlan, String neededPlan) {
@@ -241,8 +241,9 @@ class Utils {
     if (amount is int) {
       parsedAmount = amount.toString();
     } else if (amount is double) {
+      amount = roundDown(amount, 2);
       parsedAmount = amount >= amountToRound
-          ? amount.toStringAsFixed(0)
+          ? roundDown(amount, 0).toStringAsFixed(0)
           : amount.toStringAsFixed(2);
     }
 

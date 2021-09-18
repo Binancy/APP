@@ -66,28 +66,20 @@ class MovememntEmptyCard extends StatelessWidget {
         highlightColor: themeColor.withOpacity(0.1),
         splashColor: themeColor.withOpacity(0.1),
         child: Container(
-          height: movementCardSize,
-          padding:
-              const EdgeInsets.only(left: customMargin, right: customMargin),
+          padding: const EdgeInsets.all(customMargin),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const Icon(Icons.add_rounded, color: Colors.white, size: 50),
               const SpaceDivider(isVertical: true),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                      movementType == MovementType.INCOME
-                          ? "No hay ningun ingreso registrado"
-                          : "No hay ningun gasto registrado",
-                      style: accentStyle(),
-                      textAlign: TextAlign.center),
-                  Text("Toca para añadir uno",
-                      style: accentStyle(), textAlign: TextAlign.center),
-                ],
+              Expanded(
+                child: Text(
+                    movementType == MovementType.INCOME
+                        ? "No hay ningun ingreso registrado. Toca para añadir uno"
+                        : "No hay ningun gasto registrado. Toca para añadir uno",
+                    style: accentStyle(),
+                    textAlign: TextAlign.start),
               )
             ],
           ),

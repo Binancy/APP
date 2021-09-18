@@ -197,6 +197,10 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
                         ChangeNotifierProvider(
                           create: (_) =>
                               Provider.of<CategoriesChangeNotifier>(context),
+                        ),
+                        ChangeNotifierProvider(
+                          create: (_) =>
+                              Provider.of<PlansChangeNotifier>(context),
                         )
                       ],
                       child: MovementBalanceView(),

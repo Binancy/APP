@@ -11,6 +11,8 @@ import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/widgets.dart';
 import 'package:binancy/views/movements/movements_card_widget.dart';
 import 'package:binancy/views/movements/movements_empty_card_widget.dart';
+import 'package:binancy/views/payments/premium_ad_widget.dart';
+import 'package:binancy/views/savings_plan/savings_plan_empty_widget.dart';
 import 'package:binancy/views/savings_plan/savings_plan_widget.dart';
 import 'package:binancy/views/subscriptions/subscription_card_widget.dart';
 import 'package:binancy/views/subscriptions/subscription_empty_card_widget.dart';
@@ -61,7 +63,10 @@ class MovementBalanceView extends StatelessWidget {
                         latestsExpenses(context, movementsProvider),
                         for (var i in premiumWidgets(context, movementsProvider,
                             subscriptionsProvider, savingsPlanProvider))
-                          Utils.isPremium() ? i : const SizedBox()
+                          Utils.isPremium() ? i : const SizedBox(),
+                        Utils.isPremium()
+                            ? const SizedBox()
+                            : const PremiumAdWidget()
                       ])),
             )));
   }
@@ -185,7 +190,7 @@ class MovementBalanceView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text("Tu patrimonio", style: accentTitleStyle()),
-              Text(movementsProvider.totalHeritage.toStringAsFixed(2) + "€",
+              Text(Utils.parseAmount(movementsProvider.totalHeritage),
                   style: balanceValueStyle()),
             ],
           ),
@@ -381,7 +386,7 @@ class MovementBalanceView extends StatelessWidget {
     savingsPlanWidgetList.add(Padding(
         padding: const EdgeInsets.only(
             top: customMargin, left: customMargin, bottom: customMargin),
-        child: Text("Planes de ahorro:", style: titleCardStyle())));
+        child: Text("Metas de ahorro:", style: titleCardStyle())));
     savingsPlanWidgetList.add(const LinearDivider());
     if (savingsPlanChangeNotifier.savingsPlanList.isNotEmpty) {
       if (savingsPlanChangeNotifier.savingsPlanList.length >
@@ -399,7 +404,7 @@ class MovementBalanceView extends StatelessWidget {
         }
       }
     } else {
-      savingsPlanWidgetList.add(const SubscriptionEmptyCard());
+      savingsPlanWidgetList.add(const SavingsPlanEmptyWidget());
     }
     return savingsPlanWidgetList;
   }

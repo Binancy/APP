@@ -55,7 +55,6 @@ class _SavingsPlanAllViewState extends State<SavingsPlanAllView> {
           title: Text("Metas de ahorro", style: appBarStyle())),
       body: Consumer2<SavingsPlanChangeNotifier, MovementsChangeNotifier>(
           builder: (context, savingsProvider, movementsProvider, child) {
-        print(savingsProvider.savingsPlanList.length);
         return Column(
           children: [
             const SpaceDivider(),
@@ -67,7 +66,7 @@ class _SavingsPlanAllViewState extends State<SavingsPlanAllView> {
             Center(child: Text("Tus metas de ahorro", style: titleCardStyle())),
             const SpaceDivider(),
             savingsProvider.savingsPlanList.isEmpty
-                ? buildEmptySavingsPlanWidget()
+                ? Expanded(child: buildEmptySavingsPlanWidget())
                 : showAllSavingsPlan
                     ? Expanded(
                         child: buildSavingsPlansWidgetList(
@@ -102,7 +101,8 @@ class _SavingsPlanAllViewState extends State<SavingsPlanAllView> {
 
   Container buildEmptySavingsPlanWidget() {
     return Container(
-      margin: const EdgeInsets.only(left: customMargin, right: customMargin),
+      margin: const EdgeInsets.only(
+          left: customMargin, right: customMargin, bottom: customMargin),
       padding: const EdgeInsets.all(customMargin),
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.width,
