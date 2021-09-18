@@ -491,10 +491,12 @@ class _RegisterViewState extends State<RegisterView> {
     }
   }
 
-  Future<void> makeRegister(Map<String, dynamic> userData) async {
-    ConnAPI connAPI = ConnAPI(APIEndpoints.REGISTER, "POST", false, userData);
+  Future<void> makeRegister(Map<String, dynamic> registerData) async {
+    ConnAPI connAPI =
+        ConnAPI(APIEndpoints.REGISTER, "POST", false, registerData);
     await connAPI.callAPI();
     if (connAPI.getStatus() == 200) {
+      userData = registerData;
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => LoadingView()),

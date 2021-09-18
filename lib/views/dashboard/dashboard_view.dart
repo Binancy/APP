@@ -1,5 +1,7 @@
 import 'package:binancy/controllers/providers/movements_change_notifier.dart';
 import 'package:binancy/controllers/providers/plans_change_notifier.dart';
+import 'package:binancy/controllers/providers/savings_plans_change_notifier.dart';
+import 'package:binancy/controllers/providers/subscriptions_change_notifier.dart';
 import 'package:binancy/utils/ui/icons.dart';
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/widgets.dart';
@@ -74,6 +76,14 @@ class _DashboardViewState extends State<DashboardView> {
                   controller: _refreshController,
                   onRefresh: () async {
                     await provider.updateMovements().then((value) {
+                      Provider.of<SavingsPlanChangeNotifier>(context,
+                              listen: false)
+                          .updateSavingsPlan();
+                      Provider.of<SubscriptionsChangeNotifier>(context,
+                              listen: false)
+                          .updateSubscriptions();
+                      Provider.of<PlansChangeNotifier>(context, listen: false)
+                          .updateAll();
                       _refreshController.refreshCompleted();
                     });
                   },

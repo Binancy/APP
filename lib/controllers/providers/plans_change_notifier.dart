@@ -10,6 +10,11 @@ class PlansChangeNotifier extends ChangeNotifier {
   @override
   void dispose() {}
 
+  Future<void> updateAll() async {
+    await updatePlans();
+    await updateCarousel();
+  }
+
   Future<void> updatePlans() async {
     plansList = await PlansController.getAvaiablePlans();
     plansList.sort((a, b) => b.planAmount.compareTo(a.planAmount));

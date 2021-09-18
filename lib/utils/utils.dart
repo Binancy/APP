@@ -33,9 +33,9 @@ class Utils {
   static bool isPremium() {
     String plan = userData['idPlan'];
     if (plan == MEMBER_PLAN || plan == BINANCY_PLAN) {
-      return !true;
+      return true;
     }
-    return !false;
+    return false;
   }
 
   static bool showIfPlanIsEqualOrHigher(String currentPlan, String neededPlan) {

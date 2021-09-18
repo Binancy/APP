@@ -1,6 +1,5 @@
 import 'package:binancy/controllers/providers/plans_change_notifier.dart';
 import 'package:binancy/globals.dart';
-import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/views/advice/advice_card.dart';
 import 'package:binancy/views/payments/premium_plans_view.dart';
 import 'package:flutter/material.dart';

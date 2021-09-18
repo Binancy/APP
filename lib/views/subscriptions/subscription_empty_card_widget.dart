@@ -2,7 +2,6 @@ import 'package:binancy/controllers/providers/subscriptions_change_notifier.dart
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/widgets.dart';
 import 'package:binancy/views/subscriptions/subscription_view.dart';
-import 'package:binancy/views/subscriptions/subscriptions_all_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

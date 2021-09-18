@@ -54,6 +54,7 @@ class SettingsView extends StatelessWidget {
                         await Future.delayed(
                             const Duration(milliseconds: logoutMinTimeMS));
                         await Utils.clearSecureStorage();
+                        userData.clear();
                         progressDialog.dismissDialog();
                         Navigator.pushAndRemoveUntil(
                             context,
