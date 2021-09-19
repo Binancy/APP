@@ -1,5 +1,8 @@
+import 'package:binancy/controllers/account_controller.dart';
+import 'package:binancy/utils/dialogs/info_dialog.dart';
 import 'package:binancy/utils/ui/icons.dart';
 import 'package:binancy/utils/ui/styles.dart';
+import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +14,10 @@ import 'package:intl/intl.dart';
 import '../../globals.dart';
 
 class SettingsEditUserInfoView extends StatefulWidget {
-  const SettingsEditUserInfoView({Key? key}) : super(key: key);
+  final Function() refreshParent;
+
+  const SettingsEditUserInfoView({Key? key, required this.refreshParent})
+      : super(key: key);
 
   @override
   State<SettingsEditUserInfoView> createState() =>
@@ -29,6 +35,7 @@ class _SettingsEditUserInfoViewState extends State<SettingsEditUserInfoView> {
 
   String birthdayDate = "Tu fecha de nacimiento";
   int selectedPayDay = 0;
+  bool firstRun = true;
 
   @override
   void dispose() {
@@ -43,7 +50,10 @@ class _SettingsEditUserInfoViewState extends State<SettingsEditUserInfoView> {
 
   @override
   Widget build(BuildContext context) {
-    setInitialData();
+    if (firstRun) {
+      setInitialData();
+      firstRun = false;
+    }
     return Container(
         clipBehavior: Clip.antiAliasWithSaveLayer,
         decoration: BoxDecoration(
@@ -66,6 +76,10 @@ class _SettingsEditUserInfoViewState extends State<SettingsEditUserInfoView> {
                   shrinkWrap: true,
                   padding: const EdgeInsets.all(customMargin),
                   children: [
+                    Center(
+                        child:
+                            Text("Edita tu perfil", style: titleCardStyle())),
+                    const SpaceDivider(),
                     inputWidget(
                         controller: nameController,
                         hintText: "Tu nombre",
@@ -88,15 +102,10 @@ class _SettingsEditUserInfoViewState extends State<SettingsEditUserInfoView> {
                     const SpaceDivider(),
                     inputDateWidget(dateString: birthdayDate),
                     const SpaceDivider(),
-                    Center(
-                        child:
-                            Text("Tu configuración", style: titleCardStyle())),
-                    const SpaceDivider(),
-                    const SpaceDivider(),
                     BinancyButton(
                         context: context,
-                        text: "Actualizar datos",
-                        action: () {}),
+                        text: "Actualizar perfil",
+                        action: () => checkData()),
                     SpaceDivider(
                         customSpace: MediaQuery.of(context).viewInsets.bottom)
                   ])),
@@ -117,10 +126,11 @@ class _SettingsEditUserInfoViewState extends State<SettingsEditUserInfoView> {
           color: themeColor.withOpacity(0.1)),
       alignment: Alignment.center,
       child: TextField(
+        textCapitalization: TextCapitalization.sentences,
         textInputAction: TextInputAction.next,
         onSubmitted: onSubmitted,
         inputFormatters: inputFormatters,
-        keyboardType: TextInputType.emailAddress,
+        keyboardType: TextInputType.name,
         controller: controller,
         style: inputStyle(),
         decoration: customInputDecoration(hintText, icon),
@@ -174,7 +184,51 @@ class _SettingsEditUserInfoViewState extends State<SettingsEditUserInfoView> {
 
   Widget inputNumberWidget() {
     return BinancyButton(
-        context: context, text: "Cambia tu dia de pago", action: () {});
+        context: context, text: "Cambia tu principio de mes", action: () {});
+  }
+
+  void checkData() {
+    if (nameController.text.isNotEmpty) {
+      if (nameController.text != userData['nameUser'] ||
+          firstSurnameController.text != userData['firstSurname'] ||
+          lastSurnameController.text != userData['lastSurname'] ||
+          birthdayDate !=
+              Utils.toYMD(
+                  Utils.fromISOStandard(userData['birthday']), context)) {
+        AccountController.updateProfile({
+          'nameUser': nameController.text,
+          'firstSurname': firstSurnameController.text,
+          'lastSurname': lastSurnameController.text,
+          'birthday': Utils.toISOStandard(Utils.fromYMD(birthdayDate, context))
+        }).then((value) {
+          if (value) {
+            userData['nameUser'] = nameController.text;
+            userData['firstSurname'] = firstSurnameController.text;
+            userData['lastSurname'] = lastSurnameController.text;
+            userData['birthday'] =
+                Utils.toISOStandard(Utils.fromYMD(birthdayDate, context));
+            widget.refreshParent();
+
+            BinancyInfoDialog(context, "Datos actualizados correctamente", [
+              BinancyInfoDialogItem("Aceptar", () {
+                Navigator.pop(context);
+                Navigator.pop(context);
+              })
+            ]);
+          } else {
+            BinancyInfoDialog(context, "Ha ocurrido un error", [
+              BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))
+            ]);
+          }
+        });
+      } else {
+        BinancyInfoDialog(context, "No hay cambios por aplicar",
+            [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
+      }
+    } else {
+      BinancyInfoDialog(context, "Debes introducir tu nombre",
+          [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
+    }
   }
 
   void setInitialData() {
@@ -182,5 +236,7 @@ class _SettingsEditUserInfoViewState extends State<SettingsEditUserInfoView> {
     firstSurnameController.text = userData['firstSurname'];
     lastSurnameController.text = userData['lastSurname'];
     selectedPayDay = userData['payDay'];
+    birthdayDate =
+        Utils.toYMD(Utils.fromISOStandard(userData['birthday']), context);
   }
 }

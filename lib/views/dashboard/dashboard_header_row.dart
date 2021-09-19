@@ -1,5 +1,7 @@
 import 'package:binancy/controllers/providers/categories_change_notifier.dart';
 import 'package:binancy/controllers/providers/movements_change_notifier.dart';
+import 'package:binancy/controllers/providers/plans_change_notifier.dart';
+import 'package:binancy/controllers/providers/savings_plans_change_notifier.dart';
 import 'package:binancy/controllers/providers/subscriptions_change_notifier.dart';
 import 'package:binancy/globals.dart';
 import 'package:binancy/utils/utils.dart';
@@ -94,7 +96,20 @@ class DashboardHeaderRow extends StatelessWidget {
                           ),
                           ChangeNotifierProvider(
                             create: (_) =>
+                                Provider.of<SubscriptionsChangeNotifier>(
+                                    context),
+                          ),
+                          ChangeNotifierProvider(
+                            create: (_) =>
+                                Provider.of<SavingsPlanChangeNotifier>(context),
+                          ),
+                          ChangeNotifierProvider(
+                            create: (_) =>
                                 Provider.of<CategoriesChangeNotifier>(context),
+                          ),
+                          ChangeNotifierProvider(
+                            create: (_) =>
+                                Provider.of<PlansChangeNotifier>(context),
                           )
                         ],
                         child: MovementBalanceView(),

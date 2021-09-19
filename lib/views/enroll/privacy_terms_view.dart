@@ -1,3 +1,4 @@
+import 'package:binancy/utils/ui/styles.dart';
 import 'package:flutter/material.dart';
 
 class PrivacyAndTermsView extends StatelessWidget {
@@ -5,6 +6,12 @@ class PrivacyAndTermsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: primaryColor,
+        title: Text("Política de privacidad", style: appBarStyle()),
+      ),
+    );
   }
 }

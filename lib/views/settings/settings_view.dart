@@ -6,8 +6,9 @@ import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/widgets.dart';
 import 'package:binancy/views/enroll/login_view.dart';
+import 'package:binancy/views/enroll/privacy_terms_view.dart';
 import 'package:binancy/views/payments/premium_plans_view.dart';
-import 'package:binancy/views/settings/settings_user_info.dart';
+import 'package:binancy/views/settings/settings_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -100,7 +101,7 @@ class SettingsView extends StatelessWidget {
       const SettingsHeaderRow(text: "Acciones"),
       const LinearDivider(),
       SettingsActionRow(
-          text: "Información de usuario",
+          text: "Ver mi perfil",
           action: () => Navigator.push(
               context,
               MaterialPageRoute(
@@ -109,6 +110,15 @@ class SettingsView extends StatelessWidget {
       SettingsActionRow(text: "Notificaciones", action: () => null),
       const LinearDivider(),
       SettingsActionRow(text: "Seguridad", action: () => null),
+      const LinearDivider(),
+      SettingsActionRow(
+          text: "Política de privacidad",
+          action: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const PrivacyAndTermsView()))),
+      const LinearDivider(),
+      SettingsActionRow(text: "Soporte", action: () => null),
       const LinearDivider(),
       Utils.showIfPlanIsEqualOrLower(userData['idPlan'], "binancy")
           ? SettingsActionRow(

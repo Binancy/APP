@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:binancy/globals.dart';
 import 'package:binancy/utils/api/conn_api.dart';
 import 'package:binancy/utils/api/endpoints.dart';
@@ -67,5 +69,19 @@ class AccountController {
             [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
       }
     }
+  }
+
+  static Future<bool> updateProfile(Map<String, dynamic> newUserData) async {
+    ConnAPI connAPI = ConnAPI(APIEndpoints.UPDATE_PROFILE, "PUT", false,
+        {"id": userData['idUser'], "data": newUserData});
+    await connAPI.callAPI();
+    return connAPI.getStatus() == 200;
+  }
+
+  static Future<bool> updatePayDay(int payday) async {
+    ConnAPI connAPI = ConnAPI(APIEndpoints.UPDATE_PAYDAY, "PUT", false,
+        {"id": userData['idUser'], "payDay": payday});
+    await connAPI.callAPI();
+    return connAPI.getStatus() == 200;
   }
 }
