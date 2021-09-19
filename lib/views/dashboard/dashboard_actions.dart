@@ -361,7 +361,10 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
                 builder: (_) => MultiProvider(providers: [
                       ChangeNotifierProvider(
                           create: (_) =>
-                              Provider.of<PlansChangeNotifier>(context))
+                              Provider.of<PlansChangeNotifier>(context)),
+                      ChangeNotifierProvider(
+                          create: (_) =>
+                              Provider.of<MovementsChangeNotifier>(context))
                     ], child: SettingsView())))));
   }
 

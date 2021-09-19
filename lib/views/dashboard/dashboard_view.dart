@@ -41,6 +41,10 @@ class _DashboardViewState extends State<DashboardView> {
                                 ChangeNotifierProvider(
                                     create: (_) =>
                                         Provider.of<PlansChangeNotifier>(
+                                            context)),
+                                ChangeNotifierProvider(
+                                    create: (_) =>
+                                        Provider.of<MovementsChangeNotifier>(
                                             context))
                               ], child: SettingsView())))),
               automaticallyImplyLeading: false,

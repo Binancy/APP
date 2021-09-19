@@ -1,3 +1,4 @@
+import 'package:binancy/controllers/providers/movements_change_notifier.dart';
 import 'package:binancy/controllers/providers/plans_change_notifier.dart';
 import 'package:binancy/globals.dart';
 import 'package:binancy/utils/dialogs/info_dialog.dart';
@@ -36,7 +37,9 @@ class SettingsView extends StatelessWidget {
                 const SliverToBoxAdapter(child: BinancyIconHorizontal()),
                 SliverToBoxAdapter(child: myDataCard(context)),
                 const SliverToBoxAdapter(child: SpaceDivider()),
-                SliverToBoxAdapter(child: actionsCard(context)),
+                SliverToBoxAdapter(
+                    child: actionsCard(context,
+                        Provider.of<MovementsChangeNotifier>(context))),
                 const SliverToBoxAdapter(child: SpaceDivider()),
                 SliverToBoxAdapter(
                     child: BinancyButton(
@@ -96,16 +99,18 @@ class SettingsView extends StatelessWidget {
         ));
   }
 
-  Widget actionsCard(BuildContext context) {
+  Widget actionsCard(
+      BuildContext context, MovementsChangeNotifier movementsChangeNotifier) {
     List<Widget> widgetList = [
       const SettingsHeaderRow(text: "Acciones"),
       const LinearDivider(),
       SettingsActionRow(
           text: "Ver mi perfil",
-          action: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const SettingsUserDataView()))),
+          action: () async => await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const SettingsUserDataView()))
+              .then((value) => movementsChangeNotifier.updateMovements())),
       const LinearDivider(),
       SettingsActionRow(text: "Notificaciones", action: () => null),
       const LinearDivider(),
