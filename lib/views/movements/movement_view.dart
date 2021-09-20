@@ -6,6 +6,7 @@ import 'package:binancy/globals.dart';
 import 'package:binancy/models/category.dart';
 import 'package:binancy/models/expend.dart';
 import 'package:binancy/models/income.dart';
+import 'package:binancy/utils/dialogs/date_dialog.dart';
 import 'package:binancy/utils/dialogs/info_dialog.dart';
 import 'package:binancy/utils/enums.dart';
 import 'package:binancy/utils/ui/icons.dart';
@@ -14,7 +15,6 @@ import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class MovementView extends StatefulWidget {
@@ -207,17 +207,17 @@ class _MovementViewState extends State<MovementView> {
           onTap: () {
             FocusScope.of(context).unfocus();
             if (allowEdit) {
-              showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime(1970),
-                      lastDate: DateTime(DateTime.now().year + 1))
-                  .then((value) {
-                setState(() {
-                  parsedDate = DateFormat.yMd(
-                          Localizations.localeOf(context).toLanguageTag())
-                      .format(value!);
-                });
+              BinancyDatePicker binancyDatePicker = BinancyDatePicker(
+                  context: context,
+                  initialDate: Utils.isValidDateYMD(parsedDate, context)
+                      ? Utils.fromYMD(parsedDate, context)
+                      : DateTime.now());
+              binancyDatePicker.showCustomDialog().then((value) {
+                if (value != null) {
+                  setState(() {
+                    parsedDate = Utils.toYMD(value, context);
+                  });
+                }
               });
             }
           },

@@ -1,6 +1,7 @@
 import 'package:binancy/globals.dart';
 import 'package:binancy/utils/api/conn_api.dart';
 import 'package:binancy/utils/api/endpoints.dart';
+import 'package:binancy/utils/dialogs/date_dialog.dart';
 import 'package:binancy/utils/dialogs/info_dialog.dart';
 import 'package:binancy/utils/ui/icons.dart';
 import 'package:binancy/utils/ui/styles.dart';
@@ -307,17 +308,17 @@ class _RegisterViewState extends State<RegisterView> {
                 child: InkWell(
                   onTap: () {
                     FocusScope.of(context).unfocus();
-                    showDatePicker(
-                            context: context,
-                            initialDate: DateTime.now(),
-                            firstDate: DateTime(1970),
-                            lastDate: DateTime(DateTime.now().year + 1))
-                        .then((value) {
-                      setState(() {
-                        parsedDate = DateFormat.yMd(
-                                Localizations.localeOf(context).toLanguageTag())
-                            .format(value!);
-                      });
+                    BinancyDatePicker binancyDatePicker = BinancyDatePicker(
+                        context: context,
+                        initialDate: Utils.isValidDateYMD(parsedDate, context)
+                            ? Utils.fromYMD(parsedDate, context)
+                            : DateTime.now());
+                    binancyDatePicker.showCustomDialog().then((value) {
+                      if (value != null) {
+                        setState(() {
+                          parsedDate = Utils.toYMD(value, context);
+                        });
+                      }
                     });
                   },
                   borderRadius: BorderRadius.circular(customBorderRadius),
@@ -359,20 +360,25 @@ class _RegisterViewState extends State<RegisterView> {
                           termsPrivacyCheck = !termsPrivacyCheck;
                         });
                       }),
-                  Text(
-                    "He leído y acepto los ",
-                    style: miniInputStyle(),
-                  ),
-                  GestureDetector(
-                    child: Text(
-                      "términos y condiciones de uso",
-                      style: miniAccentStyle(),
-                    ),
+                  Expanded(
+                      child: GestureDetector(
                     onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => const PrivacyAndTermsView())),
-                  )
+                    child: RichText(
+                        text: TextSpan(
+                            text: "He leído y acepto ",
+                            style: miniInputStyle(),
+                            children: [
+                          TextSpan(
+                              text: "los términos y condiciones de " +
+                                  appName +
+                                  " y " +
+                                  organizationName,
+                              style: miniAccentStyle())
+                        ])),
+                  ))
                 ],
               ),
             ),

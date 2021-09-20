@@ -2,6 +2,7 @@ import 'package:binancy/controllers/providers/savings_plans_change_notifier.dart
 import 'package:binancy/controllers/savings_plan_controller.dart';
 import 'package:binancy/globals.dart';
 import 'package:binancy/models/savings_plan.dart';
+import 'package:binancy/utils/dialogs/date_dialog.dart';
 import 'package:binancy/utils/dialogs/info_dialog.dart';
 import 'package:binancy/utils/ui/icons.dart';
 import 'package:binancy/utils/ui/styles.dart';
@@ -9,7 +10,6 @@ import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class SavingsPlanView extends StatefulWidget {
@@ -218,17 +218,17 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
           onTap: () {
             FocusScope.of(context).unfocus();
             if (allowEdit) {
-              showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime(1970),
-                      lastDate: DateTime(DateTime.now().year + 1))
-                  .then((value) {
-                setState(() {
-                  parsedDate = DateFormat.yMd(
-                          Localizations.localeOf(context).toLanguageTag())
-                      .format(value!);
-                });
+              BinancyDatePicker binancyDatePicker = BinancyDatePicker(
+                  context: context,
+                  initialDate: Utils.isValidDateYMD(parsedDate, context)
+                      ? Utils.fromYMD(parsedDate, context)
+                      : DateTime.now());
+              binancyDatePicker.showCustomDialog().then((value) {
+                if (value != null) {
+                  setState(() {
+                    parsedDate = Utils.toYMD(value, context);
+                  });
+                }
               });
             }
           },

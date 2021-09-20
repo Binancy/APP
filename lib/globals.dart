@@ -2,6 +2,7 @@
 import 'package:binancy/models/category.dart';
 
 const String appName = "Binancy";
+const String organizationName = "Appxs";
 const String appVersion = "1.1.1";
 
 // API GLOBALS

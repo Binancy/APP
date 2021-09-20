@@ -1,4 +1,5 @@
 import 'package:binancy/controllers/account_controller.dart';
+import 'package:binancy/utils/dialogs/date_dialog.dart';
 import 'package:binancy/utils/dialogs/info_dialog.dart';
 import 'package:binancy/utils/ui/icons.dart';
 import 'package:binancy/utils/ui/styles.dart';
@@ -9,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:intl/intl.dart';
 
 import '../../globals.dart';
 
@@ -100,7 +100,15 @@ class _SettingsEditUserInfoViewState extends State<SettingsEditUserInfoView> {
                         icon: BinancyIcons.user,
                         onSubmitted: (value) => lastSurnameFocusNode.unfocus()),
                     const SpaceDivider(),
-                    inputDateWidget(dateString: birthdayDate),
+                    inputDateWidget(
+                        dateString: birthdayDate,
+                        onFinish: (value) {
+                          if (value != null) {
+                            setState(() {
+                              birthdayDate = Utils.toYMD(value, context);
+                            });
+                          }
+                        }),
                     const SpaceDivider(),
                     BinancyButton(
                         context: context,
@@ -138,25 +146,20 @@ class _SettingsEditUserInfoViewState extends State<SettingsEditUserInfoView> {
     );
   }
 
-  Widget inputDateWidget({required String dateString}) {
+  Widget inputDateWidget(
+      {required String dateString, required Function(DateTime?) onFinish}) {
     return Material(
       color: themeColor.withOpacity(0.1),
       borderRadius: BorderRadius.circular(customBorderRadius),
       child: InkWell(
         onTap: () {
           FocusScope.of(context).unfocus();
-          showDatePicker(
-                  context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime(1970),
-                  lastDate: DateTime(DateTime.now().year + 1))
-              .then((value) {
-            setState(() {
-              dateString = DateFormat.yMd(
-                      Localizations.localeOf(context).toLanguageTag())
-                  .format(value!);
-            });
-          });
+          BinancyDatePicker binancyDatePicker = BinancyDatePicker(
+              context: context,
+              initialDate: Utils.isValidDateYMD(dateString, context)
+                  ? Utils.fromYMD(dateString, context)
+                  : DateTime.now());
+          binancyDatePicker.showCustomDialog().then((value) => onFinish(value));
         },
         borderRadius: BorderRadius.circular(customBorderRadius),
         highlightColor: themeColor.withOpacity(0.1),
