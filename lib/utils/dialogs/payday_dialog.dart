@@ -63,13 +63,16 @@ class BinancyPayDayDialog {
                                           customBorderRadius),
                                       color: Colors.grey.withOpacity(0.1)),
                                   padding: const EdgeInsets.all(10),
-                                  child: NumberPicker(
-                                      minValue: 1,
-                                      maxValue: 31,
-                                      value: dialogPickerValue,
-                                      onChanged: (value) => setDialogState(() {
-                                            dialogPickerValue = value;
-                                          })),
+                                  child: ScrollConfiguration(
+                                      behavior: MyBehavior(),
+                                      child: NumberPicker(
+                                          minValue: 1,
+                                          maxValue: 31,
+                                          value: dialogPickerValue,
+                                          onChanged: (value) =>
+                                              setDialogState(() {
+                                                dialogPickerValue = value;
+                                              }))),
                                 ),
                                 const SpaceDivider(),
                                 Row(
@@ -165,13 +168,15 @@ class BinancyPayDayDialog {
                                     BorderRadius.circular(customBorderRadius),
                                 color: Colors.grey.withOpacity(0.1)),
                             padding: const EdgeInsets.all(10),
-                            child: NumberPicker(
-                                minValue: 1,
-                                maxValue: 31,
-                                value: dialogPickerValue,
-                                onChanged: (value) => setDialogState(() {
-                                      dialogPickerValue = value;
-                                    })),
+                            child: ScrollConfiguration(
+                                behavior: MyBehavior(),
+                                child: NumberPicker(
+                                    minValue: 1,
+                                    maxValue: 31,
+                                    value: dialogPickerValue,
+                                    onChanged: (value) => setDialogState(() {
+                                          dialogPickerValue = value;
+                                        }))),
                           ),
                           const SpaceDivider(),
                           Row(

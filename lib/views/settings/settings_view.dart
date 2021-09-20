@@ -13,7 +13,12 @@ import 'package:binancy/views/settings/settings_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class SettingsView extends StatelessWidget {
+class SettingsView extends StatefulWidget {
+  @override
+  State<SettingsView> createState() => _SettingsViewState();
+}
+
+class _SettingsViewState extends State<SettingsView> {
   @override
   Widget build(BuildContext context) {
     return BinancyBackground(Scaffold(
@@ -107,10 +112,13 @@ class SettingsView extends StatelessWidget {
       SettingsActionRow(
           text: "Ver mi perfil",
           action: () async => await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const SettingsUserDataView()))
-              .then((value) => movementsChangeNotifier.updateMovements())),
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const SettingsUserDataView()))
+                  .then((value) {
+                movementsChangeNotifier.updateMovements();
+                setState(() {});
+              })),
       const LinearDivider(),
       SettingsActionRow(text: "Notificaciones", action: () => null),
       const LinearDivider(),

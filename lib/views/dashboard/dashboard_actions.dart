@@ -48,7 +48,7 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
   Widget build(BuildContext context) {
     if (firstRun) {
       clearLists();
-      buildActions();
+      buildActions(context);
       buildPageList(context);
       opacityValueList = List.filled(pageList.length, 0.25);
       opacityValueList[0] = 1;
@@ -149,7 +149,7 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
     }
   }
 
-  void buildActions() {
+  void buildActions(BuildContext context) {
     actionsList.add(ActionButtonWidget(
         context: context,
         icon: SvgPicture.asset("assets/svg/dashboard_add_income.svg"),
