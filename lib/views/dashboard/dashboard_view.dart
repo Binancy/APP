@@ -2,9 +2,11 @@ import 'package:binancy/controllers/providers/movements_change_notifier.dart';
 import 'package:binancy/controllers/providers/plans_change_notifier.dart';
 import 'package:binancy/controllers/providers/savings_plans_change_notifier.dart';
 import 'package:binancy/controllers/providers/subscriptions_change_notifier.dart';
+import 'package:binancy/globals.dart';
 import 'package:binancy/utils/ui/icons.dart';
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/ui/widgets.dart';
+import 'package:binancy/utils/utils.dart';
 import 'package:binancy/views/dashboard/dashboard_actions.dart';
 import 'package:binancy/views/dashboard/dashboard_header_row.dart';
 import 'package:binancy/views/dashboard/dashboard_summary_card.dart';
@@ -72,24 +74,30 @@ class _DashboardViewState extends State<DashboardView> {
                                 AlwaysStoppedAnimation<Color>(accentColor),
                             strokeWidth: 1)),
                     completeIcon: Icon(Icons.check, color: accentColor),
+                    failedIcon: Icon(Icons.close_rounded, color: accentColor),
                     refreshingText: "Actualizando...",
+                    failedText: "No se ha podido actualizar",
                     completeText: "Datos actualizados",
                     releaseText: "Suelta para actualizar",
                     idleText: "Desliza para actualizar",
                   ),
                   controller: _refreshController,
                   onRefresh: () async {
-                    await provider.updateMovements().then((value) {
-                      Provider.of<SavingsPlanChangeNotifier>(context,
-                              listen: false)
-                          .updateSavingsPlan();
-                      Provider.of<SubscriptionsChangeNotifier>(context,
-                              listen: false)
-                          .updateSubscriptions();
-                      Provider.of<PlansChangeNotifier>(context, listen: false)
-                          .updateAll();
-                      _refreshController.refreshCompleted();
-                    });
+                    if (await Utils.hasConnection().timeout(timeout)) {
+                      await provider.updateMovements().then((value) {
+                        Provider.of<SavingsPlanChangeNotifier>(context,
+                                listen: false)
+                            .updateSavingsPlan();
+                        Provider.of<SubscriptionsChangeNotifier>(context,
+                                listen: false)
+                            .updateSubscriptions();
+                        Provider.of<PlansChangeNotifier>(context, listen: false)
+                            .updateAll();
+                        _refreshController.refreshCompleted();
+                      });
+                    } else {
+                      _refreshController.refreshFailed();
+                    }
                   },
                   child: Column(
                     children: [

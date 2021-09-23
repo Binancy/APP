@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:binancy/globals.dart';
 import 'package:binancy/views/advice/advice_card.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -236,6 +237,11 @@ class Utils {
     }
 
     return fullName;
+  }
+
+  static Future<bool> hasConnection() async {
+    var connectivityResult = await Connectivity().checkConnectivity();
+    return connectivityResult != ConnectivityResult.none;
   }
 
   static String parseAmount(dynamic amount,
