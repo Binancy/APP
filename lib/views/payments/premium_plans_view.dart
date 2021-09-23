@@ -2,7 +2,7 @@ import 'package:binancy/controllers/providers/plans_change_notifier.dart';
 import 'package:binancy/globals.dart';
 import 'package:binancy/models/plan.dart';
 import 'package:binancy/utils/ui/styles.dart';
-import 'package:binancy/utils/widgets.dart';
+import 'package:binancy/utils/ui/widgets.dart';
 import 'package:binancy/views/payments/premium_carousel_widget.dart';
 import 'package:binancy/views/payments/premium_plan_widget.dart';
 import 'package:flutter/material.dart';

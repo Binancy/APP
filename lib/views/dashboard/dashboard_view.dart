@@ -4,7 +4,7 @@ import 'package:binancy/controllers/providers/savings_plans_change_notifier.dart
 import 'package:binancy/controllers/providers/subscriptions_change_notifier.dart';
 import 'package:binancy/utils/ui/icons.dart';
 import 'package:binancy/utils/ui/styles.dart';
-import 'package:binancy/utils/widgets.dart';
+import 'package:binancy/utils/ui/widgets.dart';
 import 'package:binancy/views/dashboard/dashboard_actions.dart';
 import 'package:binancy/views/dashboard/dashboard_header_row.dart';
 import 'package:binancy/views/dashboard/dashboard_summary_card.dart';

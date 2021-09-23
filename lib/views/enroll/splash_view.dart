@@ -7,7 +7,7 @@ import 'package:binancy/controllers/subscriptions_controller.dart';
 import 'package:binancy/utils/api/conn_api.dart';
 import 'package:binancy/utils/api/endpoints.dart';
 import 'package:binancy/utils/utils.dart';
-import 'package:binancy/utils/widgets.dart';
+import 'package:binancy/utils/ui/widgets.dart';
 import 'package:binancy/views/dashboard/dashboard_view.dart';
 import 'package:binancy/views/enroll/login_view.dart';
 import 'package:flutter/material.dart';

@@ -5,7 +5,7 @@ import 'package:binancy/utils/dialogs/info_dialog.dart';
 import 'package:binancy/utils/dialogs/payday_dialog.dart';
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/utils.dart';
-import 'package:binancy/utils/widgets.dart';
+import 'package:binancy/utils/ui/widgets.dart';
 import 'package:binancy/views/settings/settings_change_password.dart';
 import 'package:binancy/views/settings/settings_edit_profile.dart';
 import 'package:binancy/views/settings/settings_view.dart';

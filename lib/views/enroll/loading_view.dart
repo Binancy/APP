@@ -2,13 +2,18 @@ import 'dart:math';
 
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/utils.dart';
-import 'package:binancy/utils/widgets.dart';
+import 'package:binancy/utils/ui/widgets.dart';
 import 'package:binancy/views/enroll/splash_view.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import '../../globals.dart';
 
-class LoadingView extends StatelessWidget {
+class LoadingView extends StatefulWidget {
+  @override
+  State<LoadingView> createState() => _LoadingViewState();
+}
+
+class _LoadingViewState extends State<LoadingView> {
   @override
   Widget build(BuildContext context) {
     initializeApp(context);

@@ -2,7 +2,7 @@ import 'package:binancy/globals.dart';
 import 'package:binancy/models/announce.dart';
 import 'package:binancy/models/offert.dart';
 import 'package:binancy/utils/ui/styles.dart';
-import 'package:binancy/utils/widgets.dart';
+import 'package:binancy/utils/ui/widgets.dart';
 import 'package:flutter/material.dart';
 
 class PlansCarouselWidget extends StatelessWidget {

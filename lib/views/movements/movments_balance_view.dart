@@ -5,10 +5,9 @@ import 'package:binancy/controllers/providers/subscriptions_change_notifier.dart
 import 'package:binancy/globals.dart';
 import 'package:binancy/models/savings_plan.dart';
 import 'package:binancy/models/subscription.dart';
-import 'package:binancy/utils/enums.dart';
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/utils.dart';
-import 'package:binancy/utils/widgets.dart';
+import 'package:binancy/utils/ui/widgets.dart';
 import 'package:binancy/views/movements/movements_card_widget.dart';
 import 'package:binancy/views/movements/movements_empty_card_widget.dart';
 import 'package:binancy/views/payments/premium_ad_widget.dart';
@@ -19,6 +18,8 @@ import 'package:binancy/views/subscriptions/subscription_empty_card_widget.dart'
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'movement_view.dart';
 
 class MovementBalanceView extends StatelessWidget {
   @override

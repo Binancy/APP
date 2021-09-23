@@ -1,6 +1,5 @@
 import 'package:binancy/controllers/subscriptions_controller.dart';
 import 'package:binancy/models/subscription.dart';
-import 'package:binancy/utils/enums.dart';
 import 'package:flutter/material.dart';
 
 class SubscriptionsChangeNotifier extends ChangeNotifier {

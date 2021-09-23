@@ -2,7 +2,7 @@ import 'package:binancy/controllers/providers/microexpenses_change_notifier.dart
 import 'package:binancy/controllers/providers/movements_change_notifier.dart';
 import 'package:binancy/globals.dart';
 import 'package:binancy/utils/ui/styles.dart';
-import 'package:binancy/utils/widgets.dart';
+import 'package:binancy/utils/ui/widgets.dart';
 import 'package:binancy/views/advice/advice_card.dart';
 import 'package:binancy/views/microexpenses/microexpend_view.dart';
 import 'package:binancy/views/microexpenses/microexpenses_widget.dart';

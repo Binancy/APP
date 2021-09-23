@@ -96,6 +96,10 @@ class Utils {
     return adviceCardList;
   }
 
+  // QUICK-ACTIONS
+
+  static void enableShortcuts(BuildContext context) {}
+
   // SHARED STORAGE
 
   static Future<void> saveOnSecureStorage(String key, dynamic value) async {

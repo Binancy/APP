@@ -4,7 +4,22 @@ import 'package:binancy/models/expend.dart';
 import 'package:binancy/models/subscription.dart';
 import 'package:binancy/utils/api/conn_api.dart';
 import 'package:binancy/utils/api/endpoints.dart';
-import 'package:binancy/utils/enums.dart';
+
+enum Month {
+  NONE,
+  JANUARY,
+  FEBRUARY,
+  MARCH,
+  APRIL,
+  MAY,
+  JUNE,
+  JULY,
+  AUGUST,
+  SEPTEMBER,
+  OCTOBER,
+  NOVEMBER,
+  DECEMEBER
+}
 
 class SubscriptionsController {
   static Future<List<Subscription>> getSubscriptions() async {

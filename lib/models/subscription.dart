@@ -1,4 +1,4 @@
-import 'package:binancy/utils/enums.dart';
+import 'package:binancy/controllers/subscriptions_controller.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 

@@ -1,7 +1,7 @@
 import 'package:binancy/controllers/providers/subscriptions_change_notifier.dart';
 import 'package:binancy/globals.dart';
 import 'package:binancy/utils/ui/styles.dart';
-import 'package:binancy/utils/widgets.dart';
+import 'package:binancy/utils/ui/widgets.dart';
 import 'package:binancy/views/subscriptions/subscription_card_widget.dart';
 import 'package:binancy/views/subscriptions/subscription_empty_card_widget.dart';
 import 'package:flutter/material.dart';

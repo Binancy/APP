@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
 
 import '../../globals.dart';
-import '../widgets.dart';
+import '../ui/widgets.dart';
 import 'info_dialog.dart';
 
 class BinancyPayDayDialog {

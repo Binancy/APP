@@ -1,6 +1,6 @@
 import 'package:binancy/controllers/providers/savings_plans_change_notifier.dart';
 import 'package:binancy/utils/ui/styles.dart';
-import 'package:binancy/utils/widgets.dart';
+import 'package:binancy/utils/ui/widgets.dart';
 import 'package:binancy/views/savings_plan/savings_plan_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

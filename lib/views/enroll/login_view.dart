@@ -6,7 +6,7 @@ import 'package:binancy/utils/dialogs/progress_dialog.dart';
 import 'package:binancy/utils/ui/icons.dart';
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/utils.dart';
-import 'package:binancy/utils/widgets.dart';
+import 'package:binancy/utils/ui/widgets.dart';
 import 'package:binancy/views/enroll/loading_view.dart';
 import 'package:binancy/views/enroll/register_view.dart';
 import 'package:flutter/material.dart';
