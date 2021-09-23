@@ -180,4 +180,12 @@ class SubscriptionsController {
     await connAPI.callAPI();
     return connAPI.getStatus() == 200;
   }
+
+  static Future<bool> addSubscription(Subscription subscription) async {
+    return true;
+  }
+
+  static Future<bool> updateSubscription(Subscription subscription) async {
+    return false;
+  }
 }

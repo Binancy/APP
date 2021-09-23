@@ -4,6 +4,7 @@ import 'package:binancy/globals.dart';
 import 'package:binancy/models/savings_plan.dart';
 import 'package:binancy/utils/dialogs/date_dialog.dart';
 import 'package:binancy/utils/dialogs/info_dialog.dart';
+import 'package:binancy/utils/dialogs/progress_dialog.dart';
 import 'package:binancy/utils/ui/icons.dart';
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/utils.dart';
@@ -308,7 +309,10 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
           ? Utils.fromYMD(parsedDate, context)
           : null;
 
+    BinancyProgressDialog binancyProgressDialog =
+        BinancyProgressDialog(context: context)..showProgressDialog();
     await SavingsPlansController.addSavingsPlan(savingsPlan).then((value) {
+      binancyProgressDialog.dismissDialog();
       if (value) {
         BinancyInfoDialog(context, "Meta de ahorro añadida correctamente!", [
           BinancyInfoDialogItem("Aceptar", () async {
@@ -338,7 +342,10 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
           ? Utils.fromYMD(parsedDate, context)
           : null;
 
+    BinancyProgressDialog binancyProgressDialog =
+        BinancyProgressDialog(context: context)..showProgressDialog();
     await SavingsPlansController.updateSavingsPlan(savingsPlan).then((value) {
+      binancyProgressDialog.dismissDialog();
       if (value) {
         BinancyInfoDialog(
             context, "Meta de ahorro actualizada correctamente!", [

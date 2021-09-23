@@ -6,6 +6,7 @@ import 'package:binancy/globals.dart';
 import 'package:binancy/models/expend.dart';
 import 'package:binancy/models/microexpend.dart';
 import 'package:binancy/utils/dialogs/info_dialog.dart';
+import 'package:binancy/utils/dialogs/progress_dialog.dart';
 import 'package:binancy/utils/ui/icons.dart';
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/utils.dart';
@@ -267,7 +268,10 @@ class _MicroExpendViewState extends State<MicroExpendView> {
       ..idUser = userData['idUser']
       ..description = descriptionController.text;
 
+    BinancyProgressDialog binancyProgressDialog =
+        BinancyProgressDialog(context: context)..showProgressDialog();
     await MicroExpensesController.addMicroExpend(microExpend).then((value) {
+      binancyProgressDialog.dismissDialog();
       if (value) {
         BinancyInfoDialog(context, "Gasto frecuente añadido correctamente!", [
           BinancyInfoDialogItem("Aceptar", () async {
@@ -294,7 +298,10 @@ class _MicroExpendViewState extends State<MicroExpendView> {
       ..idMicroExpend = selectedMicroExpend!.idMicroExpend
       ..description = descriptionController.text;
 
+    BinancyProgressDialog binancyProgressDialog =
+        BinancyProgressDialog(context: context)..showProgressDialog();
     await MicroExpensesController.updateMicroExpend(microExpend).then((value) {
+      binancyProgressDialog.dismissDialog();
       if (value) {
         BinancyInfoDialog(
             context, "Gasto frecuente actualizado correctamente!", [
@@ -326,7 +333,10 @@ class _MicroExpendViewState extends State<MicroExpendView> {
       ..date = DateTime.now()
       ..title = selectedMicroExpend!.title;
 
+    BinancyProgressDialog binancyProgressDialog =
+        BinancyProgressDialog(context: context)..showProgressDialog();
     ExpensesController.insertExpend(microExpend).then((value) {
+      binancyProgressDialog.dismissDialog();
       if (value) {
         BinancyInfoDialog(context, "Gasto frecuente añadido correctamente!", [
           BinancyInfoDialogItem("Aceptar", () async {

@@ -8,6 +8,7 @@ import 'package:binancy/models/expend.dart';
 import 'package:binancy/models/income.dart';
 import 'package:binancy/utils/dialogs/date_dialog.dart';
 import 'package:binancy/utils/dialogs/info_dialog.dart';
+import 'package:binancy/utils/dialogs/progress_dialog.dart';
 import 'package:binancy/utils/ui/icons.dart';
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/utils.dart';
@@ -385,25 +386,25 @@ class _MovementViewState extends State<MovementView> {
       ..description = noteController.text
       ..category = selectedCategory;
 
-    await IncomesController.insertIncome(income).then((value) => {
-          if (value)
-            {
-              BinancyInfoDialog(context, "Ingreso añadido correctamente!", [
-                BinancyInfoDialogItem("Aceptar", () async {
-                  await movementsProvider.updateMovements();
-                  leaveScreen();
-                })
-              ])
-            }
-          else
-            {
-              BinancyInfoDialog(context, "Error al añadir el ingreso...", [
-                BinancyInfoDialogItem("Aceptar", () {
-                  Navigator.pop(context);
-                })
-              ])
-            }
-        });
+    BinancyProgressDialog binancyProgressDialog =
+        BinancyProgressDialog(context: context)..showProgressDialog();
+    await IncomesController.insertIncome(income).then((value) {
+      binancyProgressDialog.dismissDialog();
+      if (value) {
+        BinancyInfoDialog(context, "Ingreso añadido correctamente!", [
+          BinancyInfoDialogItem("Aceptar", () async {
+            await movementsProvider.updateMovements();
+            leaveScreen();
+          })
+        ]);
+      } else {
+        BinancyInfoDialog(context, "Error al añadir el ingreso...", [
+          BinancyInfoDialogItem("Aceptar", () {
+            Navigator.pop(context);
+          })
+        ]);
+      }
+    });
   }
 
   Future<void> updateIncome(MovementsChangeNotifier movementsProvider) async {
@@ -416,29 +417,29 @@ class _MovementViewState extends State<MovementView> {
       ..category = selectedCategory
       ..idIncome = selectedMovement.idIncome;
 
-    await IncomesController.updateIncome(income).then((value) => {
-          if (value)
-            {
-              BinancyInfoDialog(context, "Ingreso actualizado correctamente!", [
-                BinancyInfoDialogItem("Aceptar", () async {
-                  await movementsProvider.updateMovements();
-                  setState(() {
-                    selectedMovement = income;
-                    allowEdit = false;
-                  });
-                  Navigator.pop(context);
-                })
-              ])
-            }
-          else
-            {
-              BinancyInfoDialog(context, "Error al actualizar el ingreso...", [
-                BinancyInfoDialogItem("Aceptar", () {
-                  Navigator.pop(context);
-                })
-              ])
-            }
-        });
+    BinancyProgressDialog binancyProgressDialog =
+        BinancyProgressDialog(context: context)..showProgressDialog();
+    await IncomesController.updateIncome(income).then((value) {
+      binancyProgressDialog.dismissDialog();
+      if (value) {
+        BinancyInfoDialog(context, "Ingreso actualizado correctamente!", [
+          BinancyInfoDialogItem("Aceptar", () async {
+            await movementsProvider.updateMovements();
+            setState(() {
+              selectedMovement = income;
+              allowEdit = false;
+            });
+            Navigator.pop(context);
+          })
+        ]);
+      } else {
+        BinancyInfoDialog(context, "Error al actualizar el ingreso...", [
+          BinancyInfoDialogItem("Aceptar", () {
+            Navigator.pop(context);
+          })
+        ]);
+      }
+    });
   }
 
   Future<void> insertExpend(MovementsChangeNotifier movementsProvider) async {

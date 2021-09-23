@@ -6,6 +6,7 @@ import 'package:binancy/globals.dart';
 import 'package:binancy/models/expend.dart';
 import 'package:binancy/models/microexpend.dart';
 import 'package:binancy/utils/dialogs/info_dialog.dart';
+import 'package:binancy/utils/dialogs/progress_dialog.dart';
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/ui/widgets.dart';
@@ -87,25 +88,31 @@ class MicroExpendCard extends StatelessWidget {
           actions: [
             IconSlideAction(
               caption: "Eliminar",
-              onTap: () =>
-                  MicroExpensesController.deleteMicroExpend(microExpend)
-                      .then((value) async {
-                if (value) {
-                  await microExpensesChangeNotifier.updateMicroExpenses();
-                  BinancyInfoDialog(
-                      context, "Gasto frecuente eliminado correctamente", [
-                    BinancyInfoDialogItem("Aceptar", () {
-                      Navigator.of(context).pop();
-                    })
-                  ]);
-                } else {
-                  BinancyInfoDialog(
-                      context, "Error al eliminar el gasto frecuente", [
-                    BinancyInfoDialogItem(
-                        "Aceptar", () => Navigator.of(context).pop())
-                  ]);
-                }
-              }),
+              onTap: () {
+                BinancyProgressDialog binancyProgressDialog =
+                    BinancyProgressDialog(context: context)
+                      ..showProgressDialog();
+                MicroExpensesController.deleteMicroExpend(microExpend)
+                    .then((value) async {
+                  if (value) {
+                    await microExpensesChangeNotifier.updateMicroExpenses();
+                    binancyProgressDialog.dismissDialog();
+                    BinancyInfoDialog(
+                        context, "Gasto frecuente eliminado correctamente", [
+                      BinancyInfoDialogItem("Aceptar", () {
+                        Navigator.of(context).pop();
+                      })
+                    ]);
+                  } else {
+                    binancyProgressDialog.dismissDialog();
+                    BinancyInfoDialog(
+                        context, "Error al eliminar el gasto frecuente", [
+                      BinancyInfoDialogItem(
+                          "Aceptar", () => Navigator.of(context).pop())
+                    ]);
+                  }
+                });
+              },
               iconWidget: Icon(Icons.delete, size: 50, color: accentColor),
               foregroundColor: accentColor,
               color: Colors.transparent,
@@ -128,6 +135,10 @@ class MicroExpendCard extends StatelessWidget {
             containerWidget: (_, animation, child) => MicroExpendDialogCard(
                   microExpend: microExpend,
                   action: () async {
+                    BinancyProgressDialog binancyProgressDialog =
+                        BinancyProgressDialog(context: context)
+                          ..showProgressDialog();
+
                     await ExpensesController.insertExpend(Expend()
                           ..idUser = userData['idUser']
                           ..title = microExpend.title
@@ -135,6 +146,7 @@ class MicroExpendCard extends StatelessWidget {
                           ..description = microExpend.description
                           ..date = DateTime.now())
                         .then((value) async {
+                      binancyProgressDialog.dismissDialog();
                       if (value) {
                         BinancyInfoDialog(
                             context, "Se ha añadido el gasto correctamente!", [

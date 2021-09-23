@@ -5,6 +5,7 @@ import 'package:binancy/controllers/providers/movements_change_notifier.dart';
 import 'package:binancy/models/expend.dart';
 import 'package:binancy/models/income.dart';
 import 'package:binancy/utils/dialogs/info_dialog.dart';
+import 'package:binancy/utils/dialogs/progress_dialog.dart';
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -102,17 +103,21 @@ class MovementCard extends StatelessWidget {
         color: Colors.transparent,
         icon: Icons.delete,
         onTap: () async {
+          BinancyProgressDialog binancyProgressDialog =
+              BinancyProgressDialog(context: context)..showProgressDialog();
           if (movement is Income) {
             await IncomesController.deleteIncome(movement as Income)
                 .then((value) async {
               if (value) {
                 await movementsProvider.updateMovements();
+                binancyProgressDialog.dismissDialog();
                 BinancyInfoDialog(context, "Ingreso eliminado correctamente", [
                   BinancyInfoDialogItem("Aceptar", () {
                     Navigator.pop(context);
                   })
                 ]);
               } else {
+                binancyProgressDialog.dismissDialog();
                 BinancyInfoDialog(context, "Error al eliminar el ingreso", [
                   BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))
                 ]);
@@ -123,12 +128,14 @@ class MovementCard extends StatelessWidget {
                 .then((value) async {
               if (value) {
                 await movementsProvider.updateMovements();
+                binancyProgressDialog.dismissDialog();
                 BinancyInfoDialog(context, "Gasto eliminado correctamente", [
                   BinancyInfoDialogItem("Aceptar", () {
                     Navigator.pop(context);
                   })
                 ]);
               } else {
+                binancyProgressDialog.dismissDialog();
                 BinancyInfoDialog(context, "Error al eliminar el gasto", [
                   BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))
                 ]);

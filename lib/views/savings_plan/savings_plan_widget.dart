@@ -3,6 +3,7 @@ import 'package:binancy/controllers/savings_plan_controller.dart';
 import 'package:binancy/globals.dart';
 import 'package:binancy/models/savings_plan.dart';
 import 'package:binancy/utils/dialogs/info_dialog.dart';
+import 'package:binancy/utils/dialogs/progress_dialog.dart';
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/ui/widgets.dart';
@@ -150,23 +151,29 @@ class _SavingsPlanWidgetState extends State<SavingsPlanWidget>
         foregroundColor: accentColor,
         color: Colors.transparent,
         icon: Icons.delete,
-        onTap: () async =>
-            await SavingsPlansController.deleteSavingsPlan(widget.savingsPlan)
-                .then((value) async {
-          if (value) {
-            await widget.savingsPlanChangeNotifier.updateSavingsPlan();
-            BinancyInfoDialog(
-                context, "Meta de ahorros eliminada correctamente", [
-              BinancyInfoDialogItem("Aceptar", () {
-                Navigator.pop(context);
-              })
-            ]);
-          } else {
-            BinancyInfoDialog(context, "Error al eliminar la meta de ahorros", [
-              BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))
-            ]);
-          }
-        }),
+        onTap: () async {
+          BinancyProgressDialog binancyProgressDialog =
+              BinancyProgressDialog(context: context)..showProgressDialog();
+          await SavingsPlansController.deleteSavingsPlan(widget.savingsPlan)
+              .then((value) async {
+            if (value) {
+              await widget.savingsPlanChangeNotifier.updateSavingsPlan();
+              binancyProgressDialog.dismissDialog();
+              BinancyInfoDialog(
+                  context, "Meta de ahorros eliminada correctamente", [
+                BinancyInfoDialogItem("Aceptar", () {
+                  Navigator.pop(context);
+                })
+              ]);
+            } else {
+              binancyProgressDialog.dismissDialog();
+              BinancyInfoDialog(
+                  context, "Error al eliminar la meta de ahorros", [
+                BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))
+              ]);
+            }
+          });
+        },
       ),
       IconSlideAction(
         caption: "Editar",

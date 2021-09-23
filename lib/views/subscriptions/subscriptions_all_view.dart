@@ -4,6 +4,7 @@ import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/ui/widgets.dart';
 import 'package:binancy/views/subscriptions/subscription_card_widget.dart';
 import 'package:binancy/views/subscriptions/subscription_empty_card_widget.dart';
+import 'package:binancy/views/subscriptions/subscription_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -21,9 +22,18 @@ class SubscriptionsView extends StatelessWidget {
                 backgroundColor: Colors.transparent,
                 actions: [
                   IconButton(
-                      icon: const Icon(Icons.more_horiz_rounded,
-                          color: Colors.white),
-                      onPressed: () {})
+                      icon: const Icon(Icons.add, color: Colors.white),
+                      onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => MultiProvider(
+                                    providers: [
+                                      ChangeNotifierProvider(
+                                          create: (context) => provider)
+                                    ],
+                                    child:
+                                        const SubscriptionView(allowEdit: true),
+                                  ))))
                 ],
               ),
               body: Container(
