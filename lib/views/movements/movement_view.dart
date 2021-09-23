@@ -388,16 +388,14 @@ class _MovementViewState extends State<MovementView> {
 
     BinancyProgressDialog binancyProgressDialog =
         BinancyProgressDialog(context: context)..showProgressDialog();
-    await IncomesController.insertIncome(income).then((value) {
-      binancyProgressDialog.dismissDialog();
+    await IncomesController.insertIncome(income).then((value) async {
       if (value) {
-        BinancyInfoDialog(context, "Ingreso añadido correctamente!", [
-          BinancyInfoDialogItem("Aceptar", () async {
-            await movementsProvider.updateMovements();
-            leaveScreen();
-          })
-        ]);
+        await movementsProvider.updateMovements();
+        binancyProgressDialog.dismissDialog();
+        BinancyInfoDialog(context, "Ingreso añadido correctamente!",
+            [BinancyInfoDialogItem("Aceptar", () => leaveScreen())]);
       } else {
+        binancyProgressDialog.dismissDialog();
         BinancyInfoDialog(context, "Error al añadir el ingreso...", [
           BinancyInfoDialogItem("Aceptar", () {
             Navigator.pop(context);
@@ -419,12 +417,12 @@ class _MovementViewState extends State<MovementView> {
 
     BinancyProgressDialog binancyProgressDialog =
         BinancyProgressDialog(context: context)..showProgressDialog();
-    await IncomesController.updateIncome(income).then((value) {
-      binancyProgressDialog.dismissDialog();
+    await IncomesController.updateIncome(income).then((value) async {
       if (value) {
+        await movementsProvider.updateMovements();
+        binancyProgressDialog.dismissDialog();
         BinancyInfoDialog(context, "Ingreso actualizado correctamente!", [
-          BinancyInfoDialogItem("Aceptar", () async {
-            await movementsProvider.updateMovements();
+          BinancyInfoDialogItem("Aceptar", () {
             setState(() {
               selectedMovement = income;
               allowEdit = false;
@@ -433,6 +431,7 @@ class _MovementViewState extends State<MovementView> {
           })
         ]);
       } else {
+        binancyProgressDialog.dismissDialog();
         BinancyInfoDialog(context, "Error al actualizar el ingreso...", [
           BinancyInfoDialogItem("Aceptar", () {
             Navigator.pop(context);
@@ -451,25 +450,26 @@ class _MovementViewState extends State<MovementView> {
       ..description = noteController.text
       ..category = selectedCategory;
 
-    await ExpensesController.insertExpend(expend).then((value) => {
-          if (value)
-            {
-              BinancyInfoDialog(context, "Gasto añadido correctamente!", [
-                BinancyInfoDialogItem("Aceptar", () async {
-                  await movementsProvider.updateMovements();
-                  leaveScreen();
-                })
-              ])
-            }
-          else
-            {
-              BinancyInfoDialog(context, "Error al añadir el gasto...", [
-                BinancyInfoDialogItem("Aceptar", () {
-                  Navigator.pop(context);
-                })
-              ])
-            }
-        });
+    BinancyProgressDialog binancyProgressDialog =
+        BinancyProgressDialog(context: context)..showProgressDialog();
+    await ExpensesController.insertExpend(expend).then((value) async {
+      if (value) {
+        await movementsProvider.updateMovements();
+        binancyProgressDialog.dismissDialog();
+        BinancyInfoDialog(context, "Gasto añadido correctamente!", [
+          BinancyInfoDialogItem("Aceptar", () async {
+            leaveScreen();
+          })
+        ]);
+      } else {
+        binancyProgressDialog.dismissDialog();
+        BinancyInfoDialog(context, "Error al añadir el gasto...", [
+          BinancyInfoDialogItem("Aceptar", () {
+            Navigator.pop(context);
+          })
+        ]);
+      }
+    });
   }
 
   Future<void> updateExpend(MovementsChangeNotifier movementsProvider) async {
@@ -484,29 +484,30 @@ class _MovementViewState extends State<MovementView> {
       ..category = selectedCategory
       ..idExpend = selectedMovement.idExpend;
 
-    await ExpensesController.updateExpend(expend).then((value) => {
-          if (value)
-            {
-              BinancyInfoDialog(context, "Ingreso actualizado correctamente!", [
-                BinancyInfoDialogItem("Aceptar", () async {
-                  await movementsProvider.updateMovements();
-                  setState(() {
-                    allowEdit = false;
-                    selectedMovement = expend;
-                  });
-                  Navigator.pop(context);
-                })
-              ])
-            }
-          else
-            {
-              BinancyInfoDialog(context, "Error al actualizar el ingreso...", [
-                BinancyInfoDialogItem("Aceptar", () {
-                  Navigator.pop(context);
-                })
-              ])
-            }
-        });
+    BinancyProgressDialog binancyProgressDialog =
+        BinancyProgressDialog(context: context)..showProgressDialog();
+    await ExpensesController.updateExpend(expend).then((value) async {
+      if (value) {
+        await movementsProvider.updateMovements();
+        binancyProgressDialog.dismissDialog();
+        BinancyInfoDialog(context, "Ingreso actualizado correctamente!", [
+          BinancyInfoDialogItem("Aceptar", () async {
+            setState(() {
+              allowEdit = false;
+              selectedMovement = expend;
+            });
+            Navigator.pop(context);
+          })
+        ]);
+      } else {
+        binancyProgressDialog.dismissDialog();
+        BinancyInfoDialog(context, "Error al actualizar el ingreso...", [
+          BinancyInfoDialogItem("Aceptar", () {
+            Navigator.pop(context);
+          })
+        ]);
+      }
+    });
   }
 
   void checkMovement() {

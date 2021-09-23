@@ -51,55 +51,49 @@ class _AllMovementViewState extends State<AllMovementView>
   @override
   Widget build(BuildContext context) {
     return BinancyBackground(Consumer<MovementsChangeNotifier>(
-        builder: (context, movementsProvider, child) => WillPopScope(
-              child: Scaffold(
-                resizeToAvoidBottomInset: false,
+        builder: (context, movementsProvider, child) => Scaffold(
+              resizeToAvoidBottomInset: false,
+              backgroundColor: Colors.transparent,
+              appBar: AppBar(
                 backgroundColor: Colors.transparent,
-                appBar: AppBar(
-                  backgroundColor: Colors.transparent,
-                  centerTitle: true,
-                  elevation: 0,
-                  actions: [
-                    IconButton(
-                        onPressed: () {}, icon: const Icon(BinancyIcons.filter))
-                  ],
-                  title: Text("Todos tus movimientos", style: appBarStyle()),
-                  bottom: TabBar(
-                      controller: tabController,
-                      onTap: (value) {
-                        setState(() {
-                          pageIndex = value;
-                        });
-                        pageController.animateToPage(pageIndex,
-                            duration: const Duration(
-                                milliseconds: pageSwapDurationMS),
-                            curve: Curves.fastLinearToSlowEaseIn);
-                      },
-                      labelStyle: semititleStyle(),
-                      indicatorColor: accentColor,
-                      tabs: const [Tab(text: "Ingresos"), Tab(text: "Gastos")]),
-                ),
-                body: ScrollConfiguration(
-                    behavior: MyBehavior(),
-                    child: PageView(
-                      physics: const NeverScrollableScrollPhysics(),
-                      onPageChanged: (value) {
-                        setState(() {
-                          pageIndex = value;
-                        });
-                        tabController.animateTo(pageIndex);
-                      },
-                      controller: pageController,
-                      children: [
-                        incomesPage(movementsProvider),
-                        expensesPage(movementsProvider)
-                      ],
-                    )),
+                centerTitle: true,
+                elevation: 0,
+                actions: [
+                  IconButton(
+                      onPressed: () {}, icon: const Icon(BinancyIcons.filter))
+                ],
+                title: Text("Todos tus movimientos", style: appBarStyle()),
+                bottom: TabBar(
+                    controller: tabController,
+                    onTap: (value) {
+                      setState(() {
+                        pageIndex = value;
+                      });
+                      pageController.animateToPage(pageIndex,
+                          duration:
+                              const Duration(milliseconds: pageSwapDurationMS),
+                          curve: Curves.fastLinearToSlowEaseIn);
+                    },
+                    labelStyle: semititleStyle(),
+                    indicatorColor: accentColor,
+                    tabs: const [Tab(text: "Ingresos"), Tab(text: "Gastos")]),
               ),
-              onWillPop: () async {
-                movementsProvider.updateMovements();
-                return true;
-              },
+              body: ScrollConfiguration(
+                  behavior: MyBehavior(),
+                  child: PageView(
+                    physics: const NeverScrollableScrollPhysics(),
+                    onPageChanged: (value) {
+                      setState(() {
+                        pageIndex = value;
+                      });
+                      tabController.animateTo(pageIndex);
+                    },
+                    controller: pageController,
+                    children: [
+                      incomesPage(movementsProvider),
+                      expensesPage(movementsProvider)
+                    ],
+                  )),
             )));
   }
 
