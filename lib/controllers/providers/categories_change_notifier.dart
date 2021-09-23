@@ -1,5 +1,6 @@
 import 'package:binancy/controllers/categories_controller.dart';
 import 'package:binancy/globals.dart';
+import 'package:binancy/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 class CategoriesChangeNotifier extends ChangeNotifier {
@@ -9,8 +10,10 @@ class CategoriesChangeNotifier extends ChangeNotifier {
   void dispose() {}
 
   Future<void> updateCategories() async {
-    await getCategories();
-    notifyListeners();
+    if (await Utils.hasConnection().timeout(timeout)) {
+      await getCategories();
+      notifyListeners();
+    }
   }
 
   Future<void> getCategories() async {

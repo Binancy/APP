@@ -1,6 +1,9 @@
 import 'package:binancy/controllers/plans_controller.dart';
 import 'package:binancy/models/plan.dart';
+import 'package:binancy/utils/utils.dart';
 import 'package:flutter/widgets.dart';
+
+import '../../globals.dart';
 
 class PlansChangeNotifier extends ChangeNotifier {
   bool updating = false;
@@ -11,8 +14,10 @@ class PlansChangeNotifier extends ChangeNotifier {
   void dispose() {}
 
   Future<void> updateAll() async {
-    await updatePlans();
-    await updateCarousel();
+    if (await Utils.hasConnection().timeout(timeout)) {
+      await updatePlans();
+      await updateCarousel();
+    }
   }
 
   Future<void> updatePlans() async {

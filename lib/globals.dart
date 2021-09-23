@@ -8,6 +8,7 @@ const String appVersion = "1.1.1";
 // API GLOBALS
 const String apiURL = "https://binancy.herokuapp.com";
 const String testURL = "http://localhost:5000";
+const Duration timeout = Duration(milliseconds: 3500);
 
 // PLANS
 const String MEMBER_PLAN = "member";

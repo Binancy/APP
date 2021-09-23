@@ -1,6 +1,7 @@
 import 'package:binancy/controllers/microexpenses_controller.dart';
 import 'package:binancy/globals.dart';
 import 'package:binancy/models/microexpend.dart';
+import 'package:binancy/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 class MicroExpensesChangeNotifier extends ChangeNotifier {
@@ -11,8 +12,10 @@ class MicroExpensesChangeNotifier extends ChangeNotifier {
   void dispose() {}
 
   Future<void> updateMicroExpenses() async {
-    microExpensesList =
-        await MicroExpensesController.getMicroExpenses(userData['idUser']);
-    notifyListeners();
+    if (await Utils.hasConnection().timeout(timeout)) {
+      microExpensesList =
+          await MicroExpensesController.getMicroExpenses(userData['idUser']);
+      notifyListeners();
+    }
   }
 }

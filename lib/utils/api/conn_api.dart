@@ -6,7 +6,8 @@ import 'dart:io';
 
 import 'package:binancy/globals.dart';
 import 'package:http/http.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
+
+import '../utils.dart';
 
 class ConnAPI {
   String endpoint = "";
@@ -16,12 +17,10 @@ class ConnAPI {
   var response;
   Map<String, String> headers = {"Content-Type": "application/json"};
 
-  Duration timeout = const Duration(milliseconds: 3500);
-
   ConnAPI(this.endpoint, this.method, this.isTest, this.requestJSON);
 
   Future<void> callAPI() async {
-    await hasConnection().timeout(timeout).then((value) async {
+    await Utils.hasConnection().timeout(timeout).then((value) async {
       if (value) {
         try {
           switch (method) {
@@ -97,11 +96,6 @@ class ConnAPI {
             description: "No dispones de conexión a internet");
       }
     });
-  }
-
-  Future<bool> hasConnection() async {
-    var connectivityResult = await Connectivity().checkConnectivity();
-    return connectivityResult != ConnectivityResult.none;
   }
 
   int? getStatus() {

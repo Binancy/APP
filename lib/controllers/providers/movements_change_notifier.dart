@@ -16,10 +16,12 @@ class MovementsChangeNotifier extends ChangeNotifier {
   void dispose() {}
 
   Future<void> updateMovements() async {
-    await getAllIncomes();
-    await getAllExpenses();
-    await getBalance();
-    notifyListeners();
+    if (await Utils.hasConnection().timeout(timeout)) {
+      await getAllIncomes();
+      await getAllExpenses();
+      await getBalance();
+      notifyListeners();
+    }
   }
 
   Future<void> getBalance() async {
