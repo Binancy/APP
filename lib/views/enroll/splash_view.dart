@@ -1,4 +1,5 @@
 import 'package:binancy/controllers/providers/categories_change_notifier.dart';
+import 'package:binancy/controllers/providers/microexpenses_change_notifier.dart';
 import 'package:binancy/controllers/providers/movements_change_notifier.dart';
 import 'package:binancy/controllers/providers/plans_change_notifier.dart';
 import 'package:binancy/controllers/providers/savings_plans_change_notifier.dart';
@@ -160,9 +161,13 @@ void gotoDashboard(BuildContext context) async {
   SavingsPlanChangeNotifier savingsPlanChangeNotifier =
       SavingsPlanChangeNotifier();
 
+  MicroExpensesChangeNotifier microExpensesChangeNotifier =
+      MicroExpensesChangeNotifier();
+
   if (Utils.isPremium()) {
     await subscriptionsChangeNotifier.updateSubscriptions();
     await savingsPlanChangeNotifier.updateSavingsPlan();
+    await microExpensesChangeNotifier.updateMicroExpenses();
 
     // Verifica si hay alguna suscripción por pagar, si es asi, añade el gasto a la
     // DB, actualiza el ultimo mes de cobro de la suscripción y avisa a MovementsChangeNotifier
@@ -185,7 +190,8 @@ void gotoDashboard(BuildContext context) async {
           create: (context) => subscriptionsChangeNotifier,
         ),
         ChangeNotifierProvider(create: (context) => savingsPlanChangeNotifier),
-        ChangeNotifierProvider(create: (_) => plansChangeNotifier)
+        ChangeNotifierProvider(create: (context) => plansChangeNotifier),
+        ChangeNotifierProvider(create: (context) => microExpensesChangeNotifier)
       ], child: DashboardView())),
       (route) => false);
 }

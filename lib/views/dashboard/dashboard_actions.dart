@@ -259,15 +259,14 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
         text: "Gastos rápidos",
         action: () async {
           if (Utils.isPremium()) {
-            MicroExpensesChangeNotifier microExpensesChangeNotifier =
-                MicroExpensesChangeNotifier();
-            await microExpensesChangeNotifier.updateMicroExpenses();
             Navigator.push(
                 context,
                 MaterialPageRoute(
                     builder: (_) => MultiProvider(providers: [
                           ChangeNotifierProvider(
-                              create: (_) => microExpensesChangeNotifier),
+                              create: (_) =>
+                                  Provider.of<MicroExpensesChangeNotifier>(
+                                      context)),
                           ChangeNotifierProvider(
                               create: (_) =>
                                   Provider.of<MovementsChangeNotifier>(context))
