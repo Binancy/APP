@@ -2,6 +2,7 @@ import 'package:binancy/globals.dart';
 import 'package:binancy/utils/api/conn_api.dart';
 import 'package:binancy/utils/api/endpoints.dart';
 import 'package:binancy/utils/dialogs/info_dialog.dart';
+import 'package:binancy/utils/dialogs/progress_dialog.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:binancy/views/enroll/splash_view.dart';
 import 'package:flutter/material.dart';
@@ -51,8 +52,10 @@ class AccountController {
       BuildContext context, String newPassword, Function() onSuccess) async {
     ConnAPI connAPI = ConnAPI(APIEndpoints.CHANGE_PASSWORD, "PUT", false,
         {"id": userData['idUser'], "password": Utils.encrypt(newPassword)});
+    BinancyProgressDialog binancyProgressDialog =
+        BinancyProgressDialog(context: context)..showProgressDialog();
     await connAPI.callAPI();
-
+    binancyProgressDialog.dismissDialog();
     if (connAPI.getStatus() == 200) {
       userData['password'] = Utils.encrypt(newPassword);
       BinancyInfoDialog(context, "Contaseña actualizada correctamente",

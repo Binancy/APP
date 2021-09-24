@@ -1,8 +1,9 @@
 import 'dart:ui';
 import 'package:binancy/controllers/account_controller.dart';
 import 'package:binancy/globals.dart';
+import 'package:binancy/utils/dialogs/daypicker_dialog.dart';
 import 'package:binancy/utils/dialogs/info_dialog.dart';
-import 'package:binancy/utils/dialogs/payday_dialog.dart';
+import 'package:binancy/utils/dialogs/progress_dialog.dart';
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/ui/widgets.dart';
@@ -86,8 +87,10 @@ class _SettingsUserDataViewState extends State<SettingsUserDataView> {
       const LinearDivider(),
       SettingsDataRow(
           title: "Fecha de nacimiento",
-          data: Utils.toYMD(
-              Utils.fromISOStandard(userData['birthday']), context)),
+          data: userData['birthday'] != null
+              ? Utils.toYMD(
+                  Utils.fromISOStandard(userData['birthday']), context)
+              : "No hay información"),
       const LinearDivider(),
       SettingsDataRow(
           title: "Principio de mes", data: userData['payDay'].toString()),
@@ -111,8 +114,38 @@ class _SettingsUserDataViewState extends State<SettingsUserDataView> {
       const LinearDivider(),
       SettingsActionRow(
           text: "Cambiar principio de mes",
-          action: () => BinancyPayDayDialog(
-              context: context, refreshParent: () => setState(() {}))),
+          action: () {
+            BinancyDayPickerDialog binancyDayPickerDialog =
+                BinancyDayPickerDialog(
+                    context: context,
+                    title: "Selecciona tu principio de mes",
+                    initialDate: userData['payDay']);
+            binancyDayPickerDialog.showDayPickerDialog().then((selectedDay) {
+              if (selectedDay != null) {
+                BinancyProgressDialog binancyProgressDialog =
+                    BinancyProgressDialog(context: context)
+                      ..showProgressDialog();
+                AccountController.updatePayDay(selectedDay).then((value) {
+                  binancyProgressDialog.dismissDialog();
+                  if (value) {
+                    userData['payDay'] = selectedDay;
+                    setState(() {});
+                    BinancyInfoDialog(
+                        context, "Principio de mes actualizado correctamente", [
+                      BinancyInfoDialogItem(
+                          "Aceptar", () => Navigator.pop(context))
+                    ]);
+                  } else {
+                    BinancyInfoDialog(
+                        context, "Error al actualizar el principio de mes", [
+                      BinancyInfoDialogItem(
+                          "Aceptar", () => Navigator.pop(context))
+                    ]);
+                  }
+                });
+              }
+            });
+          }),
       const LinearDivider(),
       SettingsActionRow(
         text: "Cambiar contraseña",

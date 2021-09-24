@@ -1,6 +1,7 @@
 import 'package:binancy/controllers/account_controller.dart';
 import 'package:binancy/utils/dialogs/date_dialog.dart';
 import 'package:binancy/utils/dialogs/info_dialog.dart';
+import 'package:binancy/utils/dialogs/progress_dialog.dart';
 import 'package:binancy/utils/ui/icons.dart';
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/utils.dart';
@@ -191,27 +192,28 @@ class _SettingsEditUserInfoViewState extends State<SettingsEditUserInfoView> {
   }
 
   void checkData() {
+    FocusScope.of(context).unfocus();
     if (nameController.text.isNotEmpty) {
-      if (nameController.text != userData['nameUser'] ||
-          firstSurnameController.text != userData['firstSurname'] ||
-          lastSurnameController.text != userData['lastSurname'] ||
-          birthdayDate !=
-              Utils.toYMD(
-                  Utils.fromISOStandard(userData['birthday']), context)) {
+      if (hasChangedData()) {
+        BinancyProgressDialog binancyProgressDialog =
+            BinancyProgressDialog(context: context)..showProgressDialog();
         AccountController.updateProfile({
           'nameUser': nameController.text,
           'firstSurname': firstSurnameController.text,
           'lastSurname': lastSurnameController.text,
-          'birthday': Utils.toISOStandard(Utils.fromYMD(birthdayDate, context))
+          'birthday': Utils.validateStringDate(birthdayDate)
+              ? Utils.toISOStandard(Utils.fromYMD(birthdayDate, context))
+              : null
         }).then((value) {
           if (value) {
             userData['nameUser'] = nameController.text;
             userData['firstSurname'] = firstSurnameController.text;
             userData['lastSurname'] = lastSurnameController.text;
-            userData['birthday'] =
-                Utils.toISOStandard(Utils.fromYMD(birthdayDate, context));
+            userData['birthday'] = Utils.validateStringDate(birthdayDate)
+                ? Utils.toISOStandard(Utils.fromYMD(birthdayDate, context))
+                : null;
             widget.refreshParent();
-
+            binancyProgressDialog.dismissDialog();
             BinancyInfoDialog(context, "Datos actualizados correctamente", [
               BinancyInfoDialogItem("Aceptar", () {
                 Navigator.pop(context);
@@ -219,6 +221,7 @@ class _SettingsEditUserInfoViewState extends State<SettingsEditUserInfoView> {
               })
             ]);
           } else {
+            binancyProgressDialog.dismissDialog();
             BinancyInfoDialog(context, "Ha ocurrido un error", [
               BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))
             ]);
@@ -236,10 +239,49 @@ class _SettingsEditUserInfoViewState extends State<SettingsEditUserInfoView> {
 
   void setInitialData() {
     nameController.text = userData['nameUser'];
-    firstSurnameController.text = userData['firstSurname'];
-    lastSurnameController.text = userData['lastSurname'];
+    firstSurnameController.text = userData['firstSurname'] ?? "";
+    lastSurnameController.text = userData['lastSurname'] ?? "";
     selectedPayDay = userData['payDay'];
-    birthdayDate =
-        Utils.toYMD(Utils.fromISOStandard(userData['birthday']), context);
+    birthdayDate = userData['birthday'] != null
+        ? Utils.toYMD(Utils.fromISOStandard(userData['birthday']), context)
+        : "Introduce tu fecha de nacimiento";
+  }
+
+  bool hasChangedData() {
+    bool changedName = false,
+        changedFirstSurname = false,
+        changedLastName = false,
+        changedDate = false;
+
+    if (nameController.text.isEmpty) {
+      changedName = userData['nameUser'] != null &&
+          (userData['nameUser'] as String).isNotEmpty;
+    } else {
+      changedName = nameController.text != userData['nameUser'];
+    }
+
+    if (firstSurnameController.text.isEmpty) {
+      changedFirstSurname = userData['firstSurname'] != null &&
+          (userData['firstSurname'] as String).isNotEmpty;
+    } else {
+      changedFirstSurname =
+          firstSurnameController.text != userData['firstSurname'];
+    }
+
+    if (lastSurnameController.text.isEmpty) {
+      changedLastName = userData['lastSurname'] != null &&
+          (userData['lastSurname'] as String).isNotEmpty;
+    } else {
+      changedLastName = lastSurnameController.text != userData['lastSurname'];
+    }
+
+    if (Utils.validateStringDate(birthdayDate)) {
+      changedDate = birthdayDate !=
+          Utils.toYMD(Utils.fromISOStandard(userData['birthday']), context);
+    } else {
+      changedDate = birthdayDate != userData['birthday'];
+    }
+
+    return changedName || changedFirstSurname || changedLastName || changedDate;
   }
 }

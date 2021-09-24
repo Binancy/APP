@@ -45,6 +45,7 @@ class MicroExpensesView extends StatelessWidget {
                       child) =>
                   Column(
                     children: [
+                      const SpaceDivider(),
                       AdviceCard(
                           icon: SvgPicture.asset(
                               "assets/svg/dashboard_add_expense.svg"),

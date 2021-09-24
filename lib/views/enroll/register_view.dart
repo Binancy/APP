@@ -34,6 +34,13 @@ class _RegisterViewState extends State<RegisterView> {
   TextEditingController firstSurnameController = TextEditingController();
   TextEditingController lastSurnameController = TextEditingController();
 
+  FocusNode emailFocusNode = FocusNode();
+  FocusNode passwordFocusNode = FocusNode();
+  FocusNode verifyPasswordFocusNode = FocusNode();
+  FocusNode nameFocusNode = FocusNode();
+  FocusNode firstSurnameFocusNode = FocusNode();
+  FocusNode lastSurnameFocusNode = FocusNode();
+
   late PageController advicePageController, registerPageController;
 
   _RegisterViewState() {
@@ -127,7 +134,9 @@ class _RegisterViewState extends State<RegisterView> {
               child: TextField(
                 keyboardType: TextInputType.emailAddress,
                 controller: emailController,
+                focusNode: emailFocusNode,
                 style: inputStyle(),
+                onSubmitted: (value) => passwordFocusNode.requestFocus(),
                 decoration: customInputDecoration(
                     "Correo electronico", BinancyIcons.email),
               ),
@@ -151,7 +160,10 @@ class _RegisterViewState extends State<RegisterView> {
                         child: TextField(
                       controller: passwordController,
                       obscureText: hidePass,
+                      focusNode: passwordFocusNode,
                       style: inputStyle(),
+                      onSubmitted: (value) =>
+                          verifyPasswordFocusNode.requestFocus(),
                       decoration:
                           customInputDecoration("Contraseña", BinancyIcons.key),
                     )),
@@ -187,7 +199,14 @@ class _RegisterViewState extends State<RegisterView> {
                         child: TextField(
                       controller: verifyPasswordController,
                       obscureText: hideConfirmPass,
+                      focusNode: verifyPasswordFocusNode,
                       style: inputStyle(),
+                      onSubmitted: (value) {
+                        emailFocusNode.unfocus();
+                        passwordFocusNode.unfocus();
+                        verifyPasswordFocusNode.unfocus();
+                        checkFirstStep();
+                      },
                       decoration: customInputDecoration(
                           "Confirma tu contraseña", BinancyIcons.key),
                     )),
@@ -256,8 +275,12 @@ class _RegisterViewState extends State<RegisterView> {
                   color: themeColor.withOpacity(0.1)),
               alignment: Alignment.center,
               child: TextField(
+                keyboardType: TextInputType.name,
+                textCapitalization: TextCapitalization.words,
                 controller: nameController,
                 style: inputStyle(),
+                onSubmitted: (value) => firstSurnameFocusNode.requestFocus(),
+                focusNode: nameFocusNode,
                 decoration:
                     customInputDecoration("Tu nombre", BinancyIcons.user),
               ),
@@ -276,6 +299,10 @@ class _RegisterViewState extends State<RegisterView> {
               child: TextField(
                 controller: firstSurnameController,
                 style: inputStyle(),
+                onSubmitted: (value) => lastSurnameFocusNode.requestFocus(),
+                focusNode: firstSurnameFocusNode,
+                keyboardType: TextInputType.name,
+                textCapitalization: TextCapitalization.words,
                 decoration: customInputDecoration(
                     "Tu primer apellido", BinancyIcons.user),
               ),
@@ -294,6 +321,14 @@ class _RegisterViewState extends State<RegisterView> {
               child: TextField(
                 controller: lastSurnameController,
                 style: inputStyle(),
+                onSubmitted: (value) {
+                  nameFocusNode.unfocus();
+                  firstSurnameFocusNode.unfocus();
+                  lastSurnameFocusNode.unfocus();
+                },
+                focusNode: lastSurnameFocusNode,
+                keyboardType: TextInputType.name,
+                textCapitalization: TextCapitalization.words,
                 decoration: customInputDecoration(
                     "Tu segundo apellido", BinancyIcons.user),
               ),
@@ -446,16 +481,27 @@ class _RegisterViewState extends State<RegisterView> {
                 context,
                 "La contraseña introducida no es válida.\n\nLa contraseña debe tener una longitud mínima de 8 carácteres y contener como mínimo 1 mayúscula, 1 minúscula, 1 numéro y 1 carácter especial",
                 [
-                  BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))
+                  BinancyInfoDialogItem("Aceptar", () {
+                    Navigator.pop(context);
+                    passwordFocusNode.requestFocus();
+                  })
                 ]);
           }
         } else {
-          BinancyInfoDialog(context, "Las contraseñas no coinciden...",
-              [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
+          BinancyInfoDialog(context, "Las contraseñas no coinciden...", [
+            BinancyInfoDialogItem("Aceptar", () {
+              Navigator.pop(context);
+              passwordFocusNode.requestFocus();
+            })
+          ]);
         }
       } else {
-        BinancyInfoDialog(context, "El correo introducido no es válido...",
-            [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
+        BinancyInfoDialog(context, "El correo introducido no es válido...", [
+          BinancyInfoDialogItem("Aceptar", () {
+            Navigator.pop(context);
+            emailFocusNode.requestFocus();
+          })
+        ]);
       }
     } else {
       BinancyInfoDialog(context, "Faltan datos por introducirse",
