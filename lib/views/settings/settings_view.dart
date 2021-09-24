@@ -43,8 +43,10 @@ class _SettingsViewState extends State<SettingsView> {
                 SliverToBoxAdapter(child: myDataCard(context)),
                 const SliverToBoxAdapter(child: SpaceDivider()),
                 SliverToBoxAdapter(
-                    child: actionsCard(context,
-                        Provider.of<MovementsChangeNotifier>(context))),
+                    child: actionsCard(
+                        context,
+                        Provider.of<MovementsChangeNotifier>(context,
+                            listen: false))),
                 const SliverToBoxAdapter(child: SpaceDivider()),
                 SliverToBoxAdapter(
                     child: BinancyButton(
@@ -141,8 +143,9 @@ class _SettingsViewState extends State<SettingsView> {
                   MaterialPageRoute(
                       builder: (_) => MultiProvider(providers: [
                             ChangeNotifierProvider(
-                                create: (_) =>
-                                    Provider.of<PlansChangeNotifier>(context))
+                                create: (_) => Provider.of<PlansChangeNotifier>(
+                                    context,
+                                    listen: false))
                           ], child: const PremiumPlansView()))),
             )
           : const SizedBox(),

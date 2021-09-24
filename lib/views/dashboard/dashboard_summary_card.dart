@@ -56,19 +56,10 @@ class DashboardSummaryCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        totalBalance >= 1000 || totalBalance <= -1000
-                            ? Text(
-                                Utils.roundDown(totalBalance, 0)
-                                        .toStringAsFixed(0) +
-                                    "€",
-                                style: balanceValueStyle(),
-                              )
-                            : Text(
-                                Utils.roundDown(totalBalance, 2)
-                                        .toStringAsFixed(2) +
-                                    "€",
-                                style: balanceValueStyle(),
-                              ),
+                        Text(
+                          Utils.parseAmount(totalBalance, amountToRound: 1000),
+                          style: balanceValueStyle(),
+                        ),
                         Padding(
                           padding: EdgeInsets.only(
                               left: MediaQuery.of(context).size.width / 5,
@@ -104,7 +95,7 @@ class DashboardSummaryCard extends StatelessWidget {
       axes: [
         RadialAxis(
           minimum: 0,
-          maximum: 1,
+          maximum: 2,
           showLabels: false,
           showTicks: false,
           axisLineStyle: AxisLineStyle(
@@ -132,21 +123,16 @@ class DashboardSummaryCard extends StatelessWidget {
 
   double _getTotalBalance(double totalIncomes, double totalExpenses) {
     if (totalIncomes == totalExpenses) {
-      return 0.5;
+      return 1;
     } else if (totalIncomes == 0) {
       return 0;
     } else if (totalExpenses == 0) {
-      return 1;
+      return 2;
     } else if (totalIncomes > totalExpenses) {
-      if (totalIncomes / totalExpenses >= (summaryMaxDifference + 1)) {
-        return 1;
-      } else {
-        return (totalIncomes / totalExpenses) / (summaryMaxDifference + 1);
-      }
+      return 2 - (totalExpenses / totalIncomes);
     } else if (totalExpenses > totalIncomes) {
-      return (totalIncomes / totalExpenses) / 2;
+      return (totalIncomes / totalExpenses);
     }
-
-    return 1;
+    return 2;
   }
 }

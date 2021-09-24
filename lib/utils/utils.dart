@@ -251,10 +251,11 @@ class Utils {
     if (amount is int) {
       parsedAmount = amount.toString();
     } else if (amount is double) {
+      bool canParseToInt = amount % 1 == 0;
       amount = roundDown(amount, 2);
       parsedAmount = amount >= amountToRound
           ? roundDown(amount, 0).toStringAsFixed(0)
-          : amount.toStringAsFixed(2);
+          : amount.toStringAsFixed(canParseToInt ? 0 : 2);
     }
 
     if (addCurreny) {
