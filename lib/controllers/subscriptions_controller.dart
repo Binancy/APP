@@ -182,10 +182,16 @@ class SubscriptionsController {
   }
 
   static Future<bool> addSubscription(Subscription subscription) async {
-    return true;
+    ConnAPI connAPI = ConnAPI(APIEndpoints.CREATE_SUBSCRIPTION, "POST", false,
+        {"data": subscription.toJson()});
+    await connAPI.callAPI();
+    return connAPI.getStatus() == 200;
   }
 
   static Future<bool> updateSubscription(Subscription subscription) async {
-    return false;
+    ConnAPI connAPI = ConnAPI(APIEndpoints.UPDATE_SUBSCRIPTION, "POST", false,
+        {"data": subscription.toJson()});
+    await connAPI.callAPI();
+    return connAPI.getStatus() == 200;
   }
 }

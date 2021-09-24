@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:binancy/controllers/subscriptions_controller.dart';
 import 'package:binancy/globals.dart';
 import 'package:binancy/views/advice/advice_card.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -263,6 +264,10 @@ class Utils {
     }
 
     return parsedAmount;
+  }
+
+  static Month thisMonthEnun(DateTime todayDate) {
+    return Month.values[todayDate.month];
   }
 }
 

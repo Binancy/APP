@@ -33,6 +33,8 @@ class _SubscriptionViewState extends State<SubscriptionView> {
   TextEditingController descriptionController = TextEditingController();
   TextEditingController amountController = TextEditingController();
 
+  bool ignoreCheckoutThisMonth = false;
+
   _SubscriptionViewState(this.selectedSubscription, this.allowEdit);
 
   @override
@@ -117,8 +119,10 @@ class _SubscriptionViewState extends State<SubscriptionView> {
                         const SpaceDivider(),
                         datePicker(context),
                         const SpaceDivider(),
+                        ignoreCheckoutWidget(),
+                        const SpaceDivider(),
                         descriptionInputWidget(),
-                        const SpaceDivider()
+                        const SpaceDivider(),
                       ],
                     ))),
             allowEdit ? const SpaceDivider() : const SizedBox(),
@@ -283,6 +287,41 @@ class _SubscriptionViewState extends State<SubscriptionView> {
     );
   }
 
+  Widget ignoreCheckoutWidget() {
+    return Padding(
+        padding: const EdgeInsets.only(left: customMargin, right: customMargin),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Checkbox(
+                checkColor: accentColor,
+                value: ignoreCheckoutThisMonth,
+                onChanged: (value) {
+                  setState(() {
+                    ignoreCheckoutThisMonth = !ignoreCheckoutThisMonth;
+                  });
+                }),
+            GestureDetector(
+                onTap: () => setState(() {
+                      ignoreCheckoutThisMonth = !ignoreCheckoutThisMonth;
+                    }),
+                child: Text("No renovar este mes", style: inputStyle())),
+            IconButton(
+                onPressed: () => BinancyInfoDialog(
+                        context,
+                        "Si habilitas esta opción " +
+                            appName +
+                            " no renovará esta suscripción este mes. Esta función es util si la suscripción se renueva el mismo día que creas la suscripcíon, pero ya se ha efectuado el primer cobro",
+                        [
+                          BinancyInfoDialogItem(
+                              "Aceptar", () => Navigator.pop(context))
+                        ]),
+                icon: Icon(Icons.help_outline_rounded, color: accentColor))
+          ],
+        ));
+  }
+
   Future<void> checkData(
       SubscriptionsChangeNotifier subscriptionsProvider) async {
     if (nameController.text.isNotEmpty) {
@@ -314,9 +353,11 @@ class _SubscriptionViewState extends State<SubscriptionView> {
     Subscription subscription = Subscription()
       ..name = nameController.text
       ..idUser = userData['idUser']
-      ..value = int.parse(amountController.text)
+      ..value = double.parse(amountController.text)
       ..payDay = int.parse(payDay)
-      ..latestMonth = Month.NONE
+      ..latestMonth = ignoreCheckoutThisMonth
+          ? Utils.thisMonthEnun(Utils.getTodayDate())
+          : Month.NONE
       ..description = descriptionController.text;
 
     BinancyProgressDialog binancyProgressDialog =
