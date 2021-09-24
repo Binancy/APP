@@ -298,13 +298,11 @@ class MovementBalanceView extends StatelessWidget {
         }
       } else {
         for (var i = 0; i < providerList.length; i++) {
-          for (var i = 0; i < latestMovementsMaxCount; i++) {
-            listMovementsWidget.add(MovementCard(
-                movement: providerList.elementAt(i),
-                movementsProvider: movementsChangeNotifier));
-            if (i != providerList.length - 1) {
-              listMovementsWidget.add(const LinearDivider());
-            }
+          listMovementsWidget.add(MovementCard(
+              movement: providerList.elementAt(i),
+              movementsProvider: movementsChangeNotifier));
+          if (i != providerList.length - 1) {
+            listMovementsWidget.add(const LinearDivider());
           }
         }
       }
