@@ -1,6 +1,5 @@
+import 'package:binancy/controllers/account_controller.dart';
 import 'package:binancy/globals.dart';
-import 'package:binancy/utils/api/conn_api.dart';
-import 'package:binancy/utils/api/endpoints.dart';
 import 'package:binancy/utils/dialogs/date_dialog.dart';
 import 'package:binancy/utils/dialogs/info_dialog.dart';
 import 'package:binancy/utils/ui/icons.dart';
@@ -8,7 +7,6 @@ import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/ui/widgets.dart';
 import 'package:binancy/views/advice/advice_card.dart';
-import 'package:binancy/views/enroll/loading_view.dart';
 import 'package:binancy/views/enroll/privacy_terms_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -519,20 +517,19 @@ class _RegisterViewState extends State<RegisterView> {
         DateTime birthday =
             DateFormat.yMd(Localizations.localeOf(context).toLanguageTag())
                 .parse(parsedDate);
-
         String email = emailController.text;
         String password = Utils.encrypt(passwordController.text);
-
-        await makeRegister({
-          "data": {
-            "email": email,
-            "password": password,
-            "name": name,
-            "firstSurname": firstSurname,
-            "lastSurname": lastSurname,
-            "birthday": Utils.toISOStandard(birthday),
-            "registerDate": Utils.toISOStandard(Utils.getTodayDate())
-          }
+        await AccountController.registerUser(context, {
+          "email": email,
+          "password": password,
+          "nameUser": name,
+          "payDay": 1,
+          "firstSurname": firstSurname,
+          "lastSurname": lastSurname,
+          "birthday": Utils.toISOStandard(birthday),
+          "registerDate": Utils.toISOStandard(Utils.getTodayDate()),
+          'idPlan': "free",
+          'planTitle': "Free"
         });
       } else {
         BinancyInfoDialog(context, "Debes aceptar los términos y condiciones",
@@ -540,24 +537,6 @@ class _RegisterViewState extends State<RegisterView> {
       }
     } else {
       BinancyInfoDialog(context, "Faltan datos por introducirse",
-          [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
-    }
-  }
-
-  Future<void> makeRegister(Map<String, dynamic> registerData) async {
-    ConnAPI connAPI =
-        ConnAPI(APIEndpoints.REGISTER, "POST", false, registerData);
-    await connAPI.callAPI();
-    if (connAPI.getStatus() == 200) {
-      userData = registerData;
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => LoadingView()),
-          (route) => false);
-    } else {
-      BinancyInfoDialog(
-          context,
-          "Ha ocurrido un error al registrarte, intentalo más tarde",
           [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
     }
   }

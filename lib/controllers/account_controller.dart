@@ -4,10 +4,42 @@ import 'package:binancy/utils/api/endpoints.dart';
 import 'package:binancy/utils/dialogs/info_dialog.dart';
 import 'package:binancy/utils/dialogs/progress_dialog.dart';
 import 'package:binancy/utils/utils.dart';
+import 'package:binancy/views/enroll/loading_view.dart';
 import 'package:binancy/views/enroll/splash_view.dart';
 import 'package:flutter/material.dart';
 
 class AccountController {
+  static Future<void> registerUser(
+      BuildContext context, Map<String, dynamic> registerData) async {
+    ConnAPI connAPI =
+        ConnAPI(APIEndpoints.REGISTER, "POST", false, {"data": registerData});
+    BinancyProgressDialog binancyProgressDialog =
+        BinancyProgressDialog(context: context)..showProgressDialog();
+    await connAPI.callAPI();
+    binancyProgressDialog.dismissDialog();
+    if (connAPI.getStatus() == 200) {
+      userData = registerData;
+      Map<String, dynamic>? responseJSON = connAPI.getRawResponse();
+      if (responseJSON != null) {
+        userData['idUser'] = responseJSON['data'];
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => LoadingView()),
+            (route) => false);
+      } else {
+        BinancyInfoDialog(
+            context,
+            "Ha ocurrido un error al registrarte, intentalo más tarde",
+            [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
+      }
+    } else {
+      BinancyInfoDialog(
+          context,
+          "Ha ocurrido un error al registrarte, intentalo más tarde",
+          [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
+    }
+  }
+
   static Future<void> deleteAccount(BuildContext context) async {
     ConnAPI connAPI = ConnAPI(APIEndpoints.DELETE_ACCOUNT, "DELETE", false,
         {"id": userData['idUser']});

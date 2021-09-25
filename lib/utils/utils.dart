@@ -33,7 +33,7 @@ class Utils {
   // PLANS
 
   static bool isPremium() {
-    String plan = userData['idPlan'];
+    String plan = userData['idPlan'] ?? "free";
     if (plan == MEMBER_PLAN || plan == BINANCY_PLAN) {
       return true;
     }

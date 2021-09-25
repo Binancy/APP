@@ -84,6 +84,7 @@ class _SettingsViewState extends State<SettingsView> {
   }
 
   Widget myDataCard(BuildContext context) {
+    print(userData);
     List<Widget> widgetList = [
       const SettingsHeaderRow(text: "Mis datos"),
       const LinearDivider(),

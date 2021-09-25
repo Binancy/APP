@@ -115,6 +115,15 @@ class ConnAPI {
     }
   }
 
+  Map<String, dynamic>? getRawResponse() {
+    if (response.runtimeType == BinancyException ||
+        response.statusCode != 200) {
+      return null;
+    } else {
+      return jsonDecode(response.body);
+    }
+  }
+
   BinancyException? getException() {
     if (response.runtimeType != BinancyException) {
       return null;

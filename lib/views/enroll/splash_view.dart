@@ -57,6 +57,7 @@ class _SplashScreenState extends State<SplashScreen> {
     if (await checkLoginWithToken()) {
       gotoDashboard(context);
     } else {
+      await Future.delayed(const Duration(milliseconds: 1500));
       gotoLogin(context);
     }
   }
