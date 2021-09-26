@@ -328,7 +328,7 @@ class _SubscriptionViewState extends State<SubscriptionView> {
                 onPressed: () => BinancyInfoDialog(
                         context,
                         AppLocalizations.of(context)!
-                            .subscription_renew_description,
+                            .subscription_renew_description(appName),
                         [
                           BinancyInfoDialogItem(
                               AppLocalizations.of(context)!.accept,

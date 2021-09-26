@@ -20,13 +20,13 @@ class Utils {
     return [
       AdviceCard(
           icon: SvgPicture.asset("assets/svg/dashboard_categories.svg"),
-          text: AppLocalizations.of(context)!.register_advice_1),
+          text: AppLocalizations.of(context)!.register_advice_1(appName)),
       AdviceCard(
           icon: SvgPicture.asset("assets/svg/dashboard_historial.svg"),
-          text: AppLocalizations.of(context)!.register_advice_2),
+          text: AppLocalizations.of(context)!.register_advice_2(appName)),
       AdviceCard(
           icon: SvgPicture.asset("assets/svg/dashboard_pie_chart.svg"),
-          text: AppLocalizations.of(context)!.register_advice_3)
+          text: AppLocalizations.of(context)!.register_advice_3(appName))
     ];
   }
 

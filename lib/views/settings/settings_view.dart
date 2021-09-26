@@ -104,7 +104,8 @@ class _SettingsViewState extends State<SettingsView> {
           data: userData['planTitle']),
       const LinearDivider(),
       SettingsDataRow(
-          title: AppLocalizations.of(context)!.version, data: appVersion)
+          title: AppLocalizations.of(context)!.version(appName),
+          data: appVersion)
     ];
 
     return Container(

@@ -181,5 +181,66 @@
     "password_requirements": "La contrasenya ha de tenir com a mínim 8 caràcters de longitud, 1 majúscula, 1 minúscula, 1 número i 1 caràcter especial",
     "login_error_password": "L'usuari o la contrasenya no es correcta",
     "error_no_connection": "No tens connexió a Internet",
-    "error_timeout": "S'ha esgotat els temps màxim per dur a terme l'acció"
+    "error_timeout": "S'ha esgotat els temps màxim per dur a terme l'acció",
+    "@version" : {
+        "placeholders": {
+            "appName": {}
+        }
+    },
+    "@delete_data_description" : {
+        "placeholders": {
+            "appName": {},
+            "organizationName": {}
+        }
+    },
+    "@delete_account_description" : {
+        "placeholders": {
+            "appName": {},
+            "organizationName": {}
+        }
+    },
+    "@register_advice_1" : {
+        "placeholders": {
+            "appName": {}
+        }
+    },
+    "@register_advice_2" : {
+        "placeholders": {
+            "appName": {}
+        }
+    },
+    "@register_advice_3" : {
+        "placeholders": {
+            "appName": {}
+        }
+    },
+    "@register_privacy_terms_2" : {
+        "placeholders": {
+            "appName": {},
+            "organizationName": {}
+        }
+    },
+    "@subscription_renew_description" : {
+        "placeholders": {
+            "appName": {}
+        }
+    },
+    "@register_invalid_terms" : {
+        "placeholders": {
+            "appName": {}
+        }
+    },
+    "@register_steps" : {
+        "placeholders": {
+            "currentStep": {},
+            "totalSteps": {}
+        }
+    },
+    "@dashboard_summary_widget_description" : {
+        "placeholders": {
+            "totalIncomes": {},
+            "totalExpends": {},
+            "currency": {}
+        }
+    }
 }

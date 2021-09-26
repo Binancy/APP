@@ -66,15 +66,15 @@ class DashboardSummaryCard extends StatelessWidget {
                               left: MediaQuery.of(context).size.width / 5,
                               right: MediaQuery.of(context).size.width / 5),
                           child: Text(
-                            'Este mes has ingresado ' +
-                                Utils.roundDown(
-                                        provider.getThisMonthIncomes(), 0)
-                                    .toStringAsFixed(0) +
-                                '€ y has gastado ' +
-                                Utils.roundDown(
-                                        provider.getThisMonthExpenses(), 0)
-                                    .toStringAsFixed(0) +
-                                '€',
+                            AppLocalizations.of(context)!
+                                .dashboard_summary_widget_description(
+                                    Utils.roundDown(
+                                            provider.getThisMonthIncomes(), 0)
+                                        .toStringAsFixed(0),
+                                    Utils.roundDown(
+                                            provider.getThisMonthExpenses(), 0)
+                                        .toStringAsFixed(0),
+                                    currency),
                             style: dashboardActionButtonStyle(),
                             textAlign: TextAlign.center,
                           ),

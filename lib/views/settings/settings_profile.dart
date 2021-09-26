@@ -230,12 +230,15 @@ class _SettingsUserDataViewState extends State<SettingsUserDataView> {
   void confirmDeleteUserData({bool skipVerification = false}) {
     if (!skipVerification) {
       BinancyInfoDialog(
-          context, AppLocalizations.of(context)!.delete_data_description, [
-        BinancyInfoDialogItem(
-            AppLocalizations.of(context)!.cancel, () => Navigator.pop(context)),
-        BinancyInfoDialogItem(AppLocalizations.of(context)!.delete_data,
-            () => AccountController.deleteUserData(context))
-      ]);
+          context,
+          AppLocalizations.of(context)!
+              .delete_data_description(appName, organizationName),
+          [
+            BinancyInfoDialogItem(AppLocalizations.of(context)!.cancel,
+                () => Navigator.pop(context)),
+            BinancyInfoDialogItem(AppLocalizations.of(context)!.delete_data,
+                () => AccountController.deleteUserData(context))
+          ]);
     } else {
       AccountController.deleteUserData(context);
     }
@@ -243,13 +246,16 @@ class _SettingsUserDataViewState extends State<SettingsUserDataView> {
 
   void confirmDeleteAccount() {
     BinancyInfoDialog(
-        context, AppLocalizations.of(context)!.delete_account_description, [
-      BinancyInfoDialogItem(
-          AppLocalizations.of(context)!.cancel, () => Navigator.pop(context)),
-      BinancyInfoDialogItem(AppLocalizations.of(context)!.only_appName,
-          () => confirmDeleteUserData(skipVerification: true)),
-      BinancyInfoDialogItem(AppLocalizations.of(context)!.delete_account,
-          () => AccountController.deleteAccount(context))
-    ]);
+        context,
+        AppLocalizations.of(context)!
+            .delete_account_description(appName, organizationName),
+        [
+          BinancyInfoDialogItem(AppLocalizations.of(context)!.cancel,
+              () => Navigator.pop(context)),
+          BinancyInfoDialogItem(AppLocalizations.of(context)!.only_appName,
+              () => confirmDeleteUserData(skipVerification: true)),
+          BinancyInfoDialogItem(AppLocalizations.of(context)!.delete_account,
+              () => AccountController.deleteAccount(context))
+        ]);
   }
 }

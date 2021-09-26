@@ -74,7 +74,8 @@ class _RegisterViewState extends State<RegisterView> {
           SliverAppBar(
             elevation: 0,
             centerTitle: true,
-            title: Text(AppLocalizations.of(context)!.register_steps),
+            title: Text(AppLocalizations.of(context)!
+                .register_steps(registerCurrentPage, registerPageList.length)),
             leading: registerCurrentPage != 0
                 ? IconButton(
                     icon: const Icon(Icons.arrow_back),
@@ -418,7 +419,8 @@ class _RegisterViewState extends State<RegisterView> {
                             children: [
                           TextSpan(
                               text: AppLocalizations.of(context)!
-                                  .register_privacy_terms_2,
+                                  .register_privacy_terms_2(
+                                      appName, organizationName),
                               style: miniAccentStyle())
                         ])),
                   ))
@@ -549,8 +551,8 @@ class _RegisterViewState extends State<RegisterView> {
           'planTitle': "Free"
         });
       } else {
-        BinancyInfoDialog(
-            context, AppLocalizations.of(context)!.register_invalid_terms, [
+        BinancyInfoDialog(context,
+            AppLocalizations.of(context)!.register_invalid_terms(appName), [
           BinancyInfoDialogItem(AppLocalizations.of(context)!.accept,
               () => Navigator.pop(context))
         ]);

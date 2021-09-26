@@ -181,5 +181,66 @@
     "password_requirements": "La contraseña debe tener como mínimo 8 caracteres de longitud, 1 mayúscula, 1 minúscula, 1 número y 1 carácter especial",
     "login_error_password": "El correo o la contraseña no son correctos",
     "error_no_connection": "No tienes conexión a Internet",
-    "error_timeout": "Se ha agotado el tiempo máximo para llevar a cabo la acción"
+    "error_timeout": "Se ha agotado el tiempo máximo para llevar a cabo la acción",
+    "@version" : {
+        "placeholders": {
+            "appName": {}
+        }
+    },
+    "@delete_data_description" : {
+        "placeholders": {
+            "appName": {},
+            "organizationName": {}
+        }
+    },
+    "@delete_account_description" : {
+        "placeholders": {
+            "appName": {},
+            "organizationName": {}
+        }
+    },
+    "@register_advice_1" : {
+        "placeholders": {
+            "appName": {}
+        }
+    },
+    "@register_advice_2" : {
+        "placeholders": {
+            "appName": {}
+        }
+    },
+    "@register_advice_3" : {
+        "placeholders": {
+            "appName": {}
+        }
+    },
+    "@register_privacy_terms_2" : {
+        "placeholders": {
+            "appName": {},
+            "organizationName": {}
+        }
+    },
+    "@subscription_renew_description" : {
+        "placeholders": {
+            "appName": {}
+        }
+    },
+    "@register_invalid_terms" : {
+        "placeholders": {
+            "appName": {}
+        }
+    },
+    "@register_steps" : {
+        "placeholders": {
+            "currentStep": {},
+            "totalSteps": {}
+        }
+    },
+    "@dashboard_summary_widget_description" : {
+        "placeholders": {
+            "totalIncomes": {},
+            "totalExpends": {},
+            "currency": {}
+        }
+    }
 }
