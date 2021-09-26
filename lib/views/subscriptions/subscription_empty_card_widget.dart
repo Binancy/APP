@@ -4,7 +4,7 @@ import 'package:binancy/utils/ui/widgets.dart';
 import 'package:binancy/views/subscriptions/subscription_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../globals.dart';
 
 class SubscriptionEmptyCard extends StatelessWidget {
@@ -21,7 +21,8 @@ class SubscriptionEmptyCard extends StatelessWidget {
   Widget expandedSubscriptionEmptyCard(BuildContext context) {
     return GestureDetector(
       onTap: () => gotoAddSubscription(context),
-      child: SizedBox(
+      child: Container(
+        padding: const EdgeInsets.all(customMargin),
         width: MediaQuery.of(context).size.width,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -35,9 +36,7 @@ class SubscriptionEmptyCard extends StatelessWidget {
                   size: 100,
                   color: Colors.white,
                 )),
-            Text("No hay ninguna suscripcion registrada",
-                style: accentStyle(), textAlign: TextAlign.center),
-            Text("Toca para añadir una",
+            Text(AppLocalizations.of(context)!.no_subscriptions,
                 style: accentStyle(), textAlign: TextAlign.center),
             const SizedBox(
               height: 100,
@@ -66,10 +65,8 @@ class SubscriptionEmptyCard extends StatelessWidget {
               const Icon(Icons.add_rounded, color: Colors.white, size: 50),
               const SpaceDivider(isVertical: true),
               Expanded(
-                  child: Text(
-                      "No hay ninguna suscripción registrada. Toca para añadir una",
-                      style: accentStyle(),
-                      textAlign: TextAlign.start))
+                  child: Text(AppLocalizations.of(context)!.no_subscriptions,
+                      style: accentStyle(), textAlign: TextAlign.start))
             ],
           ),
         ),

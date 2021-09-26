@@ -16,6 +16,7 @@ import 'package:binancy/utils/ui/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 enum MovementType { INCOME, EXPEND }
 
@@ -42,11 +43,17 @@ class _MovementViewState extends State<MovementView> {
   TextEditingController titleController = TextEditingController();
   TextEditingController noteController = TextEditingController();
 
-  String parsedDate = "Fecha de realización";
+  String parsedDate = "";
 
   Category? selectedCategory;
 
   _MovementViewState(this.selectedMovement, this.allowEdit);
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    parsedDate = AppLocalizations.of(context)!.your_name;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,22 +85,29 @@ class _MovementViewState extends State<MovementView> {
                     : createMode
                         ? IconButton(
                             icon: const Icon(Icons.arrow_back),
-                            onPressed: () => BinancyInfoDialog(context,
-                                    "¿Estas seguro que quieres salir?", [
-                                  BinancyInfoDialogItem(
-                                      "Cancelar", () => Navigator.pop(context)),
-                                  BinancyInfoDialogItem("Abortar", () {
-                                    Navigator.pop(context);
-                                    Navigator.pop(context);
-                                  })
-                                ]))
+                            onPressed: () => BinancyInfoDialog(
+                                    context,
+                                    AppLocalizations.of(context)!.exit_confirm,
+                                    [
+                                      BinancyInfoDialogItem(
+                                          AppLocalizations.of(context)!.cancel,
+                                          () => Navigator.pop(context)),
+                                      BinancyInfoDialogItem(
+                                          AppLocalizations.of(context)!.abort,
+                                          () {
+                                        Navigator.pop(context);
+                                        Navigator.pop(context);
+                                      })
+                                    ]))
                         : IconButton(
                             icon: const Icon(Icons.close_outlined),
-                            onPressed: () => BinancyInfoDialog(
-                                context, "Estas seguro que quieres salir?", [
+                            onPressed: () => BinancyInfoDialog(context,
+                                AppLocalizations.of(context)!.exit_confirm, [
                               BinancyInfoDialogItem(
-                                  "Canelar", () => Navigator.pop(context)),
-                              BinancyInfoDialogItem("Abortar", () {
+                                  AppLocalizations.of(context)!.cancel,
+                                  () => Navigator.pop(context)),
+                              BinancyInfoDialogItem(
+                                  AppLocalizations.of(context)!.abort, () {
                                 Navigator.pop(context);
                                 setState(() {
                                   allowEdit = false;
@@ -104,8 +118,8 @@ class _MovementViewState extends State<MovementView> {
                 title: Text(
                     createMode
                         ? widget.movementType.index == 0
-                            ? "Añade un ingreso"
-                            : "Añade un gasto"
+                            ? AppLocalizations.of(context)!.add_income
+                            : AppLocalizations.of(context)!.add_expend
                         : selectedMovement.title,
                     style: appBarStyle()),
               ),
@@ -118,7 +132,8 @@ class _MovementViewState extends State<MovementView> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         movementHeader(),
-                        Text("Datos del movimiento", style: titleCardStyle()),
+                        Text(AppLocalizations.of(context)!.movement_data,
+                            style: titleCardStyle()),
                         const SpaceDivider(),
                         movementNotes(),
                         const SpaceDivider(),
@@ -135,12 +150,16 @@ class _MovementViewState extends State<MovementView> {
                                     text: createMode
                                         ? widget.movementType ==
                                                 MovementType.INCOME
-                                            ? "Añadir ingreso"
-                                            : "Añadir gasto"
+                                            ? AppLocalizations.of(context)!
+                                                .add_income
+                                            : AppLocalizations.of(context)!
+                                                .add_expend
                                         : widget.movementType ==
                                                 MovementType.INCOME
-                                            ? "Actualizar ingreso"
-                                            : "Actualizar gasto",
+                                            ? AppLocalizations.of(context)!
+                                                .update_income
+                                            : AppLocalizations.of(context)!
+                                                .update_expend,
                                     action: () async {
                                       FocusScope.of(context).unfocus();
                                       await checkData(movementsProvider);
@@ -188,7 +207,7 @@ class _MovementViewState extends State<MovementView> {
             errorBorder: InputBorder.none,
             disabledBorder: InputBorder.none,
             counterStyle: detailStyle(),
-            hintText: "Añade una nota a este movimiento",
+            hintText: AppLocalizations.of(context)!.movement_description,
             hintStyle: inputStyle()),
         style: inputStyle(),
         maxLength: 300,
@@ -272,7 +291,7 @@ class _MovementViewState extends State<MovementView> {
                     child: DropdownButton<Category>(
                         isExpanded: true,
                         hint: Text(
-                          "Selecciona una categoría",
+                          AppLocalizations.of(context)!.select_category,
                           style: inputStyle(),
                         ),
                         onTap: () => FocusScope.of(context).unfocus(),
@@ -315,7 +334,7 @@ class _MovementViewState extends State<MovementView> {
           errorBorder: InputBorder.none,
           disabledBorder: InputBorder.none,
           hintStyle: accentTitleStyle(),
-          hintText: "Título del movimiento"),
+          hintText: AppLocalizations.of(context)!.movement_title),
     );
   }
 
@@ -363,17 +382,24 @@ class _MovementViewState extends State<MovementView> {
           }
         } else {
           BinancyInfoDialog(
-              context,
-              "La fecha introducida no es válida o esta en blanco",
-              [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
+              context, AppLocalizations.of(context)!.movement_invalid_date, [
+            BinancyInfoDialogItem(AppLocalizations.of(context)!.accept,
+                () => Navigator.pop(context))
+          ]);
         }
       } else {
-        BinancyInfoDialog(context, "Debes introducir un nombre al movimiento",
-            [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
+        BinancyInfoDialog(
+            context, AppLocalizations.of(context)!.movement_invalid_title, [
+          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept,
+              () => Navigator.pop(context))
+        ]);
       }
     } else {
-      BinancyInfoDialog(context, "Debes introducir un valor al movimiento",
-          [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
+      BinancyInfoDialog(
+          context, AppLocalizations.of(context)!.movement_invalid_amount, [
+        BinancyInfoDialogItem(
+            AppLocalizations.of(context)!.accept, () => Navigator.pop(context))
+      ]);
     }
   }
 
@@ -392,12 +418,16 @@ class _MovementViewState extends State<MovementView> {
       if (value) {
         await movementsProvider.updateMovements();
         binancyProgressDialog.dismissDialog();
-        BinancyInfoDialog(context, "Ingreso añadido correctamente!",
-            [BinancyInfoDialogItem("Aceptar", () => leaveScreen())]);
+        BinancyInfoDialog(
+            context, AppLocalizations.of(context)!.income_add_success, [
+          BinancyInfoDialogItem(
+              AppLocalizations.of(context)!.accept, () => leaveScreen())
+        ]);
       } else {
         binancyProgressDialog.dismissDialog();
-        BinancyInfoDialog(context, "Error al añadir el ingreso...", [
-          BinancyInfoDialogItem("Aceptar", () {
+        BinancyInfoDialog(
+            context, AppLocalizations.of(context)!.income_add_fail, [
+          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () {
             Navigator.pop(context);
           })
         ]);
@@ -421,8 +451,9 @@ class _MovementViewState extends State<MovementView> {
       if (value) {
         await movementsProvider.updateMovements();
         binancyProgressDialog.dismissDialog();
-        BinancyInfoDialog(context, "Ingreso actualizado correctamente!", [
-          BinancyInfoDialogItem("Aceptar", () {
+        BinancyInfoDialog(
+            context, AppLocalizations.of(context)!.income_update_success, [
+          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () {
             setState(() {
               selectedMovement = income;
               allowEdit = false;
@@ -432,8 +463,9 @@ class _MovementViewState extends State<MovementView> {
         ]);
       } else {
         binancyProgressDialog.dismissDialog();
-        BinancyInfoDialog(context, "Error al actualizar el ingreso...", [
-          BinancyInfoDialogItem("Aceptar", () {
+        BinancyInfoDialog(
+            context, AppLocalizations.of(context)!.income_update_fail, [
+          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () {
             Navigator.pop(context);
           })
         ]);
@@ -456,15 +488,17 @@ class _MovementViewState extends State<MovementView> {
       if (value) {
         await movementsProvider.updateMovements();
         binancyProgressDialog.dismissDialog();
-        BinancyInfoDialog(context, "Gasto añadido correctamente!", [
-          BinancyInfoDialogItem("Aceptar", () async {
+        BinancyInfoDialog(
+            context, AppLocalizations.of(context)!.expend_add_success, [
+          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () async {
             leaveScreen();
           })
         ]);
       } else {
         binancyProgressDialog.dismissDialog();
-        BinancyInfoDialog(context, "Error al añadir el gasto...", [
-          BinancyInfoDialogItem("Aceptar", () {
+        BinancyInfoDialog(
+            context, AppLocalizations.of(context)!.expend_add_fail, [
+          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () {
             Navigator.pop(context);
           })
         ]);
@@ -490,8 +524,9 @@ class _MovementViewState extends State<MovementView> {
       if (value) {
         await movementsProvider.updateMovements();
         binancyProgressDialog.dismissDialog();
-        BinancyInfoDialog(context, "Ingreso actualizado correctamente!", [
-          BinancyInfoDialogItem("Aceptar", () async {
+        BinancyInfoDialog(
+            context, AppLocalizations.of(context)!.expend_update_success, [
+          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () async {
             setState(() {
               allowEdit = false;
               selectedMovement = expend;
@@ -501,8 +536,9 @@ class _MovementViewState extends State<MovementView> {
         ]);
       } else {
         binancyProgressDialog.dismissDialog();
-        BinancyInfoDialog(context, "Error al actualizar el ingreso...", [
-          BinancyInfoDialogItem("Aceptar", () {
+        BinancyInfoDialog(
+            context, AppLocalizations.of(context)!.expend_update_fail, [
+          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () {
             Navigator.pop(context);
           })
         ]);

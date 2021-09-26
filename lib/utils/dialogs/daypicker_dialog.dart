@@ -8,6 +8,7 @@ import 'package:binancy/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BinancyDayPickerDialog {
   final BuildContext context;
@@ -85,7 +86,9 @@ class BinancyDayPickerDialog {
                                             selectedDay = dialogPickerValue;
                                             Navigator.pop(context);
                                           },
-                                          child: Text("Cambiar día",
+                                          child: Text(
+                                              AppLocalizations.of(context)!
+                                                  .change_day,
                                               style: inputStyle())),
                                     ))
                                   ],
@@ -154,7 +157,9 @@ class BinancyDayPickerDialog {
                                       selectedDay = dialogPickerValue;
                                       Navigator.pop(context);
                                     },
-                                    child: Text("Cambiar día",
+                                    child: Text(
+                                        AppLocalizations.of(context)!
+                                            .change_day,
                                         style: inputStyle())),
                               ))
                             ],

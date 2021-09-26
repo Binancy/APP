@@ -10,6 +10,7 @@ import 'package:binancy/utils/ui/widgets.dart';
 import 'package:binancy/views/enroll/loading_view.dart';
 import 'package:binancy/views/enroll/register_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginView extends StatefulWidget {
   @override
@@ -54,11 +55,14 @@ class _LoginViewState extends State<LoginView> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "¿Has olvidado tu contraseña? ",
+                                    AppLocalizations.of(context)!
+                                            .forgot_password_1 +
+                                        " ",
                                     style: inputStyle(),
                                   ),
                                   Text(
-                                    "Recuperala",
+                                    AppLocalizations.of(context)!
+                                        .forgot_password_2,
                                     style: accentStyle(),
                                   )
                                 ],
@@ -66,7 +70,7 @@ class _LoginViewState extends State<LoginView> {
                               const SpaceDivider(),
                               BinancyButton(
                                   context: context,
-                                  text: "Iniciar sesión",
+                                  text: AppLocalizations.of(context)!.login,
                                   action: () async {
                                     FocusScope.of(context).unfocus();
                                     await makeLogin();
@@ -75,14 +79,15 @@ class _LoginViewState extends State<LoginView> {
                               const SpaceDivider(),
                               Center(
                                 child: Text(
-                                  "¿Todavía no tienes cuenta?",
+                                  AppLocalizations.of(context)!
+                                      .register_button_header,
                                   style: inputStyle(),
                                 ),
                               ),
                               const SpaceDivider(),
                               BinancyButton(
                                   context: context,
-                                  text: "Registrate",
+                                  text: AppLocalizations.of(context)!.register,
                                   action: () {
                                     FocusScope.of(context).unfocus();
                                     Navigator.push(
@@ -115,15 +120,18 @@ class _LoginViewState extends State<LoginView> {
         progressDialog.dismissDialog();
         if (response is BinancyException) {
           BinancyException exception = response;
-          BinancyInfoDialog(context, exception.description,
-              [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
+          BinancyInfoDialog(context, exception.description, [
+            BinancyInfoDialogItem(AppLocalizations.of(context)!.accept,
+                () => Navigator.pop(context))
+          ]);
         } else {
           int? statusResponse = connAPI.getStatus();
           switch (statusResponse) {
             case null:
               BinancyException exception = connAPI.getException()!;
               BinancyInfoDialog(context, exception.description, [
-                BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))
+                BinancyInfoDialogItem(AppLocalizations.of(context)!.accept,
+                    () => Navigator.pop(context))
               ]);
               break;
             case 200:
@@ -137,13 +145,17 @@ class _LoginViewState extends State<LoginView> {
         }
       } else {
         BinancyInfoDialog(
-            context,
-            "El correo electrónico que has introducido no es válido...",
-            [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
+            context, AppLocalizations.of(context)!.email_not_valid, [
+          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept,
+              () => Navigator.pop(context))
+        ]);
       }
     } else {
-      BinancyInfoDialog(context, "Faltan datos por introducirse",
-          [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
+      BinancyInfoDialog(
+          context, AppLocalizations.of(context)!.register_data_needed, [
+        BinancyInfoDialogItem(
+            AppLocalizations.of(context)!.accept, () => Navigator.pop(context))
+      ]);
     }
   }
 
@@ -161,8 +173,8 @@ class _LoginViewState extends State<LoginView> {
         keyboardType: TextInputType.emailAddress,
         controller: emailController,
         style: inputStyle(),
-        decoration:
-            customInputDecoration("Correo electrónico", BinancyIcons.email),
+        decoration: customInputDecoration(
+            AppLocalizations.of(context)!.email, BinancyIcons.email),
       ),
     );
   }
@@ -186,8 +198,8 @@ class _LoginViewState extends State<LoginView> {
                 autocorrect: false,
                 enableSuggestions: false,
                 obscureText: showPass,
-                decoration:
-                    customInputDecoration("Contraseña", BinancyIcons.key),
+                decoration: customInputDecoration(
+                    AppLocalizations.of(context)!.password, BinancyIcons.key),
               ),
             ),
             IconButton(

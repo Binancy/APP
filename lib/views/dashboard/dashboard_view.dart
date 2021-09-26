@@ -14,6 +14,7 @@ import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:binancy/views/settings/settings_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DashboardView extends StatefulWidget {
   @override
@@ -50,7 +51,8 @@ class _DashboardViewState extends State<DashboardView> {
                                             context))
                               ], child: SettingsView())))),
               automaticallyImplyLeading: false,
-              title: Text('Mi resumen', style: appBarStyle()),
+              title: Text(AppLocalizations.of(context)!.my_summary,
+                  style: appBarStyle()),
               centerTitle: true,
               backgroundColor: Colors.transparent,
               elevation: 0,

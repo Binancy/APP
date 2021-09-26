@@ -13,6 +13,7 @@ import 'package:binancy/utils/ui/widgets.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SubscriptionView extends StatefulWidget {
   final bool allowEdit;
@@ -27,7 +28,7 @@ class SubscriptionView extends StatefulWidget {
 class _SubscriptionViewState extends State<SubscriptionView> {
   Subscription? selectedSubscription;
   bool allowEdit = false, createMode = false;
-  String payDay = "Día de renovación";
+  String payDay = "";
 
   TextEditingController nameController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
@@ -41,6 +42,12 @@ class _SubscriptionViewState extends State<SubscriptionView> {
   void initState() {
     super.initState();
     checkSubscription();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    payDay = AppLocalizations.of(context)!.subscription_day;
   }
 
   @override
@@ -70,11 +77,13 @@ class _SubscriptionViewState extends State<SubscriptionView> {
               : createMode
                   ? IconButton(
                       icon: const Icon(Icons.arrow_back),
-                      onPressed: () => BinancyInfoDialog(
-                              context, "¿Estas seguro que quieres salir?", [
+                      onPressed: () => BinancyInfoDialog(context,
+                              AppLocalizations.of(context)!.exit_confirm, [
                             BinancyInfoDialogItem(
-                                "Cancelar", () => Navigator.pop(context)),
-                            BinancyInfoDialogItem("Abortar", () {
+                                AppLocalizations.of(context)!.cancel,
+                                () => Navigator.pop(context)),
+                            BinancyInfoDialogItem(
+                                AppLocalizations.of(context)!.abort, () {
                               Navigator.pop(context);
                               Navigator.pop(context);
                             })
@@ -82,10 +91,12 @@ class _SubscriptionViewState extends State<SubscriptionView> {
                   : IconButton(
                       icon: const Icon(Icons.close_outlined),
                       onPressed: () => BinancyInfoDialog(
-                          context, "Estas seguro que quieres salir?", [
+                          context, AppLocalizations.of(context)!.exit_confirm, [
                         BinancyInfoDialogItem(
-                            "Canelar", () => Navigator.pop(context)),
-                        BinancyInfoDialogItem("Abortar", () {
+                            AppLocalizations.of(context)!.cancel,
+                            () => Navigator.pop(context)),
+                        BinancyInfoDialogItem(
+                            AppLocalizations.of(context)!.abort, () {
                           Navigator.pop(context);
                           setState(() {
                             checkSubscription();
@@ -108,7 +119,8 @@ class _SubscriptionViewState extends State<SubscriptionView> {
                           alignment: Alignment.center,
                           child: Text(
                               createMode
-                                  ? "Añade una nueva suscripción"
+                                  ? AppLocalizations.of(context)!
+                                      .add_subscription_header
                                   : selectedSubscription!.name,
                               style: headerItemView(),
                               textAlign: TextAlign.center),
@@ -133,8 +145,8 @@ class _SubscriptionViewState extends State<SubscriptionView> {
                     child: BinancyButton(
                         context: context,
                         text: createMode
-                            ? "Añadir suscripción"
-                            : "Actualizar suscripción",
+                            ? AppLocalizations.of(context)!.add_subscription
+                            : AppLocalizations.of(context)!.update_subscription,
                         action: () async {
                           await checkData(subscriptionsProvider);
                         }),
@@ -180,7 +192,8 @@ class _SubscriptionViewState extends State<SubscriptionView> {
         controller: nameController,
         style: inputStyle(),
         decoration: customInputDecoration(
-            "Título de la suscripción", BinancyIcons.email),
+            AppLocalizations.of(context)!.subscription_title,
+            BinancyIcons.email),
       ),
     );
   }
@@ -202,7 +215,8 @@ class _SubscriptionViewState extends State<SubscriptionView> {
         controller: amountController,
         style: inputStyle(),
         decoration: customInputDecoration(
-            "Importe de la suscripción", BinancyIcons.calendar),
+            AppLocalizations.of(context)!.subscription_amount,
+            BinancyIcons.calendar),
       ),
     );
   }
@@ -227,7 +241,7 @@ class _SubscriptionViewState extends State<SubscriptionView> {
             errorBorder: InputBorder.none,
             disabledBorder: InputBorder.none,
             counterStyle: detailStyle(),
-            hintText: "Añade una descripción a esta suscripción",
+            hintText: AppLocalizations.of(context)!.subscription_description,
             hintStyle: inputStyle()),
         style: inputStyle(),
         maxLength: 300,
@@ -252,7 +266,7 @@ class _SubscriptionViewState extends State<SubscriptionView> {
                   BinancyDayPickerDialog(
                       context: context,
                       initialDate: int.tryParse(payDay),
-                      title: "Selecciona el día de renovación");
+                      title: AppLocalizations.of(context)!.subscription_day);
               binancyDayPickerDialog.showDayPickerDialog().then((value) {
                 if (value != null) {
                   setState(() {
@@ -306,16 +320,19 @@ class _SubscriptionViewState extends State<SubscriptionView> {
                 onTap: () => setState(() {
                       ignoreCheckoutThisMonth = !ignoreCheckoutThisMonth;
                     }),
-                child: Text("No renovar este mes", style: inputStyle())),
+                child: Text(
+                    AppLocalizations.of(context)!
+                        .subscription_ignore_this_month,
+                    style: inputStyle())),
             IconButton(
                 onPressed: () => BinancyInfoDialog(
                         context,
-                        "Si habilitas esta opción " +
-                            appName +
-                            " no renovará esta suscripción este mes. Esta función es util si la suscripción se renueva el mismo día que creas la suscripcíon, pero ya se ha efectuado el primer cobro",
+                        AppLocalizations.of(context)!
+                            .subscription_renew_description,
                         [
                           BinancyInfoDialogItem(
-                              "Aceptar", () => Navigator.pop(context))
+                              AppLocalizations.of(context)!.accept,
+                              () => Navigator.pop(context))
                         ]),
                 icon: Icon(Icons.help_outline_rounded, color: accentColor))
           ],
@@ -334,17 +351,24 @@ class _SubscriptionViewState extends State<SubscriptionView> {
           }
         } else {
           BinancyInfoDialog(
-              context,
-              "El día de renovación no es válido o esta en blanco",
-              [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
+              context, AppLocalizations.of(context)!.subscription_invalid_day, [
+            BinancyInfoDialogItem(AppLocalizations.of(context)!.accept,
+                () => Navigator.pop(context))
+          ]);
         }
       } else {
-        BinancyInfoDialog(context, "Debes introducir un valor a la suscripción",
-            [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
+        BinancyInfoDialog(context,
+            AppLocalizations.of(context)!.subscription_invalid_amount, [
+          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept,
+              () => Navigator.pop(context))
+        ]);
       }
     } else {
-      BinancyInfoDialog(context, "Debes introducir un titulo a la suscripción",
-          [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
+      BinancyInfoDialog(
+          context, AppLocalizations.of(context)!.subscription_invalid_title, [
+        BinancyInfoDialogItem(
+            AppLocalizations.of(context)!.accept, () => Navigator.pop(context))
+      ]);
     }
   }
 
@@ -365,15 +389,17 @@ class _SubscriptionViewState extends State<SubscriptionView> {
     await SubscriptionsController.addSubscription(subscription).then((value) {
       binancyProgressDialog.dismissDialog();
       if (value) {
-        BinancyInfoDialog(context, "Suscripción añadida correctamente!", [
-          BinancyInfoDialogItem("Aceptar", () async {
+        BinancyInfoDialog(
+            context, AppLocalizations.of(context)!.subscription_add_success, [
+          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () async {
             await subscriptionsProvider.updateSubscriptions();
             leaveScreen();
           })
         ]);
       } else {
-        BinancyInfoDialog(context, "Error al añadir la suscripción...", [
-          BinancyInfoDialogItem("Aceptar", () {
+        BinancyInfoDialog(
+            context, AppLocalizations.of(context)!.subscription_add_fail, [
+          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () {
             Navigator.pop(context);
           })
         ]);
@@ -398,8 +424,9 @@ class _SubscriptionViewState extends State<SubscriptionView> {
         .then((value) {
       binancyProgressDialog.dismissDialog();
       if (value) {
-        BinancyInfoDialog(context, "Suscripción actualizada correctamente!", [
-          BinancyInfoDialogItem("Aceptar", () async {
+        BinancyInfoDialog(context,
+            AppLocalizations.of(context)!.subscription_update_success, [
+          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () async {
             await subscriptionsProvider.updateSubscriptions();
             setState(() {
               selectedSubscription = subscription;
@@ -409,8 +436,9 @@ class _SubscriptionViewState extends State<SubscriptionView> {
           })
         ]);
       } else {
-        BinancyInfoDialog(context, "Error al actualizar la suscripción...", [
-          BinancyInfoDialogItem("Aceptar", () {
+        BinancyInfoDialog(
+            context, AppLocalizations.of(context)!.subscription_update_fail, [
+          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () {
             Navigator.pop(context);
           })
         ]);

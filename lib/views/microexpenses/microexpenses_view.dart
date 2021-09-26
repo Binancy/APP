@@ -5,11 +5,13 @@ import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/ui/widgets.dart';
 import 'package:binancy/views/advice/advice_card.dart';
 import 'package:binancy/views/microexpenses/microexpend_view.dart';
+import 'package:binancy/views/microexpenses/microexpenses_empty_widget.dart';
 import 'package:binancy/views/microexpenses/microexpenses_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MicroExpensesView extends StatelessWidget {
   @override
@@ -21,7 +23,8 @@ class MicroExpensesView extends StatelessWidget {
             backgroundColor: Colors.transparent,
             elevation: 0,
             centerTitle: true,
-            title: Text("Gastos rápidos", style: appBarStyle()),
+            title: Text(AppLocalizations.of(context)!.microexpends,
+                style: appBarStyle()),
             actions: [
               IconButton(
                   onPressed: () => Navigator.push(
@@ -49,40 +52,52 @@ class MicroExpensesView extends StatelessWidget {
                       AdviceCard(
                           icon: SvgPicture.asset(
                               "assets/svg/dashboard_add_expense.svg"),
-                          text:
-                              "Aqui podrás establecer movimientos que realizes con frequencia y poder añadirlos más rápidamente."),
+                          text: AppLocalizations.of(context)!
+                              .microexpends_ad_description),
                       const SpaceDivider(),
                       Center(
-                          child: Text("Tus gastos rápidos",
+                          child: Text(
+                              AppLocalizations.of(context)!.your_microexpends,
                               style: titleCardStyle())),
-                      Expanded(
-                          child: Container(
+                      microExpensesProvider.microExpensesList.isEmpty
+                          ? Expanded(
+                              child: Container(
                               margin: const EdgeInsets.all(customMargin),
-                              child: ClipRRect(
-                                borderRadius:
-                                    BorderRadius.circular(customBorderRadius),
-                                child: ScrollConfiguration(
-                                    behavior: MyBehavior(),
-                                    child: StaggeredGridView.countBuilder(
-                                      crossAxisCount: 2,
-                                      itemCount: microExpensesProvider
-                                          .microExpensesList.length,
-                                      mainAxisSpacing: customMargin,
-                                      crossAxisSpacing: customMargin,
-                                      itemBuilder: (context, index) =>
-                                          MicroExpendCard(
-                                        microExpensesChangeNotifier:
-                                            microExpensesProvider,
-                                        microExpend: microExpensesProvider
-                                            .microExpensesList
-                                            .elementAt(index),
-                                        movementsChangeNotifier:
-                                            movementsProvider,
-                                      ),
-                                      staggeredTileBuilder: (index) =>
-                                          const StaggeredTile.fit(1),
-                                    )),
-                              )))
+                              decoration: BoxDecoration(
+                                  color: themeColor.withOpacity(0.1),
+                                  borderRadius: BorderRadius.circular(
+                                      customBorderRadius)),
+                              child:
+                                  const MicroExpendEmptyCard(isExpanded: true),
+                            ))
+                          : Expanded(
+                              child: Container(
+                                  margin: const EdgeInsets.all(customMargin),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(
+                                        customBorderRadius),
+                                    child: ScrollConfiguration(
+                                        behavior: MyBehavior(),
+                                        child: StaggeredGridView.countBuilder(
+                                          crossAxisCount: 2,
+                                          itemCount: microExpensesProvider
+                                              .microExpensesList.length,
+                                          mainAxisSpacing: customMargin,
+                                          crossAxisSpacing: customMargin,
+                                          itemBuilder: (context, index) =>
+                                              MicroExpendCard(
+                                            microExpensesChangeNotifier:
+                                                microExpensesProvider,
+                                            microExpend: microExpensesProvider
+                                                .microExpensesList
+                                                .elementAt(index),
+                                            movementsChangeNotifier:
+                                                movementsProvider,
+                                          ),
+                                          staggeredTileBuilder: (index) =>
+                                              const StaggeredTile.fit(1),
+                                        )),
+                                  )))
                     ],
                   ))),
     );

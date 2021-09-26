@@ -18,7 +18,7 @@ import 'package:binancy/views/subscriptions/subscription_empty_card_widget.dart'
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'movement_view.dart';
 
 class MovementBalanceView extends StatelessWidget {
@@ -37,7 +37,8 @@ class MovementBalanceView extends StatelessWidget {
                 backgroundColor: Colors.transparent,
                 elevation: 0,
                 centerTitle: true,
-                title: Text("Mi cuenta", style: appBarStyle()),
+                title: Text(AppLocalizations.of(context)!.my_account,
+                    style: appBarStyle()),
               ),
               body: ScrollConfiguration(
                   behavior: MyBehavior(),
@@ -49,7 +50,9 @@ class MovementBalanceView extends StatelessWidget {
                         movementsProvider.totalHeritage == 0
                             ? const SizedBox()
                             : Center(
-                                child: Text("Tus últimos balances",
+                                child: Text(
+                                    AppLocalizations.of(context)!
+                                        .latests_balances,
                                     style: titleCardStyle())),
                         movementsProvider.totalHeritage == 0
                             ? const SizedBox()
@@ -58,7 +61,8 @@ class MovementBalanceView extends StatelessWidget {
                             ? const SizedBox()
                             : const SpaceDivider(),
                         Center(
-                            child: Text("Tus últimos movimientos",
+                            child: Text(
+                                AppLocalizations.of(context)!.latests_movements,
                                 style: titleCardStyle())),
                         latestsIncomes(context, movementsProvider),
                         latestsExpenses(context, movementsProvider),
@@ -86,7 +90,8 @@ class MovementBalanceView extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: getLatestMovements(MovementType.EXPEND, movementsProvider),
+        children:
+            getLatestMovements(context, MovementType.EXPEND, movementsProvider),
       ),
     );
   }
@@ -105,7 +110,8 @@ class MovementBalanceView extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: getLatestMovements(MovementType.INCOME, movementsProvider),
+        children:
+            getLatestMovements(context, MovementType.INCOME, movementsProvider),
       ),
     );
   }
@@ -150,7 +156,7 @@ class MovementBalanceView extends StatelessWidget {
                     Icon(Icons.circle, color: accentColor),
                     const SpaceDivider(isVertical: true, customSpace: 10),
                     Text(
-                      "Ingresos",
+                      AppLocalizations.of(context)!.income,
                       style: inputStyle(),
                     )
                   ],
@@ -160,7 +166,7 @@ class MovementBalanceView extends StatelessWidget {
                     Icon(Icons.circle, color: Colors.white.withOpacity(0.25)),
                     const SpaceDivider(isVertical: true, customSpace: 10),
                     Text(
-                      "Gastos",
+                      AppLocalizations.of(context)!.expend,
                       style: inputStyle(),
                     )
                   ],
@@ -190,7 +196,8 @@ class MovementBalanceView extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text("Tu patrimonio", style: accentTitleStyle()),
+              Text(AppLocalizations.of(context)!.my_heritage,
+                  style: accentTitleStyle()),
               Text(Utils.parseAmount(movementsProvider.totalHeritage),
                   style: balanceValueStyle()),
             ],
@@ -202,7 +209,7 @@ class MovementBalanceView extends StatelessWidget {
           child: BinancyButton(
               wrapOnFinal: true,
               context: context,
-              text: "Ver movimientos",
+              text: AppLocalizations.of(context)!.see_all_movements,
               action: () {}),
         )
       ],
@@ -222,9 +229,11 @@ class MovementBalanceView extends StatelessWidget {
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) =>
-              getSubscriptions(subscriptionsChangeNotifier).elementAt(index),
+              getSubscriptions(context, subscriptionsChangeNotifier)
+                  .elementAt(index),
           separatorBuilder: (context, index) => const LinearDivider(),
-          itemCount: getSubscriptions(subscriptionsChangeNotifier).length),
+          itemCount:
+              getSubscriptions(context, subscriptionsChangeNotifier).length),
     );
   }
 
@@ -243,11 +252,12 @@ class MovementBalanceView extends StatelessWidget {
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) =>
-              getSavingsPlan(savingsPlanChangeNotifier, currentAmount)
+              getSavingsPlan(context, savingsPlanChangeNotifier, currentAmount)
                   .elementAt(index),
           separatorBuilder: (context, index) => const LinearDivider(),
           itemCount:
-              getSavingsPlan(savingsPlanChangeNotifier, currentAmount).length),
+              getSavingsPlan(context, savingsPlanChangeNotifier, currentAmount)
+                  .length),
     );
   }
 
@@ -259,7 +269,8 @@ class MovementBalanceView extends StatelessWidget {
     List<Widget> premiumWidgetList = [];
     premiumWidgetList.add(const SpaceDivider());
     premiumWidgetList.add(Center(
-        child: Text("Características premium", style: titleCardStyle())));
+        child: Text(AppLocalizations.of(context)!.premium_features,
+            style: titleCardStyle())));
     premiumWidgetList.add(const SpaceDivider());
 
     premiumWidgetList
@@ -271,7 +282,9 @@ class MovementBalanceView extends StatelessWidget {
     return premiumWidgetList;
   }
 
-  List<Widget> getLatestMovements(MovementType movementType,
+  List<Widget> getLatestMovements(
+      BuildContext context,
+      MovementType movementType,
       MovementsChangeNotifier movementsChangeNotifier) {
     List<Widget> listMovementsWidget = [];
     List<dynamic> providerList = movementType == MovementType.INCOME
@@ -281,7 +294,10 @@ class MovementBalanceView extends StatelessWidget {
     listMovementsWidget.add(Padding(
         padding: const EdgeInsets.only(
             top: customMargin, left: customMargin, bottom: customMargin),
-        child: Text(movementType == MovementType.INCOME ? "Ingresos" : "Gastos",
+        child: Text(
+            movementType == MovementType.INCOME
+                ? AppLocalizations.of(context)!.income
+                : AppLocalizations.of(context)!.expend,
             style: titleCardStyle())));
     listMovementsWidget.add(const LinearDivider());
     if (providerList.isEmpty) {
@@ -345,13 +361,14 @@ class MovementBalanceView extends StatelessWidget {
     return List.from(barChartList.reversed);
   }
 
-  List<Widget> getSubscriptions(
+  List<Widget> getSubscriptions(BuildContext context,
       SubscriptionsChangeNotifier subscriptionsChangeNotifier) {
     List<Widget> subscriptionsWidgetList = [];
     subscriptionsWidgetList.add(Padding(
         padding: const EdgeInsets.only(
             top: customMargin, left: customMargin, bottom: customMargin),
-        child: Text("Suscripciones:", style: titleCardStyle())));
+        child: Text(AppLocalizations.of(context)!.subscription,
+            style: titleCardStyle())));
     subscriptionsWidgetList.add(const LinearDivider());
     if (subscriptionsChangeNotifier.subscriptionsList.isNotEmpty) {
       if (subscriptionsChangeNotifier.subscriptionsList.length >
@@ -379,13 +396,15 @@ class MovementBalanceView extends StatelessWidget {
   }
 
   List<Widget> getSavingsPlan(
+      BuildContext context,
       SavingsPlanChangeNotifier savingsPlanChangeNotifier,
       double currentAmount) {
     List<Widget> savingsPlanWidgetList = [];
     savingsPlanWidgetList.add(Padding(
         padding: const EdgeInsets.only(
             top: customMargin, left: customMargin, bottom: customMargin),
-        child: Text("Metas de ahorro:", style: titleCardStyle())));
+        child: Text(AppLocalizations.of(context)!.goals,
+            style: titleCardStyle())));
     savingsPlanWidgetList.add(const LinearDivider());
     if (savingsPlanChangeNotifier.savingsPlanList.isNotEmpty) {
       if (savingsPlanChangeNotifier.savingsPlanList.length >

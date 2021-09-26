@@ -5,6 +5,7 @@ import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/ui/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../globals.dart';
 
@@ -66,7 +67,9 @@ class SettingsChangePassword {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Center(
-                              child: Text("Cambia tu contrseña",
+                              child: Text(
+                                  AppLocalizations.of(context)!
+                                      .change_password_header,
                                   style: titleCardStyle(),
                                   textAlign: TextAlign.center)),
                           const SpaceDivider(),
@@ -98,7 +101,8 @@ class SettingsChangePassword {
                           const SpaceDivider(),
                           BinancyButton(
                               context: context,
-                              text: "Cambiar contraseña",
+                              text:
+                                  AppLocalizations.of(context)!.change_password,
                               action: () =>
                                   changePassword(() => setModalState(() {
                                         currentPasswordController.text = "";
@@ -133,7 +137,8 @@ class SettingsChangePassword {
                 enableSuggestions: false,
                 obscureText: currentPasswordHidePass,
                 decoration: customInputDecoration(
-                    "Actual contraseña", BinancyIcons.key),
+                    AppLocalizations.of(context)!.current_password,
+                    BinancyIcons.key),
               ),
             ),
             IconButton(
@@ -166,8 +171,9 @@ class SettingsChangePassword {
                 autocorrect: false,
                 enableSuggestions: false,
                 obscureText: newPassword1HidePass,
-                decoration:
-                    customInputDecoration("Nueva contraseña", BinancyIcons.key),
+                decoration: customInputDecoration(
+                    AppLocalizations.of(context)!.new_password,
+                    BinancyIcons.key),
               ),
             ),
             IconButton(
@@ -201,7 +207,8 @@ class SettingsChangePassword {
                 enableSuggestions: false,
                 obscureText: newPassword2HidePass,
                 decoration: customInputDecoration(
-                    "Repite tu nueva contraseña", BinancyIcons.key),
+                    AppLocalizations.of(context)!.repeat_new_password,
+                    BinancyIcons.key),
               ),
             ),
             IconButton(
@@ -222,28 +229,18 @@ class SettingsChangePassword {
           userData['password']) {
         if (newPassword1Controller.text.isNotEmpty &&
             newPassword2Controller.text.isNotEmpty) {
-          if (currentPasswordController.text != newPassword1Controller.text) {
-            if (newPassword1Controller.text == newPassword2Controller.text) {
-              if (Utils.verifySecurityPassword(newPassword1Controller.text)) {
-                AccountController.changePassword(
-                    context, newPassword1Controller.text, () {
-                  setModalState();
-                  Navigator.pop(context);
-                  Navigator.pop(context);
-                });
-              } else {
-                BinancyInfoDialog(
-                    context, "La nueva contraseña introducida no es válida", [
-                  BinancyInfoDialogItem("Aceptar", () {
-                    Navigator.pop(context);
-                    newPassword1Focus.requestFocus();
-                  })
-                ]);
-              }
+          if (newPassword1Controller.text == newPassword2Controller.text) {
+            if (Utils.verifySecurityPassword(newPassword1Controller.text)) {
+              AccountController.changePassword(
+                  context, newPassword1Controller.text, () {
+                setModalState();
+                Navigator.pop(context);
+                Navigator.pop(context);
+              });
             } else {
               BinancyInfoDialog(
-                  context, "La nueva contraseña introducida no coincide", [
-                BinancyInfoDialogItem("Aceptar", () {
+                  context, AppLocalizations.of(context)!.password_not_valid, [
+                BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () {
                   Navigator.pop(context);
                   newPassword1Focus.requestFocus();
                 })
@@ -251,23 +248,17 @@ class SettingsChangePassword {
             }
           } else {
             BinancyInfoDialog(
-                context,
-                "Tu actual contraseña y la nueva que has introducido son las mismas",
-                [
-                  BinancyInfoDialogItem("Aceptar", () {
-                    Navigator.pop(context);
-                    if (newPassword1Controller.text.isEmpty) {
-                      newPassword1Focus.requestFocus();
-                    } else {
-                      newPassword2Focus.requestFocus();
-                    }
-                  })
-                ]);
+                context, AppLocalizations.of(context)!.password_not_match, [
+              BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () {
+                Navigator.pop(context);
+                newPassword1Focus.requestFocus();
+              })
+            ]);
           }
         } else {
           BinancyInfoDialog(
-              context, "La nueva contraseña no puede estar en blanco", [
-            BinancyInfoDialogItem("Aceptar", () {
+              context, AppLocalizations.of(context)!.password_not_empty, [
+            BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () {
               Navigator.pop(context);
               if (newPassword1Controller.text.isEmpty) {
                 newPassword1Focus.requestFocus();
@@ -279,16 +270,17 @@ class SettingsChangePassword {
         }
       } else {
         BinancyInfoDialog(context,
-            "La contraseña que has introducido no es tu actual contraseña", [
-          BinancyInfoDialogItem("Aceptar", () {
+            AppLocalizations.of(context)!.password_not_current_password, [
+          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () {
             Navigator.pop(context);
             currentPasswordFocus.requestFocus();
           })
         ]);
       }
     } else {
-      BinancyInfoDialog(context, "Debes introducir tu contraseña", [
-        BinancyInfoDialogItem("Aceptar", () {
+      BinancyInfoDialog(
+          context, AppLocalizations.of(context)!.password_current_empty, [
+        BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () {
           Navigator.pop(context);
           currentPasswordFocus.requestFocus();
         })

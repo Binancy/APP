@@ -14,6 +14,7 @@ import 'package:binancy/utils/ui/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MicroExpendView extends StatefulWidget {
   final MicroExpend? selectedMicroExpend;
@@ -67,22 +68,29 @@ class _MicroExpendViewState extends State<MicroExpendView> {
                     : createMode
                         ? IconButton(
                             icon: const Icon(Icons.arrow_back),
-                            onPressed: () => BinancyInfoDialog(context,
-                                    "¿Estas seguro que quieres salir?", [
-                                  BinancyInfoDialogItem(
-                                      "Cancelar", () => Navigator.pop(context)),
-                                  BinancyInfoDialogItem("Abortar", () {
-                                    Navigator.pop(context);
-                                    Navigator.pop(context);
-                                  })
-                                ]))
+                            onPressed: () => BinancyInfoDialog(
+                                    context,
+                                    AppLocalizations.of(context)!.exit_confirm,
+                                    [
+                                      BinancyInfoDialogItem(
+                                          AppLocalizations.of(context)!.cancel,
+                                          () => Navigator.pop(context)),
+                                      BinancyInfoDialogItem(
+                                          AppLocalizations.of(context)!.abort,
+                                          () {
+                                        Navigator.pop(context);
+                                        Navigator.pop(context);
+                                      })
+                                    ]))
                         : IconButton(
                             icon: const Icon(Icons.close_outlined),
-                            onPressed: () => BinancyInfoDialog(
-                                context, "Estas seguro que quieres salir?", [
+                            onPressed: () => BinancyInfoDialog(context,
+                                AppLocalizations.of(context)!.exit_confirm, [
                               BinancyInfoDialogItem(
-                                  "Canelar", () => Navigator.pop(context)),
-                              BinancyInfoDialogItem("Abortar", () {
+                                  AppLocalizations.of(context)!.cancel,
+                                  () => Navigator.pop(context)),
+                              BinancyInfoDialogItem(
+                                  AppLocalizations.of(context)!.abort, () {
                                 Navigator.pop(context);
                                 setState(() {
                                   allowEdit = false;
@@ -104,7 +112,8 @@ class _MicroExpendViewState extends State<MicroExpendView> {
                                 alignment: Alignment.center,
                                 child: Text(
                                   createMode
-                                      ? "Añade un gasto frecuente"
+                                      ? AppLocalizations.of(context)!
+                                          .goals_header
                                       : selectedMicroExpend!.title,
                                   style: headerItemView(),
                                   textAlign: TextAlign.center,
@@ -124,21 +133,17 @@ class _MicroExpendViewState extends State<MicroExpendView> {
                     child: !createMode && !allowEdit
                         ? BinancyButton(
                             context: context,
-                            text: "Añadir gasto",
+                            text: AppLocalizations.of(context)!.add_expend,
                             action: () async => await addExpend(context))
                         : allowEdit
-                            ? Padding(
-                                padding: const EdgeInsets.only(
-                                    left: customMargin, right: customMargin),
-                                child: BinancyButton(
-                                    context: context,
-                                    text: createMode
-                                        ? "Añadir gasto frecuente"
-                                        : "Actualizar gasto frecuente",
-                                    action: () async {
-                                      await checkData(microExpensesProvider);
-                                    }),
-                              )
+                            ? BinancyButton(
+                                context: context,
+                                text: createMode
+                                    ? AppLocalizations.of(context)!.add_goal
+                                    : AppLocalizations.of(context)!.update_goal,
+                                action: () async {
+                                  await checkData(microExpensesProvider);
+                                })
                             : const SizedBox(),
                   ),
                   const SpaceDivider()
@@ -164,7 +169,7 @@ class _MicroExpendViewState extends State<MicroExpendView> {
         controller: titleController,
         style: inputStyle(),
         decoration: customInputDecoration(
-            "Título del gasto frecuente", BinancyIcons.email),
+            AppLocalizations.of(context)!.goal_title, BinancyIcons.email),
       ),
     );
   }
@@ -185,8 +190,8 @@ class _MicroExpendViewState extends State<MicroExpendView> {
         keyboardType: TextInputType.number,
         controller: amountController,
         style: inputStyle(),
-        decoration:
-            customInputDecoration("Importe del gasto", BinancyIcons.calendar),
+        decoration: customInputDecoration(
+            AppLocalizations.of(context)!.goal_amount, BinancyIcons.calendar),
       ),
     );
   }
@@ -211,7 +216,7 @@ class _MicroExpendViewState extends State<MicroExpendView> {
             errorBorder: InputBorder.none,
             disabledBorder: InputBorder.none,
             counterStyle: detailStyle(),
-            hintText: "Añade una descripción a este gasto frecuente",
+            hintText: AppLocalizations.of(context)!.goal_description,
             hintMaxLines: 3,
             hintStyle: inputStyle()),
         style: inputStyle(),
@@ -249,14 +254,18 @@ class _MicroExpendViewState extends State<MicroExpendView> {
           await updateMicroExpend(microExpensesProvider);
         }
       } else {
-        BinancyInfoDialog(context, "El gasto frecuente debe tener un importe",
-            [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
+        BinancyInfoDialog(
+            context, AppLocalizations.of(context)!.goal_invalid_amount, [
+          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept,
+              () => Navigator.pop(context))
+        ]);
       }
     } else {
       BinancyInfoDialog(
-          context,
-          "Debes introducir un titulo al gasto frecuente",
-          [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
+          context, AppLocalizations.of(context)!.goal_invalid_title, [
+        BinancyInfoDialogItem(
+            AppLocalizations.of(context)!.accept, () => Navigator.pop(context))
+      ]);
     }
   }
 
@@ -273,15 +282,17 @@ class _MicroExpendViewState extends State<MicroExpendView> {
     await MicroExpensesController.addMicroExpend(microExpend).then((value) {
       binancyProgressDialog.dismissDialog();
       if (value) {
-        BinancyInfoDialog(context, "Gasto frecuente añadido correctamente!", [
-          BinancyInfoDialogItem("Aceptar", () async {
+        BinancyInfoDialog(
+            context, AppLocalizations.of(context)!.goal_add_success, [
+          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () async {
             await microExpensesProvider.updateMicroExpenses();
             leaveScreen();
           })
         ]);
       } else {
-        BinancyInfoDialog(context, "Error al añadir el gasto frecuente...", [
-          BinancyInfoDialogItem("Aceptar", () {
+        BinancyInfoDialog(
+            context, AppLocalizations.of(context)!.goal_add_fail, [
+          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () {
             Navigator.pop(context);
           })
         ]);
@@ -304,8 +315,8 @@ class _MicroExpendViewState extends State<MicroExpendView> {
       binancyProgressDialog.dismissDialog();
       if (value) {
         BinancyInfoDialog(
-            context, "Gasto frecuente actualizado correctamente!", [
-          BinancyInfoDialogItem("Aceptar", () async {
+            context, AppLocalizations.of(context)!.goal_update_success, [
+          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () async {
             await microExpensesProvider.updateMicroExpenses();
             setState(() {
               selectedMicroExpend = microExpend;
@@ -316,8 +327,8 @@ class _MicroExpendViewState extends State<MicroExpendView> {
         ]);
       } else {
         BinancyInfoDialog(
-            context, "Error al actualizar el gasto frecuente...", [
-          BinancyInfoDialogItem("Aceptar", () {
+            context, AppLocalizations.of(context)!.goal_update_fail, [
+          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () {
             Navigator.pop(context);
           })
         ]);
@@ -338,16 +349,18 @@ class _MicroExpendViewState extends State<MicroExpendView> {
     ExpensesController.insertExpend(microExpend).then((value) {
       binancyProgressDialog.dismissDialog();
       if (value) {
-        BinancyInfoDialog(context, "Gasto frecuente añadido correctamente!", [
-          BinancyInfoDialogItem("Aceptar", () async {
+        BinancyInfoDialog(
+            context, AppLocalizations.of(context)!.goal_add_success, [
+          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () async {
             await Provider.of<MovementsChangeNotifier>(context, listen: false)
                 .updateMovements();
             leaveScreen();
           })
         ]);
       } else {
-        BinancyInfoDialog(context, "Error al añadir el gasto frecuente...", [
-          BinancyInfoDialogItem("Aceptar", () {
+        BinancyInfoDialog(
+            context, AppLocalizations.of(context)!.goal_add_fail, [
+          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () {
             Navigator.pop(context);
           })
         ]);

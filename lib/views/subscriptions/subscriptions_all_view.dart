@@ -7,6 +7,7 @@ import 'package:binancy/views/subscriptions/subscription_empty_card_widget.dart'
 import 'package:binancy/views/subscriptions/subscription_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SubscriptionsView extends StatelessWidget {
   @override
@@ -18,7 +19,8 @@ class SubscriptionsView extends StatelessWidget {
               appBar: AppBar(
                 elevation: 0,
                 centerTitle: true,
-                title: Text("Tus suscripciones", style: appBarStyle()),
+                title: Text(AppLocalizations.of(context)!.my_subscriptions,
+                    style: appBarStyle()),
                 backgroundColor: Colors.transparent,
                 actions: [
                   IconButton(
@@ -69,8 +71,10 @@ class SubscriptionsView extends StatelessWidget {
                             children: [
                               Text(
                                 provider.subscriptionsList.length == 1
-                                    ? "Suscripción activa"
-                                    : "Suscripciones activas",
+                                    ? AppLocalizations.of(context)!
+                                        .subscription_active
+                                    : AppLocalizations.of(context)!
+                                        .subscriptions_active,
                                 style: titleCardStyle(),
                               ),
                             ],
@@ -102,7 +106,8 @@ class SubscriptionsView extends StatelessWidget {
                                             provider
                                                 .getNextSubscriptionToPay()!
                                                 .getNextPayDay(context)
-                                        : "No tienes ninguna suscripción",
+                                        : AppLocalizations.of(context)!
+                                            .no_subscriptions,
                                     style: titleCardStyle())
                               ],
                             ),
@@ -128,7 +133,7 @@ class SubscriptionsView extends StatelessWidget {
                               padding:
                                   const EdgeInsets.only(left: customMargin),
                               child: Text(
-                                "Todas tus suscripciones",
+                                AppLocalizations.of(context)!.all_subscriptions,
                                 style: titleCardStyle(),
                               )),
                           const LinearDivider()

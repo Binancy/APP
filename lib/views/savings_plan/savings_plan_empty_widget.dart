@@ -4,7 +4,7 @@ import 'package:binancy/utils/ui/widgets.dart';
 import 'package:binancy/views/savings_plan/savings_plan_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../globals.dart';
 
 class SavingsPlanEmptyWidget extends StatelessWidget {
@@ -22,7 +22,8 @@ class SavingsPlanEmptyWidget extends StatelessWidget {
   Widget expandedSavingsPlanEmptyWidget(BuildContext context) {
     return GestureDetector(
       onTap: () => gotoAddSavingsPlan(context),
-      child: SizedBox(
+      child: Container(
+        padding: const EdgeInsets.all(customMargin),
         width: MediaQuery.of(context).size.width,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -36,9 +37,7 @@ class SavingsPlanEmptyWidget extends StatelessWidget {
                   size: 100,
                   color: Colors.white,
                 )),
-            Text("No hay ninguna meta de ahorro registrada",
-                style: accentStyle(), textAlign: TextAlign.center),
-            Text("Toca para añadir una",
+            Text(AppLocalizations.of(context)!.no_goals,
                 style: accentStyle(), textAlign: TextAlign.center),
             const SizedBox(
               height: 100,
@@ -67,10 +66,8 @@ class SavingsPlanEmptyWidget extends StatelessWidget {
               const Icon(Icons.add_rounded, color: Colors.white, size: 50),
               const SpaceDivider(isVertical: true),
               Expanded(
-                  child: Text(
-                      "No hay ninguna meta de ahorro registrada. Toca para añadir una",
-                      style: accentStyle(),
-                      textAlign: TextAlign.start))
+                  child: Text(AppLocalizations.of(context)!.no_goals,
+                      style: accentStyle(), textAlign: TextAlign.start))
             ],
           ),
         ),

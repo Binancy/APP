@@ -10,25 +10,25 @@ import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'dart:convert';
 import 'dart:math' as math;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 
 class Utils {
-  static List<AdviceCard> adviceCardList = [
-    AdviceCard(
-        icon: SvgPicture.asset("assets/svg/dashboard_categories.svg"),
-        text:
-            "Binancy te permite clasificar tus movimientos en categorias para tener un mayor control de ellos"),
-    AdviceCard(
-        icon: SvgPicture.asset("assets/svg/dashboard_historial.svg"),
-        text:
-            "Binancy almacena todos tus movimientos para que no se te escape ninguno."),
-    AdviceCard(
-        icon: SvgPicture.asset("assets/svg/dashboard_pie_chart.svg"),
-        text:
-            "Binancy te permite visualizar tus movimientos de multiples formas y filtros.")
-  ];
+  static List<AdviceCard> adviceCardList(BuildContext context) {
+    return [
+      AdviceCard(
+          icon: SvgPicture.asset("assets/svg/dashboard_categories.svg"),
+          text: AppLocalizations.of(context)!.register_advice_1),
+      AdviceCard(
+          icon: SvgPicture.asset("assets/svg/dashboard_historial.svg"),
+          text: AppLocalizations.of(context)!.register_advice_2),
+      AdviceCard(
+          icon: SvgPicture.asset("assets/svg/dashboard_pie_chart.svg"),
+          text: AppLocalizations.of(context)!.register_advice_3)
+    ];
+  }
 
   // PLANS
 
@@ -94,8 +94,8 @@ class Utils {
     return password.length >= 8 && regEx.hasMatch(password);
   }
 
-  static List<AdviceCard> getAllAdviceCards() {
-    return adviceCardList;
+  static List<AdviceCard> getAllAdviceCards(BuildContext context) {
+    return adviceCardList(context);
   }
 
   // QUICK-ACTIONS

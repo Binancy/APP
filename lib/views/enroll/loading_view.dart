@@ -7,6 +7,7 @@ import 'package:binancy/views/enroll/splash_view.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import '../../globals.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoadingView extends StatefulWidget {
   @override
@@ -32,12 +33,12 @@ class _LoadingViewState extends State<LoadingView> {
                   ),
                   const SpaceDivider(),
                   Text(
-                    appName + " esta cargando...",
+                    AppLocalizations.of(context)!.please_wait,
                     style: titleCardStyle(),
                   ),
                   const SpaceDivider(),
-                  Utils.getAllAdviceCards()[
-                      Random().nextInt(Utils.getAllAdviceCards().length)]
+                  Utils.getAllAdviceCards(context)[
+                      Random().nextInt(Utils.getAllAdviceCards(context).length)]
                 ],
               ),
             ))),

@@ -11,6 +11,7 @@ import 'package:binancy/views/enroll/privacy_terms_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RegisterView extends StatefulWidget {
   @override
@@ -47,8 +48,15 @@ class _RegisterViewState extends State<RegisterView> {
     registerPageController = PageController(initialPage: registerCurrentPage);
   }
 
-  List<AdviceCard> adviceCardList = Utils.getAllAdviceCards();
-  String parsedDate = "Tu fecha de nacimiento";
+  List<AdviceCard> adviceCardList = [];
+  String parsedDate = "";
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    parsedDate = AppLocalizations.of(context)!.birthday;
+    adviceCardList = Utils.getAllAdviceCards(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,10 +74,7 @@ class _RegisterViewState extends State<RegisterView> {
           SliverAppBar(
             elevation: 0,
             centerTitle: true,
-            title: Text("Paso " +
-                (registerCurrentPage + 1).toString() +
-                " de " +
-                registerPageList.length.toString()),
+            title: Text(AppLocalizations.of(context)!.register_steps),
             leading: registerCurrentPage != 0
                 ? IconButton(
                     icon: const Icon(Icons.arrow_back),
@@ -91,7 +96,8 @@ class _RegisterViewState extends State<RegisterView> {
           SliverToBoxAdapter(child: adviceSlider(context)),
           SliverToBoxAdapter(
               child: Center(
-                  child: Text("Crea tu cuenta", style: titleCardStyle()))),
+                  child: Text(AppLocalizations.of(context)!.create_your_account,
+                      style: titleCardStyle()))),
           SliverToBoxAdapter(
               child: SizedBox(
             height: MediaQuery.of(context).size.height -
@@ -136,7 +142,7 @@ class _RegisterViewState extends State<RegisterView> {
                 style: inputStyle(),
                 onSubmitted: (value) => passwordFocusNode.requestFocus(),
                 decoration: customInputDecoration(
-                    "Correo electronico", BinancyIcons.email),
+                    AppLocalizations.of(context)!.email, BinancyIcons.email),
               ),
             ),
             const SpaceDivider(),
@@ -162,8 +168,9 @@ class _RegisterViewState extends State<RegisterView> {
                       style: inputStyle(),
                       onSubmitted: (value) =>
                           verifyPasswordFocusNode.requestFocus(),
-                      decoration:
-                          customInputDecoration("Contraseña", BinancyIcons.key),
+                      decoration: customInputDecoration(
+                          AppLocalizations.of(context)!.password,
+                          BinancyIcons.key),
                     )),
                     IconButton(
                         icon: Icon(
@@ -206,7 +213,8 @@ class _RegisterViewState extends State<RegisterView> {
                         checkFirstStep();
                       },
                       decoration: customInputDecoration(
-                          "Confirma tu contraseña", BinancyIcons.key),
+                          AppLocalizations.of(context)!.repeat_new_password,
+                          BinancyIcons.key),
                     )),
                     IconButton(
                         icon: Icon(
@@ -227,21 +235,22 @@ class _RegisterViewState extends State<RegisterView> {
               width: MediaQuery.of(context).size.width - (customMargin * 2),
               child: BinancyButton(
                   context: context,
-                  text: "Continuar registro",
+                  text: AppLocalizations.of(context)!.continue_register,
                   action: () => checkFirstStep()),
             )
           ],
         ),
         Column(
           children: [
-            Text("¿Ya tienes cuenta?", style: inputStyle()),
+            Text(AppLocalizations.of(context)!.login_button_header,
+                style: inputStyle()),
             const SpaceDivider(),
             Padding(
                 padding: const EdgeInsets.only(
                     left: customMargin, right: customMargin),
                 child: BinancyButton(
                     context: context,
-                    text: "Iniciar sesión",
+                    text: AppLocalizations.of(context)!.login,
                     action: () {
                       FocusScope.of(context).unfocus();
                       Navigator.pop(context);
@@ -279,8 +288,8 @@ class _RegisterViewState extends State<RegisterView> {
                 style: inputStyle(),
                 onSubmitted: (value) => firstSurnameFocusNode.requestFocus(),
                 focusNode: nameFocusNode,
-                decoration:
-                    customInputDecoration("Tu nombre", BinancyIcons.user),
+                decoration: customInputDecoration(
+                    AppLocalizations.of(context)!.your_name, BinancyIcons.user),
               ),
             ),
             const SpaceDivider(),
@@ -302,7 +311,8 @@ class _RegisterViewState extends State<RegisterView> {
                 keyboardType: TextInputType.name,
                 textCapitalization: TextCapitalization.words,
                 decoration: customInputDecoration(
-                    "Tu primer apellido", BinancyIcons.user),
+                    AppLocalizations.of(context)!.your_first_surname,
+                    BinancyIcons.user),
               ),
             ),
             const SpaceDivider(),
@@ -328,7 +338,8 @@ class _RegisterViewState extends State<RegisterView> {
                 keyboardType: TextInputType.name,
                 textCapitalization: TextCapitalization.words,
                 decoration: customInputDecoration(
-                    "Tu segundo apellido", BinancyIcons.user),
+                    AppLocalizations.of(context)!.your_last_surname,
+                    BinancyIcons.user),
               ),
             ),
             const SpaceDivider(),
@@ -401,14 +412,13 @@ class _RegisterViewState extends State<RegisterView> {
                             builder: (context) => const PrivacyAndTermsView())),
                     child: RichText(
                         text: TextSpan(
-                            text: "He leído y acepto ",
+                            text: AppLocalizations.of(context)!
+                                .register_privacy_terms_1,
                             style: miniInputStyle(),
                             children: [
                           TextSpan(
-                              text: "los términos y condiciones de " +
-                                  appName +
-                                  " y " +
-                                  organizationName,
+                              text: AppLocalizations.of(context)!
+                                  .register_privacy_terms_2,
                               style: miniAccentStyle())
                         ])),
                   ))
@@ -422,7 +432,7 @@ class _RegisterViewState extends State<RegisterView> {
               const EdgeInsets.only(left: customMargin, right: customMargin),
           child: BinancyButton(
               context: context,
-              text: "Registrate",
+              text: AppLocalizations.of(context)!.register,
               action: () {
                 FocusScope.of(context).unfocus();
                 checkSecondStep();
@@ -477,33 +487,40 @@ class _RegisterViewState extends State<RegisterView> {
           } else {
             BinancyInfoDialog(
                 context,
-                "La contraseña introducida no es válida.\n\nLa contraseña debe tener una longitud mínima de 8 carácteres y contener como mínimo 1 mayúscula, 1 minúscula, 1 numéro y 1 carácter especial",
+                AppLocalizations.of(context)!.password_not_valid +
+                    AppLocalizations.of(context)!.password_requirements,
                 [
-                  BinancyInfoDialogItem("Aceptar", () {
+                  BinancyInfoDialogItem(AppLocalizations.of(context)!.accept,
+                      () {
                     Navigator.pop(context);
                     passwordFocusNode.requestFocus();
                   })
                 ]);
           }
         } else {
-          BinancyInfoDialog(context, "Las contraseñas no coinciden...", [
-            BinancyInfoDialogItem("Aceptar", () {
+          BinancyInfoDialog(
+              context, AppLocalizations.of(context)!.password_not_match, [
+            BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () {
               Navigator.pop(context);
               passwordFocusNode.requestFocus();
             })
           ]);
         }
       } else {
-        BinancyInfoDialog(context, "El correo introducido no es válido...", [
-          BinancyInfoDialogItem("Aceptar", () {
+        BinancyInfoDialog(
+            context, AppLocalizations.of(context)!.email_not_valid, [
+          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () {
             Navigator.pop(context);
             emailFocusNode.requestFocus();
           })
         ]);
       }
     } else {
-      BinancyInfoDialog(context, "Faltan datos por introducirse",
-          [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
+      BinancyInfoDialog(
+          context, AppLocalizations.of(context)!.register_data_needed, [
+        BinancyInfoDialogItem(
+            AppLocalizations.of(context)!.accept, () => Navigator.pop(context))
+      ]);
     }
   }
 
@@ -532,12 +549,18 @@ class _RegisterViewState extends State<RegisterView> {
           'planTitle': "Free"
         });
       } else {
-        BinancyInfoDialog(context, "Debes aceptar los términos y condiciones",
-            [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
+        BinancyInfoDialog(
+            context, AppLocalizations.of(context)!.register_invalid_terms, [
+          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept,
+              () => Navigator.pop(context))
+        ]);
       }
     } else {
-      BinancyInfoDialog(context, "Faltan datos por introducirse",
-          [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
+      BinancyInfoDialog(
+          context, AppLocalizations.of(context)!.register_data_needed, [
+        BinancyInfoDialogItem(
+            AppLocalizations.of(context)!.accept, () => Navigator.pop(context))
+      ]);
     }
   }
 }

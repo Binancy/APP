@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/ui/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../globals.dart';
 
@@ -53,7 +54,8 @@ class BinancyProgressDialog {
                         const SpaceDivider(isVertical: true),
                         Expanded(
                             child: Text(
-                          customText ?? "Por favor, espera...",
+                          customText ??
+                              AppLocalizations.of(context)!.please_wait,
                           style: dialogStyle(),
                           textAlign: TextAlign.start,
                           maxLines: 3,

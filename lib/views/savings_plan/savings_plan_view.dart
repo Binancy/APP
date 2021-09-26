@@ -12,6 +12,7 @@ import 'package:binancy/utils/ui/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SavingsPlanView extends StatefulWidget {
   final SavingsPlan? selectedSavingsPlan;
@@ -28,13 +29,19 @@ class SavingsPlanView extends StatefulWidget {
 class _SavingsPlanViewState extends State<SavingsPlanView> {
   SavingsPlan? selectedSavingsPlan;
   bool allowEdit = false, createMode = false;
-  String parsedDate = "Fecha límite";
+  String parsedDate = "";
 
   TextEditingController nameController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController totalAmountController = TextEditingController();
 
   _SavingsPlanViewState(this.selectedSavingsPlan, this.allowEdit);
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    parsedDate = AppLocalizations.of(context)!.goal_date;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,22 +70,29 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
                     : createMode
                         ? IconButton(
                             icon: const Icon(Icons.arrow_back),
-                            onPressed: () => BinancyInfoDialog(context,
-                                    "¿Estas seguro que quieres salir?", [
-                                  BinancyInfoDialogItem(
-                                      "Cancelar", () => Navigator.pop(context)),
-                                  BinancyInfoDialogItem("Abortar", () {
-                                    Navigator.pop(context);
-                                    Navigator.pop(context);
-                                  })
-                                ]))
+                            onPressed: () => BinancyInfoDialog(
+                                    context,
+                                    AppLocalizations.of(context)!.exit_confirm,
+                                    [
+                                      BinancyInfoDialogItem(
+                                          AppLocalizations.of(context)!.cancel,
+                                          () => Navigator.pop(context)),
+                                      BinancyInfoDialogItem(
+                                          AppLocalizations.of(context)!.abort,
+                                          () {
+                                        Navigator.pop(context);
+                                        Navigator.pop(context);
+                                      })
+                                    ]))
                         : IconButton(
                             icon: const Icon(Icons.close_outlined),
-                            onPressed: () => BinancyInfoDialog(
-                                context, "Estas seguro que quieres salir?", [
+                            onPressed: () => BinancyInfoDialog(context,
+                                AppLocalizations.of(context)!.exit_confirm, [
                               BinancyInfoDialogItem(
-                                  "Canelar", () => Navigator.pop(context)),
-                              BinancyInfoDialogItem("Abortar", () {
+                                  AppLocalizations.of(context)!.cancel,
+                                  () => Navigator.pop(context)),
+                              BinancyInfoDialogItem(
+                                  AppLocalizations.of(context)!.abort, () {
                                 Navigator.pop(context);
                                 setState(() {
                                   allowEdit = false;
@@ -100,7 +114,8 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
                                   alignment: Alignment.center,
                                   child: Text(
                                       createMode
-                                          ? "Añade una meta de ingresos"
+                                          ? AppLocalizations.of(context)!
+                                              .goals_header
                                           : selectedSavingsPlan!.name,
                                       style: headerItemView(),
                                       textAlign: TextAlign.center)),
@@ -121,8 +136,8 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
                           child: BinancyButton(
                               context: context,
                               text: createMode
-                                  ? "Añadir meta de ahorro"
-                                  : "Actualizar meta de ahorro",
+                                  ? AppLocalizations.of(context)!.add_goal
+                                  : AppLocalizations.of(context)!.update_goal,
                               action: () async {
                                 await checkData(savingsPlanProvider);
                               }),
@@ -150,8 +165,8 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
         keyboardType: TextInputType.name,
         controller: nameController,
         style: inputStyle(),
-        decoration:
-            customInputDecoration("Título de la meta", BinancyIcons.email),
+        decoration: customInputDecoration(
+            AppLocalizations.of(context)!.goal_title, BinancyIcons.email),
       ),
     );
   }
@@ -172,8 +187,8 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
         keyboardType: TextInputType.number,
         controller: totalAmountController,
         style: inputStyle(),
-        decoration:
-            customInputDecoration("Cantidad a ahorrar", BinancyIcons.calendar),
+        decoration: customInputDecoration(
+            AppLocalizations.of(context)!.goal_amount, BinancyIcons.calendar),
       ),
     );
   }
@@ -198,7 +213,7 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
             errorBorder: InputBorder.none,
             disabledBorder: InputBorder.none,
             counterStyle: detailStyle(),
-            hintText: "Añade una descripción a esta meta",
+            hintText: AppLocalizations.of(context)!.goal_description,
             hintStyle: inputStyle()),
         style: inputStyle(),
         maxLength: 300,
@@ -288,13 +303,17 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
         }
       } else {
         BinancyInfoDialog(
-            context,
-            "La meta de ahorros debe tener un valor objetivo",
-            [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
+            context, AppLocalizations.of(context)!.goal_invalid_amount, [
+          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept,
+              () => Navigator.pop(context))
+        ]);
       }
     } else {
-      BinancyInfoDialog(context, "Debes introducir un titulo a la meta",
-          [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
+      BinancyInfoDialog(
+          context, AppLocalizations.of(context)!.goal_invalid_title, [
+        BinancyInfoDialogItem(
+            AppLocalizations.of(context)!.accept, () => Navigator.pop(context))
+      ]);
     }
   }
 
@@ -314,15 +333,17 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
     await SavingsPlansController.addSavingsPlan(savingsPlan).then((value) {
       binancyProgressDialog.dismissDialog();
       if (value) {
-        BinancyInfoDialog(context, "Meta de ahorro añadida correctamente!", [
-          BinancyInfoDialogItem("Aceptar", () async {
+        BinancyInfoDialog(
+            context, AppLocalizations.of(context)!.goal_add_success, [
+          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () async {
             await savingsPlanChangeNotifier.updateSavingsPlan();
             leaveScreen();
           })
         ]);
       } else {
-        BinancyInfoDialog(context, "Error al añadir la meta de ahorro...", [
-          BinancyInfoDialogItem("Aceptar", () {
+        BinancyInfoDialog(
+            context, AppLocalizations.of(context)!.goal_add_fail, [
+          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () {
             Navigator.pop(context);
           })
         ]);
@@ -348,8 +369,8 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
       binancyProgressDialog.dismissDialog();
       if (value) {
         BinancyInfoDialog(
-            context, "Meta de ahorro actualizada correctamente!", [
-          BinancyInfoDialogItem("Aceptar", () async {
+            context, AppLocalizations.of(context)!.goal_update_success, [
+          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () async {
             await savingsPlanChangeNotifier.updateSavingsPlan();
             setState(() {
               selectedSavingsPlan = savingsPlan;
@@ -359,8 +380,9 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
           })
         ]);
       } else {
-        BinancyInfoDialog(context, "Error al actualizar la meta de ahorro...", [
-          BinancyInfoDialogItem("Aceptar", () {
+        BinancyInfoDialog(
+            context, AppLocalizations.of(context)!.goal_update_fail, [
+          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () {
             Navigator.pop(context);
           })
         ]);

@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'movement_view.dart';
 import 'movements_card_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AllMovementView extends StatefulWidget {
   final int initialPage;
@@ -62,7 +63,8 @@ class _AllMovementViewState extends State<AllMovementView>
                   IconButton(
                       onPressed: () {}, icon: const Icon(BinancyIcons.filter))
                 ],
-                title: Text("Todos tus movimientos", style: appBarStyle()),
+                title: Text(AppLocalizations.of(context)!.all_movements,
+                    style: appBarStyle()),
                 bottom: TabBar(
                     controller: tabController,
                     onTap: (value) {
@@ -76,7 +78,10 @@ class _AllMovementViewState extends State<AllMovementView>
                     },
                     labelStyle: semititleStyle(),
                     indicatorColor: accentColor,
-                    tabs: const [Tab(text: "Ingresos"), Tab(text: "Gastos")]),
+                    tabs: [
+                      Tab(text: AppLocalizations.of(context)!.income),
+                      Tab(text: AppLocalizations.of(context)!.expend)
+                    ]),
               ),
               body: ScrollConfiguration(
                   behavior: MyBehavior(),
@@ -128,8 +133,8 @@ class _AllMovementViewState extends State<AllMovementView>
                 children: [
                   Text(
                     movementType == MovementType.INCOME
-                        ? "Ingresos realizados"
-                        : "Gastos realizados",
+                        ? AppLocalizations.of(context)!.incomes_realized
+                        : AppLocalizations.of(context)!.expends_realized,
                     style: titleCardStyle(),
                   ),
                   Text(
@@ -148,7 +153,7 @@ class _AllMovementViewState extends State<AllMovementView>
 
   String buildSubtitleText() {
     if (fromDate == null && toDate == null) {
-      return "Desde siempre";
+      return AppLocalizations.of(context)!.since_forever;
     } else if (fromDate != null && toDate == null) {
       return "Desde el " + Utils.toYMD(fromDate ?? DateTime.now(), context);
     } else if (fromDate == null && toDate != null) {
@@ -187,7 +192,7 @@ class _AllMovementViewState extends State<AllMovementView>
               Padding(
                   padding: const EdgeInsets.only(left: customMargin),
                   child: Text(
-                    "Ingresos",
+                    AppLocalizations.of(context)!.income,
                     style: titleCardStyle(),
                   )),
               const LinearDivider()
@@ -244,7 +249,7 @@ class _AllMovementViewState extends State<AllMovementView>
               Padding(
                   padding: const EdgeInsets.only(left: customMargin),
                   child: Text(
-                    "Gastos",
+                    AppLocalizations.of(context)!.expend,
                     style: titleCardStyle(),
                   )),
               const LinearDivider()

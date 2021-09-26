@@ -14,6 +14,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SettingsUserDataView extends StatefulWidget {
   const SettingsUserDataView({Key? key}) : super(key: key);
@@ -32,7 +33,8 @@ class _SettingsUserDataViewState extends State<SettingsUserDataView> {
             centerTitle: true,
             elevation: 0,
             backgroundColor: Colors.transparent,
-            title: Text("Tu perfil", style: appBarStyle())),
+            title: Text(AppLocalizations.of(context)!.my_profile,
+                style: appBarStyle())),
         body: ScrollConfiguration(
             behavior: MyBehavior(),
             child: ListView(
@@ -78,22 +80,23 @@ class _SettingsUserDataViewState extends State<SettingsUserDataView> {
 
   Widget myDataCard(BuildContext context) {
     List<Widget> widgetList = [
-      const SettingsHeaderRow(text: "Mis datos"),
+      SettingsHeaderRow(text: AppLocalizations.of(context)!.my_data),
       const LinearDivider(),
       SettingsDataRow(
-          title: "Registrado desde",
+          title: AppLocalizations.of(context)!.registered_since,
           data: Utils.toYMD(
               Utils.fromISOStandard(userData['registerDate']), context)),
       const LinearDivider(),
       SettingsDataRow(
-          title: "Fecha de nacimiento",
+          title: AppLocalizations.of(context)!.birthday,
           data: userData['birthday'] != null
               ? Utils.toYMD(
                   Utils.fromISOStandard(userData['birthday']), context)
-              : "No hay información"),
+              : AppLocalizations.of(context)!.no_data),
       const LinearDivider(),
       SettingsDataRow(
-          title: "Principio de mes", data: userData['payDay'].toString()),
+          title: AppLocalizations.of(context)!.first_of_month,
+          data: userData['payDay'].toString()),
     ];
 
     return Container(
@@ -107,18 +110,20 @@ class _SettingsUserDataViewState extends State<SettingsUserDataView> {
 
   Widget actionsCard(BuildContext context) {
     List<Widget> widgetList = [
-      const SettingsHeaderRow(text: "Acciones disponibles"),
+      SettingsHeaderRow(text: AppLocalizations.of(context)!.actions),
       const LinearDivider(),
       SettingsActionRow(
-          text: "Edita tu perfil", action: () => editUserInfo(context)),
+          text: AppLocalizations.of(context)!.edit_profile,
+          action: () => editUserInfo(context)),
       const LinearDivider(),
       SettingsActionRow(
-          text: "Cambiar principio de mes",
+          text: AppLocalizations.of(context)!.change_first_of_month,
           action: () {
             BinancyDayPickerDialog binancyDayPickerDialog =
                 BinancyDayPickerDialog(
                     context: context,
-                    title: "Selecciona tu principio de mes",
+                    title: AppLocalizations.of(context)!
+                        .change_first_of_month_header,
                     initialDate: userData['payDay']);
             binancyDayPickerDialog.showDayPickerDialog().then((selectedDay) {
               if (selectedDay != null) {
@@ -130,16 +135,18 @@ class _SettingsUserDataViewState extends State<SettingsUserDataView> {
                   if (value) {
                     userData['payDay'] = selectedDay;
                     setState(() {});
-                    BinancyInfoDialog(
-                        context, "Principio de mes actualizado correctamente", [
+                    BinancyInfoDialog(context,
+                        AppLocalizations.of(context)!.payday_change_success, [
                       BinancyInfoDialogItem(
-                          "Aceptar", () => Navigator.pop(context))
+                          AppLocalizations.of(context)!.accept,
+                          () => Navigator.pop(context))
                     ]);
                   } else {
-                    BinancyInfoDialog(
-                        context, "Error al actualizar el principio de mes", [
+                    BinancyInfoDialog(context,
+                        AppLocalizations.of(context)!.payday_change_fail, [
                       BinancyInfoDialogItem(
-                          "Aceptar", () => Navigator.pop(context))
+                          AppLocalizations.of(context)!.accept,
+                          () => Navigator.pop(context))
                     ]);
                   }
                 });
@@ -148,15 +155,16 @@ class _SettingsUserDataViewState extends State<SettingsUserDataView> {
           }),
       const LinearDivider(),
       SettingsActionRow(
-        text: "Cambiar contraseña",
+        text: AppLocalizations.of(context)!.change_password,
         action: () => SettingsChangePassword(context: context),
       ),
       const LinearDivider(),
       SettingsActionRow(
-          text: "Borrar tus datos", action: () => confirmDeleteUserData()),
+          text: AppLocalizations.of(context)!.delete_data,
+          action: () => confirmDeleteUserData()),
       const LinearDivider(),
       SettingsActionRow(
-        text: "Eliminar cuenta",
+        text: AppLocalizations.of(context)!.delete_account,
         action: () => confirmDeleteAccount(),
       ),
     ];
@@ -222,45 +230,26 @@ class _SettingsUserDataViewState extends State<SettingsUserDataView> {
   void confirmDeleteUserData({bool skipVerification = false}) {
     if (!skipVerification) {
       BinancyInfoDialog(
-          context,
-          "¿Estas seguro que quieres eliminar todos tus datos? Tu cuenta seguirá estando activa para " +
-              appName +
-              " y los demás servicios que ofrece Appxs",
-          [
-            BinancyInfoDialogItem("Cancelar", () => Navigator.pop(context)),
-            BinancyInfoDialogItem("Eliminar datos",
-                () => AccountController.deleteUserData(context))
-          ]);
+          context, AppLocalizations.of(context)!.delete_data_description, [
+        BinancyInfoDialogItem(
+            AppLocalizations.of(context)!.cancel, () => Navigator.pop(context)),
+        BinancyInfoDialogItem(AppLocalizations.of(context)!.delete_data,
+            () => AccountController.deleteUserData(context))
+      ]);
     } else {
       AccountController.deleteUserData(context);
     }
   }
 
-  List<DropdownMenuItem> generatePayDayDialog() {
-    List<DropdownMenuItem> payDayNumbersList = [];
-    for (var i = 0; i < 30; i++) {
-      payDayNumbersList.add(DropdownMenuItem(
-          enabled: true,
-          value: i + 1,
-          child: Text("(i + 1).toString()", style: dialogStyle())));
-    }
-    return payDayNumbersList;
-  }
-
   void confirmDeleteAccount() {
     BinancyInfoDialog(
-        context,
-        "¿Estas seguro que quieres eliminar tu cuenta? Si eliminas tu cuenta también se eliminará esta cuenta para los demás servicios que ofrece Appxs, si solamente quieres eliminar tus datos de " +
-            appName +
-            " selecciona \"Solo " +
-            appName +
-            "\"",
-        [
-          BinancyInfoDialogItem("Cancelar", () => Navigator.pop(context)),
-          BinancyInfoDialogItem("Solo Binancy",
-              () => confirmDeleteUserData(skipVerification: true)),
-          BinancyInfoDialogItem("Eliminar completamente",
-              () => AccountController.deleteAccount(context))
-        ]);
+        context, AppLocalizations.of(context)!.delete_account_description, [
+      BinancyInfoDialogItem(
+          AppLocalizations.of(context)!.cancel, () => Navigator.pop(context)),
+      BinancyInfoDialogItem(AppLocalizations.of(context)!.only_appName,
+          () => confirmDeleteUserData(skipVerification: true)),
+      BinancyInfoDialogItem(AppLocalizations.of(context)!.delete_account,
+          () => AccountController.deleteAccount(context))
+    ]);
   }
 }

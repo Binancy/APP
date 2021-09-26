@@ -12,6 +12,7 @@ import 'package:binancy/views/payments/premium_plans_view.dart';
 import 'package:binancy/views/settings/settings_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SettingsView extends StatefulWidget {
   @override
@@ -26,7 +27,7 @@ class _SettingsViewState extends State<SettingsView> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         title: Text(
-          "Ajustes",
+          AppLocalizations.of(context)!.settings,
           style: appBarStyle(),
         ),
         centerTitle: true,
@@ -51,13 +52,15 @@ class _SettingsViewState extends State<SettingsView> {
                 SliverToBoxAdapter(
                     child: BinancyButton(
                   context: context,
-                  text: "Cerrar sesión",
+                  text: AppLocalizations.of(context)!.logout,
                   action: () async {
-                    BinancyInfoDialog(context,
-                        "¿Estas seguro que quieres cerrar tu sesión?", [
+                    BinancyInfoDialog(
+                        context, AppLocalizations.of(context)!.logout_confirm, [
                       BinancyInfoDialogItem(
-                          "Cancelar", () => Navigator.pop(context)),
-                      BinancyInfoDialogItem("Cerrar sesión", () async {
+                          AppLocalizations.of(context)!.cancel,
+                          () => Navigator.pop(context)),
+                      BinancyInfoDialogItem(
+                          AppLocalizations.of(context)!.logout, () async {
                         Navigator.pop(context);
                         BinancyProgressDialog progressDialog =
                             BinancyProgressDialog(context: context)
@@ -86,15 +89,22 @@ class _SettingsViewState extends State<SettingsView> {
   Widget myDataCard(BuildContext context) {
     print(userData);
     List<Widget> widgetList = [
-      const SettingsHeaderRow(text: "Mis datos"),
+      SettingsHeaderRow(text: AppLocalizations.of(context)!.my_data),
       const LinearDivider(),
-      SettingsDataRow(title: "Nombre", data: userData['nameUser'] ?? "-"),
+      SettingsDataRow(
+          title: AppLocalizations.of(context)!.name,
+          data: userData['nameUser'] ?? "-"),
       const LinearDivider(),
-      SettingsDataRow(title: "Email", data: userData['email'] ?? "-"),
+      SettingsDataRow(
+          title: AppLocalizations.of(context)!.email,
+          data: userData['email'] ?? "-"),
       const LinearDivider(),
-      SettingsDataRow(title: "Plan actual", data: userData['planTitle']),
+      SettingsDataRow(
+          title: AppLocalizations.of(context)!.current_plan,
+          data: userData['planTitle']),
       const LinearDivider(),
-      const SettingsDataRow(title: "Versión de Binancy", data: appVersion)
+      SettingsDataRow(
+          title: AppLocalizations.of(context)!.version, data: appVersion)
     ];
 
     return Container(
@@ -110,10 +120,10 @@ class _SettingsViewState extends State<SettingsView> {
   Widget actionsCard(
       BuildContext context, MovementsChangeNotifier movementsChangeNotifier) {
     List<Widget> widgetList = [
-      const SettingsHeaderRow(text: "Acciones"),
+      SettingsHeaderRow(text: AppLocalizations.of(context)!.actions),
       const LinearDivider(),
       SettingsActionRow(
-          text: "Ver mi perfil",
+          text: AppLocalizations.of(context)!.my_profile,
           action: () async => await Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -123,22 +133,23 @@ class _SettingsViewState extends State<SettingsView> {
                 setState(() {});
               })),
       const LinearDivider(),
-      SettingsActionRow(text: "Notificaciones", action: () => null),
-      const LinearDivider(),
-      SettingsActionRow(text: "Seguridad", action: () => null),
+      SettingsActionRow(
+          text: AppLocalizations.of(context)!.notifications,
+          action: () => null),
       const LinearDivider(),
       SettingsActionRow(
-          text: "Política de privacidad",
+          text: AppLocalizations.of(context)!.privacy_policy,
           action: () => Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => const PrivacyAndTermsView()))),
       const LinearDivider(),
-      SettingsActionRow(text: "Soporte", action: () => null),
+      SettingsActionRow(
+          text: AppLocalizations.of(context)!.support, action: () => null),
       const LinearDivider(),
       Utils.showIfPlanIsEqualOrLower(userData['idPlan'], "binancy")
           ? SettingsActionRow(
-              text: "Cambiar de plan",
+              text: AppLocalizations.of(context)!.change_plan,
               action: () => Navigator.push(
                   context,
                   MaterialPageRoute(

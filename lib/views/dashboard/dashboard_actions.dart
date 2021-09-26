@@ -23,7 +23,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'dashboard_action_button_widget.dart';
 
 class DashboardActionsCard extends StatefulWidget {
@@ -57,7 +57,7 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
     return Column(
       children: [
         Text(
-          '¿Que quieres hacer?',
+          AppLocalizations.of(context)!.dashboard_actions_header,
           style: titleCardStyle(),
         ),
         const SizedBox(
@@ -152,7 +152,7 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
     actionsList.add(ActionButtonWidget(
         context: context,
         icon: SvgPicture.asset("assets/svg/dashboard_add_income.svg"),
-        text: "Añade un ingreso",
+        text: AppLocalizations.of(context)!.add_income,
         action: () => Navigator.push(
             context,
             MaterialPageRoute(
@@ -175,7 +175,7 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
     actionsList.add(ActionButtonWidget(
         context: context,
         icon: SvgPicture.asset("assets/svg/dashboard_compare.svg"),
-        text: "Mi cuenta",
+        text: AppLocalizations.of(context)!.my_account,
         action: () => Navigator.push(
             context,
             MaterialPageRoute(
@@ -207,7 +207,7 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
     actionsList.add(ActionButtonWidget(
         context: context,
         icon: SvgPicture.asset("assets/svg/dashboard_add_expense.svg"),
-        text: "Añade un gasto",
+        text: AppLocalizations.of(context)!.add_expend,
         action: () => Navigator.push(
             context,
             MaterialPageRoute(
@@ -230,12 +230,12 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
     actionsList.add(ActionButtonWidget(
         context: context,
         icon: SvgPicture.asset("assets/svg/dashboard_categories.svg"),
-        text: "Ver categorías",
+        text: AppLocalizations.of(context)!.see_categories,
         action: () {}));
     actionsList.add(ActionButtonWidget(
         context: context,
         icon: SvgPicture.asset("assets/svg/dashboard_see_movements.svg"),
-        text: "Todos mis movimientos",
+        text: AppLocalizations.of(context)!.see_all_movements,
         action: () => Navigator.push(
             context,
             MaterialPageRoute(
@@ -256,7 +256,7 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
     actionsList.add(ActionButtonWidget(
         context: context,
         icon: SvgPicture.asset("assets/svg/dashboard_coins.svg"),
-        text: "Gastos rápidos",
+        text: AppLocalizations.of(context)!.microexpends,
         action: () async {
           if (Utils.isPremium()) {
             Navigator.push(
@@ -278,7 +278,7 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
     actionsList.add(ActionButtonWidget(
         context: context,
         icon: SvgPicture.asset("assets/svg/dashboard_vault.svg"),
-        text: "Metas de ahorro",
+        text: AppLocalizations.of(context)!.goals,
         action: () => Utils.isPremium()
             ? Navigator.push(
                 context,
@@ -301,7 +301,7 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
     actionsList.add(ActionButtonWidget(
         context: context,
         icon: SvgPicture.asset("assets/svg/dashboard_historial.svg"),
-        text: "Tus suscripciones",
+        text: AppLocalizations.of(context)!.my_subscriptions,
         action: () => Utils.isPremium()
             ? Navigator.push(
                 context,
@@ -320,13 +320,13 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
     actionsList.add(ActionButtonWidget(
         context: context,
         icon: SvgPicture.asset("assets/svg/dashboard_advices.svg"),
-        text: "Ayudas y consejos",
+        text: AppLocalizations.of(context)!.help_advice,
         action: () {}));
     if (Utils.showIfPlanIsEqualOrLower(userData['idPlan'], "binancy")) {
       actionsList.add(ActionButtonWidget(
           context: context,
           icon: SvgPicture.asset("assets/svg/dashboard_premium.svg"),
-          text: "Hazte premium",
+          text: AppLocalizations.of(context)!.become_premium,
           action: () => Navigator.push(
               context,
               MaterialPageRoute(
@@ -339,7 +339,7 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
       actionsList.add(ActionButtonWidget(
           context: context,
           icon: SvgPicture.asset("assets/svg/dashboard_premium.svg"),
-          text: "Haz una donación",
+          text: AppLocalizations.of(context)!.make_donation,
           action: () => Navigator.push(
               context,
               MaterialPageRoute(
@@ -352,7 +352,7 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
     actionsList.add(ActionButtonWidget(
         context: context,
         icon: SvgPicture.asset("assets/svg/dashboard_settings.svg"),
-        text: "Ajustes",
+        text: AppLocalizations.of(context)!.settings,
         action: () => Navigator.push(
             context,
             MaterialPageRoute(
@@ -388,11 +388,12 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text("Esta es una función premium",
+                      Text(AppLocalizations.of(context)!.premium_action,
                           style: headerItemView(), textAlign: TextAlign.center),
                       const SpaceDivider(),
                       Text(
-                          "Para utilizar esta función debes adquirir uno de los planes premium que Binancy obtiene",
+                          AppLocalizations.of(context)!
+                              .premium_action_description,
                           style: accentStyle(),
                           textAlign: TextAlign.center)
                     ],
@@ -400,7 +401,7 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
                   const SpaceDivider(),
                   BinancyButton(
                       context: context,
-                      text: "Hazte premium",
+                      text: AppLocalizations.of(context)!.become_premium,
                       action: () {
                         Navigator.pop(context);
                         Navigator.push(

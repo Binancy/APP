@@ -11,6 +11,7 @@ import 'package:binancy/views/subscriptions/subscriptions_all_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:binancy/utils/ui/styles.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DashboardHeaderRow extends StatelessWidget {
   @override
@@ -21,7 +22,7 @@ class DashboardHeaderRow extends StatelessWidget {
       if (Utils.isPremium()) {
         rowItems.add(rowWidget(
             subscriptionsProvider.totalSubscriptionsValue,
-            "Ver suscripciones",
+            AppLocalizations.of(context)!.see_subscriptions,
             () => Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -84,7 +85,7 @@ class DashboardHeaderRow extends StatelessWidget {
     return [
       rowWidget(
           movementsProvider.totalHeritage,
-          "Ver patrimonio",
+          AppLocalizations.of(context)!.see_heritage,
           () => Navigator.push(
               context,
               MaterialPageRoute(
@@ -116,7 +117,7 @@ class DashboardHeaderRow extends StatelessWidget {
                       )))),
       rowWidget(
           movementsProvider.getThisMonthIncomes(),
-          "Ver ingresos",
+          AppLocalizations.of(context)!.see_incomes,
           () => Navigator.push(
               context,
               MaterialPageRoute(
@@ -136,7 +137,7 @@ class DashboardHeaderRow extends StatelessWidget {
               ))),
       rowWidget(
           movementsProvider.getThisMonthExpenses(),
-          "Ver gastos",
+          AppLocalizations.of(context)!.see_expends,
           () => Navigator.push(
               context,
               MaterialPageRoute(

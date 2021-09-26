@@ -10,6 +10,7 @@ import 'package:binancy/views/savings_plan/savings_plan_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SavingsPlanAllView extends StatefulWidget {
   @override
@@ -52,7 +53,8 @@ class _SavingsPlanAllViewState extends State<SavingsPlanAllView> {
                             ))),
                 icon: const Icon(Icons.add))
           ],
-          title: Text("Metas de ahorro", style: appBarStyle())),
+          title:
+              Text(AppLocalizations.of(context)!.goals, style: appBarStyle())),
       body: Consumer2<SavingsPlanChangeNotifier, MovementsChangeNotifier>(
           builder: (context, savingsProvider, movementsProvider, child) {
         return Column(
@@ -60,10 +62,11 @@ class _SavingsPlanAllViewState extends State<SavingsPlanAllView> {
             const SpaceDivider(),
             AdviceCard(
                 icon: SvgPicture.asset("assets/svg/dashboard_vault.svg"),
-                text:
-                    "Establece metas de ahorro para cumplir en un tiempo determinado"),
+                text: AppLocalizations.of(context)!.goals_ad_description),
             const SpaceDivider(),
-            Center(child: Text("Tus metas de ahorro", style: titleCardStyle())),
+            Center(
+                child: Text(AppLocalizations.of(context)!.your_goals,
+                    style: titleCardStyle())),
             const SpaceDivider(),
             savingsProvider.savingsPlanList.isEmpty
                 ? Expanded(child: buildEmptySavingsPlanWidget())
@@ -88,8 +91,8 @@ class _SavingsPlanAllViewState extends State<SavingsPlanAllView> {
                         child: BinancyButton(
                             context: context,
                             text: showAllSavingsPlan
-                                ? "Ver menos"
-                                : "Ver todas tus metas de ahorro",
+                                ? AppLocalizations.of(context)!.see_less
+                                : AppLocalizations.of(context)!.see_more,
                             action: () => setState(() {
                                   showAllSavingsPlan = !showAllSavingsPlan;
                                 })))

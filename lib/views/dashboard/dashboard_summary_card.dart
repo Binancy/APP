@@ -5,6 +5,7 @@ import 'package:binancy/utils/utils.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DashboardSummary extends StatelessWidget {
   @override
@@ -27,7 +28,7 @@ class DashboardSummaryCard extends StatelessWidget {
       return Column(
         children: [
           Text(
-            "Tu balance mensual",
+            AppLocalizations.of(context)!.your_monthly_balance,
             style: titleCardStyle(),
           ),
           const SizedBox(

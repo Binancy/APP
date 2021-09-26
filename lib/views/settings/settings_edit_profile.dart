@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../globals.dart';
 
 class SettingsEditUserInfoView extends StatefulWidget {
@@ -34,9 +34,15 @@ class _SettingsEditUserInfoViewState extends State<SettingsEditUserInfoView> {
       firstSurnameFocusNode = FocusNode(),
       lastSurnameFocusNode = FocusNode();
 
-  String birthdayDate = "Tu fecha de nacimiento";
+  String birthdayDate = "";
   int selectedPayDay = 0;
   bool firstRun = true;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    birthdayDate = AppLocalizations.of(context)!.birthday;
+  }
 
   @override
   void dispose() {
@@ -78,26 +84,28 @@ class _SettingsEditUserInfoViewState extends State<SettingsEditUserInfoView> {
                   padding: const EdgeInsets.all(customMargin),
                   children: [
                     Center(
-                        child:
-                            Text("Edita tu perfil", style: titleCardStyle())),
+                        child: Text(AppLocalizations.of(context)!.edit_profile,
+                            style: titleCardStyle())),
                     const SpaceDivider(),
                     inputWidget(
                         controller: nameController,
-                        hintText: "Tu nombre",
+                        hintText: AppLocalizations.of(context)!.your_name,
                         icon: BinancyIcons.user,
                         onSubmitted: (value) =>
                             firstSurnameFocusNode.requestFocus()),
                     const SpaceDivider(),
                     inputWidget(
                         controller: firstSurnameController,
-                        hintText: "Tu primer apellido",
+                        hintText:
+                            AppLocalizations.of(context)!.your_first_surname,
                         icon: BinancyIcons.user,
                         onSubmitted: (value) =>
                             lastSurnameFocusNode.requestFocus()),
                     const SpaceDivider(),
                     inputWidget(
                         controller: lastSurnameController,
-                        hintText: "Tu segundo apellido",
+                        hintText:
+                            AppLocalizations.of(context)!.your_last_surname,
                         icon: BinancyIcons.user,
                         onSubmitted: (value) => lastSurnameFocusNode.unfocus()),
                     const SpaceDivider(),
@@ -113,7 +121,7 @@ class _SettingsEditUserInfoViewState extends State<SettingsEditUserInfoView> {
                     const SpaceDivider(),
                     BinancyButton(
                         context: context,
-                        text: "Actualizar perfil",
+                        text: AppLocalizations.of(context)!.update_profile,
                         action: () => checkData()),
                     SpaceDivider(
                         customSpace: MediaQuery.of(context).viewInsets.bottom)
@@ -186,11 +194,6 @@ class _SettingsEditUserInfoViewState extends State<SettingsEditUserInfoView> {
     );
   }
 
-  Widget inputNumberWidget() {
-    return BinancyButton(
-        context: context, text: "Cambia tu principio de mes", action: () {});
-  }
-
   void checkData() {
     FocusScope.of(context).unfocus();
     if (nameController.text.isNotEmpty) {
@@ -214,26 +217,35 @@ class _SettingsEditUserInfoViewState extends State<SettingsEditUserInfoView> {
                 : null;
             widget.refreshParent();
             binancyProgressDialog.dismissDialog();
-            BinancyInfoDialog(context, "Datos actualizados correctamente", [
-              BinancyInfoDialogItem("Aceptar", () {
+            BinancyInfoDialog(
+                context, AppLocalizations.of(context)!.profile_update_success, [
+              BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () {
                 Navigator.pop(context);
                 Navigator.pop(context);
               })
             ]);
           } else {
             binancyProgressDialog.dismissDialog();
-            BinancyInfoDialog(context, "Ha ocurrido un error", [
-              BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))
+            BinancyInfoDialog(
+                context, AppLocalizations.of(context)!.profile_update_fail, [
+              BinancyInfoDialogItem(AppLocalizations.of(context)!.accept,
+                  () => Navigator.pop(context))
             ]);
           }
         });
       } else {
-        BinancyInfoDialog(context, "No hay cambios por aplicar",
-            [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
+        BinancyInfoDialog(
+            context, AppLocalizations.of(context)!.profile_update_no_changes, [
+          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept,
+              () => Navigator.pop(context))
+        ]);
       }
     } else {
-      BinancyInfoDialog(context, "Debes introducir tu nombre",
-          [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
+      BinancyInfoDialog(
+          context, AppLocalizations.of(context)!.profile_invalid_name, [
+        BinancyInfoDialogItem(
+            AppLocalizations.of(context)!.accept, () => Navigator.pop(context))
+      ]);
     }
   }
 
@@ -244,7 +256,7 @@ class _SettingsEditUserInfoViewState extends State<SettingsEditUserInfoView> {
     selectedPayDay = userData['payDay'];
     birthdayDate = userData['birthday'] != null
         ? Utils.toYMD(Utils.fromISOStandard(userData['birthday']), context)
-        : "Introduce tu fecha de nacimiento";
+        : AppLocalizations.of(context)!.set_birthday;
   }
 
   bool hasChangedData() {
