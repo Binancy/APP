@@ -52,7 +52,7 @@ class _MovementViewState extends State<MovementView> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    parsedDate = AppLocalizations.of(context)!.your_name;
+    parsedDate = AppLocalizations.of(context)!.realization_date;
   }
 
   @override

@@ -1,3 +1,5 @@
+// ignore_for_file: must_call_super
+
 import 'package:binancy/controllers/microexpenses_controller.dart';
 import 'package:binancy/globals.dart';
 import 'package:binancy/models/microexpend.dart';

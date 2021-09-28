@@ -65,7 +65,7 @@ class DashboardHeaderRow extends StatelessWidget {
             width: 160,
             child: Padding(
               padding: const EdgeInsets.only(
-                  left: customMargin, right: customMargin),
+                  left: customMargin),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,

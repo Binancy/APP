@@ -81,7 +81,7 @@ TextStyle headerItemView() {
 TextStyle balanceValueStyle() {
   return TextStyle(
       color: textColor,
-      fontSize: 70,
+      fontSize: 65,
       fontWeight: FontWeight.bold,
       fontFamily: "Segoe UI");
 }
