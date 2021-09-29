@@ -22,12 +22,17 @@ class _LoginViewState extends State<LoginView> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
+  FocusNode userFocusNode = FocusNode();
   FocusNode passwordFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+      onTap: () {
+        userFocusNode.unfocus();
+        passwordFocusNode.unfocus();
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
       child: BinancyBackground(Scaffold(
           backgroundColor: Colors.transparent,
           body: SafeArea(
@@ -113,7 +118,7 @@ class _LoginViewState extends State<LoginView> {
     String email = emailController.text;
     String password = Utils.encrypt(passwordController.text);
 
-    if (email.isNotEmpty && password.isNotEmpty) {
+    if (email.isNotEmpty && passwordController.text.isNotEmpty) {
       if (Utils.verifyEmail(email)) {
         ConnAPI connAPI = ConnAPI(APIEndpoints.LOGIN, "POST", false,
             {'email': email, 'pass': password});
@@ -150,15 +155,23 @@ class _LoginViewState extends State<LoginView> {
       } else {
         BinancyInfoDialog(
             context, AppLocalizations.of(context)!.email_not_valid, [
-          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept,
-              () => Navigator.pop(context))
+          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () {
+            Navigator.pop(context);
+            userFocusNode.requestFocus();
+          })
         ]);
       }
     } else {
       BinancyInfoDialog(
           context, AppLocalizations.of(context)!.register_data_needed, [
-        BinancyInfoDialogItem(
-            AppLocalizations.of(context)!.accept, () => Navigator.pop(context))
+        BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () {
+          Navigator.pop(context);
+          if (emailController.text.isEmpty) {
+            userFocusNode.requestFocus();
+          } else if (passwordController.text.isEmpty) {
+            passwordFocusNode.requestFocus();
+          }
+        })
       ]);
     }
   }
@@ -172,8 +185,12 @@ class _LoginViewState extends State<LoginView> {
           color: themeColor.withOpacity(0.1)),
       alignment: Alignment.center,
       child: TextField(
+        focusNode: userFocusNode,
         textInputAction: TextInputAction.next,
-        onSubmitted: (value) => passwordFocusNode.requestFocus(),
+        onSubmitted: (value) {
+          userFocusNode.unfocus();
+          passwordFocusNode.requestFocus();
+        },
         keyboardType: TextInputType.emailAddress,
         controller: emailController,
         style: inputStyle(),
@@ -196,7 +213,10 @@ class _LoginViewState extends State<LoginView> {
             Expanded(
               child: TextField(
                 focusNode: passwordFocusNode,
-                onSubmitted: (value) async => await makeLogin(),
+                onSubmitted: (value) async {
+                  passwordFocusNode.unfocus();
+                  await makeLogin();
+                },
                 controller: passwordController,
                 style: inputStyle(),
                 autocorrect: false,
