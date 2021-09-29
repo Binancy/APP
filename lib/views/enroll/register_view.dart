@@ -69,51 +69,49 @@ class _RegisterViewState extends State<RegisterView> {
     ];
 
     return BinancyBackground(Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          centerTitle: true,
+          title: Text(AppLocalizations.of(context)!.register_steps(
+              registerCurrentPage + 1, registerPageList.length)),
+          leading: registerCurrentPage != 0
+              ? IconButton(
+                  icon: const Icon(Icons.arrow_back),
+                  onPressed: () {
+                    setState(() {
+                      registerCurrentPage--;
+                    });
+                    registerPageController.animateToPage(registerCurrentPage,
+                        duration:
+                            Duration(milliseconds: registerTransitionDuration),
+                        curve: Curves.easeOut);
+                  })
+              : const SizedBox(),
+          backgroundColor: Colors.transparent,
+        ),
         backgroundColor: Colors.transparent,
-        body: CustomScrollView(slivers: [
-          SliverAppBar(
-            elevation: 0,
-            centerTitle: true,
-            title: Text(AppLocalizations.of(context)!
-                .register_steps(registerCurrentPage, registerPageList.length)),
-            leading: registerCurrentPage != 0
-                ? IconButton(
-                    icon: const Icon(Icons.arrow_back),
-                    onPressed: () {
-                      setState(() {
-                        registerCurrentPage--;
-                      });
-                      registerPageController.animateToPage(registerCurrentPage,
-                          duration: Duration(
-                              milliseconds: registerTransitionDuration),
-                          curve: Curves.easeOut);
-                    })
-                : const SizedBox(),
-            backgroundColor: Colors.transparent,
-            pinned: false,
-            snap: true,
-            floating: true,
-          ),
-          SliverToBoxAdapter(child: adviceSlider(context)),
-          SliverToBoxAdapter(
-              child: Center(
-                  child: Text(AppLocalizations.of(context)!.create_your_account,
-                      style: titleCardStyle()))),
-          SliverToBoxAdapter(
-              child: SizedBox(
-            height: MediaQuery.of(context).size.height -
-                (MediaQuery.of(context).padding.top +
-                    MediaQuery.of(context).padding.bottom +
-                    kToolbarHeight +
-                    210),
-            child: PageView(
-              physics: const NeverScrollableScrollPhysics(),
-              controller: registerPageController,
-              onPageChanged: (value) => registerCurrentPage = value,
-              children: registerPageList,
+        body: ScrollConfiguration(
+          behavior: MyBehavior(),
+          child: ListView(children: [
+            adviceSlider(context),
+            Center(
+                child: Text(AppLocalizations.of(context)!.create_your_account,
+                    style: titleCardStyle())),
+            SizedBox(
+              height: MediaQuery.of(context).size.height -
+                  (MediaQuery.of(context).padding.top +
+                      MediaQuery.of(context).padding.bottom +
+                      kToolbarHeight +
+                      190),
+              child: PageView(
+                physics: const NeverScrollableScrollPhysics(),
+                controller: registerPageController,
+                onPageChanged: (value) => registerCurrentPage = value,
+                children: registerPageList,
+              ),
             ),
-          )),
-        ])));
+          ]),
+        )));
   }
 
   Widget registerFirstStep(BuildContext context) {
@@ -242,20 +240,23 @@ class _RegisterViewState extends State<RegisterView> {
           ],
         ),
         Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(AppLocalizations.of(context)!.login_button_header,
                 style: inputStyle()),
             const SpaceDivider(),
             Padding(
-                padding: const EdgeInsets.only(
-                    left: customMargin, right: customMargin),
-                child: BinancyButton(
-                    context: context,
-                    text: AppLocalizations.of(context)!.login,
-                    action: () {
-                      FocusScope.of(context).unfocus();
-                      Navigator.pop(context);
-                    }))
+              padding: const EdgeInsets.fromLTRB(
+                  customMargin, 0, customMargin, customMargin),
+              child: BinancyButton(
+                  context: context,
+                  text: AppLocalizations.of(context)!.login,
+                  action: () {
+                    FocusScope.of(context).unfocus();
+                    Navigator.pop(context);
+                  }),
+            )
           ],
         )
       ],
@@ -407,14 +408,23 @@ class _RegisterViewState extends State<RegisterView> {
                       }),
                   Expanded(
                       child: GestureDetector(
-                    onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const PrivacyAndTermsView())),
+                    onTap: () {
+                      Utils.unfocusAll(List.of([
+                        nameFocusNode,
+                        firstSurnameFocusNode,
+                        lastSurnameFocusNode
+                      ]));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const PrivacyAndTermsView()));
+                    },
                     child: RichText(
                         text: TextSpan(
                             text: AppLocalizations.of(context)!
-                                .register_privacy_terms_1,
+                                    .register_privacy_terms_1 +
+                                " ",
                             style: miniInputStyle(),
                             children: [
                           TextSpan(
@@ -430,8 +440,8 @@ class _RegisterViewState extends State<RegisterView> {
           ],
         ),
         Padding(
-          padding:
-              const EdgeInsets.only(left: customMargin, right: customMargin),
+          padding: const EdgeInsets.only(
+              left: customMargin, right: customMargin, bottom: customMargin),
           child: BinancyButton(
               context: context,
               text: AppLocalizations.of(context)!.register,

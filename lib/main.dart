@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:binancy/globals.dart';
 import 'package:binancy/utils/ui/styles.dart';
@@ -11,12 +12,15 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 
 void main() async {
   runZonedGuarded<Future<void>>(() async {
     Paint.enableDithering = true;
 
     WidgetsFlutterBinding.ensureInitialized();
+
+    // FIREBASE INITIALIZATION
     await Firebase.initializeApp();
     if (kDebugMode) {
       await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
@@ -25,11 +29,21 @@ void main() async {
       await FirebaseCrashlytics.instance.sendUnsentReports();
     }
 
+    // IAP INITIALIZATION
+    if (Platform.isAndroid) {
+      InAppPurchaseAndroidPlatformAddition.enablePendingPurchases();
+    }
+
     runApp(MyApp());
   }, (error, stack) => FirebaseCrashlytics.instance.recordError(error, stack));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(

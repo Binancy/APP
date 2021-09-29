@@ -30,16 +30,17 @@ class _LoginViewState extends State<LoginView> {
       onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
       child: BinancyBackground(Scaffold(
           backgroundColor: Colors.transparent,
-          body: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Center(
-                child: ScrollConfiguration(
-                    behavior: MyBehavior(),
-                    child: CustomScrollView(
+          body: SafeArea(
+            child: Padding(
+              padding:
+                  const EdgeInsets.fromLTRB(customMargin, 0, customMargin, 0),
+              child: ScrollConfiguration(
+                  behavior: MyBehavior(),
+                  child: Center(
+                    child: ListView(
                       shrinkWrap: true,
-                      slivers: [
-                        SliverToBoxAdapter(
-                            child: Center(
+                      children: [
+                        Center(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -95,13 +96,16 @@ class _LoginViewState extends State<LoginView> {
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 RegisterView()));
-                                  })
+                                  }),
+                              const SpaceDivider(),
                             ],
                           ),
-                        ))
+                        )
                       ],
-                    )),
-              )))),
+                    ),
+                  )),
+            ),
+          ))),
     );
   }
 

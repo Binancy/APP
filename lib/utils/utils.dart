@@ -269,6 +269,12 @@ class Utils {
   static Month thisMonthEnun(DateTime todayDate) {
     return Month.values[todayDate.month];
   }
+
+  static void unfocusAll(List<FocusNode> focusNodeList) {
+    for (var focusNode in focusNodeList) {
+      focusNode.unfocus();
+    }
+  }
 }
 
 class DecimalTextInputFormatter extends TextInputFormatter {
