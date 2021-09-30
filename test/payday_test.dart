@@ -16,9 +16,12 @@ void main() {
     final BuildContext context = tester.element(find.byType(Container));
 
     userData = {'payDay': 20};
-    expect(Utils.toYMD(Utils.getCurrentMonthPayDay(), context), "9/20/2021");
-    expect(Utils.toYMD(Utils.getNextMonthPayDay(), context), "10/20/2021");
-    expect(Utils.getMonthNameOfPayDay(Utils.getCurrentMonthPayDay()),
+    DateTime today = Utils.getTodayDate();
+    expect(
+        Utils.toYMD(Utils.getStartMonthByPayDay(today), context), "9/20/2021");
+    expect(
+        Utils.toYMD(Utils.getFinalMonthByPayDay(today), context), "10/20/2021");
+    expect(Utils.getMonthNameOfPayDay(Utils.getStartMonthByPayDay(today)),
         Month.OCTOBER);
   });
 }

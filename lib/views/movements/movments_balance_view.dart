@@ -2,6 +2,7 @@ import 'package:binancy/controllers/providers/categories_change_notifier.dart';
 import 'package:binancy/controllers/providers/movements_change_notifier.dart';
 import 'package:binancy/controllers/providers/savings_plans_change_notifier.dart';
 import 'package:binancy/controllers/providers/subscriptions_change_notifier.dart';
+import 'package:binancy/controllers/subscriptions_controller.dart';
 import 'package:binancy/globals.dart';
 import 'package:binancy/models/savings_plan.dart';
 import 'package:binancy/models/subscription.dart';
@@ -329,10 +330,18 @@ class MovementBalanceView extends StatelessWidget {
   List<String> generateBalanceChartTitles(BuildContext context) {
     List<String> chartTitles = [];
 
+    DateTime today = Utils.getTodayDate();
     for (var i = 0; i < balanceChartMaxMonths; i++) {
-      DateTime previousMonth = Utils.getSpecificMonthPayDay(DateTime(
-          Utils.getTodayDate().year, Utils.getTodayDate().month - i, 1));
-      chartTitles.add(Utils.toMY(previousMonth, context));
+      DateTime payDayMonth = Utils.getStartMonthByPayDay(
+          DateTime(today.year, today.month - i, today.day));
+      Month month = Utils.getMonthNameOfPayDay(payDayMonth);
+
+      if (month.index > payDayMonth.month) {
+        payDayMonth = Utils.getStartMonthByPayDay(
+            DateTime(today.year, today.month - (i - 1), today.day));
+      }
+
+      chartTitles.add(Utils.toMY(payDayMonth, context));
     }
     return chartTitles;
   }
@@ -340,15 +349,13 @@ class MovementBalanceView extends StatelessWidget {
   List<BarChartGroupData> buildBarCharts(
       BuildContext context, MovementsChangeNotifier movementsChangeNotifier) {
     List<BarChartGroupData> barChartList = [];
+    List<String> chartTitles = generateBalanceChartTitles(context);
+
     for (var i = 0; i < balanceChartMaxMonths; i++) {
-      double monthIncomes = movementsChangeNotifier.getMonthIncomes(DateTime(
-          Utils.getTodayDate().year,
-          Utils.getTodayDate().month - i,
-          Utils.getTodayDate().day));
-      double monthExpends = movementsChangeNotifier.getMonthExpends(DateTime(
-          Utils.getTodayDate().year,
-          Utils.getTodayDate().month - i,
-          Utils.getTodayDate().day));
+      DateTime startMonth = Utils.fromMY(chartTitles[i], context);
+
+      double monthIncomes = movementsChangeNotifier.getMonthIncomes(startMonth);
+      double monthExpends = movementsChangeNotifier.getMonthExpends(startMonth);
       barChartList.add(BarChartGroupData(x: i, barRods: [
         BarChartRodData(
             y: monthIncomes, colors: [accentColor], width: barChartWidth),

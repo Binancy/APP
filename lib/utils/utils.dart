@@ -228,40 +228,40 @@ class Utils {
 
   // PAYDAY
 
-  /// payDay 2.0
-  static DateTime getCurrentMonthPayDay() {
-    DateTime today = Utils.getTodayDate();
+  static DateTime getStartMonthByPayDay(DateTime referenceDate) {
     int payDay = userData['payDay'] ?? 1;
-    if (today.day >= payDay) {
-      return DateTime(today.year, today.month,
-          getPayDayOfMonth(DateTime(today.year, today.month)));
+    if (referenceDate.day >= payDay) {
+      return DateTime(referenceDate.year, referenceDate.month,
+          getPayDayOfMonth(DateTime(referenceDate.year, referenceDate.month)));
     } else {
-      return DateTime(today.year, today.month - 1,
-          getPayDayOfMonth(DateTime(today.year, today.month - 1)));
+      return DateTime(
+          referenceDate.year,
+          referenceDate.month - 1,
+          getPayDayOfMonth(
+              DateTime(referenceDate.year, referenceDate.month - 1)));
     }
   }
 
-  /// payDay 2.0
-  static DateTime getNextMonthPayDay() {
-    DateTime today = Utils.getTodayDate();
+  static DateTime getFinalMonthByPayDay(DateTime referenceDate) {
     int payDay = userData['payDay'] ?? 1;
-    if (today.day >= payDay) {
-      return DateTime(today.year, today.month + 1,
-          getPayDayOfMonth(DateTime(today.year, today.month + 1)));
+    if (referenceDate.day >= payDay) {
+      return DateTime(
+          referenceDate.year,
+          referenceDate.month + 1,
+          getPayDayOfMonth(
+              DateTime(referenceDate.year, referenceDate.month + 1)));
     } else {
-      return DateTime(today.year, today.month,
-          getPayDayOfMonth(DateTime(today.year, today.month)));
+      return DateTime(referenceDate.year, referenceDate.month,
+          getPayDayOfMonth(DateTime(referenceDate.year, referenceDate.month)));
     }
   }
 
-  /// payDay 2.0
   static Month getMonthNameOfPayDay(DateTime thisMonthPayday) {
     bool isAfterHalfMonth = thisMonthPayday.day >= 16;
     return Month.values[
         isAfterHalfMonth ? thisMonthPayday.month + 1 : thisMonthPayday.month];
   }
 
-  // payDay 2.0
   static int getPayDayOfMonth(DateTime date) {
     int payDay = userData['payDay'];
 
@@ -283,83 +283,14 @@ class Utils {
     return payDay;
   }
 
-  static DateTime getThisMonthPayDay() {
-    DateTime today = DateTime.now();
-    int payDay = userData['payDay'] ?? 1;
-
-    if (payDay == 31) {
-      DateTime expectedPayDayDate =
-          DateTime(today.year, today.month, userData['payDay']);
-      if (today.month == 2 && expectedPayDayDate.day == 1 | 2 | 3) {
-        return DateTime(today.year, today.month, isLeapYear(today) ? 29 : 28);
-      } else if (expectedPayDayDate.month == today.month + 1 &&
-          expectedPayDayDate.day == 1) {
-        return DateTime(today.year, today.month, 30);
-      }
-    } else if (payDay == 30 || payDay == 29) {
-      if (today.month == 2) {
-        return DateTime(today.year, today.month, isLeapYear(today) ? 29 : 28);
-      }
-    }
-    return DateTime(today.year, today.month, userData['payDay'] ?? 1);
-  }
-
-  static DateTime getLatestMonthPayDay() {
-    DateTime today = DateTime.now();
-    int payDay = userData['payDay'] ?? 1;
-
-    if (payDay == 31) {
-      DateTime expectedDate = DateTime(
-          today.month == 1 ? today.year - 1 : today.year,
-          today.month == 1 ? 12 : today.month - 1,
-          userData['payDay']);
-      if (expectedDate.month == 2 && expectedDate.day == 1 | 2 | 3) {
-        return DateTime(expectedDate.year, expectedDate.month - 1,
-            isLeapYear(today) ? 29 : 28);
-      } else if (expectedDate.month == today.month && expectedDate.day == 1) {
-        return DateTime(expectedDate.year, expectedDate.month - 1, 30);
-      }
-    } else if (payDay == 30 || payDay == 29) {
-      return DateTime(today.month == 1 ? today.year - 1 : today.year,
-          today.month == 1 ? 12 : today.month - 1, isLeapYear(today) ? 29 : 28);
-    }
-    return DateTime(today.month == 1 ? today.year - 1 : today.year,
-        today.month == 1 ? 12 : today.month - 1, userData['payDay'] ?? 1);
-  }
-
-  static DateTime getSpecificMonthPayDay(DateTime monthDate) {
-    int payDay = userData['payDay'] ?? 1;
-    if (payDay == 31) {
-      DateTime expectedDate = DateTime(monthDate.year, monthDate.month, payDay);
-      if (monthDate.month == 2 && expectedDate.day == 1 | 2 | 3) {
-        return DateTime(
-            monthDate.year, monthDate.month, isLeapYear(monthDate) ? 29 : 28);
-      } else if (expectedDate.month == monthDate.month + 1 &&
-          expectedDate.day == 1) {
-        return DateTime(monthDate.year, monthDate.month, 30);
-      }
-    } else if (payDay == 30 || payDay == 29) {
-      if (monthDate.month == 2) {
-        return DateTime(
-            monthDate.year, monthDate.month, isLeapYear(monthDate) ? 29 : 28);
-      }
-    }
-
-    return DateTime(monthDate.year, monthDate.month, payDay);
-  }
-
-  static bool isAfterPayDay(DateTime month, DateTime movementDate) {
-    DateTime lastMonthPayDay = DateTime(
-        month.year, month.month - 1, Utils.getThisMonthPayDay().day, 0, 0, 0);
-    bool potato = movementDate.isAfter(lastMonthPayDay) ||
-        movementDate.isAtSameMomentAs(lastMonthPayDay);
+  static bool isAfterPayDay(DateTime startPayDayMonth, DateTime movementDate) {
+    bool potato = movementDate.isAfter(startPayDayMonth) ||
+        movementDate.isAtSameMomentAs(startPayDayMonth);
     return potato;
   }
 
-  static bool isBeforePayDay(DateTime month, DateTime movementDate) {
-    DateTime thisMonthPayDay = DateTime(
-        month.year, month.month, Utils.getThisMonthPayDay().day, 0, 0, 0);
-    bool tomate = movementDate.isBefore(thisMonthPayDay);
+  static bool isBeforePayDay(DateTime finalPayDayMonth, DateTime movementDate) {
+    bool tomate = movementDate.isBefore(finalPayDayMonth);
     return tomate;
   }
 

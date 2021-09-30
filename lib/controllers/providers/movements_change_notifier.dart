@@ -46,30 +46,12 @@ class MovementsChangeNotifier extends ChangeNotifier {
 
     for (var element in incomeList) {
       if (userData['payDay'] != null) {
-        if (Utils.isAtSameDay(
-            Utils.getTodayDate(), Utils.getThisMonthPayDay())) {
-          if (element.date.isAfter(Utils.getThisMonthPayDay()) &&
-              element.date.month == Utils.getTodayDate().month) {
-            thisMonthIncomes += element.value;
-          }
-        } else if (Utils.isAfterPayDay(
-            Utils.getThisMonthPayDay(), element.date)) {
-          thisMonthIncomes += element.value;
-        } else if (Utils.getTodayDate().isAfter(Utils.getThisMonthPayDay())) {
-          if (element.date.isAfter(Utils.getThisMonthPayDay()) &&
-              element.date.month == Utils.getTodayDate().month) {
-            thisMonthIncomes += element.value;
-          }
-        } else if (element.date.isAfter(Utils.getLatestMonthPayDay()) &&
-            element.date.isBefore(Utils.getThisMonthPayDay())) {
-          thisMonthIncomes += element.value;
-        }
-      } else {
-        if (element.date.isAfter(
-                DateTime(DateTime.now().year, DateTime.now().month, 1)) ||
-            element.date.year == DateTime.now().year &&
-                element.date.month == DateTime.now().month &&
-                element.date.day == 1) {
+        if (Utils.isAfterPayDay(
+                Utils.getStartMonthByPayDay(Utils.getTodayDate()),
+                element.date) &&
+            Utils.isBeforePayDay(
+                Utils.getFinalMonthByPayDay(Utils.getTodayDate()),
+                element.date)) {
           thisMonthIncomes += element.value;
         }
       }
@@ -82,27 +64,12 @@ class MovementsChangeNotifier extends ChangeNotifier {
     double thisMonthExpenses = 0;
     for (var element in expendList) {
       if (userData['payDay'] != null) {
-        if (Utils.isAtSameDay(
-            Utils.getTodayDate(), Utils.getThisMonthPayDay())) {
-          if (element.date.isAfter(Utils.getThisMonthPayDay()) &&
-              element.date.month == Utils.getTodayDate().month) {
-            thisMonthExpenses += element.value;
-          }
-        } else if (Utils.getTodayDate().isAfter(Utils.getThisMonthPayDay())) {
-          if (element.date.isAfter(Utils.getThisMonthPayDay()) &&
-              element.date.month == Utils.getTodayDate().month) {
-            thisMonthExpenses += element.value;
-          }
-        } else if (element.date.isAfter(Utils.getLatestMonthPayDay()) &&
-            element.date.isBefore(Utils.getThisMonthPayDay())) {
-          thisMonthExpenses += element.value;
-        }
-      } else {
-        if (element.date.isAfter(
-                DateTime(DateTime.now().year, DateTime.now().month, 1)) ||
-            element.date.year == DateTime.now().year &&
-                element.date.month == DateTime.now().month &&
-                element.date.day == 1) {
+        if (Utils.isAfterPayDay(
+                Utils.getStartMonthByPayDay(Utils.getTodayDate()),
+                element.date) &&
+            Utils.isBeforePayDay(
+                Utils.getFinalMonthByPayDay(Utils.getTodayDate()),
+                element.date)) {
           thisMonthExpenses += element.value;
         }
       }
@@ -143,25 +110,27 @@ class MovementsChangeNotifier extends ChangeNotifier {
     }
   }
 
-  double getMonthIncomes(DateTime month) {
+  double getMonthIncomes(DateTime startMonth) {
     double monthIncomes = 0;
     for (var income in incomeList) {
-      if (Utils.isAfterPayDay(month, income.date) &&
-          Utils.isBeforePayDay(month, income.date)) {
+      if (Utils.isAfterPayDay(startMonth, income.date) &&
+          Utils.isBeforePayDay(
+              Utils.getFinalMonthByPayDay(startMonth), income.date)) {
         monthIncomes += income.value;
       }
     }
-    return monthIncomes;
+    return Utils.roundDown(monthIncomes, 2);
   }
 
-  double getMonthExpends(DateTime month) {
+  double getMonthExpends(DateTime startMonth) {
     double monthExpends = 0;
     for (var expend in expendList) {
-      if (Utils.isAfterPayDay(month, expend.date) &&
-          Utils.isBeforePayDay(month, expend.date)) {
+      if (Utils.isAfterPayDay(startMonth, expend.date) &&
+          Utils.isBeforePayDay(
+              Utils.getFinalMonthByPayDay(startMonth), expend.date)) {
         monthExpends += expend.value;
       }
     }
-    return monthExpends;
+    return Utils.roundDown(monthExpends, 2);
   }
 }
