@@ -328,9 +328,10 @@ class MovementBalanceView extends StatelessWidget {
 
   List<String> generateBalanceChartTitles(BuildContext context) {
     List<String> chartTitles = [];
+
     for (var i = 0; i < balanceChartMaxMonths; i++) {
-      DateTime previousMonth = DateTime(Utils.getTodayDate().year,
-          Utils.getTodayDate().month - (i), Utils.getTodayDate().day);
+      DateTime previousMonth = Utils.getSpecificMonthPayDay(DateTime(
+          Utils.getTodayDate().year, Utils.getTodayDate().month - i, 1));
       chartTitles.add(Utils.toMY(previousMonth, context));
     }
     return chartTitles;
@@ -348,7 +349,6 @@ class MovementBalanceView extends StatelessWidget {
           Utils.getTodayDate().year,
           Utils.getTodayDate().month - i,
           Utils.getTodayDate().day));
-      if (monthIncomes != 0 && monthExpends != 0) {}
       barChartList.add(BarChartGroupData(x: i, barRods: [
         BarChartRodData(
             y: monthIncomes, colors: [accentColor], width: barChartWidth),

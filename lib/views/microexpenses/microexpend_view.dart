@@ -113,7 +113,7 @@ class _MicroExpendViewState extends State<MicroExpendView> {
                                 child: Text(
                                   createMode
                                       ? AppLocalizations.of(context)!
-                                          .goals_header
+                                          .microexpend_header
                                       : selectedMicroExpend!.title,
                                   style: headerItemView(),
                                   textAlign: TextAlign.center,
@@ -139,8 +139,10 @@ class _MicroExpendViewState extends State<MicroExpendView> {
                             ? BinancyButton(
                                 context: context,
                                 text: createMode
-                                    ? AppLocalizations.of(context)!.add_goal
-                                    : AppLocalizations.of(context)!.update_goal,
+                                    ? AppLocalizations.of(context)!
+                                        .add_microexpend
+                                    : AppLocalizations.of(context)!
+                                        .update_microexpend,
                                 action: () async {
                                   await checkData(microExpensesProvider);
                                 })
@@ -169,7 +171,8 @@ class _MicroExpendViewState extends State<MicroExpendView> {
         controller: titleController,
         style: inputStyle(),
         decoration: customInputDecoration(
-            AppLocalizations.of(context)!.goal_title, BinancyIcons.email),
+            AppLocalizations.of(context)!.microexpend_title,
+            BinancyIcons.email),
       ),
     );
   }
@@ -191,7 +194,8 @@ class _MicroExpendViewState extends State<MicroExpendView> {
         controller: amountController,
         style: inputStyle(),
         decoration: customInputDecoration(
-            AppLocalizations.of(context)!.goal_amount, BinancyIcons.calendar),
+            AppLocalizations.of(context)!.microexpend_amount,
+            BinancyIcons.calendar),
       ),
     );
   }
@@ -216,7 +220,7 @@ class _MicroExpendViewState extends State<MicroExpendView> {
             errorBorder: InputBorder.none,
             disabledBorder: InputBorder.none,
             counterStyle: detailStyle(),
-            hintText: AppLocalizations.of(context)!.goal_description,
+            hintText: AppLocalizations.of(context)!.microexpend_description,
             hintMaxLines: 3,
             hintStyle: inputStyle()),
         style: inputStyle(),
@@ -255,14 +259,14 @@ class _MicroExpendViewState extends State<MicroExpendView> {
         }
       } else {
         BinancyInfoDialog(
-            context, AppLocalizations.of(context)!.goal_invalid_amount, [
+            context, AppLocalizations.of(context)!.microexpend_invalid_amount, [
           BinancyInfoDialogItem(AppLocalizations.of(context)!.accept,
               () => Navigator.pop(context))
         ]);
       }
     } else {
       BinancyInfoDialog(
-          context, AppLocalizations.of(context)!.goal_invalid_title, [
+          context, AppLocalizations.of(context)!.microexpend_invalid_title, [
         BinancyInfoDialogItem(
             AppLocalizations.of(context)!.accept, () => Navigator.pop(context))
       ]);
@@ -283,7 +287,7 @@ class _MicroExpendViewState extends State<MicroExpendView> {
       binancyProgressDialog.dismissDialog();
       if (value) {
         BinancyInfoDialog(
-            context, AppLocalizations.of(context)!.goal_add_success, [
+            context, AppLocalizations.of(context)!.microexpend_add_success, [
           BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () async {
             await microExpensesProvider.updateMicroExpenses();
             leaveScreen();
@@ -291,7 +295,7 @@ class _MicroExpendViewState extends State<MicroExpendView> {
         ]);
       } else {
         BinancyInfoDialog(
-            context, AppLocalizations.of(context)!.goal_add_fail, [
+            context, AppLocalizations.of(context)!.microexpend_add_fail, [
           BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () {
             Navigator.pop(context);
           })
@@ -315,7 +319,7 @@ class _MicroExpendViewState extends State<MicroExpendView> {
       binancyProgressDialog.dismissDialog();
       if (value) {
         BinancyInfoDialog(
-            context, AppLocalizations.of(context)!.goal_update_success, [
+            context, AppLocalizations.of(context)!.microexpend_update_success, [
           BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () async {
             await microExpensesProvider.updateMicroExpenses();
             setState(() {
@@ -327,7 +331,7 @@ class _MicroExpendViewState extends State<MicroExpendView> {
         ]);
       } else {
         BinancyInfoDialog(
-            context, AppLocalizations.of(context)!.goal_update_fail, [
+            context, AppLocalizations.of(context)!.microexpend_update_fail, [
           BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () {
             Navigator.pop(context);
           })
@@ -350,7 +354,7 @@ class _MicroExpendViewState extends State<MicroExpendView> {
       binancyProgressDialog.dismissDialog();
       if (value) {
         BinancyInfoDialog(
-            context, AppLocalizations.of(context)!.goal_add_success, [
+            context, AppLocalizations.of(context)!.microexpend_add_success, [
           BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () async {
             await Provider.of<MovementsChangeNotifier>(context, listen: false)
                 .updateMovements();
@@ -359,7 +363,7 @@ class _MicroExpendViewState extends State<MicroExpendView> {
         ]);
       } else {
         BinancyInfoDialog(
-            context, AppLocalizations.of(context)!.goal_add_fail, [
+            context, AppLocalizations.of(context)!.microexpend_add_fail, [
           BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () {
             Navigator.pop(context);
           })

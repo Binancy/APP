@@ -39,7 +39,7 @@ class MicroExpendEmptyCard extends StatelessWidget {
                   size: 100,
                   color: Colors.white,
                 )),
-            Text(AppLocalizations.of(context)!.no_goals,
+            Text(AppLocalizations.of(context)!.no_microexpends,
                 style: accentStyle(), textAlign: TextAlign.center),
             const SizedBox(
               height: 100,

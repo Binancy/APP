@@ -43,20 +43,25 @@ class MovementsChangeNotifier extends ChangeNotifier {
 
   double getThisMonthIncomes() {
     double thisMonthIncomes = 0;
+
     for (var element in incomeList) {
       if (userData['payDay'] != null) {
-        if (Utils.isAtSameDay(Utils.getTodayDate(), Utils.getUserPayDay())) {
-          if (element.date.isAfter(Utils.getUserPayDay()) &&
+        if (Utils.isAtSameDay(
+            Utils.getTodayDate(), Utils.getThisMonthPayDay())) {
+          if (element.date.isAfter(Utils.getThisMonthPayDay()) &&
               element.date.month == Utils.getTodayDate().month) {
             thisMonthIncomes += element.value;
           }
-        } else if (Utils.getTodayDate().isAfter(Utils.getUserPayDay())) {
-          if (element.date.isAfter(Utils.getUserPayDay()) &&
+        } else if (Utils.isAfterPayDay(
+            Utils.getThisMonthPayDay(), element.date)) {
+          thisMonthIncomes += element.value;
+        } else if (Utils.getTodayDate().isAfter(Utils.getThisMonthPayDay())) {
+          if (element.date.isAfter(Utils.getThisMonthPayDay()) &&
               element.date.month == Utils.getTodayDate().month) {
             thisMonthIncomes += element.value;
           }
         } else if (element.date.isAfter(Utils.getLatestMonthPayDay()) &&
-            element.date.isBefore(Utils.getUserPayDay())) {
+            element.date.isBefore(Utils.getThisMonthPayDay())) {
           thisMonthIncomes += element.value;
         }
       } else {
@@ -77,18 +82,19 @@ class MovementsChangeNotifier extends ChangeNotifier {
     double thisMonthExpenses = 0;
     for (var element in expendList) {
       if (userData['payDay'] != null) {
-        if (Utils.isAtSameDay(Utils.getTodayDate(), Utils.getUserPayDay())) {
-          if (element.date.isAfter(Utils.getUserPayDay()) &&
+        if (Utils.isAtSameDay(
+            Utils.getTodayDate(), Utils.getThisMonthPayDay())) {
+          if (element.date.isAfter(Utils.getThisMonthPayDay()) &&
               element.date.month == Utils.getTodayDate().month) {
             thisMonthExpenses += element.value;
           }
-        } else if (Utils.getTodayDate().isAfter(Utils.getUserPayDay())) {
-          if (element.date.isAfter(Utils.getUserPayDay()) &&
+        } else if (Utils.getTodayDate().isAfter(Utils.getThisMonthPayDay())) {
+          if (element.date.isAfter(Utils.getThisMonthPayDay()) &&
               element.date.month == Utils.getTodayDate().month) {
             thisMonthExpenses += element.value;
           }
         } else if (element.date.isAfter(Utils.getLatestMonthPayDay()) &&
-            element.date.isBefore(Utils.getUserPayDay())) {
+            element.date.isBefore(Utils.getThisMonthPayDay())) {
           thisMonthExpenses += element.value;
         }
       } else {
@@ -140,10 +146,8 @@ class MovementsChangeNotifier extends ChangeNotifier {
   double getMonthIncomes(DateTime month) {
     double monthIncomes = 0;
     for (var income in incomeList) {
-      if (income.date.isAfter(DateTime(month.year, month.month - 1,
-              Utils.getUserPayDay().day, 0, 0, 0)) &&
-          income.date.isBefore(DateTime(
-              month.year, month.month, Utils.getUserPayDay().day, 0, 0, 0))) {
+      if (Utils.isAfterPayDay(month, income.date) &&
+          Utils.isBeforePayDay(month, income.date)) {
         monthIncomes += income.value;
       }
     }
@@ -153,10 +157,8 @@ class MovementsChangeNotifier extends ChangeNotifier {
   double getMonthExpends(DateTime month) {
     double monthExpends = 0;
     for (var expend in expendList) {
-      if (expend.date.isAfter(DateTime(month.year, month.month - 1,
-              Utils.getUserPayDay().day, 0, 0, 0)) &&
-          expend.date.isBefore(DateTime(
-              month.year, month.month, Utils.getUserPayDay().day, 0, 0, 0))) {
+      if (Utils.isAfterPayDay(month, expend.date) &&
+          Utils.isBeforePayDay(month, expend.date)) {
         monthExpends += expend.value;
       }
     }

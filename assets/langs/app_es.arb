@@ -182,6 +182,15 @@
     "login_error_password": "El correo o la contraseña no son correctos",
     "error_no_connection": "No tienes conexión a Internet",
     "error_timeout": "Se ha agotado el tiempo máximo para llevar a cabo la acción",
+    "microexpend_header": "Añade un gasto rápido",
+    "microexpend_title": "Título del gasto rápido",
+    "microexpend_amount": "Importe del gasto rápido",
+    "microexpend_description": "Añade una descripción a este gasto rápido",
+    "add_microexpend": "Añadir gasto rápido",
+    "update_microexpend": "Actualizar gasto rápido",
+    "microexpend_invalid_title": "El título del gasto rápido no es válido o está en blanco",
+    "microexpend_invalid_amount": "El importe del gasto rápido no es válido o está en blanco",
+    "no_microexpends": "No hay ningún gasto rápido registrado. Toca para añadir uno.",
     "@version" : {
         "placeholders": {
             "appName": {}

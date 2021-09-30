@@ -8,7 +8,7 @@
     "goals": "Objectius",
     "my_subscriptions": "Les meves subscripcions",
     "help_advice": "Ajudes i consells",
-    "become_premium": "Fes_te premium",
+    "become_premium": "Fes-te premium",
     "settings": "Configuració",
     "see_heritage": "Veure patrimoni",
     "see_incomes": "Veure ingressos",
@@ -78,7 +78,7 @@
     "since_forever": "Desde sempre",
     "expends_realized": "Despeses realitzades",
     "your_microexpends": "Les teves despeses ràpides",
-    "microexpends_ad_description": "Aqui podràs afegir despeses que realitzis amb frequència y poder afegir_los mès ràpid.",
+    "microexpends_ad_description": "Aqui podràs afegir despeses que realitzis amb frequència y poder afegir-los mès ràpid.",
     "subscriptions_active": "Subscripcions actives",
     "all_subscriptions": "Totes les subscripcions",
     "add_subscription_header": "Afegeix una nova subscripció",
@@ -102,7 +102,7 @@
     "update_income": "Actualizar ingrès",
     "update_expend": "Actualizar depessa",
     "goals_ad_description": "Estableix objectius que complir en un temps determinat",
-    "unexpected_error": "Ha hagut un error inesperat. Torna a provar_hi més tarde",
+    "unexpected_error": "Ha hagut un error inesperat. Torna a provar-hi més tarde",
     "income_add_success": "Ingrès afegit correctament!",
     "income_add_fail": "Ha hagut un error a l'afegir l'ingrès",
     "income_update_success": "Ingrès actualizat correctament!",
@@ -182,61 +182,70 @@
     "login_error_password": "L'usuari o la contrasenya no es correcta",
     "error_no_connection": "No tens connexió a Internet",
     "error_timeout": "S'ha esgotat els temps màxim per dur a terme l'acció",
-    "@version" : {
+    "microexpend_header": "Afegeix una despesa ràpida",
+    "microexpend_title": "Títol de la despesa ràpida",
+    "microexpend_amount": "Valor de la despesa ràpida",
+    "microexpend_description": "Afegeix una descripció a aquesta despesa ràpida",
+    "add_microexpend": "Afegir despesa ràpida",
+    "update_microexpend": "Actualitzar despesa ràpida",
+    "microexpend_invalid_title": "El títol de la despesa ràpida no es vàlid o està en blanc",
+    "microexpend_invalid_amount": "El valor de la despesa ràpida no es vàlid o està en blanc",
+    "no_microexpends": "No hi ha cap despesa ràpida registrada. Toca per afegir una",
+    "@version": {
         "placeholders": {
             "appName": {}
         }
     },
-    "@delete_data_description" : {
+    "@delete_data_description": {
         "placeholders": {
             "appName": {},
             "organizationName": {}
         }
     },
-    "@delete_account_description" : {
+    "@delete_account_description": {
         "placeholders": {
             "appName": {},
             "organizationName": {}
         }
     },
-    "@register_advice_1" : {
+    "@register_advice_1": {
         "placeholders": {
             "appName": {}
         }
     },
-    "@register_advice_2" : {
+    "@register_advice_2": {
         "placeholders": {
             "appName": {}
         }
     },
-    "@register_advice_3" : {
+    "@register_advice_3": {
         "placeholders": {
             "appName": {}
         }
     },
-    "@register_privacy_terms_2" : {
+    "@register_privacy_terms_2": {
         "placeholders": {
             "appName": {},
             "organizationName": {}
         }
     },
-    "@subscription_renew_description" : {
+    "@subscription_renew_description": {
         "placeholders": {
             "appName": {}
         }
     },
-    "@register_invalid_terms" : {
+    "@register_invalid_terms": {
         "placeholders": {
             "appName": {}
         }
     },
-    "@register_steps" : {
+    "@register_steps": {
         "placeholders": {
             "currentStep": {},
             "totalSteps": {}
         }
     },
-    "@dashboard_summary_widget_description" : {
+    "@dashboard_summary_widget_description": {
         "placeholders": {
             "totalIncomes": {},
             "totalExpends": {},
