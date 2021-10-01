@@ -87,7 +87,6 @@ class _SettingsViewState extends State<SettingsView> {
   }
 
   Widget myDataCard(BuildContext context) {
-    print(userData);
     List<Widget> widgetList = [
       SettingsHeaderRow(text: AppLocalizations.of(context)!.my_data),
       const LinearDivider(),

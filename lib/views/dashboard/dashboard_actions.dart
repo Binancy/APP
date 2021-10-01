@@ -12,7 +12,6 @@ import 'package:binancy/views/microexpenses/microexpenses_view.dart';
 import 'package:binancy/views/movements/movements_all_view.dart';
 import 'package:binancy/views/movements/movement_view.dart';
 import 'package:binancy/views/movements/movments_balance_view.dart';
-import 'package:binancy/views/payments/donations_view.dart';
 import 'package:binancy/views/payments/premium_plans_view.dart';
 import 'package:binancy/views/savings_plan/savings_plans_all_view.dart';
 import 'package:binancy/views/settings/settings_view.dart';
@@ -335,19 +334,6 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
                             create: (_) =>
                                 Provider.of<PlansChangeNotifier>(context))
                       ], child: const PremiumPlansView())))));
-    } else {
-      actionsList.add(ActionButtonWidget(
-          context: context,
-          icon: SvgPicture.asset("assets/svg/dashboard_premium.svg"),
-          text: AppLocalizations.of(context)!.make_donation,
-          action: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (_) => MultiProvider(providers: [
-                        ChangeNotifierProvider(
-                            create: (_) =>
-                                Provider.of<PlansChangeNotifier>(context))
-                      ], child: const DonationView())))));
     }
     actionsList.add(ActionButtonWidget(
         context: context,

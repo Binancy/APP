@@ -507,8 +507,6 @@ class _MovementViewState extends State<MovementView> {
   }
 
   Future<void> updateExpend(MovementsChangeNotifier movementsProvider) async {
-    print(selectedMovement.idExpend);
-
     Expend expend = Expend()
       ..title = titleController.text
       ..value = double.parse(valueController.text)

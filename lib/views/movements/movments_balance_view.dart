@@ -340,7 +340,6 @@ class MovementBalanceView extends StatelessWidget {
         payDayMonth = Utils.getStartMonthByPayDay(
             DateTime(today.year, today.month - (i - 1), today.day));
       }
-
       chartTitles.add(Utils.toMY(payDayMonth, context));
     }
     return chartTitles;
@@ -352,8 +351,12 @@ class MovementBalanceView extends StatelessWidget {
     List<String> chartTitles = generateBalanceChartTitles(context);
 
     for (var i = 0; i < balanceChartMaxMonths; i++) {
-      DateTime startMonth = Utils.fromMY(chartTitles[i], context);
-
+      DateTime parsedDate = Utils.fromMY(chartTitles[i], context);
+      DateTime startMonth = DateTime(
+          parsedDate.year,
+          parsedDate.month - 1,
+          Utils.getPayDayOfMonth(
+              DateTime(parsedDate.year, parsedDate.month - 1)));
       double monthIncomes = movementsChangeNotifier.getMonthIncomes(startMonth);
       double monthExpends = movementsChangeNotifier.getMonthExpends(startMonth);
       barChartList.add(BarChartGroupData(x: i, barRods: [
