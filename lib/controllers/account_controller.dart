@@ -7,6 +7,7 @@ import 'package:binancy/utils/utils.dart';
 import 'package:binancy/views/enroll/loading_view.dart';
 import 'package:binancy/views/enroll/splash_view.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 
 class AccountController {
   static Future<void> registerUser(
@@ -24,7 +25,9 @@ class AccountController {
         userData['idUser'] = responseJSON['data'];
         Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => LoadingView()),
+            PageTransition(
+                child: LoadingView(),
+                type: PageTransitionType.rightToLeftWithFade),
             (route) => false);
       } else {
         BinancyInfoDialog(

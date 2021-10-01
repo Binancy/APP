@@ -63,9 +63,6 @@ class _MyAppState extends State<MyApp> {
           splashColor: themeColor.withOpacity(0.1),
           highlightColor: themeColor.withOpacity(0.1),
           toggleableActiveColor: Colors.transparent,
-          pageTransitionsTheme: const PageTransitionsTheme(builders: {
-            TargetPlatform.android: CupertinoPageTransitionsBuilder(),
-          }),
           unselectedWidgetColor: accentColor),
       builder: (context, child) =>
           ResponsiveWrapper.builder(child, defaultScale: true),

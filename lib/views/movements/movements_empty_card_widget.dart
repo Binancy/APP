@@ -3,6 +3,7 @@ import 'package:binancy/controllers/providers/movements_change_notifier.dart';
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/ui/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../globals.dart';
@@ -90,41 +91,43 @@ class MovememntEmptyCard extends StatelessWidget {
     movementType == MovementType.INCOME
         ? Navigator.push(
             context,
-            MaterialPageRoute(
-                builder: (_) => MultiProvider(
-                      providers: [
-                        ChangeNotifierProvider(
-                          create: (_) =>
-                              Provider.of<MovementsChangeNotifier>(context),
-                        ),
-                        ChangeNotifierProvider(
-                          create: (_) =>
-                              Provider.of<CategoriesChangeNotifier>(context),
-                        )
-                      ],
-                      child: const MovementView(
-                        allowEdit: true,
-                        movementType: MovementType.INCOME,
-                      ),
-                    )))
+            PageTransition(
+                type: PageTransitionType.rightToLeftWithFade,
+                child: MultiProvider(
+                  providers: [
+                    ChangeNotifierProvider(
+                      create: (_) =>
+                          Provider.of<MovementsChangeNotifier>(context),
+                    ),
+                    ChangeNotifierProvider(
+                      create: (_) =>
+                          Provider.of<CategoriesChangeNotifier>(context),
+                    )
+                  ],
+                  child: const MovementView(
+                    allowEdit: true,
+                    movementType: MovementType.INCOME,
+                  ),
+                )))
         : Navigator.push(
             context,
-            MaterialPageRoute(
-                builder: (_) => MultiProvider(
-                      providers: [
-                        ChangeNotifierProvider(
-                          create: (_) =>
-                              Provider.of<MovementsChangeNotifier>(context),
-                        ),
-                        ChangeNotifierProvider(
-                          create: (_) =>
-                              Provider.of<CategoriesChangeNotifier>(context),
-                        )
-                      ],
-                      child: const MovementView(
-                        allowEdit: true,
-                        movementType: MovementType.EXPEND,
-                      ),
-                    )));
+            PageTransition(
+                type: PageTransitionType.rightToLeftWithFade,
+                child: MultiProvider(
+                  providers: [
+                    ChangeNotifierProvider(
+                      create: (_) =>
+                          Provider.of<MovementsChangeNotifier>(context),
+                    ),
+                    ChangeNotifierProvider(
+                      create: (_) =>
+                          Provider.of<CategoriesChangeNotifier>(context),
+                    )
+                  ],
+                  child: const MovementView(
+                    allowEdit: true,
+                    movementType: MovementType.EXPEND,
+                  ),
+                )));
   }
 }

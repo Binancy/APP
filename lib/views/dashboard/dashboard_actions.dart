@@ -21,6 +21,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'dashboard_action_button_widget.dart';
@@ -154,78 +155,80 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
         text: AppLocalizations.of(context)!.add_income,
         action: () => Navigator.push(
             context,
-            MaterialPageRoute(
-                builder: (_) => MultiProvider(
-                      providers: [
-                        ChangeNotifierProvider(
-                          create: (_) =>
-                              Provider.of<MovementsChangeNotifier>(context),
-                        ),
-                        ChangeNotifierProvider(
-                          create: (_) =>
-                              Provider.of<CategoriesChangeNotifier>(context),
-                        )
-                      ],
-                      child: const MovementView(
-                        allowEdit: true,
-                        movementType: MovementType.INCOME,
-                      ),
-                    )))));
+            PageTransition(
+                type: PageTransitionType.rightToLeftWithFade,
+                child: MultiProvider(
+                  providers: [
+                    ChangeNotifierProvider(
+                      create: (_) =>
+                          Provider.of<MovementsChangeNotifier>(context),
+                    ),
+                    ChangeNotifierProvider(
+                      create: (_) =>
+                          Provider.of<CategoriesChangeNotifier>(context),
+                    )
+                  ],
+                  child: const MovementView(
+                    allowEdit: true,
+                    movementType: MovementType.INCOME,
+                  ),
+                )))));
     actionsList.add(ActionButtonWidget(
         context: context,
         icon: SvgPicture.asset("assets/svg/dashboard_compare.svg"),
         text: AppLocalizations.of(context)!.my_account,
         action: () => Navigator.push(
             context,
-            MaterialPageRoute(
-                builder: (_) => MultiProvider(
-                      providers: [
-                        ChangeNotifierProvider(
-                          create: (_) =>
-                              Provider.of<MovementsChangeNotifier>(context),
-                        ),
-                        ChangeNotifierProvider(
-                          create: (_) =>
-                              Provider.of<SubscriptionsChangeNotifier>(context),
-                        ),
-                        ChangeNotifierProvider(
-                          create: (_) =>
-                              Provider.of<SavingsPlanChangeNotifier>(context),
-                        ),
-                        ChangeNotifierProvider(
-                          create: (_) =>
-                              Provider.of<CategoriesChangeNotifier>(context),
-                        ),
-                        ChangeNotifierProvider(
-                          create: (_) =>
-                              Provider.of<PlansChangeNotifier>(context),
-                        )
-                      ],
-                      child: MovementBalanceView(),
-                    )))));
+            PageTransition(
+                type: PageTransitionType.rightToLeftWithFade,
+                child: MultiProvider(
+                  providers: [
+                    ChangeNotifierProvider(
+                      create: (_) =>
+                          Provider.of<MovementsChangeNotifier>(context),
+                    ),
+                    ChangeNotifierProvider(
+                      create: (_) =>
+                          Provider.of<SubscriptionsChangeNotifier>(context),
+                    ),
+                    ChangeNotifierProvider(
+                      create: (_) =>
+                          Provider.of<SavingsPlanChangeNotifier>(context),
+                    ),
+                    ChangeNotifierProvider(
+                      create: (_) =>
+                          Provider.of<CategoriesChangeNotifier>(context),
+                    ),
+                    ChangeNotifierProvider(
+                      create: (_) => Provider.of<PlansChangeNotifier>(context),
+                    )
+                  ],
+                  child: MovementBalanceView(),
+                )))));
     actionsList.add(ActionButtonWidget(
         context: context,
         icon: SvgPicture.asset("assets/svg/dashboard_add_expense.svg"),
         text: AppLocalizations.of(context)!.add_expend,
         action: () => Navigator.push(
             context,
-            MaterialPageRoute(
-                builder: (_) => MultiProvider(
-                      providers: [
-                        ChangeNotifierProvider(
-                          create: (_) =>
-                              Provider.of<MovementsChangeNotifier>(context),
-                        ),
-                        ChangeNotifierProvider(
-                          create: (_) =>
-                              Provider.of<CategoriesChangeNotifier>(context),
-                        )
-                      ],
-                      child: const MovementView(
-                        allowEdit: true,
-                        movementType: MovementType.EXPEND,
-                      ),
-                    )))));
+            PageTransition(
+                type: PageTransitionType.rightToLeftWithFade,
+                child: MultiProvider(
+                  providers: [
+                    ChangeNotifierProvider(
+                      create: (_) =>
+                          Provider.of<MovementsChangeNotifier>(context),
+                    ),
+                    ChangeNotifierProvider(
+                      create: (_) =>
+                          Provider.of<CategoriesChangeNotifier>(context),
+                    )
+                  ],
+                  child: const MovementView(
+                    allowEdit: true,
+                    movementType: MovementType.EXPEND,
+                  ),
+                )))));
     actionsList.add(ActionButtonWidget(
         context: context,
         icon: SvgPicture.asset("assets/svg/dashboard_categories.svg"),
@@ -237,8 +240,9 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
         text: AppLocalizations.of(context)!.see_all_movements,
         action: () => Navigator.push(
             context,
-            MaterialPageRoute(
-              builder: (_) => MultiProvider(
+            PageTransition(
+              type: PageTransitionType.rightToLeftWithFade,
+              child: MultiProvider(
                 providers: [
                   ChangeNotifierProvider(
                     create: (_) =>
@@ -260,16 +264,17 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
           if (Utils.isPremium()) {
             Navigator.push(
                 context,
-                MaterialPageRoute(
-                    builder: (_) => MultiProvider(providers: [
-                          ChangeNotifierProvider(
-                              create: (_) =>
-                                  Provider.of<MicroExpensesChangeNotifier>(
-                                      context)),
-                          ChangeNotifierProvider(
-                              create: (_) =>
-                                  Provider.of<MovementsChangeNotifier>(context))
-                        ], child: MicroExpensesView())));
+                PageTransition(
+                    type: PageTransitionType.rightToLeftWithFade,
+                    child: MultiProvider(providers: [
+                      ChangeNotifierProvider(
+                          create: (_) =>
+                              Provider.of<MicroExpensesChangeNotifier>(
+                                  context)),
+                      ChangeNotifierProvider(
+                          create: (_) =>
+                              Provider.of<MovementsChangeNotifier>(context))
+                    ], child: MicroExpensesView())));
           } else {
             lockedAction();
           }
@@ -281,21 +286,21 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
         action: () => Utils.isPremium()
             ? Navigator.push(
                 context,
-                MaterialPageRoute(
-                    builder: (_) => MultiProvider(
-                          providers: [
-                            ChangeNotifierProvider(
-                              create: (_) =>
-                                  Provider.of<SavingsPlanChangeNotifier>(
-                                      context),
-                            ),
-                            ChangeNotifierProvider(
-                              create: (_) =>
-                                  Provider.of<MovementsChangeNotifier>(context),
-                            )
-                          ],
-                          child: SavingsPlanAllView(),
-                        )))
+                PageTransition(
+                    type: PageTransitionType.rightToLeftWithFade,
+                    child: MultiProvider(
+                      providers: [
+                        ChangeNotifierProvider(
+                          create: (_) =>
+                              Provider.of<SavingsPlanChangeNotifier>(context),
+                        ),
+                        ChangeNotifierProvider(
+                          create: (_) =>
+                              Provider.of<MovementsChangeNotifier>(context),
+                        )
+                      ],
+                      child: SavingsPlanAllView(),
+                    )))
             : lockedAction()));
     actionsList.add(ActionButtonWidget(
         context: context,
@@ -304,17 +309,17 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
         action: () => Utils.isPremium()
             ? Navigator.push(
                 context,
-                MaterialPageRoute(
-                    builder: (_) => MultiProvider(
-                          providers: [
-                            ChangeNotifierProvider(
-                              create: (_) =>
-                                  Provider.of<SubscriptionsChangeNotifier>(
-                                      context),
-                            )
-                          ],
-                          child: SubscriptionsView(),
-                        )))
+                PageTransition(
+                    type: PageTransitionType.rightToLeftWithFade,
+                    child: MultiProvider(
+                      providers: [
+                        ChangeNotifierProvider(
+                          create: (_) =>
+                              Provider.of<SubscriptionsChangeNotifier>(context),
+                        )
+                      ],
+                      child: SubscriptionsView(),
+                    )))
             : lockedAction()));
     actionsList.add(ActionButtonWidget(
         context: context,
@@ -328,12 +333,13 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
           text: AppLocalizations.of(context)!.become_premium,
           action: () => Navigator.push(
               context,
-              MaterialPageRoute(
-                  builder: (_) => MultiProvider(providers: [
-                        ChangeNotifierProvider(
-                            create: (_) =>
-                                Provider.of<PlansChangeNotifier>(context))
-                      ], child: const PremiumPlansView())))));
+              PageTransition(
+                  type: PageTransitionType.rightToLeftWithFade,
+                  child: MultiProvider(providers: [
+                    ChangeNotifierProvider(
+                        create: (_) =>
+                            Provider.of<PlansChangeNotifier>(context))
+                  ], child: const PremiumPlansView())))));
     }
     actionsList.add(ActionButtonWidget(
         context: context,
@@ -341,15 +347,15 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
         text: AppLocalizations.of(context)!.settings,
         action: () => Navigator.push(
             context,
-            MaterialPageRoute(
-                builder: (_) => MultiProvider(providers: [
-                      ChangeNotifierProvider(
-                          create: (_) =>
-                              Provider.of<PlansChangeNotifier>(context)),
-                      ChangeNotifierProvider(
-                          create: (_) =>
-                              Provider.of<MovementsChangeNotifier>(context))
-                    ], child: SettingsView())))));
+            PageTransition(
+                type: PageTransitionType.rightToLeftWithFade,
+                child: MultiProvider(providers: [
+                  ChangeNotifierProvider(
+                      create: (_) => Provider.of<PlansChangeNotifier>(context)),
+                  ChangeNotifierProvider(
+                      create: (_) =>
+                          Provider.of<MovementsChangeNotifier>(context))
+                ], child: SettingsView())))));
   }
 
   Future<dynamic> lockedAction() {
@@ -392,13 +398,14 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
                         Navigator.pop(context);
                         Navigator.push(
                             context,
-                            MaterialPageRoute(
-                                builder: (_) => MultiProvider(providers: [
-                                      ChangeNotifierProvider(
-                                          create: (_) =>
-                                              Provider.of<PlansChangeNotifier>(
-                                                  context))
-                                    ], child: const PremiumPlansView())));
+                            PageTransition(
+                                type: PageTransitionType.rightToLeftWithFade,
+                                child: MultiProvider(providers: [
+                                  ChangeNotifierProvider(
+                                      create: (_) =>
+                                          Provider.of<PlansChangeNotifier>(
+                                              context))
+                                ], child: const PremiumPlansView())));
                       })
                 ],
               ),

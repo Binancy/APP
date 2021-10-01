@@ -9,6 +9,7 @@ import 'package:binancy/views/savings_plan/savings_plan_view.dart';
 import 'package:binancy/views/savings_plan/savings_plan_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -40,17 +41,18 @@ class _SavingsPlanAllViewState extends State<SavingsPlanAllView> {
             IconButton(
                 onPressed: () => Navigator.push(
                     context,
-                    MaterialPageRoute(
-                        builder: (_) => MultiProvider(
-                              providers: [
-                                ChangeNotifierProvider(
-                                  create: (_) =>
-                                      Provider.of<SavingsPlanChangeNotifier>(
-                                          context),
-                                )
-                              ],
-                              child: const SavingsPlanView(),
-                            ))),
+                    PageTransition(
+                        type: PageTransitionType.rightToLeftWithFade,
+                        child: MultiProvider(
+                          providers: [
+                            ChangeNotifierProvider(
+                              create: (_) =>
+                                  Provider.of<SavingsPlanChangeNotifier>(
+                                      context),
+                            )
+                          ],
+                          child: const SavingsPlanView(),
+                        ))),
                 icon: const Icon(Icons.add))
           ],
           title:

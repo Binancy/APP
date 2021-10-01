@@ -11,6 +11,7 @@ import 'package:binancy/views/enroll/loading_view.dart';
 import 'package:binancy/views/enroll/register_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:page_transition/page_transition.dart';
 
 class LoginView extends StatefulWidget {
   @override
@@ -98,9 +99,11 @@ class _LoginViewState extends State<LoginView> {
                                     FocusScope.of(context).unfocus();
                                     Navigator.push(
                                         context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                RegisterView()));
+                                        PageTransition(
+                                            childCurrent: widget,
+                                            type: PageTransitionType
+                                                .rightToLeftJoined,
+                                            child: RegisterView()));
                                   }),
                               const SpaceDivider(),
                             ],
@@ -147,7 +150,8 @@ class _LoginViewState extends State<LoginView> {
               userData = response[0];
               Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(builder: (context) => LoadingView()),
+                  PageTransition(
+                      type: PageTransitionType.fade, child: LoadingView()),
                   (route) => false);
               break;
           }

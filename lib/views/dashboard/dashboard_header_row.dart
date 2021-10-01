@@ -9,6 +9,7 @@ import 'package:binancy/views/movements/movements_all_view.dart';
 import 'package:binancy/views/movements/movements_balance_view.dart';
 import 'package:binancy/views/subscriptions/subscriptions_all_view.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -25,17 +26,17 @@ class DashboardHeaderRow extends StatelessWidget {
             AppLocalizations.of(context)!.see_subscriptions,
             () => Navigator.push(
                 context,
-                MaterialPageRoute(
-                    builder: (_) => MultiProvider(
-                          providers: [
-                            ChangeNotifierProvider(
-                              create: (_) =>
-                                  Provider.of<SubscriptionsChangeNotifier>(
-                                      context),
-                            )
-                          ],
-                          child: SubscriptionsView(),
-                        )))));
+                PageTransition(
+                    type: PageTransitionType.rightToLeftWithFade,
+                    child: MultiProvider(
+                      providers: [
+                        ChangeNotifierProvider(
+                          create: (_) =>
+                              Provider.of<SubscriptionsChangeNotifier>(context),
+                        )
+                      ],
+                      child: SubscriptionsView(),
+                    )))));
       }
 
       return Container(
@@ -87,40 +88,41 @@ class DashboardHeaderRow extends StatelessWidget {
           AppLocalizations.of(context)!.see_heritage,
           () => Navigator.push(
               context,
-              MaterialPageRoute(
-                  builder: (_) => MultiProvider(
-                        providers: [
-                          ChangeNotifierProvider(
-                            create: (_) =>
-                                Provider.of<MovementsChangeNotifier>(context),
-                          ),
-                          ChangeNotifierProvider(
-                            create: (_) =>
-                                Provider.of<SubscriptionsChangeNotifier>(
-                                    context),
-                          ),
-                          ChangeNotifierProvider(
-                            create: (_) =>
-                                Provider.of<SavingsPlanChangeNotifier>(context),
-                          ),
-                          ChangeNotifierProvider(
-                            create: (_) =>
-                                Provider.of<CategoriesChangeNotifier>(context),
-                          ),
-                          ChangeNotifierProvider(
-                            create: (_) =>
-                                Provider.of<PlansChangeNotifier>(context),
-                          )
-                        ],
-                        child: MovementBalanceView(),
-                      )))),
+              PageTransition(
+                  type: PageTransitionType.rightToLeftWithFade,
+                  child: MultiProvider(
+                    providers: [
+                      ChangeNotifierProvider(
+                        create: (_) =>
+                            Provider.of<MovementsChangeNotifier>(context),
+                      ),
+                      ChangeNotifierProvider(
+                        create: (_) =>
+                            Provider.of<SubscriptionsChangeNotifier>(context),
+                      ),
+                      ChangeNotifierProvider(
+                        create: (_) =>
+                            Provider.of<SavingsPlanChangeNotifier>(context),
+                      ),
+                      ChangeNotifierProvider(
+                        create: (_) =>
+                            Provider.of<CategoriesChangeNotifier>(context),
+                      ),
+                      ChangeNotifierProvider(
+                        create: (_) =>
+                            Provider.of<PlansChangeNotifier>(context),
+                      )
+                    ],
+                    child: MovementBalanceView(),
+                  )))),
       rowWidget(
           movementsProvider.getThisMonthIncomes(),
           AppLocalizations.of(context)!.see_incomes,
           () => Navigator.push(
               context,
-              MaterialPageRoute(
-                builder: (_) => MultiProvider(
+              PageTransition(
+                type: PageTransitionType.rightToLeftWithFade,
+                child: MultiProvider(
                   providers: [
                     ChangeNotifierProvider(
                       create: (_) =>
@@ -139,8 +141,9 @@ class DashboardHeaderRow extends StatelessWidget {
           AppLocalizations.of(context)!.see_expends,
           () => Navigator.push(
               context,
-              MaterialPageRoute(
-                builder: (_) => MultiProvider(
+              PageTransition(
+                type: PageTransitionType.rightToLeftWithFade,
+                child: MultiProvider(
                   providers: [
                     ChangeNotifierProvider(
                       create: (_) =>

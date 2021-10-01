@@ -4,6 +4,7 @@ import 'package:binancy/views/advice/advice_card.dart';
 import 'package:binancy/views/payments/premium_plans_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
 class PremiumAdWidget extends StatelessWidget {
@@ -16,16 +17,17 @@ class PremiumAdWidget extends StatelessWidget {
       child: GestureDetector(
           onTap: () => Navigator.push(
               context,
-              MaterialPageRoute(
-                  builder: (_) => MultiProvider(
-                        providers: [
-                          ChangeNotifierProvider(
-                            create: (_) =>
-                                Provider.of<PlansChangeNotifier>(context),
-                          )
-                        ],
-                        child: const PremiumPlansView(),
-                      ))),
+              PageTransition(
+                  type: PageTransitionType.rightToLeftWithFade,
+                  child: MultiProvider(
+                    providers: [
+                      ChangeNotifierProvider(
+                        create: (_) =>
+                            Provider.of<PlansChangeNotifier>(context),
+                      )
+                    ],
+                    child: const PremiumPlansView(),
+                  ))),
           child: AdviceCard(
               icon: SvgPicture.asset("assets/svg/dashboard_premium.svg"),
               text:

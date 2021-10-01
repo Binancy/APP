@@ -6,6 +6,7 @@ import 'package:binancy/views/subscriptions/subscription_card_widget.dart';
 import 'package:binancy/views/subscriptions/subscription_empty_card_widget.dart';
 import 'package:binancy/views/subscriptions/subscription_view.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -27,15 +28,15 @@ class SubscriptionsView extends StatelessWidget {
                       icon: const Icon(Icons.add, color: Colors.white),
                       onPressed: () => Navigator.push(
                           context,
-                          MaterialPageRoute(
-                              builder: (_) => MultiProvider(
-                                    providers: [
-                                      ChangeNotifierProvider(
-                                          create: (context) => provider)
-                                    ],
-                                    child:
-                                        const SubscriptionView(allowEdit: true),
-                                  ))))
+                          PageTransition(
+                              type: PageTransitionType.rightToLeftWithFade,
+                              child: MultiProvider(
+                                providers: [
+                                  ChangeNotifierProvider(
+                                      create: (context) => provider)
+                                ],
+                                child: const SubscriptionView(allowEdit: true),
+                              ))))
                 ],
               ),
               body: Container(

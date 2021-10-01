@@ -3,6 +3,7 @@ import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/ui/widgets.dart';
 import 'package:binancy/views/savings_plan/savings_plan_view.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../globals.dart';
@@ -78,14 +79,15 @@ class SavingsPlanEmptyWidget extends StatelessWidget {
   void gotoAddSavingsPlan(BuildContext context) {
     Navigator.push(
         context,
-        MaterialPageRoute(
-            builder: (_) => MultiProvider(
-                  providers: [
-                    ChangeNotifierProvider(
-                        create: (_) =>
-                            Provider.of<SavingsPlanChangeNotifier>(context))
-                  ],
-                  child: const SavingsPlanView(allowEdit: true),
-                )));
+        PageTransition(
+            type: PageTransitionType.rightToLeftWithFade,
+            child: MultiProvider(
+              providers: [
+                ChangeNotifierProvider(
+                    create: (_) =>
+                        Provider.of<SavingsPlanChangeNotifier>(context))
+              ],
+              child: const SavingsPlanView(allowEdit: true),
+            )));
   }
 }

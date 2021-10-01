@@ -16,6 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
 import 'microexpenses_dialog_widget.dart';
@@ -43,17 +44,17 @@ class MicroExpendCard extends StatelessWidget {
       child: InkWell(
         onTap: () => Navigator.push(
             context,
-            MaterialPageRoute(
-                builder: (_) => MultiProvider(
-                        providers: [
-                          ChangeNotifierProvider(
-                              create: (_) => microExpensesChangeNotifier),
-                          ChangeNotifierProvider(
-                              create: (_) => movementsChangeNotifier)
-                        ],
-                        child: MicroExpendView(
-                            allowEdit: false,
-                            selectedMicroExpend: microExpend)))),
+            PageTransition(
+                type: PageTransitionType.rightToLeftWithFade,
+                child: MultiProvider(
+                    providers: [
+                      ChangeNotifierProvider(
+                          create: (_) => microExpensesChangeNotifier),
+                      ChangeNotifierProvider(
+                          create: (_) => movementsChangeNotifier)
+                    ],
+                    child: MicroExpendView(
+                        allowEdit: false, selectedMicroExpend: microExpend)))),
         highlightColor: themeColor.withOpacity(0.1),
         splashColor: themeColor.withOpacity(0.1),
         child: Slidable(

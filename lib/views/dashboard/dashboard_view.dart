@@ -15,6 +15,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:binancy/views/settings/settings_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:page_transition/page_transition.dart';
 
 class DashboardView extends StatefulWidget {
   @override
@@ -39,17 +40,17 @@ class _DashboardViewState extends State<DashboardView> {
                   icon: const Icon(BinancyIcons.settings),
                   onPressed: () => Navigator.push(
                       context,
-                      MaterialPageRoute(
-                          builder: (_) => MultiProvider(providers: [
-                                ChangeNotifierProvider(
-                                    create: (_) =>
-                                        Provider.of<PlansChangeNotifier>(
-                                            context)),
-                                ChangeNotifierProvider(
-                                    create: (_) =>
-                                        Provider.of<MovementsChangeNotifier>(
-                                            context))
-                              ], child: SettingsView())))),
+                      PageTransition(
+                          child: MultiProvider(providers: [
+                            ChangeNotifierProvider(
+                                create: (_) =>
+                                    Provider.of<PlansChangeNotifier>(context)),
+                            ChangeNotifierProvider(
+                                create: (_) =>
+                                    Provider.of<MovementsChangeNotifier>(
+                                        context))
+                          ], child: SettingsView()),
+                          type: PageTransitionType.rightToLeftWithFade))),
               automaticallyImplyLeading: false,
               title: Text(AppLocalizations.of(context)!.my_summary,
                   style: appBarStyle()),

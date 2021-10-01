@@ -4,6 +4,7 @@ import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/ui/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
 import '../../globals.dart';
@@ -80,15 +81,15 @@ class MicroExpendEmptyCard extends StatelessWidget {
   void gotoAddSubscription(BuildContext context) {
     Navigator.push(
         context,
-        MaterialPageRoute(
-            builder: (_) => MultiProvider(providers: [
-                  ChangeNotifierProvider(
-                      create: (_) =>
-                          Provider.of<MicroExpensesChangeNotifier>(context)),
-                  ChangeNotifierProvider(
-                      create: (_) => Provider.of<MovementsChangeNotifier>(
-                          context,
-                          listen: false))
-                ], child: const MicroExpendView())));
+        PageTransition(
+            type: PageTransitionType.rightToLeftWithFade,
+            child: MultiProvider(providers: [
+              ChangeNotifierProvider(
+                  create: (_) =>
+                      Provider.of<MicroExpensesChangeNotifier>(context)),
+              ChangeNotifierProvider(
+                  create: (_) => Provider.of<MovementsChangeNotifier>(context,
+                      listen: false))
+            ], child: const MicroExpendView())));
   }
 }

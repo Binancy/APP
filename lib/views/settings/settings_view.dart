@@ -11,6 +11,7 @@ import 'package:binancy/views/enroll/privacy_terms_view.dart';
 import 'package:binancy/views/payments/premium_plans_view.dart';
 import 'package:binancy/views/settings/settings_profile.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -72,8 +73,9 @@ class _SettingsViewState extends State<SettingsView> {
                         progressDialog.dismissDialog();
                         Navigator.pushAndRemoveUntil(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) => LoginView()),
+                            PageTransition(
+                                type: PageTransitionType.fade,
+                                child: LoginView()),
                             (route) => false);
                       }),
                     ]);
@@ -126,8 +128,9 @@ class _SettingsViewState extends State<SettingsView> {
           text: AppLocalizations.of(context)!.my_profile,
           action: () async => await Navigator.push(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) => const SettingsUserDataView()))
+                      PageTransition(
+                          type: PageTransitionType.rightToLeftWithFade,
+                          child: const SettingsUserDataView()))
                   .then((value) {
                 movementsChangeNotifier.updateMovements();
                 setState(() {});
@@ -141,8 +144,9 @@ class _SettingsViewState extends State<SettingsView> {
           text: AppLocalizations.of(context)!.privacy_policy,
           action: () => Navigator.push(
               context,
-              MaterialPageRoute(
-                  builder: (context) => const PrivacyAndTermsView()))),
+              PageTransition(
+                  type: PageTransitionType.rightToLeftWithFade,
+                  child: const PrivacyAndTermsView()))),
       const LinearDivider(),
       SettingsActionRow(
           text: AppLocalizations.of(context)!.support, action: () => null),
@@ -152,13 +156,14 @@ class _SettingsViewState extends State<SettingsView> {
               text: AppLocalizations.of(context)!.change_plan,
               action: () => Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (_) => MultiProvider(providers: [
-                            ChangeNotifierProvider(
-                                create: (_) => Provider.of<PlansChangeNotifier>(
-                                    context,
-                                    listen: false))
-                          ], child: const PremiumPlansView()))),
+                  PageTransition(
+                      type: PageTransitionType.rightToLeftWithFade,
+                      child: MultiProvider(providers: [
+                        ChangeNotifierProvider(
+                            create: (_) => Provider.of<PlansChangeNotifier>(
+                                context,
+                                listen: false))
+                      ], child: const PremiumPlansView()))),
             )
           : const SizedBox(),
     ];

@@ -10,6 +10,7 @@ import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
 import '../../globals.dart';
@@ -36,25 +37,26 @@ class MovementCard extends StatelessWidget {
         child: InkWell(
           onTap: () => Navigator.push(
               context,
-              MaterialPageRoute(
-                  builder: (_) => MultiProvider(
-                        providers: [
-                          ChangeNotifierProvider(
-                            create: (_) =>
-                                Provider.of<MovementsChangeNotifier>(context),
-                          ),
-                          ChangeNotifierProvider(
-                            create: (_) =>
-                                Provider.of<CategoriesChangeNotifier>(context),
-                          )
-                        ],
-                        child: MovementView(
-                          selectedMovement: movement,
-                          movementType: movement is Income
-                              ? MovementType.INCOME
-                              : MovementType.EXPEND,
-                        ),
-                      ))),
+              PageTransition(
+                  type: PageTransitionType.rightToLeftWithFade,
+                  child: MultiProvider(
+                    providers: [
+                      ChangeNotifierProvider(
+                        create: (_) =>
+                            Provider.of<MovementsChangeNotifier>(context),
+                      ),
+                      ChangeNotifierProvider(
+                        create: (_) =>
+                            Provider.of<CategoriesChangeNotifier>(context),
+                      )
+                    ],
+                    child: MovementView(
+                      selectedMovement: movement,
+                      movementType: movement is Income
+                          ? MovementType.INCOME
+                          : MovementType.EXPEND,
+                    ),
+                  ))),
           highlightColor: themeColor.withOpacity(0.1),
           splashColor: themeColor.withOpacity(0.1),
           child: Container(
@@ -161,26 +163,27 @@ class MovementCard extends StatelessWidget {
         color: Colors.transparent,
         onTap: () => Navigator.push(
             thisContext,
-            MaterialPageRoute(
-                builder: (_) => MultiProvider(
-                      providers: [
-                        ChangeNotifierProvider(
-                          create: (_) =>
-                              Provider.of<MovementsChangeNotifier>(thisContext),
-                        ),
-                        ChangeNotifierProvider(
-                          create: (_) => Provider.of<CategoriesChangeNotifier>(
-                              thisContext),
-                        )
-                      ],
-                      child: MovementView(
-                        allowEdit: true,
-                        selectedMovement: movement,
-                        movementType: movement is Income
-                            ? MovementType.INCOME
-                            : MovementType.EXPEND,
-                      ),
-                    ))),
+            PageTransition(
+                type: PageTransitionType.rightToLeftWithFade,
+                child: MultiProvider(
+                  providers: [
+                    ChangeNotifierProvider(
+                      create: (_) =>
+                          Provider.of<MovementsChangeNotifier>(thisContext),
+                    ),
+                    ChangeNotifierProvider(
+                      create: (_) =>
+                          Provider.of<CategoriesChangeNotifier>(thisContext),
+                    )
+                  ],
+                  child: MovementView(
+                    allowEdit: true,
+                    selectedMovement: movement,
+                    movementType: movement is Income
+                        ? MovementType.INCOME
+                        : MovementType.EXPEND,
+                  ),
+                ))),
       )
     ];
   }

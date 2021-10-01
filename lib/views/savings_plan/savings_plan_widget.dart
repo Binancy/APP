@@ -10,6 +10,7 @@ import 'package:binancy/utils/ui/widgets.dart';
 import 'package:binancy/views/savings_plan/savings_plan_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
 class SavingsPlanWidget extends StatefulWidget {
@@ -62,8 +63,9 @@ class _SavingsPlanWidgetState extends State<SavingsPlanWidget>
         child: InkWell(
           onTap: () => Navigator.push(
               context,
-              MaterialPageRoute(
-                builder: (_) => MultiProvider(
+              PageTransition(
+                type: PageTransitionType.rightToLeftWithFade,
+                child: MultiProvider(
                   providers: [
                     ChangeNotifierProvider(
                       create: (_) =>
@@ -187,8 +189,9 @@ class _SavingsPlanWidgetState extends State<SavingsPlanWidget>
         color: Colors.transparent,
         onTap: () => Navigator.push(
             context,
-            MaterialPageRoute(
-              builder: (_) => MultiProvider(
+            PageTransition(
+              type: PageTransitionType.rightToLeftWithFade,
+              child: MultiProvider(
                 providers: [
                   ChangeNotifierProvider(
                     create: (_) =>

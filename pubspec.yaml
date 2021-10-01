@@ -53,6 +53,7 @@ dependencies:
   numberpicker: ^2.1.1
   quick_actions: ^0.6.0+7
   in_app_purchase: ^1.0.8
+  page_transition: ^2.0.4
 
 dev_dependencies:
   flutter_lints: ^1.0.4

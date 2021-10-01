@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:page_transition/page_transition.dart';
 
 class RegisterView extends StatefulWidget {
   @override
@@ -416,9 +417,9 @@ class _RegisterViewState extends State<RegisterView> {
                       ]));
                       Navigator.push(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  const PrivacyAndTermsView()));
+                          PageTransition(
+                              type: PageTransitionType.rightToLeftWithFade,
+                              child: const PrivacyAndTermsView()));
                     },
                     child: RichText(
                         text: TextSpan(
