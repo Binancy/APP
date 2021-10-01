@@ -16,10 +16,12 @@ import '../../globals.dart';
 import 'movement_view.dart';
 
 class MovementCard extends StatelessWidget {
+  final BuildContext parentContext;
   final dynamic movement;
   final MovementsChangeNotifier movementsProvider;
 
   const MovementCard({
+    required this.parentContext,
     required this.movement,
     required this.movementsProvider,
     Key? key,
@@ -95,7 +97,7 @@ class MovementCard extends StatelessWidget {
     );
   }
 
-  List<Widget> movementsActions(BuildContext context) {
+  List<Widget> movementsActions(BuildContext thisContext) {
     return [
       IconSlideAction(
         caption: "Eliminar",
@@ -104,22 +106,28 @@ class MovementCard extends StatelessWidget {
         icon: Icons.delete,
         onTap: () async {
           BinancyProgressDialog binancyProgressDialog =
-              BinancyProgressDialog(context: context)..showProgressDialog();
+              BinancyProgressDialog(context: parentContext)
+                ..showProgressDialog();
           if (movement is Income) {
             await IncomesController.deleteIncome(movement as Income)
                 .then((value) async {
               if (value) {
                 await movementsProvider.updateMovements();
                 binancyProgressDialog.dismissDialog();
-                BinancyInfoDialog(context, "Ingreso eliminado correctamente", [
+                BinancyInfoDialog(
+                    parentContext, "Ingreso eliminado correctamente", [
                   BinancyInfoDialogItem("Aceptar", () {
-                    Navigator.pop(context);
+                    Navigator.of(parentContext, rootNavigator: true).pop();
                   })
                 ]);
               } else {
                 binancyProgressDialog.dismissDialog();
-                BinancyInfoDialog(context, "Error al eliminar el ingreso", [
-                  BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))
+                BinancyInfoDialog(
+                    parentContext, "Error al eliminar el ingreso", [
+                  BinancyInfoDialogItem(
+                      "Aceptar",
+                      () => Navigator.of(parentContext, rootNavigator: true)
+                          .pop())
                 ]);
               }
             });
@@ -129,15 +137,17 @@ class MovementCard extends StatelessWidget {
               if (value) {
                 await movementsProvider.updateMovements();
                 binancyProgressDialog.dismissDialog();
-                BinancyInfoDialog(context, "Gasto eliminado correctamente", [
+                BinancyInfoDialog(
+                    parentContext, "Gasto eliminado correctamente", [
                   BinancyInfoDialogItem("Aceptar", () {
-                    Navigator.pop(context);
+                    Navigator.of(parentContext).pop();
                   })
                 ]);
               } else {
                 binancyProgressDialog.dismissDialog();
-                BinancyInfoDialog(context, "Error al eliminar el gasto", [
-                  BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))
+                BinancyInfoDialog(parentContext, "Error al eliminar el gasto", [
+                  BinancyInfoDialogItem(
+                      "Aceptar", () => Navigator.of(parentContext).pop())
                 ]);
               }
             });
@@ -150,17 +160,17 @@ class MovementCard extends StatelessWidget {
         foregroundColor: accentColor,
         color: Colors.transparent,
         onTap: () => Navigator.push(
-            context,
+            thisContext,
             MaterialPageRoute(
                 builder: (_) => MultiProvider(
                       providers: [
                         ChangeNotifierProvider(
                           create: (_) =>
-                              Provider.of<MovementsChangeNotifier>(context),
+                              Provider.of<MovementsChangeNotifier>(thisContext),
                         ),
                         ChangeNotifierProvider(
-                          create: (_) =>
-                              Provider.of<CategoriesChangeNotifier>(context),
+                          create: (_) => Provider.of<CategoriesChangeNotifier>(
+                              thisContext),
                         )
                       ],
                       child: MovementView(

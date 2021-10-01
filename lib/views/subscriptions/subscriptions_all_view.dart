@@ -154,8 +154,8 @@ class SubscriptionsView extends StatelessWidget {
                               behavior: MyBehavior(),
                               child: ListView.separated(
                                   clipBehavior: Clip.antiAliasWithSaveLayer,
-                                  itemBuilder: (context, index) =>
-                                      SubscriptionCard(
+                                  itemBuilder: (_, index) => SubscriptionCard(
+                                        parentContext: context,
                                         subscription: provider.subscriptionsList
                                             .elementAt(index),
                                         subscriptionsChangeNotifier: provider,

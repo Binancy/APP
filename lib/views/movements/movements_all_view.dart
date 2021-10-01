@@ -68,9 +68,7 @@ class _AllMovementViewState extends State<AllMovementView>
                 bottom: TabBar(
                     controller: tabController,
                     onTap: (value) {
-                      setState(() {
-                        pageIndex = value;
-                      });
+                      pageIndex = value;
                       pageController.animateToPage(pageIndex,
                           duration:
                               const Duration(milliseconds: pageSwapDurationMS),
@@ -88,9 +86,7 @@ class _AllMovementViewState extends State<AllMovementView>
                   child: PageView(
                     physics: const NeverScrollableScrollPhysics(),
                     onPageChanged: (value) {
-                      setState(() {
-                        pageIndex = value;
-                      });
+                      pageIndex = value;
                       tabController.animateTo(pageIndex);
                     },
                     controller: pageController,
@@ -213,7 +209,8 @@ class _AllMovementViewState extends State<AllMovementView>
               ? const MovememntEmptyCard(MovementType.INCOME, isExpanded: true)
               : ListView.separated(
                   clipBehavior: Clip.antiAliasWithSaveLayer,
-                  itemBuilder: (context, index) => MovementCard(
+                  itemBuilder: (_, index) => MovementCard(
+                      parentContext: context,
                       movement: incomeMovements.elementAt(index),
                       movementsProvider: movementsProvider),
                   separatorBuilder: (context, index) => const LinearDivider(),
@@ -270,7 +267,8 @@ class _AllMovementViewState extends State<AllMovementView>
               ? const MovememntEmptyCard(MovementType.EXPEND, isExpanded: true)
               : ListView.separated(
                   clipBehavior: Clip.antiAliasWithSaveLayer,
-                  itemBuilder: (context, index) => MovementCard(
+                  itemBuilder: (_, index) => MovementCard(
+                      parentContext: context,
                       movement: expenseMovements.elementAt(index),
                       movementsProvider: movementsProvider),
                   separatorBuilder: (context, index) => const LinearDivider(),

@@ -13,13 +13,14 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 
 class SavingsPlanWidget extends StatefulWidget {
+  final BuildContext parentContext;
   final SavingsPlan savingsPlan;
   final SavingsPlanChangeNotifier savingsPlanChangeNotifier;
   final bool animate;
   final dynamic currentAmount;
 
-  const SavingsPlanWidget(
-      this.savingsPlan, this.savingsPlanChangeNotifier, this.currentAmount,
+  const SavingsPlanWidget(this.parentContext, this.savingsPlan,
+      this.savingsPlanChangeNotifier, this.currentAmount,
       {this.animate = true});
 
   @override
@@ -162,14 +163,18 @@ class _SavingsPlanWidgetState extends State<SavingsPlanWidget>
               BinancyInfoDialog(
                   context, "Meta de ahorros eliminada correctamente", [
                 BinancyInfoDialogItem("Aceptar", () {
-                  Navigator.pop(context);
+                  Navigator.of(widget.parentContext, rootNavigator: true).pop();
                 })
               ]);
             } else {
               binancyProgressDialog.dismissDialog();
               BinancyInfoDialog(
                   context, "Error al eliminar la meta de ahorros", [
-                BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))
+                BinancyInfoDialogItem(
+                    "Aceptar",
+                    () =>
+                        Navigator.of(widget.parentContext, rootNavigator: true)
+                            .pop())
               ]);
             }
           });

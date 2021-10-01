@@ -307,6 +307,7 @@ class MovementBalanceView extends StatelessWidget {
       if (providerList.length > balanceMaxItemsPerCategory) {
         for (var i = 0; i < latestMovementsMaxCount; i++) {
           listMovementsWidget.add(MovementCard(
+              parentContext: context,
               movement: providerList.elementAt(i),
               movementsProvider: movementsChangeNotifier));
           if (i != latestMovementsMaxCount - 1) {
@@ -316,6 +317,7 @@ class MovementBalanceView extends StatelessWidget {
       } else {
         for (var i = 0; i < providerList.length; i++) {
           listMovementsWidget.add(MovementCard(
+              parentContext: context,
               movement: providerList.elementAt(i),
               movementsProvider: movementsChangeNotifier));
           if (i != providerList.length - 1) {
@@ -387,6 +389,7 @@ class MovementBalanceView extends StatelessWidget {
           Subscription subscription =
               subscriptionsChangeNotifier.subscriptionsList.elementAt(i);
           subscriptionsWidgetList.add(SubscriptionCard(
+              parentContext: context,
               subscription: subscription,
               subscriptionsChangeNotifier: subscriptionsChangeNotifier));
         }
@@ -394,6 +397,7 @@ class MovementBalanceView extends StatelessWidget {
         for (var subscription
             in subscriptionsChangeNotifier.subscriptionsList) {
           subscriptionsWidgetList.add(SubscriptionCard(
+              parentContext: context,
               subscription: subscription,
               subscriptionsChangeNotifier: subscriptionsChangeNotifier));
         }
@@ -423,12 +427,12 @@ class MovementBalanceView extends StatelessWidget {
           SavingsPlan savingsPlan =
               savingsPlanChangeNotifier.savingsPlanList.elementAt(i);
           savingsPlanWidgetList.add(SavingsPlanWidget(
-              savingsPlan, savingsPlanChangeNotifier, currentAmount));
+              context, savingsPlan, savingsPlanChangeNotifier, currentAmount));
         }
       } else {
         for (var savingsPlan in savingsPlanChangeNotifier.savingsPlanList) {
           savingsPlanWidgetList.add(SavingsPlanWidget(
-              savingsPlan, savingsPlanChangeNotifier, currentAmount));
+              context, savingsPlan, savingsPlanChangeNotifier, currentAmount));
         }
       }
     } else {

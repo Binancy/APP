@@ -21,12 +21,14 @@ import 'package:provider/provider.dart';
 import 'microexpenses_dialog_widget.dart';
 
 class MicroExpendCard extends StatelessWidget {
+  final BuildContext parentContext;
   final MicroExpend microExpend;
   final MicroExpensesChangeNotifier microExpensesChangeNotifier;
   final MovementsChangeNotifier movementsChangeNotifier;
 
   const MicroExpendCard(
       {Key? key,
+      required this.parentContext,
       required this.microExpend,
       required this.microExpensesChangeNotifier,
       required this.movementsChangeNotifier})
@@ -100,7 +102,7 @@ class MicroExpendCard extends StatelessWidget {
                     BinancyInfoDialog(
                         context, "Gasto frecuente eliminado correctamente", [
                       BinancyInfoDialogItem("Aceptar", () {
-                        Navigator.of(context).pop();
+                        Navigator.of(parentContext, rootNavigator: true).pop();
                       })
                     ]);
                   } else {
@@ -108,7 +110,9 @@ class MicroExpendCard extends StatelessWidget {
                     BinancyInfoDialog(
                         context, "Error al eliminar el gasto frecuente", [
                       BinancyInfoDialogItem(
-                          "Aceptar", () => Navigator.of(context).pop())
+                          "Aceptar",
+                          () => Navigator.of(parentContext, rootNavigator: true)
+                              .pop())
                     ]);
                   }
                 });

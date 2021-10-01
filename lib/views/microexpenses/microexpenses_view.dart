@@ -84,8 +84,9 @@ class MicroExpensesView extends StatelessWidget {
                                               .microExpensesList.length,
                                           mainAxisSpacing: customMargin,
                                           crossAxisSpacing: customMargin,
-                                          itemBuilder: (context, index) =>
+                                          itemBuilder: (_, index) =>
                                               MicroExpendCard(
+                                            parentContext: context,
                                             microExpensesChangeNotifier:
                                                 microExpensesProvider,
                                             microExpend: microExpensesProvider

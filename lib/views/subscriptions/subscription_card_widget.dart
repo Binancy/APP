@@ -12,10 +12,13 @@ import 'package:provider/provider.dart';
 import '../../globals.dart';
 
 class SubscriptionCard extends StatelessWidget {
+  final BuildContext parentContext;
   final Subscription subscription;
   final SubscriptionsChangeNotifier subscriptionsChangeNotifier;
   const SubscriptionCard(
-      {required this.subscription, required this.subscriptionsChangeNotifier});
+      {required this.parentContext,
+      required this.subscription,
+      required this.subscriptionsChangeNotifier});
 
   @override
   Widget build(BuildContext context) {
@@ -97,11 +100,17 @@ class SubscriptionCard extends StatelessWidget {
               binancyProgressDialog.dismissDialog();
               BinancyInfoDialog(
                   context, "Suscripción eliminada correctamente", [
-                BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))
+                BinancyInfoDialogItem(
+                    "Aceptar",
+                    () =>
+                        Navigator.of(parentContext, rootNavigator: true).pop())
               ]);
             } else {
               BinancyInfoDialog(context, "Error al eliminar la suscripcion", [
-                BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))
+                BinancyInfoDialogItem(
+                    "Aceptar",
+                    () =>
+                        Navigator.of(parentContext, rootNavigator: true).pop())
               ]);
             }
           });

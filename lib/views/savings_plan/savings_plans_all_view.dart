@@ -130,7 +130,8 @@ class _SavingsPlanAllViewState extends State<SavingsPlanAllView> {
           child: ListView.separated(
               clipBehavior: Clip.antiAliasWithSaveLayer,
               shrinkWrap: !showAllSavingsPlan,
-              itemBuilder: (context, index) => SavingsPlanWidget(
+              itemBuilder: (_, index) => SavingsPlanWidget(
+                  context,
                   savingsProvider.savingsPlanList.elementAt(index),
                   savingsProvider,
                   movementsProvider.totalHeritage,
