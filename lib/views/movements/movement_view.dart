@@ -53,12 +53,19 @@ class _MovementViewState extends State<MovementView> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     parsedDate = AppLocalizations.of(context)!.realization_date;
+    checkMovement();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    valueController.dispose();
+    titleController.dispose();
+    noteController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    checkMovement();
-
     return BinancyBackground(Consumer2<MovementsChangeNotifier,
             CategoriesChangeNotifier>(
         builder: (context, movementsProvider, categoriesProvider, child) =>
@@ -70,7 +77,7 @@ class _MovementViewState extends State<MovementView> {
                 actions: [
                   !allowEdit && !createMode
                       ? IconButton(
-                          icon: const Icon(Icons.more_horiz),
+                          icon: const Icon(Icons.edit_rounded),
                           onPressed: () {
                             setState(() {
                               allowEdit = true;
@@ -110,6 +117,7 @@ class _MovementViewState extends State<MovementView> {
                                   AppLocalizations.of(context)!.abort, () {
                                 Navigator.pop(context);
                                 setState(() {
+                                  checkMovement();
                                   allowEdit = false;
                                 });
                               })

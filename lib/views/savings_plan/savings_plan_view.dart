@@ -41,11 +41,19 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     parsedDate = AppLocalizations.of(context)!.goal_date;
+    checkSavingsPlan();
+  }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    descriptionController.dispose();
+    totalAmountController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    checkSavingsPlan();
     return BinancyBackground(Consumer<SavingsPlanChangeNotifier>(
         builder: (context, savingsPlanProvider, child) => Scaffold(
               backgroundColor: Colors.transparent,
@@ -60,7 +68,7 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
                               allowEdit = true;
                             });
                           },
-                          icon: const Icon(Icons.more_horiz_rounded))
+                          icon: const Icon(Icons.edit_rounded))
                       : const SizedBox()
                 ],
                 leading: !allowEdit
@@ -95,6 +103,7 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
                                   AppLocalizations.of(context)!.abort, () {
                                 Navigator.pop(context);
                                 setState(() {
+                                  checkSavingsPlan();
                                   allowEdit = false;
                                 });
                               })

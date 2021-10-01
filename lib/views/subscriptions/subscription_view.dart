@@ -39,15 +39,18 @@ class _SubscriptionViewState extends State<SubscriptionView> {
   _SubscriptionViewState(this.selectedSubscription, this.allowEdit);
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    payDay = AppLocalizations.of(context)!.subscription_day;
     checkSubscription();
   }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    payDay = AppLocalizations.of(context)!.subscription_day;
+  void dispose() {
+    nameController.dispose();
+    descriptionController.dispose();
+    amountController.dispose();
+    super.dispose();
   }
 
   @override
@@ -67,7 +70,7 @@ class _SubscriptionViewState extends State<SubscriptionView> {
                         allowEdit = true;
                       });
                     },
-                    icon: const Icon(Icons.more_horiz_rounded))
+                    icon: const Icon(Icons.edit_rounded))
                 : const SizedBox()
           ],
           leading: !allowEdit
@@ -163,8 +166,7 @@ class _SubscriptionViewState extends State<SubscriptionView> {
     if (selectedSubscription != null) {
       createMode = false;
       nameController.text = selectedSubscription!.name;
-      amountController.text =
-          (selectedSubscription!.value as double).toStringAsFixed(2);
+      amountController.text = selectedSubscription!.value.toString();
       payDay = selectedSubscription!.payDay.toString();
       if (selectedSubscription!.description != null) {
         descriptionController.text = selectedSubscription!.description!;
@@ -312,9 +314,11 @@ class _SubscriptionViewState extends State<SubscriptionView> {
                 checkColor: accentColor,
                 value: ignoreCheckoutThisMonth,
                 onChanged: (value) {
-                  setState(() {
-                    ignoreCheckoutThisMonth = !ignoreCheckoutThisMonth;
-                  });
+                  allowEdit
+                      ? setState(() {
+                          ignoreCheckoutThisMonth = !ignoreCheckoutThisMonth;
+                        })
+                      : null;
                 }),
             GestureDetector(
                 onTap: () => setState(() {

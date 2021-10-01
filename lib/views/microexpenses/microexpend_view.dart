@@ -41,8 +41,21 @@ class _MicroExpendViewState extends State<MicroExpendView> {
   _MicroExpendViewState(this.selectedMicroExpend, this.allowEdit);
 
   @override
-  Widget build(BuildContext context) {
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     checkMicroExpend();
+  }
+
+  @override
+  void dispose() {
+    titleController.dispose();
+    descriptionController.dispose();
+    amountController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return BinancyBackground(Consumer<MicroExpensesChangeNotifier>(
         builder: (context, microExpensesProvider, child) => Scaffold(
               backgroundColor: Colors.transparent,
@@ -58,7 +71,7 @@ class _MicroExpendViewState extends State<MicroExpendView> {
                               allowEdit = true;
                             });
                           },
-                          icon: const Icon(Icons.more_horiz_rounded))
+                          icon: const Icon(Icons.edit_rounded))
                       : const SizedBox()
                 ],
                 leading: !allowEdit
@@ -93,6 +106,7 @@ class _MicroExpendViewState extends State<MicroExpendView> {
                                   AppLocalizations.of(context)!.abort, () {
                                 Navigator.pop(context);
                                 setState(() {
+                                  checkMicroExpend();
                                   allowEdit = false;
                                 });
                               })
