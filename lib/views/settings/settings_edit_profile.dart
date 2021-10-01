@@ -35,13 +35,13 @@ class _SettingsEditUserInfoViewState extends State<SettingsEditUserInfoView> {
       lastSurnameFocusNode = FocusNode();
 
   String birthdayDate = "";
+  bool firstRun = true;
   int selectedPayDay = 0;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     birthdayDate = AppLocalizations.of(context)!.birthday;
-    setInitialData();
   }
 
   @override
@@ -57,6 +57,10 @@ class _SettingsEditUserInfoViewState extends State<SettingsEditUserInfoView> {
 
   @override
   Widget build(BuildContext context) {
+    if (firstRun) {
+      setInitialData();
+      firstRun = false;
+    }
     return Container(
         clipBehavior: Clip.antiAliasWithSaveLayer,
         decoration: BoxDecoration(

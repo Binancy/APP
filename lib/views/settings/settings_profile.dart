@@ -237,7 +237,10 @@ class _SettingsUserDataViewState extends State<SettingsUserDataView> {
             BinancyInfoDialogItem(AppLocalizations.of(context)!.cancel,
                 () => Navigator.pop(context)),
             BinancyInfoDialogItem(AppLocalizations.of(context)!.delete_data,
-                () => AccountController.deleteUserData(context))
+                () {
+              Navigator.pop(context);
+              AccountController.deleteUserData(context);
+            })
           ]);
     } else {
       AccountController.deleteUserData(context);
@@ -252,10 +255,16 @@ class _SettingsUserDataViewState extends State<SettingsUserDataView> {
         [
           BinancyInfoDialogItem(AppLocalizations.of(context)!.cancel,
               () => Navigator.pop(context)),
-          BinancyInfoDialogItem(AppLocalizations.of(context)!.only_appName,
-              () => confirmDeleteUserData(skipVerification: true)),
+          BinancyInfoDialogItem(AppLocalizations.of(context)!.only_appName, () {
+            Navigator.pop(context);
+
+            confirmDeleteUserData(skipVerification: true);
+          }),
           BinancyInfoDialogItem(AppLocalizations.of(context)!.delete_account,
-              () => AccountController.deleteAccount(context))
+              () {
+            Navigator.pop(context);
+            AccountController.deleteAccount(context);
+          })
         ]);
   }
 }
