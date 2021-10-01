@@ -36,12 +36,12 @@ class _SettingsEditUserInfoViewState extends State<SettingsEditUserInfoView> {
 
   String birthdayDate = "";
   int selectedPayDay = 0;
-  bool firstRun = true;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     birthdayDate = AppLocalizations.of(context)!.birthday;
+    setInitialData();
   }
 
   @override
@@ -57,10 +57,6 @@ class _SettingsEditUserInfoViewState extends State<SettingsEditUserInfoView> {
 
   @override
   Widget build(BuildContext context) {
-    if (firstRun) {
-      setInitialData();
-      firstRun = false;
-    }
     return Container(
         clipBehavior: Clip.antiAliasWithSaveLayer,
         decoration: BoxDecoration(
@@ -287,7 +283,8 @@ class _SettingsEditUserInfoViewState extends State<SettingsEditUserInfoView> {
       changedLastName = lastSurnameController.text != userData['lastSurname'];
     }
 
-    if (Utils.validateStringDate(birthdayDate)) {
+    if (Utils.validateStringDate(birthdayDate) &&
+        userData['birthday'] != null) {
       changedDate = birthdayDate !=
           Utils.toYMD(Utils.fromISOStandard(userData['birthday']), context);
     } else {

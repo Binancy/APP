@@ -123,8 +123,8 @@ class _SavingsPlanWidgetState extends State<SavingsPlanWidget>
                         child: Text(
                       widget.currentAmount is int
                           ? widget.currentAmount.toString()
-                          : (widget.currentAmount as double)
-                                  .toStringAsFixed(2) +
+                          : (widget.currentAmount as double).toStringAsFixed(
+                                  widget.currentAmount % 1 == 0 ? 0 : 2) +
                               "€ de " +
                               widget.savingsPlan.amount.toString() +
                               "€",

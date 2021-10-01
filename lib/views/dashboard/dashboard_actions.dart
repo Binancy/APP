@@ -64,7 +64,7 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
           height: 20,
         ),
         Container(
-            height: (MediaQuery.of(context).size.height / 10 * 2.75),
+            height: (MediaQuery.of(context).size.height / 10 * 2.825),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(customBorderRadius),
               color: themeColor.withOpacity(0.1),
