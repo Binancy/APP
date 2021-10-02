@@ -90,21 +90,21 @@ class _SettingsViewState extends State<SettingsView> {
 
   Widget myDataCard(BuildContext context) {
     List<Widget> widgetList = [
-      SettingsHeaderRow(text: AppLocalizations.of(context)!.my_data),
+      BinancyHeaderRow(text: AppLocalizations.of(context)!.my_data),
       const LinearDivider(),
-      SettingsDataRow(
+      BinancyDataRow(
           title: AppLocalizations.of(context)!.name,
           data: userData['nameUser'] ?? "-"),
       const LinearDivider(),
-      SettingsDataRow(
+      BinancyDataRow(
           title: AppLocalizations.of(context)!.email,
           data: userData['email'] ?? "-"),
       const LinearDivider(),
-      SettingsDataRow(
+      BinancyDataRow(
           title: AppLocalizations.of(context)!.current_plan,
           data: userData['planTitle']),
       const LinearDivider(),
-      SettingsDataRow(
+      BinancyDataRow(
           title: AppLocalizations.of(context)!.version(appName),
           data: appVersion)
     ];
@@ -122,9 +122,9 @@ class _SettingsViewState extends State<SettingsView> {
   Widget actionsCard(
       BuildContext context, MovementsChangeNotifier movementsChangeNotifier) {
     List<Widget> widgetList = [
-      SettingsHeaderRow(text: AppLocalizations.of(context)!.actions),
+      BinancyHeaderRow(text: AppLocalizations.of(context)!.actions),
       const LinearDivider(),
-      SettingsActionRow(
+      BinancyActionRow(
           text: AppLocalizations.of(context)!.my_profile,
           action: () async => await Navigator.push(
                       context,
@@ -136,11 +136,11 @@ class _SettingsViewState extends State<SettingsView> {
                 setState(() {});
               })),
       const LinearDivider(),
-      SettingsActionRow(
+      BinancyActionRow(
           text: AppLocalizations.of(context)!.notifications,
           action: () => null),
       const LinearDivider(),
-      SettingsActionRow(
+      BinancyActionRow(
           text: AppLocalizations.of(context)!.privacy_policy,
           action: () => Navigator.push(
               context,
@@ -148,11 +148,11 @@ class _SettingsViewState extends State<SettingsView> {
                   type: PageTransitionType.rightToLeftWithFade,
                   child: const PrivacyAndTermsView()))),
       const LinearDivider(),
-      SettingsActionRow(
+      BinancyActionRow(
           text: AppLocalizations.of(context)!.support, action: () => null),
       const LinearDivider(),
       Utils.showIfPlanIsEqualOrLower(userData['idPlan'], "binancy")
-          ? SettingsActionRow(
+          ? BinancyActionRow(
               text: AppLocalizations.of(context)!.change_plan,
               action: () => Navigator.push(
                   context,
@@ -179,8 +179,8 @@ class _SettingsViewState extends State<SettingsView> {
   }
 }
 
-class SettingsHeaderRow extends StatelessWidget {
-  const SettingsHeaderRow({
+class BinancyHeaderRow extends StatelessWidget {
+  const BinancyHeaderRow({
     Key? key,
     required this.text,
   }) : super(key: key);
@@ -206,8 +206,8 @@ class SettingsHeaderRow extends StatelessWidget {
   }
 }
 
-class SettingsDataRow extends StatelessWidget {
-  const SettingsDataRow({
+class BinancyDataRow extends StatelessWidget {
+  const BinancyDataRow({
     Key? key,
     required this.title,
     required this.data,
@@ -239,8 +239,8 @@ class SettingsDataRow extends StatelessWidget {
   }
 }
 
-class SettingsActionRow extends StatelessWidget {
-  const SettingsActionRow({Key? key, required this.text, required this.action})
+class BinancyActionRow extends StatelessWidget {
+  const BinancyActionRow({Key? key, required this.text, required this.action})
       : super(key: key);
 
   final String text;

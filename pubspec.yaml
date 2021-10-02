@@ -54,6 +54,8 @@ dependencies:
   quick_actions: ^0.6.0+7
   in_app_purchase: ^1.0.8
   page_transition: ^2.0.4
+  in_app_review: ^2.0.3
+  mailto: ^2.0.0
 
 dev_dependencies:
   flutter_lints: ^1.0.4

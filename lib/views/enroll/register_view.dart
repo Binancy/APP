@@ -24,8 +24,6 @@ class _RegisterViewState extends State<RegisterView> {
   bool termsPrivacyCheck = false;
 
   int adviceCurrentPage = 0, registerCurrentPage = 0;
-  int autoPassAdviceInterval = 5;
-  int adviceTransitionDuration = 500, registerTransitionDuration = 750;
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -470,13 +468,13 @@ class _RegisterViewState extends State<RegisterView> {
 
   void autoForwardAdvices() async {
     singletonAutoPass = true;
-    await Future.delayed(Duration(seconds: autoPassAdviceInterval));
+    await Future.delayed(const Duration(seconds: autoPassAdviceInterval));
     adviceCurrentPage < adviceCardList.length - 1
         ? adviceCurrentPage++
         : adviceCurrentPage = 0;
     if (mounted) {
       advicePageController.animateToPage(adviceCurrentPage,
-          duration: Duration(milliseconds: adviceTransitionDuration),
+          duration: const Duration(milliseconds: adviceTransitionDuration),
           curve: Curves.easeOut);
       autoForwardAdvices();
     }

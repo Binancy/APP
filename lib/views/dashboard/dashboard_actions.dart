@@ -8,6 +8,7 @@ import 'package:binancy/globals.dart';
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/ui/widgets.dart';
+import 'package:binancy/views/advice/advice_view.dart';
 import 'package:binancy/views/microexpenses/microexpenses_view.dart';
 import 'package:binancy/views/movements/movements_all_view.dart';
 import 'package:binancy/views/movements/movement_view.dart';
@@ -325,7 +326,11 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
         context: context,
         icon: SvgPicture.asset("assets/svg/dashboard_advices.svg"),
         text: AppLocalizations.of(context)!.help_advice,
-        action: () {}));
+        action: () => Navigator.push(
+            context,
+            PageTransition(
+                child: const AdviceView(),
+                type: PageTransitionType.rightToLeftWithFade))));
     if (Utils.showIfPlanIsEqualOrLower(userData['idPlan'], "binancy")) {
       actionsList.add(ActionButtonWidget(
           context: context,

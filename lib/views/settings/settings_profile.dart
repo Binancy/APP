@@ -80,21 +80,21 @@ class _SettingsUserDataViewState extends State<SettingsUserDataView> {
 
   Widget myDataCard(BuildContext context) {
     List<Widget> widgetList = [
-      SettingsHeaderRow(text: AppLocalizations.of(context)!.my_data),
+      BinancyHeaderRow(text: AppLocalizations.of(context)!.my_data),
       const LinearDivider(),
-      SettingsDataRow(
+      BinancyDataRow(
           title: AppLocalizations.of(context)!.registered_since,
           data: Utils.toYMD(
               Utils.fromISOStandard(userData['registerDate']), context)),
       const LinearDivider(),
-      SettingsDataRow(
+      BinancyDataRow(
           title: AppLocalizations.of(context)!.birthday,
           data: userData['birthday'] != null
               ? Utils.toYMD(
                   Utils.fromISOStandard(userData['birthday']), context)
               : AppLocalizations.of(context)!.no_data),
       const LinearDivider(),
-      SettingsDataRow(
+      BinancyDataRow(
           title: AppLocalizations.of(context)!.first_of_month,
           data: userData['payDay'].toString()),
     ];
@@ -110,13 +110,13 @@ class _SettingsUserDataViewState extends State<SettingsUserDataView> {
 
   Widget actionsCard(BuildContext context) {
     List<Widget> widgetList = [
-      SettingsHeaderRow(text: AppLocalizations.of(context)!.actions),
+      BinancyHeaderRow(text: AppLocalizations.of(context)!.actions),
       const LinearDivider(),
-      SettingsActionRow(
+      BinancyActionRow(
           text: AppLocalizations.of(context)!.edit_profile,
           action: () => editUserInfo(context)),
       const LinearDivider(),
-      SettingsActionRow(
+      BinancyActionRow(
           text: AppLocalizations.of(context)!.change_first_of_month,
           action: () {
             BinancyDayPickerDialog binancyDayPickerDialog =
@@ -154,16 +154,16 @@ class _SettingsUserDataViewState extends State<SettingsUserDataView> {
             });
           }),
       const LinearDivider(),
-      SettingsActionRow(
+      BinancyActionRow(
         text: AppLocalizations.of(context)!.change_password,
         action: () => SettingsChangePassword(context: context),
       ),
       const LinearDivider(),
-      SettingsActionRow(
+      BinancyActionRow(
           text: AppLocalizations.of(context)!.delete_data,
           action: () => confirmDeleteUserData()),
       const LinearDivider(),
-      SettingsActionRow(
+      BinancyActionRow(
         text: AppLocalizations.of(context)!.delete_account,
         action: () => confirmDeleteAccount(),
       ),

@@ -9,6 +9,8 @@ const String appVersion = "0.3.0";
 const String apiURL = "https://binancy.herokuapp.com";
 const String testURL = "http://localhost:5000";
 const Duration timeout = Duration(milliseconds: 3500);
+const supportEmail = "support@appxs.es";
+const appWebsite = "binancy.appxs.es";
 
 // PLANS
 const String MEMBER_PLAN = "member";
@@ -48,6 +50,9 @@ const int progressDialogBlurAnimation = 100;
 const int logoutMinTimeMS = 3000;
 const int pageSwapDurationMS = 500;
 const int swapAnimationDurationMS = 500;
+const int autoPassAdviceInterval = 5;
+const int adviceTransitionDuration = 500;
+const int registerTransitionDuration = 750;
 
 // UI GLOBALS
 const int dashboardMaxNotifications = 3;
