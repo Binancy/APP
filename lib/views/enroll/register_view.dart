@@ -81,8 +81,8 @@ class _RegisterViewState extends State<RegisterView> {
                       registerCurrentPage--;
                     });
                     registerPageController.animateToPage(registerCurrentPage,
-                        duration:
-                            Duration(milliseconds: registerTransitionDuration),
+                        duration: const Duration(
+                            milliseconds: registerTransitionDuration),
                         curve: Curves.easeOut);
                   })
               : const SizedBox(),
@@ -492,7 +492,8 @@ class _RegisterViewState extends State<RegisterView> {
             setState(() {
               registerCurrentPage++;
               registerPageController.animateToPage(registerCurrentPage,
-                  duration: Duration(milliseconds: registerTransitionDuration),
+                  duration:
+                      const Duration(milliseconds: registerTransitionDuration),
                   curve: Curves.easeOut);
             });
           } else {

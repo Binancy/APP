@@ -3,12 +3,15 @@
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/ui/widgets.dart';
 import 'package:binancy/utils/utils.dart';
+import 'package:binancy/views/advice/advice_binancy_view.dart';
 import 'package:binancy/views/advice/advice_card.dart';
+import 'package:binancy/views/advice/support_view.dart';
 import 'package:binancy/views/settings/settings_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:in_app_review/in_app_review.dart';
 import 'package:mailto/mailto.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../globals.dart';
@@ -88,7 +91,7 @@ class _AdviceViewState extends State<AdviceView> {
     ));
   }
 
-  Padding reviewAppWidget() {
+  Widget reviewAppWidget() {
     return Padding(
       padding: const EdgeInsets.only(left: customMargin, right: customMargin),
       child: Material(
@@ -141,7 +144,7 @@ class _AdviceViewState extends State<AdviceView> {
 
   void autoForwardAdvices() async {
     singletonAutoPass = true;
-    await Future.delayed(Duration(seconds: autoPassAdviceInterval));
+    await Future.delayed(const Duration(seconds: autoPassAdviceInterval));
     adviceCurrentPage < adviceCardList.length - 1
         ? adviceCurrentPage++
         : adviceCurrentPage = 0;
@@ -157,10 +160,14 @@ class _AdviceViewState extends State<AdviceView> {
     List<Widget> actionsRowList = [];
     actionsRowList
         .add(BinancyHeaderRow(text: AppLocalizations.of(context)!.actions));
-    actionsRowList
-        .add(BinancyActionRow(text: "Consejos para ti", action: () {}));
-    actionsRowList
-        .add(BinancyActionRow(text: "Acerca de " + appName, action: () {}));
+
+    actionsRowList.add(BinancyActionRow(
+        text: "Acerca de " + appName,
+        action: () => Navigator.push(
+            context,
+            PageTransition(
+                child: AdviceBinancyView(),
+                type: PageTransitionType.rightToLeftWithFade))));
     actionsRowList.add(
         BinancyActionRow(text: "Preguntas frecuentes (FAQ)", action: () {}));
     actionsRowList.add(BinancyActionRow(
@@ -169,7 +176,12 @@ class _AdviceViewState extends State<AdviceView> {
             Mailto(to: [supportEmail], subject: "Suggestion - " + appName)
                 .toString())));
     actionsRowList.add(BinancyActionRow(
-        text: AppLocalizations.of(context)!.support, action: () {}));
+        text: AppLocalizations.of(context)!.support,
+        action: () => Navigator.push(
+            context,
+            PageTransition(
+                child: SupportView(),
+                type: PageTransitionType.rightToLeftWithFade))));
 
     return actionsRowList;
   }

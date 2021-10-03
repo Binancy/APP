@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:binancy/globals.dart';
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/views/enroll/splash_view.dart';
+import 'package:feedback/feedback.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
@@ -57,29 +58,36 @@ class _MyAppState extends State<MyApp> {
       DeviceOrientation.portraitDown,
     ]);
 
-    return MaterialApp(
-      theme: ThemeData(
-          appBarTheme: const AppBarTheme(),
-          splashColor: themeColor.withOpacity(0.1),
-          highlightColor: themeColor.withOpacity(0.1),
-          toggleableActiveColor: Colors.transparent,
-          unselectedWidgetColor: accentColor),
-      builder: (context, child) =>
-          ResponsiveWrapper.builder(child, defaultScale: true),
-      title: appName,
-      debugShowCheckedModeBanner: false,
-      home: const SplashScreen(),
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: const [
-        Locale('en', ''),
-        Locale('es', ''),
-        Locale('ca', '')
-      ],
+    return BetterFeedback(
+      theme: FeedbackThemeData(
+          background: const Color(0xff262626),
+          bottomSheetDescriptionStyle: miniInputStyle(),
+          feedbackSheetColor: const Color(0xff262626),
+          activeFeedbackModeColor: accentColor),
+      child: MaterialApp(
+        theme: ThemeData(
+            appBarTheme: const AppBarTheme(),
+            splashColor: themeColor.withOpacity(0.1),
+            highlightColor: themeColor.withOpacity(0.1),
+            toggleableActiveColor: Colors.transparent,
+            unselectedWidgetColor: accentColor),
+        builder: (context, child) =>
+            ResponsiveWrapper.builder(child, defaultScale: true),
+        title: appName,
+        debugShowCheckedModeBanner: false,
+        home: const SplashScreen(),
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: const [
+          Locale('en', ''),
+          Locale('es', ''),
+          Locale('ca', '')
+        ],
+      ),
     );
   }
 }

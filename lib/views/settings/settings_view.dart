@@ -6,6 +6,7 @@ import 'package:binancy/utils/dialogs/progress_dialog.dart';
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/ui/widgets.dart';
+import 'package:binancy/views/advice/support_view.dart';
 import 'package:binancy/views/enroll/login_view.dart';
 import 'package:binancy/views/enroll/privacy_terms_view.dart';
 import 'package:binancy/views/payments/premium_plans_view.dart';
@@ -149,7 +150,12 @@ class _SettingsViewState extends State<SettingsView> {
                   child: const PrivacyAndTermsView()))),
       const LinearDivider(),
       BinancyActionRow(
-          text: AppLocalizations.of(context)!.support, action: () => null),
+          text: AppLocalizations.of(context)!.support,
+          action: () => Navigator.push(
+              context,
+              PageTransition(
+                  child: const SupportView(),
+                  type: PageTransitionType.rightToLeftWithFade))),
       const LinearDivider(),
       Utils.showIfPlanIsEqualOrLower(userData['idPlan'], "binancy")
           ? BinancyActionRow(

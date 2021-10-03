@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter/services.dart';
 
 Color primaryColor = const Color(0xff012457);
 Color secondaryColor = const Color(0xff054CCB);
@@ -169,6 +170,24 @@ InputDecoration customInputDecoration(String text, IconData icon) {
         color: accentColor,
         size: 36,
       ));
+}
+
+SystemUiOverlayStyle blueSystemUI() {
+  return SystemUiOverlayStyle(
+      statusBarBrightness: Brightness.dark,
+      statusBarIconBrightness: Brightness.dark,
+      systemNavigationBarColor: secondaryColor,
+      systemNavigationBarIconBrightness: Brightness.light,
+      statusBarColor: Colors.transparent);
+}
+
+SystemUiOverlayStyle whiteSystemUI() {
+  return const SystemUiOverlayStyle(
+      statusBarBrightness: Brightness.light,
+      statusBarIconBrightness: Brightness.light,
+      systemNavigationBarColor: Colors.white,
+      systemNavigationBarIconBrightness: Brightness.dark,
+      statusBarColor: Colors.transparent);
 }
 
 class MyBehavior extends ScrollBehavior {
