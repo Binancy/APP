@@ -54,108 +54,145 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
 
   @override
   Widget build(BuildContext context) {
-    return BinancyBackground(Consumer<SavingsPlanChangeNotifier>(
-        builder: (context, savingsPlanProvider, child) => Scaffold(
-              backgroundColor: Colors.transparent,
-              appBar: AppBar(
+    return WillPopScope(
+      onWillPop: () async {
+        if (createMode) {
+          BinancyInfoDialog(
+              context, AppLocalizations.of(context)!.exit_confirm, [
+            BinancyInfoDialogItem(AppLocalizations.of(context)!.cancel, () {
+              Navigator.pop(context);
+              return false;
+            }),
+            BinancyInfoDialogItem(AppLocalizations.of(context)!.abort, () {
+              Navigator.pop(context);
+              Navigator.pop(context);
+              return true;
+            })
+          ]);
+        } else if (allowEdit) {
+          BinancyInfoDialog(
+              context, AppLocalizations.of(context)!.exit_confirm, [
+            BinancyInfoDialogItem(AppLocalizations.of(context)!.cancel, () {
+              Navigator.pop(context);
+              return false;
+            }),
+            BinancyInfoDialogItem(AppLocalizations.of(context)!.abort, () {
+              Navigator.pop(context);
+              allowEdit = false;
+              setState(() {
+                checkSavingsPlan();
+              });
+              return true;
+            })
+          ]);
+        }
+        return true;
+      },
+      child: BinancyBackground(Consumer<SavingsPlanChangeNotifier>(
+          builder: (context, savingsPlanProvider, child) => Scaffold(
                 backgroundColor: Colors.transparent,
-                elevation: 0,
-                actions: [
-                  !createMode && !allowEdit
-                      ? IconButton(
-                          onPressed: () {
-                            setState(() {
-                              allowEdit = true;
-                            });
-                          },
-                          icon: const Icon(Icons.edit_rounded))
-                      : const SizedBox()
-                ],
-                leading: !allowEdit
-                    ? IconButton(
-                        icon: const Icon(Icons.arrow_back),
-                        onPressed: () => Navigator.pop(context))
-                    : createMode
+                appBar: AppBar(
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  actions: [
+                    !createMode && !allowEdit
                         ? IconButton(
-                            icon: const Icon(Icons.arrow_back),
-                            onPressed: () => BinancyInfoDialog(
-                                    context,
-                                    AppLocalizations.of(context)!.exit_confirm,
-                                    [
-                                      BinancyInfoDialogItem(
-                                          AppLocalizations.of(context)!.cancel,
-                                          () => Navigator.pop(context)),
-                                      BinancyInfoDialogItem(
-                                          AppLocalizations.of(context)!.abort,
-                                          () {
-                                        Navigator.pop(context);
-                                        Navigator.pop(context);
-                                      })
-                                    ]))
-                        : IconButton(
-                            icon: const Icon(Icons.close_outlined),
-                            onPressed: () => BinancyInfoDialog(context,
-                                AppLocalizations.of(context)!.exit_confirm, [
-                              BinancyInfoDialogItem(
-                                  AppLocalizations.of(context)!.cancel,
-                                  () => Navigator.pop(context)),
-                              BinancyInfoDialogItem(
-                                  AppLocalizations.of(context)!.abort, () {
-                                Navigator.pop(context);
-                                setState(() {
-                                  checkSavingsPlan();
-                                  allowEdit = false;
-                                });
-                              })
-                            ]),
-                          ),
-              ),
-              body: Column(
-                children: [
-                  Expanded(
-                      child: ScrollConfiguration(
-                          behavior: MyBehavior(),
-                          child: ListView(
-                            children: [
-                              Container(
-                                  height: 125,
-                                  padding: const EdgeInsets.all(customMargin),
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                      createMode
-                                          ? AppLocalizations.of(context)!
-                                              .goals_header
-                                          : selectedSavingsPlan!.name,
-                                      style: headerItemView(),
-                                      textAlign: TextAlign.center)),
-                              nameInputWidget(),
-                              const SpaceDivider(),
-                              amountInputWidget(),
-                              const SpaceDivider(),
-                              datePicker(context),
-                              const SpaceDivider(),
-                              descriptionInputWidget(),
-                            ],
-                          ))),
-                  allowEdit ? const SpaceDivider() : const SizedBox(),
-                  allowEdit
-                      ? Padding(
-                          padding: const EdgeInsets.only(
-                              left: customMargin, right: customMargin),
-                          child: BinancyButton(
-                              context: context,
-                              text: createMode
-                                  ? AppLocalizations.of(context)!.add_goal
-                                  : AppLocalizations.of(context)!.update_goal,
-                              action: () async {
-                                await checkData(savingsPlanProvider);
-                              }),
-                        )
-                      : const SizedBox(),
-                  const SpaceDivider(),
-                ],
-              ),
-            )));
+                            onPressed: () {
+                              setState(() {
+                                allowEdit = true;
+                              });
+                            },
+                            icon: const Icon(Icons.edit_rounded))
+                        : const SizedBox()
+                  ],
+                  leading: !allowEdit
+                      ? IconButton(
+                          icon: const Icon(Icons.arrow_back),
+                          onPressed: () => Navigator.pop(context))
+                      : createMode
+                          ? IconButton(
+                              icon: const Icon(Icons.arrow_back),
+                              onPressed: () => BinancyInfoDialog(
+                                      context,
+                                      AppLocalizations.of(context)!
+                                          .exit_confirm,
+                                      [
+                                        BinancyInfoDialogItem(
+                                            AppLocalizations.of(context)!
+                                                .cancel,
+                                            () => Navigator.pop(context)),
+                                        BinancyInfoDialogItem(
+                                            AppLocalizations.of(context)!.abort,
+                                            () {
+                                          Navigator.pop(context);
+                                          Navigator.pop(context);
+                                        })
+                                      ]))
+                          : IconButton(
+                              icon: const Icon(Icons.close_outlined),
+                              onPressed: () => BinancyInfoDialog(context,
+                                  AppLocalizations.of(context)!.exit_confirm, [
+                                BinancyInfoDialogItem(
+                                    AppLocalizations.of(context)!.cancel,
+                                    () => Navigator.pop(context)),
+                                BinancyInfoDialogItem(
+                                    AppLocalizations.of(context)!.abort, () {
+                                  Navigator.pop(context);
+                                  setState(() {
+                                    checkSavingsPlan();
+                                    allowEdit = false;
+                                  });
+                                })
+                              ]),
+                            ),
+                ),
+                body: Column(
+                  children: [
+                    Expanded(
+                        child: ScrollConfiguration(
+                            behavior: MyBehavior(),
+                            child: ListView(
+                              children: [
+                                Container(
+                                    height: 125,
+                                    padding: const EdgeInsets.all(customMargin),
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                        createMode
+                                            ? AppLocalizations.of(context)!
+                                                .goals_header
+                                            : selectedSavingsPlan!.name,
+                                        style: headerItemView(),
+                                        textAlign: TextAlign.center)),
+                                nameInputWidget(),
+                                const SpaceDivider(),
+                                amountInputWidget(),
+                                const SpaceDivider(),
+                                datePicker(context),
+                                const SpaceDivider(),
+                                descriptionInputWidget(),
+                              ],
+                            ))),
+                    allowEdit ? const SpaceDivider() : const SizedBox(),
+                    allowEdit
+                        ? Padding(
+                            padding: const EdgeInsets.only(
+                                left: customMargin, right: customMargin),
+                            child: BinancyButton(
+                                context: context,
+                                text: createMode
+                                    ? AppLocalizations.of(context)!.add_goal
+                                    : AppLocalizations.of(context)!.update_goal,
+                                action: () async {
+                                  await checkData(savingsPlanProvider);
+                                }),
+                          )
+                        : const SizedBox(),
+                    const SpaceDivider(),
+                  ],
+                ),
+              ))),
+    );
   }
 
   Widget nameInputWidget() {

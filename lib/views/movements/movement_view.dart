@@ -66,117 +66,154 @@ class _MovementViewState extends State<MovementView> {
 
   @override
   Widget build(BuildContext context) {
-    return BinancyBackground(Consumer2<MovementsChangeNotifier,
-            CategoriesChangeNotifier>(
-        builder: (context, movementsProvider, categoriesProvider, child) =>
-            Scaffold(
-              appBar: AppBar(
-                elevation: 0,
-                backgroundColor: Colors.transparent,
-                centerTitle: true,
-                actions: [
-                  !allowEdit && !createMode
-                      ? IconButton(
-                          icon: const Icon(Icons.edit_rounded),
-                          onPressed: () {
-                            setState(() {
-                              allowEdit = true;
-                            });
-                          })
-                      : const SizedBox()
-                ],
-                leading: !allowEdit
-                    ? IconButton(
-                        icon: const Icon(Icons.arrow_back),
-                        onPressed: () => Navigator.pop(context))
-                    : createMode
+    return WillPopScope(
+      onWillPop: () async {
+        if (createMode) {
+          BinancyInfoDialog(
+              context, AppLocalizations.of(context)!.exit_confirm, [
+            BinancyInfoDialogItem(AppLocalizations.of(context)!.cancel, () {
+              Navigator.pop(context);
+              return false;
+            }),
+            BinancyInfoDialogItem(AppLocalizations.of(context)!.abort, () {
+              Navigator.pop(context);
+              Navigator.pop(context);
+              return true;
+            })
+          ]);
+        } else if (allowEdit) {
+          BinancyInfoDialog(
+              context, AppLocalizations.of(context)!.exit_confirm, [
+            BinancyInfoDialogItem(AppLocalizations.of(context)!.cancel, () {
+              Navigator.pop(context);
+              return false;
+            }),
+            BinancyInfoDialogItem(AppLocalizations.of(context)!.abort, () {
+              Navigator.pop(context);
+              allowEdit = false;
+              setState(() {
+                checkMovement();
+              });
+              return true;
+            })
+          ]);
+        }
+        return true;
+      },
+      child: BinancyBackground(Consumer2<MovementsChangeNotifier,
+              CategoriesChangeNotifier>(
+          builder: (context, movementsProvider, categoriesProvider, child) =>
+              Scaffold(
+                appBar: AppBar(
+                  elevation: 0,
+                  backgroundColor: Colors.transparent,
+                  centerTitle: true,
+                  actions: [
+                    !allowEdit && !createMode
                         ? IconButton(
-                            icon: const Icon(Icons.arrow_back),
-                            onPressed: () => BinancyInfoDialog(
-                                    context,
-                                    AppLocalizations.of(context)!.exit_confirm,
-                                    [
-                                      BinancyInfoDialogItem(
-                                          AppLocalizations.of(context)!.cancel,
-                                          () => Navigator.pop(context)),
-                                      BinancyInfoDialogItem(
-                                          AppLocalizations.of(context)!.abort,
-                                          () {
-                                        Navigator.pop(context);
-                                        Navigator.pop(context);
-                                      })
-                                    ]))
-                        : IconButton(
-                            icon: const Icon(Icons.close_outlined),
-                            onPressed: () => BinancyInfoDialog(context,
-                                AppLocalizations.of(context)!.exit_confirm, [
-                              BinancyInfoDialogItem(
-                                  AppLocalizations.of(context)!.cancel,
-                                  () => Navigator.pop(context)),
-                              BinancyInfoDialogItem(
-                                  AppLocalizations.of(context)!.abort, () {
-                                Navigator.pop(context);
-                                setState(() {
-                                  checkMovement();
-                                  allowEdit = false;
-                                });
-                              })
-                            ]),
-                          ),
-                title: Text(
-                    createMode
-                        ? widget.movementType.index == 0
-                            ? AppLocalizations.of(context)!.add_income
-                            : AppLocalizations.of(context)!.add_expend
-                        : selectedMovement.title,
-                    style: appBarStyle()),
-              ),
-              backgroundColor: Colors.transparent,
-              body: ScrollConfiguration(
-                  behavior: MyBehavior(),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        movementHeader(),
-                        Text(AppLocalizations.of(context)!.movement_data,
-                            style: titleCardStyle()),
-                        const SpaceDivider(),
-                        movementNotes(),
-                        const SpaceDivider(),
-                        datePicker(context),
-                        const SpaceDivider(),
-                        categorySelector(context),
-                        const SpaceDivider(),
-                        allowEdit
-                            ? Padding(
-                                padding: const EdgeInsets.only(
-                                    left: customMargin, right: customMargin),
-                                child: BinancyButton(
-                                    context: context,
-                                    text: createMode
-                                        ? widget.movementType ==
-                                                MovementType.INCOME
-                                            ? AppLocalizations.of(context)!
-                                                .add_income
-                                            : AppLocalizations.of(context)!
-                                                .add_expend
-                                        : widget.movementType ==
-                                                MovementType.INCOME
-                                            ? AppLocalizations.of(context)!
-                                                .update_income
-                                            : AppLocalizations.of(context)!
-                                                .update_expend,
-                                    action: () async {
-                                      FocusScope.of(context).unfocus();
-                                      await checkData(movementsProvider);
-                                    }))
-                            : const SizedBox()
-                      ],
-                    ),
-                  )),
-            )));
+                            icon: const Icon(Icons.edit_rounded),
+                            onPressed: () {
+                              setState(() {
+                                allowEdit = true;
+                              });
+                            })
+                        : const SizedBox()
+                  ],
+                  leading: !allowEdit
+                      ? IconButton(
+                          icon: const Icon(Icons.arrow_back),
+                          onPressed: () => Navigator.pop(context))
+                      : createMode
+                          ? IconButton(
+                              icon: const Icon(Icons.arrow_back),
+                              onPressed: () => BinancyInfoDialog(
+                                      context,
+                                      AppLocalizations.of(context)!
+                                          .exit_confirm,
+                                      [
+                                        BinancyInfoDialogItem(
+                                            AppLocalizations.of(context)!
+                                                .cancel,
+                                            () => Navigator.pop(context)),
+                                        BinancyInfoDialogItem(
+                                            AppLocalizations.of(context)!.abort,
+                                            () {
+                                          Navigator.pop(context);
+                                          Navigator.pop(context);
+                                        })
+                                      ]))
+                          : IconButton(
+                              icon: const Icon(Icons.close_outlined),
+                              onPressed: () => BinancyInfoDialog(context,
+                                  AppLocalizations.of(context)!.exit_confirm, [
+                                BinancyInfoDialogItem(
+                                    AppLocalizations.of(context)!.cancel,
+                                    () => Navigator.pop(context)),
+                                BinancyInfoDialogItem(
+                                    AppLocalizations.of(context)!.abort, () {
+                                  Navigator.pop(context);
+                                  setState(() {
+                                    checkMovement();
+                                    allowEdit = false;
+                                  });
+                                })
+                              ]),
+                            ),
+                  title: Text(
+                      createMode
+                          ? widget.movementType.index == 0
+                              ? AppLocalizations.of(context)!.add_income
+                              : AppLocalizations.of(context)!.add_expend
+                          : selectedMovement.title,
+                      style: appBarStyle()),
+                ),
+                backgroundColor: Colors.transparent,
+                body: ScrollConfiguration(
+                    behavior: MyBehavior(),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          movementHeader(),
+                          Text(AppLocalizations.of(context)!.movement_data,
+                              style: titleCardStyle()),
+                          const SpaceDivider(),
+                          movementNotes(),
+                          const SpaceDivider(),
+                          datePicker(context),
+                          const SpaceDivider(),
+                          categorySelector(context),
+                          const SpaceDivider(),
+                          allowEdit
+                              ? Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: customMargin, right: customMargin),
+                                  child: BinancyButton(
+                                      context: context,
+                                      text: createMode
+                                          ? widget.movementType ==
+                                                  MovementType.INCOME
+                                              ? AppLocalizations.of(context)!
+                                                  .add_income
+                                              : AppLocalizations.of(context)!
+                                                  .add_expend
+                                          : widget.movementType ==
+                                                  MovementType.INCOME
+                                              ? AppLocalizations.of(context)!
+                                                  .update_income
+                                              : AppLocalizations.of(context)!
+                                                  .update_expend,
+                                      action: () async {
+                                        FocusScope.of(context).unfocus();
+                                        await checkData(movementsProvider);
+                                      }))
+                              : const SizedBox()
+                        ],
+                      ),
+                    )),
+              ))),
+    );
   }
 
   Container movementHeader() {

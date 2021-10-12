@@ -56,116 +56,153 @@ class _MicroExpendViewState extends State<MicroExpendView> {
 
   @override
   Widget build(BuildContext context) {
-    return BinancyBackground(Consumer<MicroExpensesChangeNotifier>(
-        builder: (context, microExpensesProvider, child) => Scaffold(
-              backgroundColor: Colors.transparent,
-              appBar: AppBar(
-                elevation: 0,
-                centerTitle: true,
+    return WillPopScope(
+      onWillPop: () async {
+        if (createMode) {
+          BinancyInfoDialog(
+              context, AppLocalizations.of(context)!.exit_confirm, [
+            BinancyInfoDialogItem(AppLocalizations.of(context)!.cancel, () {
+              Navigator.pop(context);
+              return false;
+            }),
+            BinancyInfoDialogItem(AppLocalizations.of(context)!.abort, () {
+              Navigator.pop(context);
+              Navigator.pop(context);
+              return true;
+            })
+          ]);
+        } else if (allowEdit) {
+          BinancyInfoDialog(
+              context, AppLocalizations.of(context)!.exit_confirm, [
+            BinancyInfoDialogItem(AppLocalizations.of(context)!.cancel, () {
+              Navigator.pop(context);
+              return false;
+            }),
+            BinancyInfoDialogItem(AppLocalizations.of(context)!.abort, () {
+              Navigator.pop(context);
+              allowEdit = false;
+              setState(() {
+                checkMicroExpend();
+              });
+              return true;
+            })
+          ]);
+        }
+        return true;
+      },
+      child: BinancyBackground(Consumer<MicroExpensesChangeNotifier>(
+          builder: (context, microExpensesProvider, child) => Scaffold(
                 backgroundColor: Colors.transparent,
-                actions: [
-                  !createMode && !allowEdit
-                      ? IconButton(
-                          onPressed: () {
-                            setState(() {
-                              allowEdit = true;
-                            });
-                          },
-                          icon: const Icon(Icons.edit_rounded))
-                      : const SizedBox()
-                ],
-                leading: !allowEdit
-                    ? IconButton(
-                        icon: const Icon(Icons.arrow_back),
-                        onPressed: () => Navigator.pop(context))
-                    : createMode
+                appBar: AppBar(
+                  elevation: 0,
+                  centerTitle: true,
+                  backgroundColor: Colors.transparent,
+                  actions: [
+                    !createMode && !allowEdit
                         ? IconButton(
-                            icon: const Icon(Icons.arrow_back),
-                            onPressed: () => BinancyInfoDialog(
-                                    context,
-                                    AppLocalizations.of(context)!.exit_confirm,
-                                    [
-                                      BinancyInfoDialogItem(
-                                          AppLocalizations.of(context)!.cancel,
-                                          () => Navigator.pop(context)),
-                                      BinancyInfoDialogItem(
-                                          AppLocalizations.of(context)!.abort,
-                                          () {
-                                        Navigator.pop(context);
-                                        Navigator.pop(context);
-                                      })
-                                    ]))
-                        : IconButton(
-                            icon: const Icon(Icons.close_outlined),
-                            onPressed: () => BinancyInfoDialog(context,
-                                AppLocalizations.of(context)!.exit_confirm, [
-                              BinancyInfoDialogItem(
-                                  AppLocalizations.of(context)!.cancel,
-                                  () => Navigator.pop(context)),
-                              BinancyInfoDialogItem(
-                                  AppLocalizations.of(context)!.abort, () {
-                                Navigator.pop(context);
-                                setState(() {
-                                  checkMicroExpend();
-                                  allowEdit = false;
-                                });
-                              })
-                            ]),
-                          ),
-              ),
-              body: Column(
-                children: [
-                  Expanded(
-                      child: ScrollConfiguration(
-                          behavior: MyBehavior(),
-                          child: ListView(
-                            children: [
-                              Container(
-                                height: 125,
-                                padding: const EdgeInsets.all(customMargin),
-                                alignment: Alignment.center,
-                                child: Text(
-                                  createMode
-                                      ? AppLocalizations.of(context)!
-                                          .microexpend_header
-                                      : selectedMicroExpend!.title,
-                                  style: headerItemView(),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                              titleInputWidget(),
-                              const SpaceDivider(),
-                              amountInputWidget(),
-                              const SpaceDivider(),
-                              descriptionInputWidget(),
-                            ],
-                          ))),
-                  allowEdit ? const SpaceDivider() : const SizedBox(),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        left: customMargin, right: customMargin),
-                    child: !createMode && !allowEdit
-                        ? BinancyButton(
-                            context: context,
-                            text: AppLocalizations.of(context)!.add_expend,
-                            action: () async => await addExpend(context))
-                        : allowEdit
-                            ? BinancyButton(
-                                context: context,
-                                text: createMode
-                                    ? AppLocalizations.of(context)!
-                                        .add_microexpend
-                                    : AppLocalizations.of(context)!
-                                        .update_microexpend,
-                                action: () async {
-                                  await checkData(microExpensesProvider);
+                            onPressed: () {
+                              setState(() {
+                                allowEdit = true;
+                              });
+                            },
+                            icon: const Icon(Icons.edit_rounded))
+                        : const SizedBox()
+                  ],
+                  leading: !allowEdit
+                      ? IconButton(
+                          icon: const Icon(Icons.arrow_back),
+                          onPressed: () => Navigator.pop(context))
+                      : createMode
+                          ? IconButton(
+                              icon: const Icon(Icons.arrow_back),
+                              onPressed: () => BinancyInfoDialog(
+                                      context,
+                                      AppLocalizations.of(context)!
+                                          .exit_confirm,
+                                      [
+                                        BinancyInfoDialogItem(
+                                            AppLocalizations.of(context)!
+                                                .cancel,
+                                            () => Navigator.pop(context)),
+                                        BinancyInfoDialogItem(
+                                            AppLocalizations.of(context)!.abort,
+                                            () {
+                                          Navigator.pop(context);
+                                          Navigator.pop(context);
+                                        })
+                                      ]))
+                          : IconButton(
+                              icon: const Icon(Icons.close_outlined),
+                              onPressed: () => BinancyInfoDialog(context,
+                                  AppLocalizations.of(context)!.exit_confirm, [
+                                BinancyInfoDialogItem(
+                                    AppLocalizations.of(context)!.cancel,
+                                    () => Navigator.pop(context)),
+                                BinancyInfoDialogItem(
+                                    AppLocalizations.of(context)!.abort, () {
+                                  Navigator.pop(context);
+                                  setState(() {
+                                    checkMicroExpend();
+                                    allowEdit = false;
+                                  });
                                 })
-                            : const SizedBox(),
-                  ),
-                  const SpaceDivider()
-                ],
-              ),
-            )));
+                              ]),
+                            ),
+                ),
+                body: Column(
+                  children: [
+                    Expanded(
+                        child: ScrollConfiguration(
+                            behavior: MyBehavior(),
+                            child: ListView(
+                              children: [
+                                Container(
+                                  height: 125,
+                                  padding: const EdgeInsets.all(customMargin),
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    createMode
+                                        ? AppLocalizations.of(context)!
+                                            .microexpend_header
+                                        : selectedMicroExpend!.title,
+                                    style: headerItemView(),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                                titleInputWidget(),
+                                const SpaceDivider(),
+                                amountInputWidget(),
+                                const SpaceDivider(),
+                                descriptionInputWidget(),
+                              ],
+                            ))),
+                    allowEdit ? const SpaceDivider() : const SizedBox(),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: customMargin, right: customMargin),
+                      child: !createMode && !allowEdit
+                          ? BinancyButton(
+                              context: context,
+                              text: AppLocalizations.of(context)!.add_expend,
+                              action: () async => await addExpend(context))
+                          : allowEdit
+                              ? BinancyButton(
+                                  context: context,
+                                  text: createMode
+                                      ? AppLocalizations.of(context)!
+                                          .add_microexpend
+                                      : AppLocalizations.of(context)!
+                                          .update_microexpend,
+                                  action: () async {
+                                    await checkData(microExpensesProvider);
+                                  })
+                              : const SizedBox(),
+                    ),
+                    const SpaceDivider()
+                  ],
+                ),
+              ))),
+    );
   }
 
   Widget titleInputWidget() {
