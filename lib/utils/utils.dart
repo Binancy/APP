@@ -1,7 +1,4 @@
-import 'dart:io';
 import 'dart:math';
-import 'dart:typed_data';
-
 import 'package:binancy/controllers/subscriptions_controller.dart';
 import 'package:binancy/globals.dart';
 import 'package:binancy/views/advice/advice_card.dart';
@@ -15,7 +12,6 @@ import 'dart:math' as math;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
-import 'package:path_provider/path_provider.dart';
 
 class Utils {
   static List<AdviceCard> adviceCardList(BuildContext context) {
@@ -357,15 +353,6 @@ class Utils {
     for (var focusNode in focusNodeList) {
       focusNode.unfocus();
     }
-  }
-
-  static Future<String> writeImageToStorage(
-      Uint8List feedbackScreenshot) async {
-    final Directory output = await getTemporaryDirectory();
-    final String screenshotFilePath = '${output.path}/feedback.png';
-    final File screenshotFile = File(screenshotFilePath);
-    await screenshotFile.writeAsBytes(feedbackScreenshot);
-    return screenshotFilePath;
   }
 }
 

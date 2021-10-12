@@ -32,10 +32,6 @@ class _DashboardViewState extends State<DashboardView> {
       builder: (context, provider, child) => BinancyBackground(
         Scaffold(
             appBar: AppBar(
-              actions: [
-                IconButton(
-                    icon: const Icon(BinancyIcons.alert), onPressed: () {})
-              ],
               leading: IconButton(
                   icon: const Icon(BinancyIcons.settings),
                   onPressed: () => Navigator.push(
@@ -78,11 +74,11 @@ class _DashboardViewState extends State<DashboardView> {
                             strokeWidth: 1)),
                     completeIcon: Icon(Icons.check, color: accentColor),
                     failedIcon: Icon(Icons.close_rounded, color: accentColor),
-                    refreshingText: "Actualizando...",
-                    failedText: "No se ha podido actualizar",
-                    completeText: "Datos actualizados",
-                    releaseText: "Suelta para actualizar",
-                    idleText: "Desliza para actualizar",
+                    refreshingText: AppLocalizations.of(context)!.updating,
+                    failedText: AppLocalizations.of(context)!.update_fail,
+                    completeText: AppLocalizations.of(context)!.update_success,
+                    releaseText: AppLocalizations.of(context)!.update_release,
+                    idleText: AppLocalizations.of(context)!.update_placeholder,
                   ),
                   controller: _refreshController,
                   onRefresh: () async {

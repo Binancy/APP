@@ -26,6 +26,7 @@ class MicroExpendEmptyCard extends StatelessWidget {
     return GestureDetector(
       onTap: () => gotoAddSubscription(context),
       child: Container(
+        color: Colors.transparent,
         padding: const EdgeInsets.all(customMargin),
         width: MediaQuery.of(context).size.width,
         child: Column(

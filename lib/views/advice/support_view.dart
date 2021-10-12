@@ -1,14 +1,10 @@
-import 'dart:io';
-
+import 'package:binancy/utils/dialogs/info_dialog.dart';
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/ui/widgets.dart';
-import 'package:binancy/utils/utils.dart';
 import 'package:binancy/views/advice/advice_card.dart';
 import 'package:binancy/views/settings/settings_view.dart';
 import 'package:feedback/feedback.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mailto/mailto.dart';
@@ -116,7 +112,13 @@ class _SupportViewState extends State<SupportView> {
               elevation: 0,
               child: InkWell(
                 onTap: () {
-                  BetterFeedback.of(context).show((feedback) async {});
+                  BetterFeedback.of(context).show((feedback) async =>
+                      BinancyInfoDialog(
+                          context, "¡Reporte enviado correctamente!", [
+                        BinancyInfoDialogItem(
+                            AppLocalizations.of(context)!.accept,
+                            () => Navigator.pop(context))
+                      ]));
                 },
                 borderRadius: BorderRadius.circular(customBorderRadius),
                 child: Column(

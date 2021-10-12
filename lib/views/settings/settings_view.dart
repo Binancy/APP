@@ -138,10 +138,6 @@ class _SettingsViewState extends State<SettingsView> {
               })),
       const LinearDivider(),
       BinancyActionRow(
-          text: AppLocalizations.of(context)!.notifications,
-          action: () => null),
-      const LinearDivider(),
-      BinancyActionRow(
           text: AppLocalizations.of(context)!.privacy_policy,
           action: () => Navigator.push(
               context,

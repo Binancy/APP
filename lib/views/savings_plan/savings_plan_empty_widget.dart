@@ -24,6 +24,7 @@ class SavingsPlanEmptyWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () => gotoAddSavingsPlan(context),
       child: Container(
+        color: Colors.transparent,
         padding: const EdgeInsets.all(customMargin),
         width: MediaQuery.of(context).size.width,
         child: Column(

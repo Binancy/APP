@@ -18,9 +18,11 @@ import 'package:binancy/views/subscriptions/subscription_card_widget.dart';
 import 'package:binancy/views/subscriptions/subscription_empty_card_widget.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'movement_view.dart';
+import 'movements_all_view.dart';
 
 class MovementBalanceView extends StatelessWidget {
   @override
@@ -130,13 +132,18 @@ class MovementBalanceView extends StatelessWidget {
                 alignment: BarChartAlignment.center,
                 groupsSpace: 24,
                 borderData: FlBorderData(show: false),
+                gridData: FlGridData(show: false),
                 titlesData: FlTitlesData(
+                    topTitles: SideTitles(showTitles: false),
+                    rightTitles: SideTitles(showTitles: false),
                     bottomTitles: SideTitles(
                         getTitles: (value) =>
                             generateBalanceChartTitles(context)
                                 .elementAt(value.toInt()),
-                        getTextStyles: (value) => const TextStyle(
-                            fontSize: 11, fontFamily: "OpenSans"),
+                        getTextStyles: (context, value) => TextStyle(
+                            fontSize: 11,
+                            fontFamily: "OpenSans",
+                            color: textColor),
                         showTitles: true),
                     leftTitles: SideTitles(showTitles: false)),
                 barGroups: buildBarCharts(context, movementsChangeNotifier)),
@@ -211,7 +218,24 @@ class MovementBalanceView extends StatelessWidget {
               wrapOnFinal: true,
               context: context,
               text: AppLocalizations.of(context)!.see_all_movements,
-              action: () {}),
+              action: () => Navigator.push(
+                  context,
+                  PageTransition(
+                    type: PageTransitionType.rightToLeftWithFade,
+                    child: MultiProvider(
+                      providers: [
+                        ChangeNotifierProvider(
+                          create: (_) =>
+                              Provider.of<MovementsChangeNotifier>(context),
+                        ),
+                        ChangeNotifierProvider(
+                          create: (_) =>
+                              Provider.of<CategoriesChangeNotifier>(context),
+                        )
+                      ],
+                      child: const AllMovementView(),
+                    ),
+                  ))),
         )
       ],
     );
@@ -269,11 +293,6 @@ class MovementBalanceView extends StatelessWidget {
       SavingsPlanChangeNotifier savingsPlanChangeNotifier) {
     List<Widget> premiumWidgetList = [];
     premiumWidgetList.add(const SpaceDivider());
-    premiumWidgetList.add(Center(
-        child: Text(AppLocalizations.of(context)!.premium_features,
-            style: titleCardStyle())));
-    premiumWidgetList.add(const SpaceDivider());
-
     premiumWidgetList
         .add(subscriptionsCard(context, subscriptionsChangeNotifier));
     premiumWidgetList.add(const SpaceDivider());
