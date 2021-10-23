@@ -340,7 +340,9 @@ class _MovementViewState extends State<MovementView> {
                           style: inputStyle(),
                         ),
                         onTap: () => FocusScope.of(context).unfocus(),
-                        dropdownColor: themeColor.withOpacity(0.5),
+                        dropdownColor: primaryColor,
+                        borderRadius: BorderRadius.circular(customBorderRadius),
+                        isDense: true,
                         elevation: 0,
                         iconDisabledColor: accentColor,
                         iconEnabledColor: accentColor,
@@ -352,9 +354,10 @@ class _MovementViewState extends State<MovementView> {
                         },
                         style: inputStyle(),
                         underline: const SizedBox(),
-                        items: categoryList
+                        items: Provider.of<CategoriesChangeNotifier>(context)
+                            .categoryList
                             .map((e) => DropdownMenuItem<Category>(
-                                value: e, child: Text(e.name)))
+                                value: e, child: Text(e.title)))
                             .toList()))
               ],
             )),

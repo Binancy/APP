@@ -274,6 +274,9 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
                                   context)),
                       ChangeNotifierProvider(
                           create: (_) =>
+                              Provider.of<CategoriesChangeNotifier>(context)),
+                      ChangeNotifierProvider(
+                          create: (_) =>
                               Provider.of<MovementsChangeNotifier>(context))
                     ], child: MicroExpensesView())));
           } else {

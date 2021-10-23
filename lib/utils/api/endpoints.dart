@@ -24,7 +24,12 @@ class APIEndpoints {
   static const String DELETE_EXPEND = "/api/expenses/delete";
 
   // CATEGORIES
-  static const String READ_CATEGORIES = "/api/categories/read";
+  static const String CREATE_CATEGORY = "/api/categories/create";
+  static const String READ_USER_CATEGORIES = "/api/categories/read";
+  static const String READ_PREDEFINED_CATEGORIES =
+      "/api/categories/read/predefined";
+  static const String UPDATE_CATEGORY = "/api/categories/update";
+  static const String DELETE_CATEGORY = "/api/categories/delete";
 
   // SUBSCRIPTIONS
   static const String CREATE_SUBSCRIPTION = "/api/subscriptions/create";

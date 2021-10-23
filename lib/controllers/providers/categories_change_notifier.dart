@@ -2,11 +2,16 @@
 
 import 'package:binancy/controllers/categories_controller.dart';
 import 'package:binancy/globals.dart';
+import 'package:binancy/models/category.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 class CategoriesChangeNotifier extends ChangeNotifier {
   bool updating = false;
+
+  List<Category> categoryList = [];
+  List<Category> userCategoryList = [];
+  List<Category> predefinedCategories = [];
 
   @override
   void dispose() {}
@@ -19,6 +24,9 @@ class CategoriesChangeNotifier extends ChangeNotifier {
   }
 
   Future<void> getCategories() async {
-    categoryList = await CategoriesController.getCategories(userData['idUser']);
+    userCategoryList =
+        await CategoriesController.getUserCategories(userData['idUser']);
+    predefinedCategories = await CategoriesController.getPredefinedCategories();
+    categoryList = List.from(predefinedCategories)..addAll(userCategoryList);
   }
 }

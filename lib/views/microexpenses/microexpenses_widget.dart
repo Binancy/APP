@@ -1,5 +1,6 @@
 import 'package:binancy/controllers/expenses_controller.dart';
 import 'package:binancy/controllers/microexpenses_controller.dart';
+import 'package:binancy/controllers/providers/categories_change_notifier.dart';
 import 'package:binancy/controllers/providers/microexpenses_change_notifier.dart';
 import 'package:binancy/controllers/providers/movements_change_notifier.dart';
 import 'package:binancy/globals.dart';
@@ -26,13 +27,15 @@ class MicroExpendCard extends StatelessWidget {
   final MicroExpend microExpend;
   final MicroExpensesChangeNotifier microExpensesChangeNotifier;
   final MovementsChangeNotifier movementsChangeNotifier;
+  final CategoriesChangeNotifier categoriesChangeNotifier;
 
   const MicroExpendCard(
       {Key? key,
       required this.parentContext,
       required this.microExpend,
       required this.microExpensesChangeNotifier,
-      required this.movementsChangeNotifier})
+      required this.movementsChangeNotifier,
+      required this.categoriesChangeNotifier})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -50,6 +53,8 @@ class MicroExpendCard extends StatelessWidget {
                     providers: [
                       ChangeNotifierProvider(
                           create: (_) => microExpensesChangeNotifier),
+                      ChangeNotifierProvider(
+                          create: (_) => categoriesChangeNotifier),
                       ChangeNotifierProvider(
                           create: (_) => movementsChangeNotifier)
                     ],

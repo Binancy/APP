@@ -72,7 +72,7 @@ class _SettingsUserDataViewState extends State<SettingsUserDataView> {
               Text(userData['email'], style: detailStyle()),
             ],
           )),
-          profilePicWidget(),
+          // profilePicWidget(),
         ],
       ),
     );
@@ -204,9 +204,10 @@ class _SettingsUserDataViewState extends State<SettingsUserDataView> {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(360),
           child: Image.network(
-              "https://res.cloudinary.com/multitaskapp/image/upload/v1623769717/profilePics/users/185.jpg"),
+              "https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg"),
         ),
-        onTap: () => showCupertinoModalPopup(
+        onTap:
+            () {} /* () => showCupertinoModalPopup(
             context: context,
             builder: (context) => CupertinoActionSheet(
                   actions: [
@@ -224,7 +225,8 @@ class _SettingsUserDataViewState extends State<SettingsUserDataView> {
                       },
                     )
                   ],
-                )));
+                )) */
+        );
   }
 
   void confirmDeleteUserData({bool skipVerification = false}) {

@@ -1,3 +1,4 @@
+import 'package:binancy/controllers/providers/categories_change_notifier.dart';
 import 'package:binancy/controllers/providers/microexpenses_change_notifier.dart';
 import 'package:binancy/controllers/providers/movements_change_notifier.dart';
 import 'package:binancy/globals.dart';
@@ -39,6 +40,10 @@ class MicroExpensesView extends StatelessWidget {
                                         context)),
                             ChangeNotifierProvider(
                                 create: (_) =>
+                                    Provider.of<CategoriesChangeNotifier>(
+                                        context)),
+                            ChangeNotifierProvider(
+                                create: (_) =>
                                     Provider.of<MovementsChangeNotifier>(
                                         context,
                                         listen: false))
@@ -46,9 +51,10 @@ class MicroExpensesView extends StatelessWidget {
                   icon: const Icon(Icons.add_rounded))
             ],
           ),
-          body: Consumer2<MicroExpensesChangeNotifier, MovementsChangeNotifier>(
+          body: Consumer3<MicroExpensesChangeNotifier, MovementsChangeNotifier,
+                  CategoriesChangeNotifier>(
               builder: (context, microExpensesProvider, movementsProvider,
-                      child) =>
+                      categoryProvider, child) =>
                   Column(
                     children: [
                       const SpaceDivider(),
@@ -97,6 +103,8 @@ class MicroExpensesView extends StatelessWidget {
                                                 .elementAt(index),
                                             movementsChangeNotifier:
                                                 movementsProvider,
+                                            categoriesChangeNotifier:
+                                                categoryProvider,
                                           ),
                                           staggeredTileBuilder: (index) =>
                                               const StaggeredTile.fit(1),

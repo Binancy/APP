@@ -1,3 +1,4 @@
+import 'package:binancy/controllers/providers/categories_change_notifier.dart';
 import 'package:binancy/controllers/providers/microexpenses_change_notifier.dart';
 import 'package:binancy/controllers/providers/movements_change_notifier.dart';
 import 'package:binancy/utils/ui/styles.dart';
@@ -88,6 +89,9 @@ class MicroExpendEmptyCard extends StatelessWidget {
               ChangeNotifierProvider(
                   create: (_) =>
                       Provider.of<MicroExpensesChangeNotifier>(context)),
+              ChangeNotifierProvider(
+                  create: (_) =>
+                      Provider.of<CategoriesChangeNotifier>(context)),
               ChangeNotifierProvider(
                   create: (_) => Provider.of<MovementsChangeNotifier>(context,
                       listen: false))

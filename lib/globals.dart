@@ -27,7 +27,6 @@ extension ParseToString on AvaiablePlans {
 
 // USER GLOBALS
 Map<String, dynamic> userData = {};
-List<Category> categoryList = [];
 String currency = "€";
 
 // WIDGET GLOBALS

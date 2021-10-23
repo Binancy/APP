@@ -6,7 +6,8 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('Testing "/api/incomes/latestIncomes" call', () async {
-    List<Category> categoryList = await CategoriesController.getCategories(5);
+    List<Category> categoryList =
+        await CategoriesController.getAllCategories(5);
     print(categoryList);
   });
 }

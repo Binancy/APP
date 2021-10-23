@@ -1,15 +1,24 @@
 class Category {
   int idCategory = 0;
-  int idUser = 0;
-  String name = "";
+  int? idUser;
+  String title = "";
+  String? description;
+  bool isPredefined = false;
 
   Category();
 
   Category.fromJson(Map<String, dynamic> json)
       : idCategory = json['idCategory'],
         idUser = json['idUser'],
-        name = json['name'];
+        isPredefined = json['isPredefined'] == 1 ? true : false,
+        description = json['description'],
+        title = json['title'];
 
-  Map<String, dynamic> toJson() =>
-      {'idCategory': idCategory, 'idUser': idUser, 'name': name};
+  Map<String, dynamic> toJson() => {
+        'idCategory': idCategory,
+        'idUser': idUser,
+        'title': title,
+        'description': description,
+        'isPredefined': isPredefined ? 1 : 0
+      };
 }
