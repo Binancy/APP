@@ -1,9 +1,12 @@
+import 'category.dart';
+
 class MicroExpend {
   int idUser = 0;
   int idMicroExpend = 0;
   String title = "";
   String? description;
   dynamic amount = 0;
+  Category? category;
 
   MicroExpend();
 

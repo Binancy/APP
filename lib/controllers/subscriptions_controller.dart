@@ -189,7 +189,7 @@ class SubscriptionsController {
   }
 
   static Future<bool> updateSubscription(Subscription subscription) async {
-    ConnAPI connAPI = ConnAPI(APIEndpoints.UPDATE_SUBSCRIPTION, "POST", false,
+    ConnAPI connAPI = ConnAPI(APIEndpoints.UPDATE_SUBSCRIPTION, "PUT", false,
         {"data": subscription.toJson()});
     await connAPI.callAPI();
     return connAPI.getStatus() == 200;

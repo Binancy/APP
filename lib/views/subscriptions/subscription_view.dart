@@ -454,7 +454,7 @@ class _SubscriptionViewState extends State<SubscriptionView> {
     Subscription subscription = Subscription()
       ..name = nameController.text
       ..idUser = userData['idUser']
-      ..value = int.parse(amountController.text)
+      ..value = double.parse(amountController.text)
       ..payDay = int.parse(payDay)
       ..idSubscription = selectedSubscription!.idSubscription
       ..latestMonth = selectedSubscription!.latestMonth

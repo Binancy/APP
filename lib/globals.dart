@@ -1,6 +1,4 @@
 // APP GLOBALS
-import 'package:binancy/models/category.dart';
-
 const String appName = "Binancy";
 const String organizationName = "Appxs";
 const String appVersion = "0.3.0";
