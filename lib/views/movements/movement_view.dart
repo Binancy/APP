@@ -159,13 +159,6 @@ class _MovementViewState extends State<MovementView> {
                                 })
                               ]),
                             ),
-                  title: Text(
-                      createMode
-                          ? widget.movementType.index == 0
-                              ? AppLocalizations.of(context)!.add_income
-                              : AppLocalizations.of(context)!.add_expend
-                          : selectedMovement.title,
-                      style: appBarStyle()),
                 ),
                 backgroundColor: Colors.transparent,
                 body: ScrollConfiguration(
@@ -175,15 +168,29 @@ class _MovementViewState extends State<MovementView> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          movementHeader(),
-                          Text(AppLocalizations.of(context)!.movement_data,
-                              style: titleCardStyle()),
+                          Container(
+                            height: 125,
+                            padding: const EdgeInsets.all(customMargin),
+                            alignment: Alignment.center,
+                            child: Text(
+                                createMode
+                                    ? widget.movementType.index == 0
+                                        ? AppLocalizations.of(context)!
+                                            .add_income
+                                        : AppLocalizations.of(context)!
+                                            .add_expend
+                                    : selectedMovement.title,
+                                style: headerItemView(),
+                                textAlign: TextAlign.center),
+                          ),
                           const SpaceDivider(),
-                          movementNotes(),
+                          movementHeader(),
                           const SpaceDivider(),
                           datePicker(context),
                           const SpaceDivider(),
                           categorySelector(context),
+                          const SpaceDivider(),
+                          movementNotes(),
                           const SpaceDivider(),
                           allowEdit
                               ? Padding(
@@ -216,25 +223,17 @@ class _MovementViewState extends State<MovementView> {
     );
   }
 
-  Container movementHeader() {
-    return Container(
-      decoration: BoxDecoration(
-          color: themeColor.withOpacity(0.1),
-          borderRadius: BorderRadius.circular(customBorderRadius)),
-      margin: const EdgeInsets.all(customMargin),
-      padding: const EdgeInsets.fromLTRB(
-          customMargin, 0, customMargin, customMargin),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [inputValue(), inputTitle()],
-      ),
+  Widget movementHeader() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [inputTitle(), const SpaceDivider(), inputValue()],
     );
   }
 
-  Container movementNotes() {
+  Widget movementNotes() {
     return Container(
-      height: 150,
+      height: 170,
       margin: const EdgeInsets.only(left: customMargin, right: customMargin),
       decoration: BoxDecoration(
           color: themeColor.withOpacity(0.1),
@@ -365,44 +364,53 @@ class _MovementViewState extends State<MovementView> {
     );
   }
 
-  TextField inputTitle() {
-    return TextField(
-      readOnly: !allowEdit,
-      inputFormatters: [LengthLimitingTextInputFormatter(30)],
-      keyboardType: TextInputType.name,
-      textCapitalization: TextCapitalization.sentences,
-      controller: titleController,
-      cursorColor: accentColor,
-      textAlign: TextAlign.center,
-      style: accentTitleStyle(),
-      decoration: InputDecoration(
-          border: InputBorder.none,
-          focusedBorder: InputBorder.none,
-          enabledBorder: InputBorder.none,
-          errorBorder: InputBorder.none,
-          disabledBorder: InputBorder.none,
-          hintStyle: accentTitleStyle(),
-          hintText: AppLocalizations.of(context)!.movement_title),
+  Widget inputTitle() {
+    return Container(
+      margin: const EdgeInsets.only(left: customMargin, right: customMargin),
+      height: buttonHeight,
+      padding: const EdgeInsets.only(left: customMargin, right: customMargin),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(customBorderRadius),
+          color: themeColor.withOpacity(0.1)),
+      alignment: Alignment.center,
+      child: TextField(
+        textCapitalization: TextCapitalization.sentences,
+        textInputAction: TextInputAction.next,
+        readOnly: !allowEdit,
+        keyboardType: TextInputType.name,
+        controller: titleController,
+        style: inputStyle(),
+        decoration: customInputDecoration(
+            widget.movementType == MovementType.INCOME
+                ? AppLocalizations.of(context)!.income_title
+                : AppLocalizations.of(context)!.expend_title,
+            BinancyIcons.email),
+      ),
     );
   }
 
   Widget inputValue() {
-    return TextField(
-      readOnly: !allowEdit,
-      inputFormatters: [DecimalTextInputFormatter(decimalRange: 2)],
-      keyboardType: TextInputType.number,
-      controller: valueController,
-      cursorColor: Colors.white,
-      textAlign: TextAlign.center,
-      style: balanceValueStyle(),
-      decoration: InputDecoration(
-          border: InputBorder.none,
-          focusedBorder: InputBorder.none,
-          enabledBorder: InputBorder.none,
-          errorBorder: InputBorder.none,
-          disabledBorder: InputBorder.none,
-          hintStyle: balanceValueStyle(),
-          hintText: "0.00€"),
+    return Container(
+      margin: const EdgeInsets.only(left: customMargin, right: customMargin),
+      height: buttonHeight,
+      padding: const EdgeInsets.only(left: customMargin, right: customMargin),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(customBorderRadius),
+          color: themeColor.withOpacity(0.1)),
+      alignment: Alignment.center,
+      child: TextField(
+        inputFormatters: [DecimalTextInputFormatter(decimalRange: 2)],
+        textInputAction: TextInputAction.next,
+        readOnly: !allowEdit,
+        keyboardType: TextInputType.number,
+        controller: valueController,
+        style: inputStyle(),
+        decoration: customInputDecoration(
+            widget.movementType == MovementType.INCOME
+                ? AppLocalizations.of(context)!.income_value
+                : AppLocalizations.of(context)!.expend_value,
+            BinancyIcons.calendar),
+      ),
     );
   }
 

@@ -176,36 +176,27 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
                 )))));
     actionsList.add(ActionButtonWidget(
         context: context,
-        icon: SvgPicture.asset("assets/svg/dashboard_compare.svg"),
-        text: AppLocalizations.of(context)!.my_account,
+        icon: SvgPicture.asset("assets/svg/dashboard_see_movements.svg"),
+        text: AppLocalizations.of(context)!.see_all_movements,
         action: () => Navigator.push(
             context,
             PageTransition(
-                type: PageTransitionType.rightToLeftWithFade,
-                child: MultiProvider(
-                  providers: [
-                    ChangeNotifierProvider(
-                      create: (_) =>
-                          Provider.of<MovementsChangeNotifier>(context),
-                    ),
-                    ChangeNotifierProvider(
-                      create: (_) =>
-                          Provider.of<SubscriptionsChangeNotifier>(context),
-                    ),
-                    ChangeNotifierProvider(
-                      create: (_) =>
-                          Provider.of<SavingsPlanChangeNotifier>(context),
-                    ),
-                    ChangeNotifierProvider(
-                      create: (_) =>
-                          Provider.of<CategoriesChangeNotifier>(context),
-                    ),
-                    ChangeNotifierProvider(
-                      create: (_) => Provider.of<PlansChangeNotifier>(context),
-                    )
-                  ],
-                  child: MovementBalanceView(),
-                )))));
+              type: PageTransitionType.rightToLeftWithFade,
+              child: MultiProvider(
+                providers: [
+                  ChangeNotifierProvider(
+                    create: (_) =>
+                        Provider.of<MovementsChangeNotifier>(context),
+                  ),
+                  ChangeNotifierProvider(
+                    create: (_) =>
+                        Provider.of<CategoriesChangeNotifier>(context),
+                  )
+                ],
+                child: const AllMovementView(),
+              ),
+            ))));
+
     actionsList.add(ActionButtonWidget(
         context: context,
         icon: SvgPicture.asset("assets/svg/dashboard_add_expense.svg"),
@@ -237,26 +228,36 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
         action: () {}));
     actionsList.add(ActionButtonWidget(
         context: context,
-        icon: SvgPicture.asset("assets/svg/dashboard_see_movements.svg"),
-        text: AppLocalizations.of(context)!.see_all_movements,
+        icon: SvgPicture.asset("assets/svg/dashboard_compare.svg"),
+        text: AppLocalizations.of(context)!.my_account,
         action: () => Navigator.push(
             context,
             PageTransition(
-              type: PageTransitionType.rightToLeftWithFade,
-              child: MultiProvider(
-                providers: [
-                  ChangeNotifierProvider(
-                    create: (_) =>
-                        Provider.of<MovementsChangeNotifier>(context),
-                  ),
-                  ChangeNotifierProvider(
-                    create: (_) =>
-                        Provider.of<CategoriesChangeNotifier>(context),
-                  )
-                ],
-                child: const AllMovementView(),
-              ),
-            ))));
+                type: PageTransitionType.rightToLeftWithFade,
+                child: MultiProvider(
+                  providers: [
+                    ChangeNotifierProvider(
+                      create: (_) =>
+                          Provider.of<MovementsChangeNotifier>(context),
+                    ),
+                    ChangeNotifierProvider(
+                      create: (_) =>
+                          Provider.of<SubscriptionsChangeNotifier>(context),
+                    ),
+                    ChangeNotifierProvider(
+                      create: (_) =>
+                          Provider.of<SavingsPlanChangeNotifier>(context),
+                    ),
+                    ChangeNotifierProvider(
+                      create: (_) =>
+                          Provider.of<CategoriesChangeNotifier>(context),
+                    ),
+                    ChangeNotifierProvider(
+                      create: (_) => Provider.of<PlansChangeNotifier>(context),
+                    )
+                  ],
+                  child: MovementBalanceView(),
+                )))));
     actionsList.add(ActionButtonWidget(
         context: context,
         icon: SvgPicture.asset("assets/svg/dashboard_coins.svg"),

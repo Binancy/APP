@@ -59,10 +59,6 @@ class _AllMovementViewState extends State<AllMovementView>
                 backgroundColor: Colors.transparent,
                 centerTitle: true,
                 elevation: 0,
-                actions: [
-                  IconButton(
-                      onPressed: () {}, icon: const Icon(BinancyIcons.filter))
-                ],
                 title: Text(AppLocalizations.of(context)!.all_movements,
                     style: appBarStyle()),
                 bottom: TabBar(
@@ -133,11 +129,6 @@ class _AllMovementViewState extends State<AllMovementView>
                         : AppLocalizations.of(context)!.expends_realized,
                     style: titleCardStyle(),
                   ),
-                  Text(
-                    buildSubtitleText(),
-                    style: semititleStyle(),
-                    overflow: TextOverflow.ellipsis,
-                  )
                 ],
               ))
             ],
@@ -169,7 +160,9 @@ class _AllMovementViewState extends State<AllMovementView>
 
     return Column(
       children: [
-        headerWidget(incomeMovements.length, MovementType.INCOME),
+        incomeMovements.isNotEmpty
+            ? headerWidget(incomeMovements.length, MovementType.INCOME)
+            : const SizedBox(height: customMargin),
         Container(
           clipBehavior: Clip.antiAliasWithSaveLayer,
           height: 65,
@@ -227,7 +220,9 @@ class _AllMovementViewState extends State<AllMovementView>
 
     return Column(
       children: [
-        headerWidget(expenseMovements.length, MovementType.EXPEND),
+        expenseMovements.isNotEmpty
+            ? headerWidget(expenseMovements.length, MovementType.EXPEND)
+            : const SizedBox(height: customMargin),
         Container(
           clipBehavior: Clip.antiAliasWithSaveLayer,
           height: 65,
