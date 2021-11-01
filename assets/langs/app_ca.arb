@@ -213,6 +213,11 @@
     "microexpend_delete_error": "Ha hagut un error al eliminar la depessa ràpida",
     "subscription_delete_success":"Subscripció eliminada correctament!",
     "subscription_delete_error":"Ha hagut un error al eliminar la subscripció",
+    "category_subscription":"Subscripcions",
+    "category_vital_income":"Ingressos Vitals",
+    "category_supplies":"Sumministres",
+    "category_fashion_beauty":"Moda y Bellesa",
+    "category_transport_travel":"Transport y Viatges",
     "@goal_amount_of_total" : {
         "placeholders": {
             "currentAmount": {},

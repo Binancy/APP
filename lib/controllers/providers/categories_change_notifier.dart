@@ -16,17 +16,18 @@ class CategoriesChangeNotifier extends ChangeNotifier {
   @override
   void dispose() {}
 
-  Future<void> updateCategories() async {
+  Future<void> updateCategories(BuildContext context) async {
     if (await Utils.hasConnection().timeout(timeout)) {
-      await getCategories();
+      await getCategories(context);
       notifyListeners();
     }
   }
 
-  Future<void> getCategories() async {
+  Future<void> getCategories(BuildContext context) async {
     userCategoryList =
         await CategoriesController.getUserCategories(userData['idUser']);
-    predefinedCategories = await CategoriesController.getPredefinedCategories();
+    predefinedCategories =
+        await CategoriesController.getPredefinedCategories(context);
     categoryList = List.from(predefinedCategories)..addAll(userCategoryList);
   }
 }

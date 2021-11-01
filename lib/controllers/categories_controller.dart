@@ -1,9 +1,11 @@
 import 'package:binancy/models/category.dart';
 import 'package:binancy/utils/api/conn_api.dart';
 import 'package:binancy/utils/api/endpoints.dart';
+import 'package:flutter/cupertino.dart';
 
 class CategoriesController {
-  static Future<List<Category>> getPredefinedCategories() async {
+  static Future<List<Category>> getPredefinedCategories(
+      BuildContext context) async {
     List<Category> categoryList = [];
 
     ConnAPI connAPI =
@@ -12,7 +14,9 @@ class CategoriesController {
     List<dynamic>? response = connAPI.getResponse();
     if (response != null) {
       for (var item in response) {
-        categoryList.add(Category.fromJson(item));
+        Category category = Category.fromJson(item);
+        category.getTitleFromKey(context);
+        categoryList.add(category);
       }
     }
 
@@ -35,8 +39,9 @@ class CategoriesController {
     return categoryList;
   }
 
-  static Future<List<Category>> getAllCategories(int userID) async {
-    return List.from(await getPredefinedCategories())
+  static Future<List<Category>> getAllCategories(
+      int userID, BuildContext context) async {
+    return List.from(await getPredefinedCategories(context))
       ..addAll(await getUserCategories(userID));
   }
 

@@ -213,6 +213,11 @@
     "microexpend_delete_error": "An error has ocurred deleting the quick expend",
     "subscription_delete_success":"Subscription deleted successfully",
     "subscription_delete_error":"An error has ocurred deleting the subscription",
+    "category_subscription":"Subscriptions",
+    "category_vital_income":"Vital Incomes",
+    "category_supplies":"Supplyments",
+    "category_fashion_beauty":"Fashion & Beauty",
+    "category_transport_travel":"Transport & Travel",
     "@goal_amount_of_total" : {
         "placeholders": {
             "currentAmount": {},

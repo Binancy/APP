@@ -150,7 +150,7 @@ void gotoDashboard(BuildContext context) async {
 
   CategoriesChangeNotifier categoriesChangeNotifier =
       CategoriesChangeNotifier();
-  await categoriesChangeNotifier.updateCategories();
+  await categoriesChangeNotifier.updateCategories(context);
 
   PlansChangeNotifier plansChangeNotifier = PlansChangeNotifier();
   await plansChangeNotifier.updatePlans();

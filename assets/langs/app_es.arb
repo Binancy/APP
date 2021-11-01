@@ -213,6 +213,11 @@
     "microexpend_delete_error": "Ha ocurrido un error al eliminar el gasto rápido",
     "subscription_delete_success":"¡Suscrpción eliminada correctamente!",
     "subscription_delete_error":"Ha ocurrido un error al eliminar la suscripción",
+    "category_subscription":"Suscripciones",
+    "category_vital_income":"Ingresos Vitales",
+    "category_supplies":"Suministros",
+    "category_fashion_beauty":"Moda y Belleza",
+    "category_transport_travel":"Transporte y Viajes",
     "@goal_amount_of_total" : {
         "placeholders": {
             "currentAmount": {},
