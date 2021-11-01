@@ -59,6 +59,7 @@ const int savingsPlanMaxCount = 3;
 const int dashboardSavingsPlanMaxCount = 2;
 const int balanceChartMaxMonths = 6;
 const int balanceMaxItemsPerCategory = 3;
+const int categoryMaxItemsToShow = 5;
 
 // ERROR CODES
 class BinancyErrorCodes {

@@ -218,6 +218,11 @@
     "category_supplies":"Suministros",
     "category_fashion_beauty":"Moda y Belleza",
     "category_transport_travel":"Transporte y Viajes",
+    "category_subscription_desc":"Gimnasio, Plataformas online, Pagos recurrentes",
+    "category_vital_income_desc":"Alquiler, Nóminas, Pensiones",
+    "category_supplies_desc":"Facturas, Seguros, Contratos",
+    "category_fashion_beauty_desc":"Vestimenta, Peluquerías, Tiendas de moda",
+    "category_transport_travel_desc":"Gasolina, Transporte público, Aviones",
     "@goal_amount_of_total" : {
         "placeholders": {
             "currentAmount": {},

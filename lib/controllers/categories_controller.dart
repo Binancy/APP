@@ -15,7 +15,8 @@ class CategoriesController {
     if (response != null) {
       for (var item in response) {
         Category category = Category.fromJson(item);
-        category.getTitleFromKey(context);
+        category.getTitleByKey(context);
+        category.getDescriptionByKey(context);
         categoryList.add(category);
       }
     }

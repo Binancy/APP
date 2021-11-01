@@ -3,6 +3,8 @@
 import 'package:binancy/controllers/categories_controller.dart';
 import 'package:binancy/globals.dart';
 import 'package:binancy/models/category.dart';
+import 'package:binancy/models/expend.dart';
+import 'package:binancy/models/income.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +14,9 @@ class CategoriesChangeNotifier extends ChangeNotifier {
   List<Category> categoryList = [];
   List<Category> userCategoryList = [];
   List<Category> predefinedCategories = [];
+
+  List<Income> incomesWithoutCategory = [];
+  List<Expend> expensesWithoutCategory = [];
 
   @override
   void dispose() {}

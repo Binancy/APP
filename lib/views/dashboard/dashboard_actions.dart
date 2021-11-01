@@ -9,6 +9,7 @@ import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/ui/widgets.dart';
 import 'package:binancy/views/advice/advice_view.dart';
+import 'package:binancy/views/categories/category_summary_view.dart';
 import 'package:binancy/views/microexpenses/microexpenses_view.dart';
 import 'package:binancy/views/movements/movements_all_view.dart';
 import 'package:binancy/views/movements/movement_view.dart';
@@ -235,7 +236,24 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
         context: context,
         icon: SvgPicture.asset("assets/svg/dashboard_categories.svg"),
         text: AppLocalizations.of(context)!.see_categories,
-        action: () {}));
+        action: () => Navigator.push(
+            context,
+            PageTransition(
+              type: PageTransitionType.rightToLeftWithFade,
+              child: MultiProvider(
+                providers: [
+                  ChangeNotifierProvider(
+                    create: (_) =>
+                        Provider.of<MovementsChangeNotifier>(context),
+                  ),
+                  ChangeNotifierProvider(
+                    create: (_) =>
+                        Provider.of<CategoriesChangeNotifier>(context),
+                  )
+                ],
+                child: const CategorySummaryView(),
+              ),
+            ))));
     actionsList.add(ActionButtonWidget(
         context: context,
         icon: SvgPicture.asset("assets/svg/dashboard_see_movements.svg"),

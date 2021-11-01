@@ -218,6 +218,11 @@
     "category_supplies":"Supplyments",
     "category_fashion_beauty":"Fashion & Beauty",
     "category_transport_travel":"Transport & Travel",
+    "category_subscription_desc":"Gym, Online platforms, Usual payments",
+    "category_vital_income_desc":"Rent, Payroll, Grants",
+    "category_supplies_desc":"Bills, Insurances, Contracts",
+    "category_fashion_beauty_desc":"Clothing, Hairdresser, Fashion Stores",
+    "category_transport_travel_desc":"Petrol, Public transport, Planes",
     "@goal_amount_of_total" : {
         "placeholders": {
             "currentAmount": {},

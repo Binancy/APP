@@ -1,3 +1,6 @@
+import 'package:binancy/globals.dart';
+import 'package:binancy/models/expend.dart';
+import 'package:binancy/models/income.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -7,6 +10,9 @@ class Category {
   String title = "";
   String? description;
   bool isPredefined = false;
+
+  List<Income> categoryIncomes = [];
+  List<Expend> categoryExpenses = [];
 
   Category();
 
@@ -25,7 +31,7 @@ class Category {
         'isPredefined': isPredefined ? 1 : 0
       };
 
-  void getTitleFromKey(BuildContext context) {
+  void getTitleByKey(BuildContext context) {
     if (isPredefined) {
       switch (title) {
         case "subscription":
@@ -43,8 +49,41 @@ class Category {
         case "transport_travel":
           title = AppLocalizations.of(context)!.category_transport_travel;
           break;
-        default:
       }
     }
+  }
+
+  void getDescriptionByKey(BuildContext context) {
+    if (isPredefined) {
+      switch (title) {
+        case "subscription":
+          description =
+              AppLocalizations.of(context)!.category_subscription_desc;
+          break;
+        case "vital_income":
+          description =
+              AppLocalizations.of(context)!.category_vital_income_desc;
+          break;
+        case "supplies":
+          description = AppLocalizations.of(context)!.category_supplies_desc;
+          break;
+        case "fashion_beauty":
+          description =
+              AppLocalizations.of(context)!.category_fashion_beauty_desc;
+          break;
+        case "transport_travel":
+          description =
+              AppLocalizations.of(context)!.category_transport_travel_desc;
+          break;
+      }
+    }
+  }
+
+  double getTotalAmountOfThisCategoryMovements() {
+    double totalAmount = 0;
+    for (var movement in categoryIncomes) {
+      totalAmount += movement.value;
+    }
+    return totalAmount;
   }
 }

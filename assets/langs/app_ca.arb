@@ -218,6 +218,11 @@
     "category_supplies":"Sumministres",
     "category_fashion_beauty":"Moda y Bellesa",
     "category_transport_travel":"Transport y Viatges",
+    "category_subscription_desc":"Gimnàs, Plataformes online, Pagaments recurrents",
+    "category_vital_income_desc":"Alquilers, Nòmines, Pensions",
+    "category_supplies_desc":"Facturaments, Segurs, Contractes",
+    "category_fashion_beauty_desc":"Vestimenta, Peluqueries, Botigues de moda",
+    "category_transport_travel_desc":"Benzina, Transport públic, Avions",
     "@goal_amount_of_total" : {
         "placeholders": {
             "currentAmount": {},
