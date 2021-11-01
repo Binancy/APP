@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 class CategoriesChangeNotifier extends ChangeNotifier {
   bool updating = false;
 
-  List<Category> categoryList = [];
   List<Category> userCategoryList = [];
   List<Category> predefinedCategories = [];
 

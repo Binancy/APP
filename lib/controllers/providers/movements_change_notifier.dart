@@ -85,9 +85,8 @@ class MovementsChangeNotifier extends ChangeNotifier {
     List<dynamic>? responseJSON = connAPI.getResponse();
     if (responseJSON != null) {
       for (var movement in responseJSON) {
-        incomeList.add(Income.fromJson(movement));
+        incomeList.add(Income.fromJson(movement)..parseCategory());
       }
-
       incomeList.sort((a, b) => b.date.compareTo(a.date));
     } else {
       print('Error, el JSON no tiene datos');
@@ -102,7 +101,7 @@ class MovementsChangeNotifier extends ChangeNotifier {
     List<dynamic>? responseJSON = connAPI.getResponse();
     if (responseJSON != null) {
       for (var movement in responseJSON) {
-        expendList.add(Expend.fromJson(movement));
+        expendList.add(Expend.fromJson(movement)..parseCategory());
         expendList.sort((a, b) => b.date.compareTo(a.date));
       }
     } else {

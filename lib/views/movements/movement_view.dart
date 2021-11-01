@@ -18,6 +18,8 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../globals.dart';
+
 enum MovementType { INCOME, EXPEND }
 
 class MovementView extends StatefulWidget {
@@ -353,8 +355,7 @@ class _MovementViewState extends State<MovementView> {
                         },
                         style: inputStyle(),
                         underline: const SizedBox(),
-                        items: Provider.of<CategoriesChangeNotifier>(context)
-                            .categoryList
+                        items: categoryList
                             .map((e) => DropdownMenuItem<Category>(
                                 value: e, child: Text(e.title)))
                             .toList()))
@@ -468,6 +469,8 @@ class _MovementViewState extends State<MovementView> {
       ..date = Utils.fromYMD(parsedDate, context)
       ..idUser = userData['idUser']
       ..description = noteController.text
+      ..idCategory =
+          selectedCategory != null ? selectedCategory!.idCategory : null
       ..category = selectedCategory;
 
     BinancyProgressDialog binancyProgressDialog =
@@ -501,6 +504,8 @@ class _MovementViewState extends State<MovementView> {
       ..idUser = userData['idUser']
       ..description = noteController.text
       ..category = selectedCategory
+      ..idCategory =
+          selectedCategory != null ? selectedCategory!.idCategory : null
       ..idIncome = selectedMovement.idIncome;
 
     BinancyProgressDialog binancyProgressDialog =
@@ -538,6 +543,8 @@ class _MovementViewState extends State<MovementView> {
       ..date = Utils.fromYMD(parsedDate, context)
       ..idUser = userData['idUser']
       ..description = noteController.text
+      ..idCategory =
+          selectedCategory != null ? selectedCategory!.idCategory : null
       ..category = selectedCategory;
 
     BinancyProgressDialog binancyProgressDialog =
@@ -572,6 +579,8 @@ class _MovementViewState extends State<MovementView> {
       ..idUser = userData['idUser']
       ..description = noteController.text
       ..category = selectedCategory
+      ..idCategory =
+          selectedCategory != null ? selectedCategory!.idCategory : null
       ..idExpend = selectedMovement.idExpend;
 
     BinancyProgressDialog binancyProgressDialog =

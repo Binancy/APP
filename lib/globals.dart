@@ -1,4 +1,6 @@
 // APP GLOBALS
+import 'package:binancy/models/category.dart';
+
 const String appName = "Binancy";
 const String organizationName = "Appxs";
 const String appVersion = "0.4.0";
@@ -25,6 +27,7 @@ extension ParseToString on AvaiablePlans {
 
 // USER GLOBALS
 Map<String, dynamic> userData = {};
+List<Category> categoryList = [];
 String currency = "€";
 
 // WIDGET GLOBALS
@@ -38,6 +41,7 @@ const double subscriptionCardSize = 75;
 const double adviceCardMinHeight = 125;
 const double descriptionWidgetHeight = 250;
 const double barChartWidth = 15;
+const double categoriesPieChartRadius = 180;
 
 // ANIMATION INTERVALS AND DURATION
 const int savingsPlanProgressMS = 750;

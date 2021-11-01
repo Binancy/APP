@@ -145,12 +145,12 @@ void gotoLogin(BuildContext context) {
 }
 
 void gotoDashboard(BuildContext context) async {
-  MovementsChangeNotifier dashboardChangeNotifier = MovementsChangeNotifier();
-  await dashboardChangeNotifier.updateMovements();
-
   CategoriesChangeNotifier categoriesChangeNotifier =
       CategoriesChangeNotifier();
   await categoriesChangeNotifier.updateCategories(context);
+
+  MovementsChangeNotifier dashboardChangeNotifier = MovementsChangeNotifier();
+  await dashboardChangeNotifier.updateMovements();
 
   PlansChangeNotifier plansChangeNotifier = PlansChangeNotifier();
   await plansChangeNotifier.updatePlans();

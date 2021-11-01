@@ -334,8 +334,7 @@ class _MicroExpendViewState extends State<MicroExpendView> {
                             : null,
                         style: inputStyle(),
                         underline: const SizedBox(),
-                        items: Provider.of<CategoriesChangeNotifier>(context)
-                            .categoryList
+                        items: categoryList
                             .map((e) => DropdownMenuItem<Category>(
                                 value: e, child: Text(e.title)))
                             .toList()))

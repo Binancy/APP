@@ -79,7 +79,7 @@ class MovementCard extends StatelessWidget {
                     Text(Utils.toYMD(movement.date, context),
                         style: detailStyle()),
                     if (movement.category != null)
-                      Text(movement.category.name, style: detailStyle())
+                      Text(movement.category.title, style: detailStyle())
                   ],
                 ),
                 Text(
