@@ -15,7 +15,7 @@ import 'package:binancy/views/microexpenses/microexpend_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
@@ -95,7 +95,7 @@ class MicroExpendCard extends StatelessWidget {
           actionExtentRatio: 1,
           actions: [
             IconSlideAction(
-              caption: "Eliminar",
+              caption: AppLocalizations.of(parentContext)!.delete,
               onTap: () {
                 BinancyProgressDialog binancyProgressDialog =
                     BinancyProgressDialog(context: context)
@@ -106,20 +106,29 @@ class MicroExpendCard extends StatelessWidget {
                     await microExpensesChangeNotifier.updateMicroExpenses();
                     binancyProgressDialog.dismissDialog();
                     BinancyInfoDialog(
-                        context, "Gasto frecuente eliminado correctamente", [
-                      BinancyInfoDialogItem("Aceptar", () {
-                        Navigator.of(parentContext, rootNavigator: true).pop();
-                      })
-                    ]);
+                        context,
+                        AppLocalizations.of(parentContext)!
+                            .microexpend_delete_success,
+                        [
+                          BinancyInfoDialogItem(
+                              AppLocalizations.of(parentContext)!.accept, () {
+                            Navigator.of(parentContext, rootNavigator: true)
+                                .pop();
+                          })
+                        ]);
                   } else {
                     binancyProgressDialog.dismissDialog();
                     BinancyInfoDialog(
-                        context, "Error al eliminar el gasto frecuente", [
-                      BinancyInfoDialogItem(
-                          "Aceptar",
-                          () => Navigator.of(parentContext, rootNavigator: true)
-                              .pop())
-                    ]);
+                        context,
+                        AppLocalizations.of(parentContext)!
+                            .microexpend_delete_error,
+                        [
+                          BinancyInfoDialogItem(
+                              AppLocalizations.of(parentContext)!.accept,
+                              () => Navigator.of(parentContext,
+                                      rootNavigator: true)
+                                  .pop())
+                        ]);
                   }
                 });
               },
@@ -159,18 +168,26 @@ class MicroExpendCard extends StatelessWidget {
                       binancyProgressDialog.dismissDialog();
                       if (value) {
                         BinancyInfoDialog(
-                            context, "Se ha añadido el gasto correctamente!", [
-                          BinancyInfoDialogItem("Aceptar", () {
-                            Navigator.pop(context);
-                            Navigator.pop(context);
-                          })
-                        ]);
+                            context,
+                            AppLocalizations.of(parentContext)!
+                                .expend_add_success,
+                            [
+                              BinancyInfoDialogItem(
+                                  AppLocalizations.of(parentContext)!.accept,
+                                  () {
+                                Navigator.pop(context);
+                                Navigator.pop(context);
+                              })
+                            ]);
                       } else {
-                        BinancyInfoDialog(context,
-                            "Ha ocurrido un error al añadir el gasto...", [
-                          BinancyInfoDialogItem(
-                              "Aceptar", () => Navigator.pop(context))
-                        ]);
+                        BinancyInfoDialog(
+                            context,
+                            AppLocalizations.of(parentContext)!.expend_add_fail,
+                            [
+                              BinancyInfoDialogItem(
+                                  AppLocalizations.of(parentContext)!.accept,
+                                  () => Navigator.pop(context))
+                            ]);
                       }
                       movementsChangeNotifier.updateMovements();
                     });
@@ -185,7 +202,7 @@ class MicroExpendCard extends StatelessWidget {
           width: MediaQuery.of(context).size.width,
           child: Center(
               child: Text(
-            "Añadir",
+            AppLocalizations.of(parentContext)!.add,
             style: TextStyle(
                 color: themeColor,
                 fontSize: 15,

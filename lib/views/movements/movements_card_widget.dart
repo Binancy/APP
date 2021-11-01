@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../globals.dart';
 import 'movement_view.dart';
@@ -85,7 +86,7 @@ class MovementCard extends StatelessWidget {
                     (movement.value is int
                             ? movement.value.toString()
                             : (movement.value as double).toStringAsFixed(2)) +
-                        "€",
+                        currency,
                     style: accentTitleStyle())
               ],
             ),
@@ -102,7 +103,7 @@ class MovementCard extends StatelessWidget {
   List<Widget> movementsActions(BuildContext thisContext) {
     return [
       IconSlideAction(
-        caption: "Eliminar",
+        caption: AppLocalizations.of(parentContext)!.delete,
         foregroundColor: accentColor,
         color: Colors.transparent,
         icon: Icons.delete,
@@ -116,18 +117,19 @@ class MovementCard extends StatelessWidget {
               if (value) {
                 await movementsProvider.updateMovements();
                 binancyProgressDialog.dismissDialog();
-                BinancyInfoDialog(
-                    parentContext, "Ingreso eliminado correctamente", [
-                  BinancyInfoDialogItem("Aceptar", () {
+                BinancyInfoDialog(parentContext,
+                    AppLocalizations.of(parentContext)!.income_delete_success, [
+                  BinancyInfoDialogItem(
+                      AppLocalizations.of(parentContext)!.accept, () {
                     Navigator.of(parentContext, rootNavigator: true).pop();
                   })
                 ]);
               } else {
                 binancyProgressDialog.dismissDialog();
-                BinancyInfoDialog(
-                    parentContext, "Error al eliminar el ingreso", [
+                BinancyInfoDialog(parentContext,
+                    AppLocalizations.of(parentContext)!.income_delete_error, [
                   BinancyInfoDialogItem(
-                      "Aceptar",
+                      AppLocalizations.of(parentContext)!.accept,
                       () => Navigator.of(parentContext, rootNavigator: true)
                           .pop())
                 ]);
@@ -139,17 +141,20 @@ class MovementCard extends StatelessWidget {
               if (value) {
                 await movementsProvider.updateMovements();
                 binancyProgressDialog.dismissDialog();
-                BinancyInfoDialog(
-                    parentContext, "Gasto eliminado correctamente", [
-                  BinancyInfoDialogItem("Aceptar", () {
+                BinancyInfoDialog(parentContext,
+                    AppLocalizations.of(parentContext)!.expend_delete_success, [
+                  BinancyInfoDialogItem(
+                      AppLocalizations.of(parentContext)!.accept, () {
                     Navigator.of(parentContext).pop();
                   })
                 ]);
               } else {
                 binancyProgressDialog.dismissDialog();
-                BinancyInfoDialog(parentContext, "Error al eliminar el gasto", [
+                BinancyInfoDialog(parentContext,
+                    AppLocalizations.of(parentContext)!.expend_delete_error, [
                   BinancyInfoDialogItem(
-                      "Aceptar", () => Navigator.of(parentContext).pop())
+                      AppLocalizations.of(parentContext)!.accept,
+                      () => Navigator.of(parentContext).pop())
                 ]);
               }
             });
@@ -157,7 +162,7 @@ class MovementCard extends StatelessWidget {
         },
       ),
       IconSlideAction(
-        caption: "Editar",
+        caption: AppLocalizations.of(parentContext)!.edit,
         icon: Icons.edit,
         foregroundColor: accentColor,
         color: Colors.transparent,

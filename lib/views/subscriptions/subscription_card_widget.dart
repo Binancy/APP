@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../globals.dart';
 
 class SubscriptionCard extends StatelessWidget {
@@ -70,7 +70,7 @@ class SubscriptionCard extends StatelessWidget {
                             ? subscription.value.toString()
                             : (subscription.value as double)
                                 .toStringAsFixed(2)) +
-                        "€",
+                        currency,
                     style: accentTitleStyle())
               ],
             ),
@@ -87,7 +87,7 @@ class SubscriptionCard extends StatelessWidget {
   List<Widget> subscriptionActions(BuildContext context) {
     return [
       IconSlideAction(
-        caption: "Eliminar",
+        caption: AppLocalizations.of(parentContext)!.delete,
         foregroundColor: accentColor,
         color: Colors.transparent,
         icon: Icons.delete,
@@ -100,25 +100,31 @@ class SubscriptionCard extends StatelessWidget {
               await subscriptionsChangeNotifier.updateSubscriptions();
               binancyProgressDialog.dismissDialog();
               BinancyInfoDialog(
-                  context, "Suscripción eliminada correctamente", [
-                BinancyInfoDialogItem(
-                    "Aceptar",
-                    () =>
-                        Navigator.of(parentContext, rootNavigator: true).pop())
-              ]);
+                  context,
+                  AppLocalizations.of(parentContext)!
+                      .subscription_delete_success,
+                  [
+                    BinancyInfoDialogItem(
+                        AppLocalizations.of(parentContext)!.accept,
+                        () => Navigator.of(parentContext, rootNavigator: true)
+                            .pop())
+                  ]);
             } else {
-              BinancyInfoDialog(context, "Error al eliminar la suscripcion", [
-                BinancyInfoDialogItem(
-                    "Aceptar",
-                    () =>
-                        Navigator.of(parentContext, rootNavigator: true).pop())
-              ]);
+              BinancyInfoDialog(
+                  context,
+                  AppLocalizations.of(parentContext)!.subscription_delete_error,
+                  [
+                    BinancyInfoDialogItem(
+                        AppLocalizations.of(parentContext)!.accept,
+                        () => Navigator.of(parentContext, rootNavigator: true)
+                            .pop())
+                  ]);
             }
           });
         },
       ),
       IconSlideAction(
-        caption: "Editar",
+        caption: AppLocalizations.of(parentContext)!.edit,
         icon: Icons.edit,
         foregroundColor: accentColor,
         color: Colors.transparent,

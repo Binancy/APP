@@ -195,6 +195,41 @@
     "microexpend_invalid_title": "El título del gasto rápido no es válido o está en blanco",
     "microexpend_invalid_amount": "El importe del gasto rápido no es válido o está en blanco",
     "no_microexpends": "No hay ningún gasto rápido registrado. Toca para añadir uno.",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "goal_delete_success": "¡Objetivo eliminado correctamente!",
+    "goal_delete_error": "Ha ocurrido un error al eliminar el objetivo",
+    "today": "Hoy",
+    "tomorrow": "Mañana",
+    "goal_due_date": "{days} dias restantes",
+    "goal_overdue": "Finalizó hace {days} días",
+    "goal_amount_of_total": "{currentAmount}{currency} de {totalAmount}{currency}",
+    "income_delete_success": "¡Ingreso eliminado correctamente!",
+    "income_delete_error": "Ha ocurrido un error al eliminar el ingreso",
+    "expend_delete_success": "¡Gasto eliminado correctamente!",
+    "expend_delete_error": "Ha ocurrido un error al eliminar el gasto",
+    "add": "Añadir",
+    "microexpend_delete_success": "¡Gasto rápido eliminado correctamente!",
+    "microexpend_delete_error": "Ha ocurrido un error al eliminar el gasto rápido",
+    "subscription_delete_success":"¡Suscrpción eliminada correctamente!",
+    "subscription_delete_error":"Ha ocurrido un error al eliminar la suscripción",
+    "@goal_amount_of_total" : {
+        "placeholders": {
+            "currentAmount": {},
+            "currency": {},
+            "totalAmount": {}
+        }
+    },
+    "@goal_due_date" : {
+        "placeholders": {
+            "days": {}
+        }
+    },
+    "@goal_overdue" : {
+        "placeholders": {
+            "days": {}
+        }
+    },
     "@version" : {
         "placeholders": {
             "appName": {}
@@ -210,6 +245,11 @@
         "placeholders": {
             "appName": {},
             "organizationName": {}
+        }
+    },
+    "@only_appName": {
+        "placeholders": {
+            "appName": {}
         }
     },
     "@register_advice_1" : {

@@ -23,16 +23,19 @@ class BinancyInfoDialog {
       showGeneralDialog(
         context: context,
         barrierLabel: "",
-        barrierDismissible: true,
+        barrierDismissible: false,
         barrierColor: Colors.transparent,
         transitionDuration:
             const Duration(milliseconds: progressDialogBlurAnimation),
         transitionBuilder: (context, anim1, anim2, child) => BackdropFilter(
           filter: ImageFilter.blur(
               sigmaX: 4 * anim1.value, sigmaY: 4 * anim1.value),
-          child: FadeTransition(
-            child: child,
-            opacity: anim1,
+          child: WillPopScope(
+            onWillPop: () async => false,
+            child: FadeTransition(
+              child: child,
+              opacity: anim1,
+            ),
           ),
         ),
         pageBuilder: (context, animation, secondaryAnimation) =>
@@ -45,16 +48,19 @@ class BinancyInfoDialog {
       showGeneralDialog(
         context: context,
         barrierLabel: "",
-        barrierDismissible: true,
+        barrierDismissible: false,
         barrierColor: Colors.transparent,
         transitionDuration:
             const Duration(milliseconds: progressDialogBlurAnimation),
         transitionBuilder: (context, anim1, anim2, child) => BackdropFilter(
           filter: ImageFilter.blur(
               sigmaX: 4 * anim1.value, sigmaY: 4 * anim1.value),
-          child: FadeTransition(
-            child: child,
-            opacity: anim1,
+          child: WillPopScope(
+            onWillPop: () async => false,
+            child: FadeTransition(
+              child: child,
+              opacity: anim1,
+            ),
           ),
         ),
         pageBuilder: (context, animation, secondaryAnimation) => AlertDialog(

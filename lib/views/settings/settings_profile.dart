@@ -257,7 +257,8 @@ class _SettingsUserDataViewState extends State<SettingsUserDataView> {
         [
           BinancyInfoDialogItem(AppLocalizations.of(context)!.cancel,
               () => Navigator.pop(context)),
-          BinancyInfoDialogItem(AppLocalizations.of(context)!.only_appName, () {
+          BinancyInfoDialogItem(
+              AppLocalizations.of(context)!.only_appName(appName), () {
             Navigator.pop(context);
 
             confirmDeleteUserData(skipVerification: true);

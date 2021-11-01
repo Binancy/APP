@@ -1,7 +1,7 @@
 // APP GLOBALS
 const String appName = "Binancy";
 const String organizationName = "Appxs";
-const String appVersion = "0.3.0";
+const String appVersion = "0.4.0";
 
 // API GLOBALS
 const String apiURL = "https://binancy.herokuapp.com";

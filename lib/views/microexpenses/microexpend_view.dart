@@ -243,7 +243,9 @@ class _MicroExpendViewState extends State<MicroExpendView> {
           color: themeColor.withOpacity(0.1)),
       alignment: Alignment.center,
       child: TextField(
-        inputFormatters: [DecimalTextInputFormatter(decimalRange: 2)],
+        inputFormatters: [
+          DecimalTextInputFormatter(decimalRange: 2, currency: currency)
+        ],
         textInputAction: TextInputAction.next,
         readOnly: !allowEdit,
         keyboardType: TextInputType.number,

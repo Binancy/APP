@@ -339,7 +339,7 @@ class Utils {
     }
 
     if (addCurreny) {
-      parsedAmount += "€";
+      parsedAmount += currency;
     }
 
     return parsedAmount;

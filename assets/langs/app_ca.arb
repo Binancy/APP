@@ -195,6 +195,41 @@
     "microexpend_invalid_title": "El títol de la despesa ràpida no es vàlid o està en blanc",
     "microexpend_invalid_amount": "El valor de la despesa ràpida no es vàlid o està en blanc",
     "no_microexpends": "No hi ha cap despesa ràpida registrada. Toca per afegir una",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "goal_delete_success": "Objectiu eliminat correctament!",
+    "goal_delete_error": "Ha hagut un error al eliminar l'objectiu",
+    "today": "Avui",
+    "tomorrow": "Demà",
+    "goal_due_date": "{days} días restantes",
+    "goal_overdue": "Va finalitzar fa {days} dies",
+    "goal_amount_of_total": "{currentAmount}{currency} de {totalAmount}{currency}",
+    "income_delete_success": "Ingrès eliminat correctament!",
+    "income_delete_error": "Ha hagut un error al eliminar l'ingrès",
+    "expend_delete_success": "Despessa eliminat correctament!",
+    "expend_delete_error": "Ha hagut un error al eliminar la despessa",
+    "add": "Afegir",
+    "microexpend_delete_success": "Despessa ràpida eliminada correctament!",
+    "microexpend_delete_error": "Ha hagut un error al eliminar la depessa ràpida",
+    "subscription_delete_success":"Subscripció eliminada correctament!",
+    "subscription_delete_error":"Ha hagut un error al eliminar la subscripció",
+    "@goal_amount_of_total" : {
+        "placeholders": {
+            "currentAmount": {},
+            "currency": {},
+            "totalAmount": {}
+        }
+    },
+    "@goal_due_date" : {
+        "placeholders": {
+            "days": {}
+        }
+    },
+    "@goal_overdue" : {
+        "placeholders": {
+            "days": {}
+        }
+    },
     "@version": {
         "placeholders": {
             "appName": {}
@@ -223,6 +258,11 @@
         }
     },
     "@register_advice_3": {
+        "placeholders": {
+            "appName": {}
+        }
+    },
+    "@only_appName": {
         "placeholders": {
             "appName": {}
         }

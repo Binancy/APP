@@ -195,6 +195,41 @@
     "microexpend_invalid_title": "The title of the quick expend is not valid or it's empty",
     "microexpend_invalid_amount": "The amount of the quick expend is not valid or it's empty",
     "no_microexpends": "There's no quick expends registered. Tap for add one",
+    "delete": "Delete",
+    "edit": "Edit",
+    "goal_delete_success": "Goal deleted successfully!",
+    "goal_delete_error": "An error has ocurred deleting the goal",
+    "today": "Today",
+    "tomorrow": "Tomorrow",
+    "goal_due_date": "{days} days remaining",
+    "goal_overdue": "Ended {days} days ago",
+    "goal_amount_of_total": "{currentAmount}{currency} of {totalAmount}{currency}",
+    "income_delete_success": "Income deleted successfully!",
+    "income_delete_error": "An error has ocurred deleting the income",
+    "expend_delete_success": "Expend deleted successfully!",
+    "expend_delete_error": "An error has ocurred deleting the expend",
+    "add": "Add",
+    "microexpend_delete_success": "Quick expend deleted successfully!",
+    "microexpend_delete_error": "An error has ocurred deleting the quick expend",
+    "subscription_delete_success":"Subscription deleted successfully",
+    "subscription_delete_error":"An error has ocurred deleting the subscription",
+    "@goal_amount_of_total" : {
+        "placeholders": {
+            "currentAmount": {},
+            "currency": {},
+            "totalAmount": {}
+        }
+    },
+    "@goal_due_date" : {
+        "placeholders": {
+            "days": {}
+        }
+    },
+    "@goal_overdue" : {
+        "placeholders": {
+            "days": {}
+        }
+    },
     "@version" : {
         "placeholders": {
             "appName": {}
@@ -239,6 +274,11 @@
         }
     },
     "@register_invalid_terms" : {
+        "placeholders": {
+            "appName": {}
+        }
+    },
+    "@only_appName": {
         "placeholders": {
             "appName": {}
         }

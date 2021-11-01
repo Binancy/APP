@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SavingsPlanWidget extends StatefulWidget {
   final BuildContext parentContext;
@@ -123,11 +124,11 @@ class _SavingsPlanWidgetState extends State<SavingsPlanWidget>
                         child: Text(
                       widget.currentAmount is int
                           ? widget.currentAmount.toString()
-                          : (widget.currentAmount as double).toStringAsFixed(
-                                  widget.currentAmount % 1 == 0 ? 0 : 2) +
-                              "€ de " +
-                              widget.savingsPlan.amount.toString() +
-                              "€",
+                          : AppLocalizations.of(context)!.goal_amount_of_total(
+                              (widget.currentAmount as double).toStringAsFixed(
+                                  widget.currentAmount % 1 == 0 ? 0 : 2),
+                              currency,
+                              widget.savingsPlan.amount.toString()),
                       style: newMethod(),
                       overflow: TextOverflow.ellipsis,
                     )),
@@ -150,7 +151,7 @@ class _SavingsPlanWidgetState extends State<SavingsPlanWidget>
   List<Widget> savingsPlansActions() {
     return [
       IconSlideAction(
-        caption: "Eliminar",
+        caption: AppLocalizations.of(context)!.delete,
         foregroundColor: accentColor,
         color: Colors.transparent,
         icon: Icons.delete,
@@ -163,17 +164,17 @@ class _SavingsPlanWidgetState extends State<SavingsPlanWidget>
               await widget.savingsPlanChangeNotifier.updateSavingsPlan();
               binancyProgressDialog.dismissDialog();
               BinancyInfoDialog(
-                  context, "Meta de ahorros eliminada correctamente", [
-                BinancyInfoDialogItem("Aceptar", () {
+                  context, AppLocalizations.of(context)!.goal_delete_success, [
+                BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () {
                   Navigator.of(widget.parentContext, rootNavigator: true).pop();
                 })
               ]);
             } else {
               binancyProgressDialog.dismissDialog();
               BinancyInfoDialog(
-                  context, "Error al eliminar la meta de ahorros", [
+                  context, AppLocalizations.of(context)!.goal_delete_error, [
                 BinancyInfoDialogItem(
-                    "Aceptar",
+                    AppLocalizations.of(context)!.accept,
                     () =>
                         Navigator.of(widget.parentContext, rootNavigator: true)
                             .pop())
@@ -183,7 +184,7 @@ class _SavingsPlanWidgetState extends State<SavingsPlanWidget>
         },
       ),
       IconSlideAction(
-        caption: "Editar",
+        caption: AppLocalizations.of(context)!.edit,
         icon: Icons.edit,
         foregroundColor: accentColor,
         color: Colors.transparent,
@@ -223,22 +224,21 @@ class _SavingsPlanWidgetState extends State<SavingsPlanWidget>
   String getDaysToLimitDate() {
     if (widget.savingsPlan.limitDate != null) {
       if (Utils.isAtSameDay(widget.savingsPlan.limitDate!, DateTime.now())) {
-        return "Hoy";
+        return AppLocalizations.of(context)!.today;
       } else if (widget.savingsPlan.limitDate!
               .difference(DateTime(DateTime.now().year, DateTime.now().month,
                   DateTime.now().day))
               .inDays ==
           1) {
-        return "Mañana";
+        return AppLocalizations.of(context)!.tomorrow;
       } else {
         int days =
             widget.savingsPlan.limitDate!.difference(DateTime.now()).inDays;
         if (days.isNegative) {
-          return "Finalizó hace " +
-              days.toString().replaceAll("-", "") +
-              " días";
+          return AppLocalizations.of(context)!
+              .goal_overdue(days.toString().replaceAll("-", ""));
         } else {
-          return days.toString() + " días restatntes";
+          return AppLocalizations.of(context)!.goal_due_date(days.toString());
         }
       }
     } else {
