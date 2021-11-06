@@ -104,7 +104,7 @@ class _SubscriptionViewState extends State<SubscriptionView> {
                           allowEdit = true;
                         });
                       },
-                      icon: const Icon(Icons.edit_rounded))
+                      icon: const Icon(BinancyIcons.edit))
                   : const SizedBox()
             ],
             leading: !allowEdit
@@ -232,8 +232,7 @@ class _SubscriptionViewState extends State<SubscriptionView> {
         controller: nameController,
         style: inputStyle(),
         decoration: customInputDecoration(
-            AppLocalizations.of(context)!.subscription_title,
-            BinancyIcons.email),
+            AppLocalizations.of(context)!.subscription_title, BinancyIcons.tag),
       ),
     );
   }
@@ -258,7 +257,7 @@ class _SubscriptionViewState extends State<SubscriptionView> {
         style: inputStyle(),
         decoration: customInputDecoration(
             AppLocalizations.of(context)!.subscription_amount,
-            BinancyIcons.calendar),
+            BinancyIcons.piggy_bank),
       ),
     );
   }

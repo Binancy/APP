@@ -4,6 +4,7 @@ import 'package:binancy/globals.dart';
 import 'package:binancy/models/category.dart';
 import 'package:binancy/utils/dialogs/info_dialog.dart';
 import 'package:binancy/utils/dialogs/progress_dialog.dart';
+import 'package:binancy/utils/ui/icons.dart';
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/views/categories/category_view.dart';
 import 'package:flutter/material.dart';
@@ -71,7 +72,7 @@ class CategoryCardWidget extends StatelessWidget {
         caption: AppLocalizations.of(context)!.delete,
         foregroundColor: accentColor,
         color: Colors.transparent,
-        icon: Icons.delete,
+        icon: BinancyIcons.delete,
         onTap: () async {
           BinancyProgressDialog binancyProgressDialog =
               BinancyProgressDialog(context: context)..showProgressDialog();
@@ -99,7 +100,7 @@ class CategoryCardWidget extends StatelessWidget {
       ),
       IconSlideAction(
         caption: AppLocalizations.of(context)!.edit,
-        icon: Icons.edit,
+        icon: BinancyIcons.edit,
         foregroundColor: accentColor,
         color: Colors.transparent,
         onTap: () => Navigator.push(

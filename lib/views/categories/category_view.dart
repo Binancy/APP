@@ -100,7 +100,7 @@ class _CategoryViewState extends State<CategoryView> {
                                 allowEdit = true;
                               });
                             },
-                            icon: const Icon(Icons.edit_rounded))
+                            icon: const Icon(BinancyIcons.edit))
                         : const SizedBox()
                   ],
                   leading: !allowEdit

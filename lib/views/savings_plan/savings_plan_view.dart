@@ -102,7 +102,7 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
                                 allowEdit = true;
                               });
                             },
-                            icon: const Icon(Icons.edit_rounded))
+                            icon: const Icon(BinancyIcons.edit))
                         : const SizedBox()
                   ],
                   leading: !allowEdit
@@ -212,7 +212,7 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
         controller: nameController,
         style: inputStyle(),
         decoration: customInputDecoration(
-            AppLocalizations.of(context)!.goal_title, BinancyIcons.email),
+            AppLocalizations.of(context)!.goal_title, BinancyIcons.tag),
       ),
     );
   }
@@ -236,7 +236,7 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
         controller: totalAmountController,
         style: inputStyle(),
         decoration: customInputDecoration(
-            AppLocalizations.of(context)!.goal_amount, BinancyIcons.calendar),
+            AppLocalizations.of(context)!.goal_amount, BinancyIcons.piggy_bank),
       ),
     );
   }

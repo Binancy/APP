@@ -4,6 +4,7 @@ import 'package:binancy/globals.dart';
 import 'package:binancy/models/savings_plan.dart';
 import 'package:binancy/utils/dialogs/info_dialog.dart';
 import 'package:binancy/utils/dialogs/progress_dialog.dart';
+import 'package:binancy/utils/ui/icons.dart';
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/ui/widgets.dart';
@@ -154,7 +155,7 @@ class _SavingsPlanWidgetState extends State<SavingsPlanWidget>
         caption: AppLocalizations.of(context)!.delete,
         foregroundColor: accentColor,
         color: Colors.transparent,
-        icon: Icons.delete,
+        icon: BinancyIcons.delete,
         onTap: () async {
           BinancyProgressDialog binancyProgressDialog =
               BinancyProgressDialog(context: context)..showProgressDialog();
@@ -185,7 +186,7 @@ class _SavingsPlanWidgetState extends State<SavingsPlanWidget>
       ),
       IconSlideAction(
         caption: AppLocalizations.of(context)!.edit,
-        icon: Icons.edit,
+        icon: BinancyIcons.edit,
         foregroundColor: accentColor,
         color: Colors.transparent,
         onTap: () => Navigator.push(

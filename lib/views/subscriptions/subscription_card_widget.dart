@@ -3,6 +3,7 @@ import 'package:binancy/controllers/subscriptions_controller.dart';
 import 'package:binancy/models/subscription.dart';
 import 'package:binancy/utils/dialogs/info_dialog.dart';
 import 'package:binancy/utils/dialogs/progress_dialog.dart';
+import 'package:binancy/utils/ui/icons.dart';
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/views/subscriptions/subscription_view.dart';
 import 'package:flutter/material.dart';
@@ -90,7 +91,7 @@ class SubscriptionCard extends StatelessWidget {
         caption: AppLocalizations.of(parentContext)!.delete,
         foregroundColor: accentColor,
         color: Colors.transparent,
-        icon: Icons.delete,
+        icon: BinancyIcons.delete,
         onTap: () async {
           BinancyProgressDialog binancyProgressDialog =
               BinancyProgressDialog(context: context)..showProgressDialog();
@@ -125,7 +126,7 @@ class SubscriptionCard extends StatelessWidget {
       ),
       IconSlideAction(
         caption: AppLocalizations.of(parentContext)!.edit,
-        icon: Icons.edit,
+        icon: BinancyIcons.edit,
         foregroundColor: accentColor,
         color: Colors.transparent,
         onTap: () => Navigator.push(

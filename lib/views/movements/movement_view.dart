@@ -113,7 +113,7 @@ class _MovementViewState extends State<MovementView> {
                   actions: [
                     !allowEdit && !createMode
                         ? IconButton(
-                            icon: const Icon(Icons.edit_rounded),
+                            icon: const Icon(BinancyIcons.edit),
                             onPressed: () {
                               setState(() {
                                 allowEdit = true;
@@ -385,7 +385,7 @@ class _MovementViewState extends State<MovementView> {
             widget.movementType == MovementType.INCOME
                 ? AppLocalizations.of(context)!.income_title
                 : AppLocalizations.of(context)!.expend_title,
-            BinancyIcons.email),
+            BinancyIcons.tag),
       ),
     );
   }
@@ -412,7 +412,7 @@ class _MovementViewState extends State<MovementView> {
             widget.movementType == MovementType.INCOME
                 ? AppLocalizations.of(context)!.income_value
                 : AppLocalizations.of(context)!.expend_value,
-            BinancyIcons.calendar),
+            BinancyIcons.piggy_bank),
       ),
     );
   }

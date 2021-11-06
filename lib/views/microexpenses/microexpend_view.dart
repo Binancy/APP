@@ -107,7 +107,7 @@ class _MicroExpendViewState extends State<MicroExpendView> {
                                 allowEdit = true;
                               });
                             },
-                            icon: const Icon(Icons.edit_rounded))
+                            icon: const Icon(BinancyIcons.edit))
                         : const SizedBox()
                   ],
                   leading: !allowEdit
@@ -226,8 +226,7 @@ class _MicroExpendViewState extends State<MicroExpendView> {
         controller: titleController,
         style: inputStyle(),
         decoration: customInputDecoration(
-            AppLocalizations.of(context)!.microexpend_title,
-            BinancyIcons.email),
+            AppLocalizations.of(context)!.microexpend_title, BinancyIcons.tag),
       ),
     );
   }
@@ -252,7 +251,7 @@ class _MicroExpendViewState extends State<MicroExpendView> {
         style: inputStyle(),
         decoration: customInputDecoration(
             AppLocalizations.of(context)!.microexpend_amount,
-            BinancyIcons.calendar),
+            BinancyIcons.piggy_bank),
       ),
     );
   }

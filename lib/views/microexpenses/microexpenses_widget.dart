@@ -8,6 +8,7 @@ import 'package:binancy/models/expend.dart';
 import 'package:binancy/models/microexpend.dart';
 import 'package:binancy/utils/dialogs/info_dialog.dart';
 import 'package:binancy/utils/dialogs/progress_dialog.dart';
+import 'package:binancy/utils/ui/icons.dart';
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/ui/widgets.dart';
@@ -132,7 +133,8 @@ class MicroExpendCard extends StatelessWidget {
                   }
                 });
               },
-              iconWidget: Icon(Icons.delete, size: 50, color: accentColor),
+              iconWidget:
+                  Icon(BinancyIcons.delete, size: 50, color: accentColor),
               foregroundColor: accentColor,
               color: Colors.transparent,
             )
