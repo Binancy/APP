@@ -29,7 +29,7 @@ class CategoryView extends StatefulWidget {
 class _CategoryViewState extends State<CategoryView> {
   Category? selectedCategory;
   bool allowEdit = false, createMode = false;
-  Color selectedColour = Colors.white;
+  Color selectedColour = themeColor;
 
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
@@ -164,9 +164,9 @@ class _CategoryViewState extends State<CategoryView> {
                                         textAlign: TextAlign.center)),
                                 nameInputWidget(),
                                 const SpaceDivider(),
-                                colourPickerWidget(context),
-                                const SpaceDivider(),
                                 descriptionInputWidget(),
+                                const SpaceDivider(),
+                                colourPickerWidget(context),
                                 const SpaceDivider()
                               ],
                             ))),
@@ -231,7 +231,7 @@ class _CategoryViewState extends State<CategoryView> {
     return Padding(
       padding: const EdgeInsets.only(left: customMargin, right: customMargin),
       child: Material(
-        color: themeColor.withOpacity(0.1),
+        color: selectedColour.withOpacity(0.3),
         borderRadius: BorderRadius.circular(customBorderRadius),
         child: InkWell(
           onTap: () {
@@ -244,6 +244,7 @@ class _CategoryViewState extends State<CategoryView> {
                           pickerColor: selectedColour,
                           onColorChanged: (value) => setState(() {
                                 selectedColour = value;
+                                Navigator.pop(context);
                               }))));
             }
           },
@@ -257,7 +258,7 @@ class _CategoryViewState extends State<CategoryView> {
               child: Row(
                 children: [
                   Icon(
-                    BinancyIcons.calendar,
+                    BinancyIcons.palette,
                     color: accentColor,
                     size: 36,
                   ),

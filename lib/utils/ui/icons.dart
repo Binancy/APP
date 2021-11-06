@@ -36,4 +36,6 @@ class BinancyIcons {
       IconData(0xe80d, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData hide =
       IconData(0xe80e, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData palette =
+      IconData(0xe80f, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }
