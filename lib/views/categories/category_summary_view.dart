@@ -6,13 +6,17 @@ import 'package:binancy/utils/ui/widgets.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:binancy/views/advice/advice_card.dart';
 import 'package:binancy/views/categories/category_card_widget.dart';
+import 'package:binancy/views/categories/category_view.dart';
 import 'package:binancy/views/movements/movement_view.dart';
+import 'package:binancy/views/movements/movements_empty_card_widget.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:flip_card/flip_card.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'category_indicator_widget.dart';
 
@@ -35,136 +39,42 @@ class _CategorySummaryViewState extends State<CategorySummaryView> {
 
   @override
   Widget build(BuildContext context) {
-    return BinancyBackground(Scaffold(
-      backgroundColor: Colors.transparent,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        centerTitle: true,
-        title: Text("Categorías", style: appBarStyle()),
-      ),
-      body: Consumer2<CategoriesChangeNotifier, MovementsChangeNotifier>(
-          builder: (context, categoriesChangeNotifier, movementsChangeNotifier,
-                  child) =>
-              FutureBuilder(
-                future: getCategoryMovemntsFromLast90Days(
-                    categoriesChangeNotifier, movementsChangeNotifier),
-                builder: (context, snapshot) => ScrollConfiguration(
-                  behavior: MyBehavior(),
-                  child: ListView(
-                    shrinkWrap: true,
-                    children: [
-                      const SpaceDivider(),
-                      AdviceCard(
-                          icon: SvgPicture.asset(
-                              "assets/svg/dashboard_categories.svg"),
-                          text:
-                              "Visualiza todos los movimientos de los últimos 90 días clasificados en categorías"),
-                      SizedBox(
+    return BinancyBackground(
+      Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            centerTitle: true,
+            title: Text("Categorías", style: appBarStyle()),
+          ),
+          body: Consumer2<CategoriesChangeNotifier, MovementsChangeNotifier>(
+            builder: (context, categoriesChangeNotifier,
+                movementsChangeNotifier, child) {
+              getCategoryMovemntsFromLast90Days(
+                  categoriesChangeNotifier, movementsChangeNotifier);
+              return ScrollConfiguration(
+                behavior: MyBehavior(),
+                child: CustomScrollView(
+                  shrinkWrap: true,
+                  slivers: [
+                    const SliverToBoxAdapter(child: SpaceDivider()),
+                    SliverToBoxAdapter(
+                        child: AdviceCard(
+                            icon: SvgPicture.asset(
+                                "assets/svg/dashboard_categories.svg"),
+                            text:
+                                "Visualiza todos los movimientos de los últimos 90 días clasificados en categorías")),
+                    SliverToBoxAdapter(
+                      child: SizedBox(
                         width: MediaQuery.of(context).size.width,
                         child: Stack(
                           children: [
                             Positioned(
-                              child: FlipCard(
-                                  alignment: Alignment.topCenter,
-                                  controller: flipCardController,
-                                  flipOnTouch: false,
-                                  front: Container(
-                                    margin: const EdgeInsets.all(customMargin),
-                                    padding: const EdgeInsets.all(customMargin),
-                                    decoration: BoxDecoration(
-                                        color: themeColor.withOpacity(0.1),
-                                        borderRadius: BorderRadius.circular(
-                                            customBorderRadius)),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Text("Ingresos",
-                                            style: titleCardStyle()),
-                                        SizedBox(
-                                          height:
-                                              MediaQuery.of(context).size.width,
-                                          child: PieChart(
-                                              PieChartData(
-                                                  centerSpaceRadius: 100,
-                                                  sectionsSpace: customMargin,
-                                                  sections: categoriesToSections(
-                                                      categoriesChangeNotifier,
-                                                      MovementType.INCOME)),
-                                              swapAnimationDuration:
-                                                  const Duration(
-                                                      milliseconds: 150),
-                                              swapAnimationCurve:
-                                                  Curves.linear),
-                                        ),
-                                        generateLegend(categoriesChangeNotifier,
-                                            MovementType.INCOME)
-                                      ],
-                                    ),
-                                  ),
-                                  back: Container(
-                                    margin: const EdgeInsets.all(customMargin),
-                                    padding: const EdgeInsets.all(customMargin),
-                                    decoration: BoxDecoration(
-                                        color: themeColor.withOpacity(0.1),
-                                        borderRadius: BorderRadius.circular(
-                                            customBorderRadius)),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Text("Gastos", style: titleCardStyle()),
-                                        SizedBox(
-                                          height:
-                                              MediaQuery.of(context).size.width,
-                                          child: PieChart(
-                                              PieChartData(
-                                                  pieTouchData: PieTouchData(
-                                                      touchCallback:
-                                                          (FlTouchEvent event,
-                                                              pieTouchResponse) {
-                                                    setState(() {
-                                                      if (!event
-                                                              .isInterestedForInteractions ||
-                                                          pieTouchResponse ==
-                                                              null ||
-                                                          pieTouchResponse
-                                                                  .touchedSection ==
-                                                              null) {
-                                                        touchedIndex = -1;
-                                                        return;
-                                                      }
-                                                      touchedIndex =
-                                                          pieTouchResponse
-                                                              .touchedSection!
-                                                              .touchedSectionIndex;
-                                                    });
-                                                  }),
-                                                  centerSpaceRadius: 100,
-                                                  borderData: FlBorderData(
-                                                    show: false,
-                                                  ),
-                                                  sectionsSpace: customMargin,
-                                                  sections: categoriesToSections(
-                                                      categoriesChangeNotifier,
-                                                      MovementType.EXPEND)),
-                                              swapAnimationDuration:
-                                                  const Duration(
-                                                      milliseconds:
-                                                          150), // Optional
-                                              swapAnimationCurve:
-                                                  Curves.linear),
-                                        ),
-                                        generateLegend(categoriesChangeNotifier,
-                                            MovementType.EXPEND)
-                                      ],
-                                    ),
-                                  )),
+                              child: categoriesPieChart(
+                                  context,
+                                  categoriesChangeNotifier,
+                                  movementsChangeNotifier),
                             ),
                             Positioned(
                                 right: customMargin * 2,
@@ -189,24 +99,135 @@ class _CategorySummaryViewState extends State<CategorySummaryView> {
                           ],
                         ),
                       ),
-                      Center(
+                    ),
+                    SliverToBoxAdapter(
+                      child: Center(
                           child:
                               Text("Tus categorías", style: titleCardStyle())),
-                      categoryListWidget(categoriesChangeNotifier, context),
-                      addCategoryButton(context),
-                      const SpaceDivider()
-                    ],
-                  ),
+                    ),
+                    SliverToBoxAdapter(
+                        child: categoryListWidget(
+                            categoriesChangeNotifier, context)),
+                    SliverToBoxAdapter(child: addCategoryButton(context)),
+                    const SliverToBoxAdapter(child: SpaceDivider())
+                  ],
                 ),
-              )),
-    ));
+              );
+            },
+          )),
+    );
+  }
+
+  Widget categoriesPieChart(
+      BuildContext context,
+      CategoriesChangeNotifier categoriesChangeNotifier,
+      MovementsChangeNotifier movementsChangeNotifier) {
+    return Container(
+        constraints: BoxConstraints(
+          minHeight: MediaQuery.of(context).size.height -
+              MediaQuery.of(context).padding.top -
+              MediaQuery.of(context).padding.bottom -
+              kToolbarHeight -
+              (customMargin * 4) -
+              adviceCardMinHeight,
+        ),
+        width: MediaQuery.of(context).size.width,
+        margin: const EdgeInsets.all(customMargin),
+        padding: const EdgeInsets.all(customMargin),
+        decoration: BoxDecoration(
+            color: themeColor.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(customBorderRadius)),
+        child: FlipCard(
+            alignment: Alignment.topCenter,
+            controller: flipCardController,
+            flipOnTouch: false,
+            front: movementsChangeNotifier.incomeList.isNotEmpty
+                ? ListView(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    children: [
+                      Center(
+                        child: Text(AppLocalizations.of(context)!.income,
+                            style: titleCardStyle()),
+                      ),
+                      const SpaceDivider(customSpace: 40),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.width -
+                            (customMargin * 4),
+                        child: PieChart(
+                            PieChartData(
+                                centerSpaceRadius: 100,
+                                borderData: FlBorderData(
+                                  show: false,
+                                ),
+                                startDegreeOffset: 270,
+                                sectionsSpace: categoriesSectionsMargin,
+                                sections: categoriesToSections(
+                                    categoriesChangeNotifier,
+                                    MovementType.INCOME)),
+                            swapAnimationDuration:
+                                const Duration(milliseconds: 500),
+                            swapAnimationCurve: Curves.easeInOut),
+                      ),
+                      const SpaceDivider(customSpace: 20),
+                      generateLegend(
+                          categoriesChangeNotifier, MovementType.INCOME)
+                    ],
+                  )
+                : const MovememntEmptyCard(MovementType.EXPEND,
+                    isExpanded: true),
+            back: movementsChangeNotifier.expendList.isNotEmpty
+                ? ListView(
+                    shrinkWrap: true,
+                    children: [
+                      Center(
+                        child: Text(AppLocalizations.of(context)!.expend,
+                            style: titleCardStyle()),
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.width,
+                        child: PieChart(
+                            PieChartData(
+                                centerSpaceRadius: 100,
+                                borderData: FlBorderData(
+                                  show: false,
+                                ),
+                                startDegreeOffset: 270,
+                                sectionsSpace: categoriesSectionsMargin,
+                                sections: categoriesToSections(
+                                    categoriesChangeNotifier,
+                                    MovementType.EXPEND)),
+                            swapAnimationDuration:
+                                const Duration(milliseconds: 500), // Optional
+                            swapAnimationCurve: Curves.easeInOut),
+                      ),
+                      generateLegend(
+                          categoriesChangeNotifier, MovementType.EXPEND)
+                    ],
+                  )
+                : const MovememntEmptyCard(MovementType.EXPEND,
+                    isExpanded: true)));
   }
 
   Widget addCategoryButton(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: customMargin, right: customMargin),
       child: BinancyButton(
-          context: context, text: "Añade una categoría", action: () {}),
+          context: context,
+          text: "Añade una categoría",
+          action: () => Navigator.push(
+              context,
+              PageTransition(
+                  type: PageTransitionType.rightToLeftWithFade,
+                  child: MultiProvider(
+                    providers: [
+                      ChangeNotifierProvider(
+                        create: (_) =>
+                            Provider.of<CategoriesChangeNotifier>(context),
+                      )
+                    ],
+                    child: const CategoryView(allowEdit: true),
+                  )))),
     );
   }
 
@@ -224,7 +245,9 @@ class _CategorySummaryViewState extends State<CategorySummaryView> {
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemBuilder: (_, index) => CategoryCardWidget(
-                    category: categoryList.elementAt(index), context: context),
+                    category: categoryList.elementAt(index),
+                    context: context,
+                    categoriesChangeNotifier: categoriesChangeNotifier),
                 separatorBuilder: (context, index) => const LinearDivider(),
                 itemCount: categoryList.length > categoryMaxItemsToShow
                     ? categoryMaxItemsToShow
@@ -443,6 +466,10 @@ class _CategorySummaryViewState extends State<CategorySummaryView> {
       ));
     }
 
-    return Column(children: rowWidgets);
+    return Column(
+        children: rowWidgets,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min);
   }
 }

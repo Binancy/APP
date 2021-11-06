@@ -1,3 +1,4 @@
+import 'package:binancy/utils/ui/styles.dart';
 import 'package:flutter/material.dart';
 
 class Indicator extends StatelessWidget {
@@ -33,8 +34,8 @@ class Indicator extends StatelessWidget {
         ),
         Text(
           text,
-          style: TextStyle(
-              fontSize: 16, fontWeight: FontWeight.bold, color: textColor),
+          style: inputStyle(),
+          overflow: TextOverflow.ellipsis,
         )
       ],
     );
