@@ -41,7 +41,7 @@ const double subscriptionCardSize = 75;
 const double adviceCardMinHeight = 125;
 const double descriptionWidgetHeight = 250;
 const double barChartWidth = 15;
-const double categoriesPieChartRadius = 180;
+const double categoriesPieChartRadius = 75;
 
 // ANIMATION INTERVALS AND DURATION
 const int savingsPlanProgressMS = 750;

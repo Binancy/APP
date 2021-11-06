@@ -1,6 +1,5 @@
 import 'package:binancy/controllers/expenses_controller.dart';
 import 'package:binancy/controllers/microexpenses_controller.dart';
-import 'package:binancy/controllers/providers/categories_change_notifier.dart';
 import 'package:binancy/controllers/providers/microexpenses_change_notifier.dart';
 import 'package:binancy/controllers/providers/movements_change_notifier.dart';
 import 'package:binancy/globals.dart';

@@ -1,4 +1,3 @@
-import 'package:binancy/globals.dart';
 import 'package:binancy/models/expend.dart';
 import 'package:binancy/models/income.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +9,7 @@ class Category {
   String title = "";
   String? description;
   bool isPredefined = false;
+  Color color = Colors.white;
 
   List<Income> categoryIncomes = [];
   List<Expend> categoryExpenses = [];
@@ -21,12 +21,14 @@ class Category {
         idUser = json['idUser'],
         isPredefined = json['isPredefined'] == 1 ? true : false,
         description = json['description'],
+        color = Color(int.parse(json['color'])),
         title = json['title'];
 
   Map<String, dynamic> toJson() => {
         'idCategory': idCategory,
         'idUser': idUser,
         'title': title,
+        'color': color.toString(),
         'description': description,
         'isPredefined': isPredefined ? 1 : 0
       };
