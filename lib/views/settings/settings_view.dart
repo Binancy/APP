@@ -132,8 +132,17 @@ class _SettingsViewState extends State<SettingsView> {
                       PageTransition(
                           type: PageTransitionType.rightToLeftWithFade,
                           child: const SettingsUserDataView()))
-                  .then((value) {
-                movementsChangeNotifier.updateMovements();
+                  .then((value) async {
+                if (value) {
+                  BinancyProgressDialog binancyProgressDialog =
+                      BinancyProgressDialog(context: context)
+                        ..showProgressDialog();
+                  await Utils.updateAllProviders(context);
+                  binancyProgressDialog.dismissDialog();
+                } else {
+                  movementsChangeNotifier.updateMovements();
+                }
+
                 setState(() {});
               })),
       const LinearDivider(),

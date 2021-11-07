@@ -73,7 +73,7 @@ class AccountController {
     }
   }
 
-  static Future<void> deleteUserData(BuildContext context) async {
+  static Future<bool> deleteUserData(BuildContext context) async {
     ConnAPI connAPI = ConnAPI(APIEndpoints.DELETE_USER_DATA, "DELETE", false,
         {"id": userData['idUser']});
     BinancyProgressDialog binancyProgressDialog =
@@ -87,6 +87,7 @@ class AccountController {
         BinancyInfoDialogItem(
             AppLocalizations.of(context)!.accept, () => Navigator.pop(context))
       ]);
+      return true;
     } else {
       BinancyException? exception = connAPI.getException();
       if (exception != null) {
@@ -102,6 +103,7 @@ class AccountController {
               () => Navigator.pop(context))
         ]);
       }
+      return false;
     }
   }
 

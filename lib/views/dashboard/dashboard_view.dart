@@ -41,12 +41,34 @@ class _DashboardViewState extends State<DashboardView> {
                       PageTransition(
                           child: MultiProvider(providers: [
                             ChangeNotifierProvider(
+                                create: (_) => Provider.of<PlansChangeNotifier>(
+                                    context,
+                                    listen: false)),
+                            ChangeNotifierProvider(
                                 create: (_) =>
-                                    Provider.of<PlansChangeNotifier>(context)),
+                                    Provider.of<SavingsPlanChangeNotifier>(
+                                        context,
+                                        listen: false)),
+                            ChangeNotifierProvider(
+                                create: (_) =>
+                                    Provider.of<MicroExpensesChangeNotifier>(
+                                        context,
+                                        listen: false)),
+                            ChangeNotifierProvider(
+                                create: (_) =>
+                                    Provider.of<CategoriesChangeNotifier>(
+                                        context,
+                                        listen: false)),
+                            ChangeNotifierProvider(
+                                create: (_) =>
+                                    Provider.of<SubscriptionsChangeNotifier>(
+                                        context,
+                                        listen: false)),
                             ChangeNotifierProvider(
                                 create: (_) =>
                                     Provider.of<MovementsChangeNotifier>(
-                                        context))
+                                        context,
+                                        listen: false))
                           ], child: SettingsView()),
                           type: PageTransitionType.rightToLeftWithFade))),
               automaticallyImplyLeading: false,
@@ -83,34 +105,10 @@ class _DashboardViewState extends State<DashboardView> {
                     idleText: AppLocalizations.of(context)!.update_placeholder,
                   ),
                   controller: _refreshController,
-                  onRefresh: () async {
-                    if (await Utils.hasConnection().timeout(timeout)) {
-                      await Provider.of<CategoriesChangeNotifier>(context,
-                              listen: false)
-                          .updateCategories(context)
-                          .then((value) async {
-                        await provider.updateMovements().then((value) {
-                          _refreshController.refreshCompleted();
-                          Provider.of<PlansChangeNotifier>(context,
-                                  listen: false)
-                              .updateAll();
-                          if (Utils.isPremium()) {
-                            Provider.of<SavingsPlanChangeNotifier>(context,
-                                    listen: false)
-                                .updateSavingsPlan();
-                            Provider.of<MicroExpensesChangeNotifier>(context,
-                                    listen: false)
-                                .updateMicroExpenses();
-                            Provider.of<SubscriptionsChangeNotifier>(context,
-                                    listen: false)
-                                .updateSubscriptions();
-                          }
-                        });
-                      });
-                    } else {
-                      _refreshController.refreshFailed();
-                    }
-                  },
+                  onRefresh: () async => await Utils.updateAllProviders(context)
+                      .then((value) => value
+                          ? _refreshController.refreshCompleted()
+                          : _refreshController.refreshFailed()),
                   child: Column(
                     children: [
                       DashboardHeaderRow(),

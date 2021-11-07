@@ -24,29 +24,37 @@ class SettingsUserDataView extends StatefulWidget {
 }
 
 class _SettingsUserDataViewState extends State<SettingsUserDataView> {
+  bool needsFullRefresh = false;
+
   @override
   Widget build(BuildContext context) {
-    return BinancyBackground(
-      Scaffold(
-        backgroundColor: Colors.transparent,
-        appBar: AppBar(
-            centerTitle: true,
-            elevation: 0,
-            backgroundColor: Colors.transparent,
-            title: Text(AppLocalizations.of(context)!.my_profile,
-                style: appBarStyle())),
-        body: ScrollConfiguration(
-            behavior: MyBehavior(),
-            child: ListView(
-              padding: const EdgeInsets.all(customMargin),
-              children: [
-                userDataCard(),
-                const SpaceDivider(),
-                myDataCard(context),
-                const SpaceDivider(),
-                actionsCard(context)
-              ],
-            )),
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pop(context, needsFullRefresh);
+        return false;
+      },
+      child: BinancyBackground(
+        Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: AppBar(
+              centerTitle: true,
+              elevation: 0,
+              backgroundColor: Colors.transparent,
+              title: Text(AppLocalizations.of(context)!.my_profile,
+                  style: appBarStyle())),
+          body: ScrollConfiguration(
+              behavior: MyBehavior(),
+              child: ListView(
+                padding: const EdgeInsets.all(customMargin),
+                children: [
+                  userDataCard(),
+                  const SpaceDivider(),
+                  myDataCard(context),
+                  const SpaceDivider(),
+                  actionsCard(context)
+                ],
+              )),
+        ),
       ),
     );
   }
@@ -241,11 +249,19 @@ class _SettingsUserDataViewState extends State<SettingsUserDataView> {
             BinancyInfoDialogItem(AppLocalizations.of(context)!.delete_data,
                 () {
               Navigator.pop(context);
-              AccountController.deleteUserData(context);
+              AccountController.deleteUserData(context).then((value) {
+                if (!needsFullRefresh) {
+                  needsFullRefresh = value;
+                }
+              });
             })
           ]);
     } else {
-      AccountController.deleteUserData(context);
+      AccountController.deleteUserData(context).then((value) {
+        if (!needsFullRefresh) {
+          needsFullRefresh = value;
+        }
+      });
     }
   }
 

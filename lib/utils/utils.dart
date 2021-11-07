@@ -1,4 +1,10 @@
 import 'dart:math';
+import 'package:binancy/controllers/providers/categories_change_notifier.dart';
+import 'package:binancy/controllers/providers/microexpenses_change_notifier.dart';
+import 'package:binancy/controllers/providers/movements_change_notifier.dart';
+import 'package:binancy/controllers/providers/plans_change_notifier.dart';
+import 'package:binancy/controllers/providers/savings_plans_change_notifier.dart';
+import 'package:binancy/controllers/providers/subscriptions_change_notifier.dart';
 import 'package:binancy/controllers/subscriptions_controller.dart';
 import 'package:binancy/globals.dart';
 import 'package:binancy/views/advice/advice_card.dart';
@@ -12,6 +18,7 @@ import 'dart:math' as math;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class Utils {
   static List<AdviceCard> adviceCardList(BuildContext context) {
@@ -361,6 +368,34 @@ class Utils {
     } else {
       return color.toString().split('Color(')[1].split(')')[0];
     }
+  }
+
+  static Future<bool> updateAllProviders(BuildContext context) async {
+    bool status = false;
+    if (await Utils.hasConnection().timeout(timeout)) {
+      await Provider.of<CategoriesChangeNotifier>(context, listen: false)
+          .updateCategories(context)
+          .then((value) async {
+        await Provider.of<MovementsChangeNotifier>(context, listen: false)
+            .updateMovements()
+            .then((value) {
+          Provider.of<PlansChangeNotifier>(context, listen: false).updateAll();
+          if (Utils.isPremium()) {
+            Provider.of<SavingsPlanChangeNotifier>(context, listen: false)
+                .updateSavingsPlan();
+            Provider.of<MicroExpensesChangeNotifier>(context, listen: false)
+                .updateMicroExpenses();
+            Provider.of<SubscriptionsChangeNotifier>(context, listen: false)
+                .updateSubscriptions();
+          }
+          status = true;
+        });
+      });
+    } else {
+      status = false;
+    }
+
+    return status;
   }
 }
 
