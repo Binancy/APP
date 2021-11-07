@@ -1,3 +1,5 @@
+import 'package:binancy/controllers/providers/categories_change_notifier.dart';
+import 'package:binancy/controllers/providers/microexpenses_change_notifier.dart';
 import 'package:binancy/controllers/providers/movements_change_notifier.dart';
 import 'package:binancy/controllers/providers/plans_change_notifier.dart';
 import 'package:binancy/controllers/providers/savings_plans_change_notifier.dart';
@@ -83,16 +85,27 @@ class _DashboardViewState extends State<DashboardView> {
                   controller: _refreshController,
                   onRefresh: () async {
                     if (await Utils.hasConnection().timeout(timeout)) {
-                      await provider.updateMovements().then((value) {
-                        Provider.of<SavingsPlanChangeNotifier>(context,
-                                listen: false)
-                            .updateSavingsPlan();
-                        Provider.of<SubscriptionsChangeNotifier>(context,
-                                listen: false)
-                            .updateSubscriptions();
-                        Provider.of<PlansChangeNotifier>(context, listen: false)
-                            .updateAll();
-                        _refreshController.refreshCompleted();
+                      await Provider.of<CategoriesChangeNotifier>(context,
+                              listen: false)
+                          .updateCategories(context)
+                          .then((value) async {
+                        await provider.updateMovements().then((value) {
+                          _refreshController.refreshCompleted();
+                          Provider.of<PlansChangeNotifier>(context,
+                                  listen: false)
+                              .updateAll();
+                          if (Utils.isPremium()) {
+                            Provider.of<SavingsPlanChangeNotifier>(context,
+                                    listen: false)
+                                .updateSavingsPlan();
+                            Provider.of<MicroExpensesChangeNotifier>(context,
+                                    listen: false)
+                                .updateMicroExpenses();
+                            Provider.of<SubscriptionsChangeNotifier>(context,
+                                    listen: false)
+                                .updateSubscriptions();
+                          }
+                        });
                       });
                     } else {
                       _refreshController.refreshFailed();

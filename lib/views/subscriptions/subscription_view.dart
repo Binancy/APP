@@ -34,6 +34,10 @@ class _SubscriptionViewState extends State<SubscriptionView> {
   TextEditingController descriptionController = TextEditingController();
   TextEditingController amountController = TextEditingController();
 
+  FocusNode nameFocusNode = FocusNode();
+  FocusNode descriptionFocusNode = FocusNode();
+  FocusNode amountFocusNode = FocusNode();
+
   bool ignoreCheckoutThisMonth = false;
 
   _SubscriptionViewState(this.selectedSubscription, this.allowEdit);
@@ -48,8 +52,11 @@ class _SubscriptionViewState extends State<SubscriptionView> {
   @override
   void dispose() {
     nameController.dispose();
+    nameFocusNode.dispose();
     descriptionController.dispose();
+    descriptionFocusNode.dispose();
     amountController.dispose();
+    amountFocusNode.dispose();
     super.dispose();
   }
 
@@ -225,6 +232,7 @@ class _SubscriptionViewState extends State<SubscriptionView> {
           color: themeColor.withOpacity(0.1)),
       alignment: Alignment.center,
       child: TextField(
+        focusNode: nameFocusNode,
         textCapitalization: TextCapitalization.sentences,
         textInputAction: TextInputAction.next,
         readOnly: !allowEdit,
@@ -247,6 +255,7 @@ class _SubscriptionViewState extends State<SubscriptionView> {
           color: themeColor.withOpacity(0.1)),
       alignment: Alignment.center,
       child: TextField(
+        focusNode: amountFocusNode,
         inputFormatters: [
           DecimalTextInputFormatter(decimalRange: 2, currency: currency)
         ],
@@ -271,6 +280,7 @@ class _SubscriptionViewState extends State<SubscriptionView> {
           borderRadius: BorderRadius.circular(customBorderRadius)),
       padding: const EdgeInsets.all(customMargin),
       child: TextField(
+        focusNode: descriptionFocusNode,
         textCapitalization: TextCapitalization.sentences,
         controller: descriptionController,
         readOnly: !allowEdit,
@@ -384,6 +394,11 @@ class _SubscriptionViewState extends State<SubscriptionView> {
 
   Future<void> checkData(
       SubscriptionsChangeNotifier subscriptionsProvider) async {
+    nameFocusNode.unfocus();
+    descriptionFocusNode.unfocus();
+    amountFocusNode.unfocus();
+    FocusScope.of(context).unfocus();
+
     if (nameController.text.isNotEmpty) {
       if (amountController.text.isNotEmpty) {
         if (int.tryParse(payDay) != null) {

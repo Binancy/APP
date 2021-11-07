@@ -34,6 +34,9 @@ class _CategoryViewState extends State<CategoryView> {
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
 
+  FocusNode titleFocusNode = FocusNode();
+  FocusNode descriptionFocusNode = FocusNode();
+
   _CategoryViewState(this.selectedCategory, this.allowEdit);
 
   @override
@@ -45,7 +48,9 @@ class _CategoryViewState extends State<CategoryView> {
   @override
   void dispose() {
     titleController.dispose();
+    titleFocusNode.dispose();
     descriptionController.dispose();
+    descriptionFocusNode.dispose();
     super.dispose();
   }
 
@@ -218,6 +223,7 @@ class _CategoryViewState extends State<CategoryView> {
           color: themeColor.withOpacity(0.1)),
       alignment: Alignment.center,
       child: TextField(
+        focusNode: titleFocusNode,
         textCapitalization: TextCapitalization.sentences,
         textInputAction: TextInputAction.next,
         readOnly: !allowEdit,
@@ -286,6 +292,7 @@ class _CategoryViewState extends State<CategoryView> {
           borderRadius: BorderRadius.circular(customBorderRadius)),
       padding: const EdgeInsets.all(customMargin),
       child: TextField(
+        focusNode: descriptionFocusNode,
         textCapitalization: TextCapitalization.sentences,
         controller: descriptionController,
         readOnly: !allowEdit,
@@ -310,6 +317,10 @@ class _CategoryViewState extends State<CategoryView> {
 
   Future<void> checkData(
       CategoriesChangeNotifier categoriesChangeNotifier) async {
+    titleFocusNode.unfocus();
+    descriptionFocusNode.unfocus();
+    FocusScope.of(context).unfocus();
+
     if (titleController.text.isNotEmpty) {
       if (createMode) {
         await insertCategory(categoriesChangeNotifier);

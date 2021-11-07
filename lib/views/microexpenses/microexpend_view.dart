@@ -40,6 +40,10 @@ class _MicroExpendViewState extends State<MicroExpendView> {
   TextEditingController descriptionController = TextEditingController();
   TextEditingController amountController = TextEditingController();
 
+  FocusNode nameFocusNode = FocusNode();
+  FocusNode descriptionFocusNode = FocusNode();
+  FocusNode amountFocusNode = FocusNode();
+
   _MicroExpendViewState(this.selectedMicroExpend, this.allowEdit);
 
   @override
@@ -51,8 +55,11 @@ class _MicroExpendViewState extends State<MicroExpendView> {
   @override
   void dispose() {
     titleController.dispose();
+    nameFocusNode.dispose();
     descriptionController.dispose();
+    descriptionFocusNode.dispose();
     amountController.dispose();
+    amountFocusNode.dispose();
     super.dispose();
   }
 
@@ -219,6 +226,7 @@ class _MicroExpendViewState extends State<MicroExpendView> {
           color: themeColor.withOpacity(0.1)),
       alignment: Alignment.center,
       child: TextField(
+        focusNode: nameFocusNode,
         textCapitalization: TextCapitalization.sentences,
         textInputAction: TextInputAction.next,
         readOnly: !allowEdit,
@@ -241,6 +249,7 @@ class _MicroExpendViewState extends State<MicroExpendView> {
           color: themeColor.withOpacity(0.1)),
       alignment: Alignment.center,
       child: TextField(
+        focusNode: amountFocusNode,
         inputFormatters: [
           DecimalTextInputFormatter(decimalRange: 2, currency: currency)
         ],
@@ -265,6 +274,7 @@ class _MicroExpendViewState extends State<MicroExpendView> {
           borderRadius: BorderRadius.circular(customBorderRadius)),
       padding: const EdgeInsets.all(customMargin),
       child: TextField(
+        focusNode: descriptionFocusNode,
         textCapitalization: TextCapitalization.sentences,
         controller: descriptionController,
         readOnly: !allowEdit,
@@ -360,6 +370,11 @@ class _MicroExpendViewState extends State<MicroExpendView> {
 
   Future<void> checkData(
       MicroExpensesChangeNotifier microExpensesProvider) async {
+    nameFocusNode.unfocus();
+    descriptionFocusNode.unfocus();
+    amountFocusNode.unfocus();
+    FocusScope.of(context).unfocus();
+
     if (titleController.text.isNotEmpty) {
       if (amountController.text.isNotEmpty) {
         if (createMode) {

@@ -252,6 +252,9 @@ class _RegisterViewState extends State<RegisterView> {
                   context: context,
                   text: AppLocalizations.of(context)!.login,
                   action: () {
+                    emailFocusNode.unfocus();
+                    passwordFocusNode.unfocus();
+                    verifyPasswordFocusNode.unfocus();
                     FocusScope.of(context).unfocus();
                     Navigator.pop(context);
                   }),
@@ -445,6 +448,9 @@ class _RegisterViewState extends State<RegisterView> {
               context: context,
               text: AppLocalizations.of(context)!.register,
               action: () {
+                nameFocusNode.unfocus();
+                firstSurnameFocusNode.unfocus();
+                lastSurnameFocusNode.unfocus();
                 FocusScope.of(context).unfocus();
                 checkSecondStep();
               }),

@@ -35,6 +35,10 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
   TextEditingController descriptionController = TextEditingController();
   TextEditingController totalAmountController = TextEditingController();
 
+  FocusNode nameFocusNode = FocusNode();
+  FocusNode descriptionFocusNode = FocusNode();
+  FocusNode totalAmountFocusNode = FocusNode();
+
   _SavingsPlanViewState(this.selectedSavingsPlan, this.allowEdit);
 
   @override
@@ -47,8 +51,11 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
   @override
   void dispose() {
     nameController.dispose();
+    nameFocusNode.dispose();
     descriptionController.dispose();
+    descriptionFocusNode.dispose();
     totalAmountController.dispose();
+    totalAmountFocusNode.dispose();
     super.dispose();
   }
 
@@ -205,6 +212,7 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
           color: themeColor.withOpacity(0.1)),
       alignment: Alignment.center,
       child: TextField(
+        focusNode: nameFocusNode,
         textCapitalization: TextCapitalization.sentences,
         textInputAction: TextInputAction.next,
         readOnly: !allowEdit,
@@ -227,6 +235,7 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
           color: themeColor.withOpacity(0.1)),
       alignment: Alignment.center,
       child: TextField(
+        focusNode: totalAmountFocusNode,
         inputFormatters: [
           DecimalTextInputFormatter(decimalRange: 2, currency: currency)
         ],
@@ -250,6 +259,7 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
           borderRadius: BorderRadius.circular(customBorderRadius)),
       padding: const EdgeInsets.all(customMargin),
       child: TextField(
+        focusNode: descriptionFocusNode,
         textCapitalization: TextCapitalization.sentences,
         controller: descriptionController,
         readOnly: !allowEdit,
@@ -342,6 +352,11 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
 
   Future<void> checkData(
       SavingsPlanChangeNotifier savingsPlanChangeNotifier) async {
+    nameFocusNode.unfocus();
+    totalAmountFocusNode.unfocus();
+    descriptionFocusNode.unfocus();
+    FocusScope.of(context).unfocus();
+
     if (nameController.text.isNotEmpty) {
       if (totalAmountController.text.isNotEmpty) {
         if (createMode) {

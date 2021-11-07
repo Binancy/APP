@@ -197,7 +197,7 @@ class _CategorySummaryViewState extends State<CategorySummaryView> {
                           categoriesChangeNotifier, MovementType.INCOME)
                     ],
                   )
-                : const MovememntEmptyCard(MovementType.EXPEND,
+                : const MovememntEmptyCard(MovementType.INCOME,
                     isExpanded: true),
             back: movementsChangeNotifier.expendList.isNotEmpty
                 ? ListView(

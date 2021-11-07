@@ -45,6 +45,10 @@ class _MovementViewState extends State<MovementView> {
   TextEditingController titleController = TextEditingController();
   TextEditingController noteController = TextEditingController();
 
+  FocusNode valueFocusNode = FocusNode();
+  FocusNode titleFocusNode = FocusNode();
+  FocusNode noteFocusNode = FocusNode();
+
   String parsedDate = "";
 
   Category? selectedCategory;
@@ -62,8 +66,11 @@ class _MovementViewState extends State<MovementView> {
   void dispose() {
     super.dispose();
     valueController.dispose();
+    valueFocusNode.dispose();
     titleController.dispose();
+    titleFocusNode.dispose();
     noteController.dispose();
+    noteFocusNode.dispose();
   }
 
   @override
@@ -242,6 +249,7 @@ class _MovementViewState extends State<MovementView> {
           borderRadius: BorderRadius.circular(customBorderRadius)),
       padding: const EdgeInsets.all(customMargin),
       child: TextField(
+        focusNode: noteFocusNode,
         textCapitalization: TextCapitalization.sentences,
         controller: noteController,
         readOnly: !allowEdit,
@@ -375,6 +383,7 @@ class _MovementViewState extends State<MovementView> {
           color: themeColor.withOpacity(0.1)),
       alignment: Alignment.center,
       child: TextField(
+        focusNode: titleFocusNode,
         textCapitalization: TextCapitalization.sentences,
         textInputAction: TextInputAction.next,
         readOnly: !allowEdit,
@@ -400,6 +409,7 @@ class _MovementViewState extends State<MovementView> {
           color: themeColor.withOpacity(0.1)),
       alignment: Alignment.center,
       child: TextField(
+        focusNode: valueFocusNode,
         inputFormatters: [
           DecimalTextInputFormatter(decimalRange: 2, currency: currency)
         ],
@@ -419,6 +429,11 @@ class _MovementViewState extends State<MovementView> {
 
   Future<void> checkData(
       MovementsChangeNotifier movementsChangeNotifier) async {
+    valueFocusNode.unfocus();
+    titleFocusNode.unfocus();
+    noteFocusNode.unfocus();
+    FocusScope.of(context).unfocus();
+
     if (valueController.text.isNotEmpty) {
       if (titleController.text.isNotEmpty) {
         if (Utils.validateStringDate(parsedDate)) {

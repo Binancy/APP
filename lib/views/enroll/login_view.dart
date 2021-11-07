@@ -79,6 +79,8 @@ class _LoginViewState extends State<LoginView> {
                                   context: context,
                                   text: AppLocalizations.of(context)!.login,
                                   action: () async {
+                                    userFocusNode.unfocus();
+                                    passwordFocusNode.unfocus();
                                     FocusScope.of(context).unfocus();
                                     await makeLogin();
                                   }),
