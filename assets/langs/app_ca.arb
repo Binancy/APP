@@ -272,6 +272,11 @@
             "days": {}
         }
     },
+    "@premium_action_description" : {
+        "placeholders": {
+            "appName": {}
+        }
+    },
     "@version": {
         "placeholders": {
             "appName": {}

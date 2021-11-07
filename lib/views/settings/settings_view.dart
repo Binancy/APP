@@ -162,7 +162,8 @@ class _SettingsViewState extends State<SettingsView> {
                   child: const SupportView(),
                   type: PageTransitionType.rightToLeftWithFade))),
       const LinearDivider(),
-      Utils.showIfPlanIsEqualOrLower(userData['idPlan'], "binancy")
+      Utils.showIfPlanIsEqualOrLower(userData['idPlan'], "binancy") &&
+              enablePlans
           ? BinancyActionRow(
               text: AppLocalizations.of(context)!.change_plan,
               action: () => Navigator.push(

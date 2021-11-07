@@ -16,6 +16,7 @@ const appWebsite = "binancy.appxs.es";
 const String MEMBER_PLAN = "member";
 const String BINANCY_PLAN = "binancy";
 const String FREE_PLAN = "free";
+const bool enablePlans = false;
 
 enum AvaiablePlans { member, binancy, free }
 

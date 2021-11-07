@@ -24,6 +24,7 @@ class AccountController {
       Map<String, dynamic>? responseJSON = connAPI.getRawResponse();
       if (responseJSON != null) {
         userData['idUser'] = responseJSON['data'];
+        Utils.saveOnSecureStorage("token", responseJSON['token']);
         Navigator.pushAndRemoveUntil(
             context,
             PageTransition(

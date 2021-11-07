@@ -39,11 +39,13 @@ class Utils {
 
   /// Check if the current user is premium or not
   static bool isPremium() {
-    String plan = userData['idPlan'] ?? "free";
+    // TODO: Add premium features on next version
+    /* String plan = userData['idPlan'] ?? "free";
     if (plan == MEMBER_PLAN || plan == BINANCY_PLAN) {
       return true;
     }
-    return false;
+    return false; */
+    return true;
   }
 
   /// Returns true if [cuurentPlan] has the same lever or if it's greater than

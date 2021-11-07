@@ -299,6 +299,11 @@
             "appName": {}
         }
     },
+    "@premium_action_description" : {
+        "placeholders": {
+            "appName": {}
+        }
+    },
     "@register_advice_2" : {
         "placeholders": {
             "appName": {}

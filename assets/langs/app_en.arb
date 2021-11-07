@@ -277,6 +277,11 @@
             "appName": {}
         }
     },
+    "@premium_action_description" : {
+        "placeholders": {
+            "appName": {}
+        }
+    },
     "@delete_data_description" : {
         "placeholders": {
             "appName": {},

@@ -354,7 +354,8 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
             PageTransition(
                 child: const AdviceView(),
                 type: PageTransitionType.rightToLeftWithFade))));
-    if (Utils.showIfPlanIsEqualOrLower(userData['idPlan'], "binancy")) {
+    if (Utils.showIfPlanIsEqualOrLower(userData['idPlan'], "binancy") &&
+        enablePlans) {
       actionsList.add(ActionButtonWidget(
           context: context,
           icon: SvgPicture.asset("assets/svg/dashboard_premium.svg"),
@@ -413,7 +414,7 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
                       const SpaceDivider(),
                       Text(
                           AppLocalizations.of(context)!
-                              .premium_action_description,
+                              .premium_action_description(appName),
                           style: accentStyle(),
                           textAlign: TextAlign.center)
                     ],
