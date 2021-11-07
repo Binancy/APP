@@ -156,6 +156,12 @@ class _LoginViewState extends State<LoginView> {
                       type: PageTransitionType.fade, child: LoadingView()),
                   (route) => false);
               break;
+            case 404:
+              BinancyInfoDialog(
+                  context, AppLocalizations.of(context)!.login_error_password, [
+                BinancyInfoDialogItem(AppLocalizations.of(context)!.accept,
+                    () => Navigator.pop(context))
+              ]);
           }
         }
       } else {
