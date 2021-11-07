@@ -34,6 +34,7 @@ class Expend {
         'idCategory': idCategory,
         'date': Utils.toISOStandard(date)
       };
+
   void parseCategory() {
     for (var category in categoryList) {
       if (category.idCategory == idCategory) {

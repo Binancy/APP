@@ -458,6 +458,10 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
   }
 
   void leaveScreen() {
+    nameFocusNode.unfocus();
+    totalAmountFocusNode.unfocus();
+    descriptionFocusNode.unfocus();
+    FocusScope.of(context).unfocus();
     Navigator.pop(context);
     Navigator.pop(context);
   }

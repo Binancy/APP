@@ -356,11 +356,13 @@ class _MovementViewState extends State<MovementView> {
                         iconDisabledColor: accentColor,
                         iconEnabledColor: accentColor,
                         value: selectedCategory,
-                        onChanged: (value) {
-                          setState(() {
-                            selectedCategory = value;
-                          });
-                        },
+                        onChanged: allowEdit
+                            ? (value) {
+                                setState(() {
+                                  selectedCategory = value;
+                                });
+                              }
+                            : null,
                         style: inputStyle(),
                         underline: const SizedBox(),
                         items: categoryList
@@ -644,6 +646,10 @@ class _MovementViewState extends State<MovementView> {
   }
 
   void leaveScreen() {
+    valueFocusNode.unfocus();
+    titleFocusNode.unfocus();
+    noteFocusNode.unfocus();
+    FocusScope.of(context).unfocus();
     Navigator.pop(context);
     Navigator.pop(context);
   }

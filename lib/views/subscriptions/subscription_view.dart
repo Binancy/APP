@@ -508,6 +508,10 @@ class _SubscriptionViewState extends State<SubscriptionView> {
   }
 
   void leaveScreen() {
+    nameFocusNode.unfocus();
+    descriptionFocusNode.unfocus();
+    amountFocusNode.unfocus();
+    FocusScope.of(context).unfocus();
     Navigator.pop(context);
     Navigator.pop(context);
   }

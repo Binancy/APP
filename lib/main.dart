@@ -66,6 +66,7 @@ class _MyAppState extends State<MyApp> {
           activeFeedbackModeColor: accentColor),
       child: MaterialApp(
         theme: ThemeData(
+            disabledColor: textColor,
             appBarTheme: const AppBarTheme(),
             splashColor: themeColor.withOpacity(0.1),
             highlightColor: themeColor.withOpacity(0.1),

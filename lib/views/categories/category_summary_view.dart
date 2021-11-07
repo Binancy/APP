@@ -264,8 +264,9 @@ class _CategorySummaryViewState extends State<CategorySummaryView> {
       BuildContext context) {
     List<Category> predefinedCategories =
         List.from(categoriesChangeNotifier.predefinedCategories);
-    predefinedCategories.removeWhere((element) =>
-        element.categoryExpenses.isEmpty && element.categoryIncomes.isEmpty);
+    predefinedCategories.sort((a, b) => b
+        .getTotalMovementsOfThisCategory()
+        .compareTo(a.getTotalMovementsOfThisCategory()));
 
     return Container(
         clipBehavior: Clip.antiAliasWithSaveLayer,

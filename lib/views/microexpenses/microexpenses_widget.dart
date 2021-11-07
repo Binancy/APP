@@ -165,6 +165,10 @@ class MicroExpendCard extends StatelessWidget {
                           ..title = microExpend.title
                           ..value = microExpend.amount
                           ..description = microExpend.description
+                          ..idCategory = microExpend.category != null
+                              ? microExpend.category!.idCategory
+                              : null
+                          ..category = microExpend.category
                           ..date = DateTime.now())
                         .then((value) async {
                       binancyProgressDialog.dismissDialog();

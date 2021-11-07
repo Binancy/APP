@@ -1,3 +1,4 @@
+import '../globals.dart';
 import 'category.dart';
 
 class MicroExpend {
@@ -7,6 +8,7 @@ class MicroExpend {
   String? description;
   dynamic amount = 0;
   Category? category;
+  int? idCategory;
 
   MicroExpend();
 
@@ -15,6 +17,7 @@ class MicroExpend {
         idMicroExpend = json['idMicroExpend'],
         title = json['title'],
         amount = json['amount'],
+        idCategory = json['idCategory'],
         description = json['description'];
 
   Map<String, dynamic> toJson() => {
@@ -22,6 +25,16 @@ class MicroExpend {
         'idMicroExpend': idMicroExpend,
         'title': title,
         'amount': amount,
+        'idCategory': idCategory,
         'description': description
       };
+
+  void parseCategory() {
+    for (var category in categoryList) {
+      if (category.idCategory == idCategory) {
+        this.category = category;
+        break;
+      }
+    }
+  }
 }

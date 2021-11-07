@@ -407,6 +407,9 @@ class _CategoryViewState extends State<CategoryView> {
   }
 
   void leaveScreen() {
+    titleFocusNode.unfocus();
+    descriptionFocusNode.unfocus();
+    FocusScope.of(context).unfocus();
     Navigator.pop(context);
     Navigator.pop(context);
   }

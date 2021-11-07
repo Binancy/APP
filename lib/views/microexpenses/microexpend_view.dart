@@ -362,6 +362,10 @@ class _MicroExpendViewState extends State<MicroExpendView> {
       if (selectedMicroExpend!.description != null) {
         descriptionController.text = selectedMicroExpend!.description!;
       }
+
+      if (selectedMicroExpend!.category != null) {
+        selectedCategory = selectedMicroExpend!.category;
+      }
     } else {
       createMode = true;
       allowEdit = true;
@@ -404,6 +408,9 @@ class _MicroExpendViewState extends State<MicroExpendView> {
       ..title = titleController.text
       ..amount = double.parse(amountController.text)
       ..idUser = userData['idUser']
+      ..idCategory =
+          selectedCategory != null ? selectedCategory!.idCategory : null
+      ..category = selectedCategory
       ..description = descriptionController.text;
 
     BinancyProgressDialog binancyProgressDialog =
@@ -438,6 +445,9 @@ class _MicroExpendViewState extends State<MicroExpendView> {
       ..amount = double.parse(amountController.text)
       ..idUser = userData['idUser']
       ..idMicroExpend = selectedMicroExpend!.idMicroExpend
+      ..category = selectedCategory
+      ..idCategory =
+          selectedCategory != null ? selectedCategory!.idCategory : null
       ..description = descriptionController.text;
 
     BinancyProgressDialog binancyProgressDialog =
@@ -475,6 +485,10 @@ class _MicroExpendViewState extends State<MicroExpendView> {
       ..value = selectedMicroExpend!.amount
       ..description = selectedMicroExpend!.description
       ..date = DateTime.now()
+      ..idCategory = selectedMicroExpend!.category != null
+          ? selectedMicroExpend!.category!.idCategory
+          : null
+      ..category = selectedMicroExpend!.category
       ..title = selectedMicroExpend!.title;
 
     BinancyProgressDialog binancyProgressDialog =
@@ -503,6 +517,10 @@ class _MicroExpendViewState extends State<MicroExpendView> {
   }
 
   void leaveScreen() {
+    nameFocusNode.unfocus();
+    descriptionFocusNode.unfocus();
+    amountFocusNode.unfocus();
+    FocusScope.of(context).unfocus();
     Navigator.pop(context);
     Navigator.pop(context);
   }

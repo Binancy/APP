@@ -13,7 +13,8 @@ class MicroExpensesController {
       List<dynamic>? responseJSON = connAPI.getResponse();
       if (responseJSON != null) {
         for (var microexpend in responseJSON) {
-          microExpensesList.add(MicroExpend.fromJson(microexpend));
+          microExpensesList
+              .add(MicroExpend.fromJson(microexpend)..parseCategory());
         }
       }
     } else {
