@@ -82,6 +82,10 @@ class Category {
     }
   }
 
+  int getTotalMovementsOfThisCategory() {
+    return categoryIncomes.length + categoryExpenses.length;
+  }
+
   double getTotalAmountOfThisCategoryMovements() {
     double totalAmount = 0;
     for (var movement in categoryIncomes) {

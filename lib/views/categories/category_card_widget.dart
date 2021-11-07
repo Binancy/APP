@@ -1,5 +1,6 @@
 import 'package:binancy/controllers/categories_controller.dart';
 import 'package:binancy/controllers/providers/categories_change_notifier.dart';
+import 'package:binancy/controllers/providers/movements_change_notifier.dart';
 import 'package:binancy/globals.dart';
 import 'package:binancy/models/category.dart';
 import 'package:binancy/utils/dialogs/info_dialog.dart';
@@ -7,6 +8,7 @@ import 'package:binancy/utils/dialogs/progress_dialog.dart';
 import 'package:binancy/utils/ui/icons.dart';
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/views/categories/category_view.dart';
+import 'package:binancy/views/movements/movements_all_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -17,12 +19,14 @@ class CategoryCardWidget extends StatelessWidget {
   final Category category;
   final BuildContext context;
   final CategoriesChangeNotifier categoriesChangeNotifier;
+  final MovementsChangeNotifier movementsChangeNotifier;
 
   const CategoryCardWidget(
       {Key? key,
       required this.category,
       required this.context,
-      required this.categoriesChangeNotifier})
+      required this.categoriesChangeNotifier,
+      required this.movementsChangeNotifier})
       : super(key: key);
 
   @override
@@ -32,7 +36,25 @@ class CategoryCardWidget extends StatelessWidget {
         color: Colors.transparent,
         clipBehavior: Clip.antiAliasWithSaveLayer,
         child: InkWell(
-          onTap: () {},
+          onTap: () => category.categoryIncomes.isEmpty &&
+                  category.categoryExpenses.isEmpty
+              ? null
+              : Navigator.push(
+                  context,
+                  PageTransition(
+                    type: PageTransitionType.rightToLeftWithFade,
+                    child: MultiProvider(
+                      providers: [
+                        ChangeNotifierProvider(
+                          create: (_) => movementsChangeNotifier,
+                        ),
+                        ChangeNotifierProvider(
+                          create: (_) => categoriesChangeNotifier,
+                        )
+                      ],
+                      child: AllMovementView(selectedCategory: category),
+                    ),
+                  )),
           highlightColor: themeColor.withOpacity(0.1),
           splashColor: themeColor.withOpacity(0.1),
           child: Container(
@@ -44,16 +66,14 @@ class CategoryCardWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(category.title, style: semititleStyle()),
-                    Text(
-                        (category.categoryIncomes.length +
-                                    category.categoryExpenses.length)
-                                .toString() +
-                            " movimientos",
-                        style: miniAccentStyle())
+                    Text(countMovementsText(), style: miniAccentStyle())
                   ],
                 )),
-                Icon(Icons.arrow_forward_ios_rounded,
-                    color: accentColor, size: 20)
+                category.categoryIncomes.isEmpty &&
+                        category.categoryExpenses.isEmpty
+                    ? const SizedBox()
+                    : Icon(Icons.arrow_forward_ios_rounded,
+                        color: accentColor, size: 20)
               ],
             ),
           ),
@@ -80,17 +100,18 @@ class CategoryCardWidget extends StatelessWidget {
               .then((value) async {
             if (value) {
               await categoriesChangeNotifier.updateCategories(context);
+              await movementsChangeNotifier.updateMovements();
               binancyProgressDialog.dismissDialog();
-              BinancyInfoDialog(
-                  context, AppLocalizations.of(context)!.goal_delete_success, [
+              BinancyInfoDialog(context,
+                  AppLocalizations.of(context)!.category_delete_success, [
                 BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () {
                   Navigator.of(context, rootNavigator: true).pop();
                 })
               ]);
             } else {
               binancyProgressDialog.dismissDialog();
-              BinancyInfoDialog(
-                  context, AppLocalizations.of(context)!.goal_delete_error, [
+              BinancyInfoDialog(context,
+                  AppLocalizations.of(context)!.category_delete_error, [
                 BinancyInfoDialogItem(AppLocalizations.of(context)!.accept,
                     () => Navigator.of(context, rootNavigator: true).pop())
               ]);
@@ -120,5 +141,19 @@ class CategoryCardWidget extends StatelessWidget {
             )),
       )
     ];
+  }
+
+  String countMovementsText() {
+    int totalMovements =
+        category.categoryIncomes.length + category.categoryExpenses.length;
+    if (totalMovements == 1) {
+      return totalMovements.toString() +
+          " " +
+          AppLocalizations.of(context)!.movement_singular;
+    } else {
+      return totalMovements.toString() +
+          " " +
+          AppLocalizations.of(context)!.movement_plural;
+    }
   }
 }

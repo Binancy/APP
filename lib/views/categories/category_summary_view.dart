@@ -1,6 +1,7 @@
 import 'package:binancy/controllers/providers/categories_change_notifier.dart';
 import 'package:binancy/controllers/providers/movements_change_notifier.dart';
 import 'package:binancy/globals.dart';
+import 'package:binancy/models/category.dart';
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/ui/widgets.dart';
 import 'package:binancy/utils/utils.dart';
@@ -30,15 +31,30 @@ class CategorySummaryView extends StatefulWidget {
 class _CategorySummaryViewState extends State<CategorySummaryView> {
   late FlipCardController flipCardController;
   int touchedIndex = -1;
+  bool singletonAutoPass = false, showAllCategories = false;
+
+  int adviceCurrentPage = 0;
+  late PageController advicePageController;
+  List<AdviceCard> adviceCardList = [];
 
   @override
   void initState() {
     super.initState();
+    advicePageController = PageController(initialPage: adviceCurrentPage);
     flipCardController = FlipCardController();
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    adviceCardList = getCategoryAdvices(context);
+  }
+
+  @override
   Widget build(BuildContext context) {
+    if (!singletonAutoPass) {
+      autoForwardAdvices();
+    }
     return BinancyBackground(
       Scaffold(
           backgroundColor: Colors.transparent,
@@ -46,7 +62,8 @@ class _CategorySummaryViewState extends State<CategorySummaryView> {
             backgroundColor: Colors.transparent,
             elevation: 0,
             centerTitle: true,
-            title: Text("Categorías", style: appBarStyle()),
+            title: Text(AppLocalizations.of(context)!.category_header,
+                style: appBarStyle()),
           ),
           body: Consumer2<CategoriesChangeNotifier, MovementsChangeNotifier>(
             builder: (context, categoriesChangeNotifier,
@@ -58,13 +75,7 @@ class _CategorySummaryViewState extends State<CategorySummaryView> {
                 child: CustomScrollView(
                   shrinkWrap: true,
                   slivers: [
-                    const SliverToBoxAdapter(child: SpaceDivider()),
-                    SliverToBoxAdapter(
-                        child: AdviceCard(
-                            icon: SvgPicture.asset(
-                                "assets/svg/dashboard_categories.svg"),
-                            text:
-                                "Visualiza todos los movimientos de los últimos 90 días clasificados en categorías")),
+                    SliverToBoxAdapter(child: adviceSlider(context)),
                     SliverToBoxAdapter(
                       child: SizedBox(
                         width: MediaQuery.of(context).size.width,
@@ -102,20 +113,24 @@ class _CategorySummaryViewState extends State<CategorySummaryView> {
                     ),
                     SliverToBoxAdapter(
                       child: Center(
-                          child: Text("Categorías predefinidas",
+                          child: Text(
+                              AppLocalizations.of(context)!.category_predefined,
                               style: titleCardStyle())),
                     ),
                     SliverToBoxAdapter(
                         child: predefinedCategoriesWidget(
-                            categoriesChangeNotifier, context)),
+                            categoriesChangeNotifier,
+                            movementsChangeNotifier,
+                            context)),
                     SliverToBoxAdapter(
                       child: Center(
-                          child:
-                              Text("Tus categorías", style: titleCardStyle())),
+                          child: Text(
+                              AppLocalizations.of(context)!.category_user,
+                              style: titleCardStyle())),
                     ),
                     SliverToBoxAdapter(
-                        child: userCategoriesWidget(
-                            categoriesChangeNotifier, context)),
+                        child: userCategoriesWidget(categoriesChangeNotifier,
+                            movementsChangeNotifier, context)),
                     SliverToBoxAdapter(child: addCategoryButton(context)),
                     const SliverToBoxAdapter(child: SpaceDivider())
                   ],
@@ -186,14 +201,17 @@ class _CategorySummaryViewState extends State<CategorySummaryView> {
                     isExpanded: true),
             back: movementsChangeNotifier.expendList.isNotEmpty
                 ? ListView(
+                    physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     children: [
                       Center(
                         child: Text(AppLocalizations.of(context)!.expend,
                             style: titleCardStyle()),
                       ),
+                      const SpaceDivider(customSpace: 40),
                       SizedBox(
-                        height: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.width -
+                            (customMargin * 4),
                         child: PieChart(
                             PieChartData(
                                 centerSpaceRadius: 100,
@@ -209,6 +227,7 @@ class _CategorySummaryViewState extends State<CategorySummaryView> {
                                 const Duration(milliseconds: 500), // Optional
                             swapAnimationCurve: Curves.easeInOut),
                       ),
+                      const SpaceDivider(customSpace: 20),
                       generateLegend(
                           categoriesChangeNotifier, MovementType.EXPEND)
                     ],
@@ -222,7 +241,7 @@ class _CategorySummaryViewState extends State<CategorySummaryView> {
       padding: const EdgeInsets.only(left: customMargin, right: customMargin),
       child: BinancyButton(
           context: context,
-          text: "Añade una categoría",
+          text: AppLocalizations.of(context)!.category_add,
           action: () => Navigator.push(
               context,
               PageTransition(
@@ -240,7 +259,14 @@ class _CategorySummaryViewState extends State<CategorySummaryView> {
   }
 
   Widget predefinedCategoriesWidget(
-      CategoriesChangeNotifier categoriesChangeNotifier, BuildContext context) {
+      CategoriesChangeNotifier categoriesChangeNotifier,
+      MovementsChangeNotifier movementsChangeNotifier,
+      BuildContext context) {
+    List<Category> predefinedCategories =
+        List.from(categoriesChangeNotifier.predefinedCategories);
+    predefinedCategories.removeWhere((element) =>
+        element.categoryExpenses.isEmpty && element.categoryIncomes.isEmpty);
+
     return Container(
         clipBehavior: Clip.antiAliasWithSaveLayer,
         decoration: BoxDecoration(
@@ -253,19 +279,25 @@ class _CategorySummaryViewState extends State<CategorySummaryView> {
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemBuilder: (_, index) => CategoryCardWidget(
-                    category: categoriesChangeNotifier.predefinedCategories
-                        .elementAt(index),
+                    category: predefinedCategories.elementAt(index),
                     context: context,
+                    movementsChangeNotifier: movementsChangeNotifier,
                     categoriesChangeNotifier: categoriesChangeNotifier),
                 separatorBuilder: (context, index) => const LinearDivider(),
-                itemCount: categoriesChangeNotifier.predefinedCategories.length)
+                itemCount: predefinedCategories.length)
           ],
         ));
   }
 
-  Widget userCategoriesWidget(
-      CategoriesChangeNotifier categoriesChangeNotifier, BuildContext context) {
+  Widget userCategoriesWidget(CategoriesChangeNotifier categoriesChangeNotifier,
+      MovementsChangeNotifier movementsChangeNotifier, BuildContext context) {
     if (categoriesChangeNotifier.userCategoryList.isNotEmpty) {
+      List<Category> userCategories =
+          List.from(categoriesChangeNotifier.userCategoryList);
+      userCategories.sort((a, b) => b
+          .getTotalMovementsOfThisCategory()
+          .compareTo(a.getTotalMovementsOfThisCategory()));
+
       return Container(
           clipBehavior: Clip.antiAliasWithSaveLayer,
           decoration: BoxDecoration(
@@ -278,17 +310,17 @@ class _CategorySummaryViewState extends State<CategorySummaryView> {
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemBuilder: (_, index) => CategoryCardWidget(
-                      category: categoriesChangeNotifier.userCategoryList
-                          .elementAt(index),
+                      movementsChangeNotifier: movementsChangeNotifier,
+                      category: userCategories.elementAt(index),
                       context: context,
                       categoriesChangeNotifier: categoriesChangeNotifier),
                   separatorBuilder: (context, index) => const LinearDivider(),
-                  itemCount: categoriesChangeNotifier.userCategoryList.length >
-                          categoryMaxItemsToShow
-                      ? categoryMaxItemsToShow
-                      : categoriesChangeNotifier.userCategoryList.length),
-              categoriesChangeNotifier.userCategoryList.length >
-                      categoryMaxItemsToShow
+                  itemCount: !showAllCategories
+                      ? userCategories.length > categoryMaxItemsToShow
+                          ? categoryMaxItemsToShow
+                          : userCategories.length
+                      : userCategories.length),
+              userCategories.length > categoryMaxItemsToShow
                   ? Column(
                       children: [
                         const LinearDivider(),
@@ -298,11 +330,18 @@ class _CategorySummaryViewState extends State<CategorySummaryView> {
                           child: InkWell(
                             highlightColor: themeColor.withOpacity(0.1),
                             splashColor: themeColor.withOpacity(0.1),
-                            onTap: () {},
+                            onTap: () => setState(() {
+                              showAllCategories = !showAllCategories;
+                            }),
                             child: SizedBox(
                                 height: buttonHeight,
                                 child: Center(
-                                    child: Text("Ver todas tus categorías",
+                                    child: Text(
+                                        showAllCategories
+                                            ? AppLocalizations.of(context)!
+                                                .see_less
+                                            : AppLocalizations.of(context)!
+                                                .see_more,
                                         style: buttonStyle()))),
                           ),
                         )
@@ -348,7 +387,7 @@ class _CategorySummaryViewState extends State<CategorySummaryView> {
                         size: 100,
                         color: Colors.white,
                       )),
-                  Text(AppLocalizations.of(context)!.no_microexpends,
+                  Text(AppLocalizations.of(context)!.no_categories,
                       style: accentStyle(), textAlign: TextAlign.center),
                   const SizedBox(
                     height: 35,
@@ -392,16 +431,22 @@ class _CategorySummaryViewState extends State<CategorySummaryView> {
           categoriesChangeNotifier.incomesWithoutCategory));
     } else {
       for (var category in categoryList) {
-        if (category.categoryExpenses.length > 1) {
+        if (category.categoryExpenses.isNotEmpty) {
           double totalAmount = 0;
           for (var movement in category.categoryExpenses) {
             totalAmount += movement.value;
           }
           pieChartSections.add(PieChartSectionData(
               value: totalAmount,
+              color: category.color,
               showTitle: false,
-              radius: categoriesPieChartRadius,
-              title: category.title));
+              title: category.title +
+                  "\n" +
+                  Utils.parseAmount(
+                      category.getTotalAmountOfThisCategoryMovements()),
+              borderSide:
+                  BorderSide(width: 10, color: themeColor.withOpacity(0.1)),
+              radius: categoriesPieChartRadius));
         }
       }
 
@@ -422,7 +467,7 @@ class _CategorySummaryViewState extends State<CategorySummaryView> {
         value: totalAmount,
         showTitle: false,
         borderSide: BorderSide(color: themeColor.withOpacity(0.1), width: 10),
-        title: "Sin categorizar",
+        title: AppLocalizations.of(context)!.movements_without_category,
         radius: categoriesPieChartRadius,
         color: Colors.grey));
   }
@@ -494,14 +539,14 @@ class _CategorySummaryViewState extends State<CategorySummaryView> {
         categoryIndicators.add(Indicator(
           color: Colors.grey,
           isSquare: false,
-          text: "Sin categorizar",
+          text: AppLocalizations.of(context)!.movements_without_category,
           size: 20,
           textColor: textColor,
         ));
       }
     } else {
       for (var category in categoryList) {
-        if (category.categoryExpenses.length > 1) {
+        if (category.categoryExpenses.isNotEmpty) {
           categoryIndicators.add(Indicator(
             color: category.color,
             isSquare: false,
@@ -516,7 +561,7 @@ class _CategorySummaryViewState extends State<CategorySummaryView> {
         categoryIndicators.add(Indicator(
           color: Colors.grey,
           isSquare: false,
-          text: "Sin categorizar",
+          text: AppLocalizations.of(context)!.movements_without_category,
           size: 20,
           textColor: textColor,
         ));
@@ -557,5 +602,46 @@ class _CategorySummaryViewState extends State<CategorySummaryView> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min);
+  }
+
+  void autoForwardAdvices() async {
+    singletonAutoPass = true;
+    await Future.delayed(const Duration(seconds: autoPassAdviceInterval));
+    adviceCurrentPage < adviceCardList.length - 1
+        ? adviceCurrentPage++
+        : adviceCurrentPage = 0;
+    if (mounted) {
+      advicePageController.animateToPage(adviceCurrentPage,
+          duration: const Duration(milliseconds: adviceTransitionDuration),
+          curve: Curves.easeOut);
+      autoForwardAdvices();
+    }
+  }
+
+  Widget adviceSlider(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(top: customMargin),
+      height: 125,
+      width: MediaQuery.of(context).size.width,
+      child: PageView(
+        controller: advicePageController,
+        children: adviceCardList,
+        onPageChanged: (value) => adviceCurrentPage = value,
+      ),
+    );
+  }
+
+  List<AdviceCard> getCategoryAdvices(BuildContext context) {
+    return [
+      AdviceCard(
+          icon: SvgPicture.asset("assets/svg/dashboard_categories.svg"),
+          text: AppLocalizations.of(context)!.category_advice_1),
+      AdviceCard(
+          icon: SvgPicture.asset("assets/svg/dashboard_categories.svg"),
+          text: AppLocalizations.of(context)!.category_advice_2),
+      AdviceCard(
+          icon: SvgPicture.asset("assets/svg/dashboard_categories.svg"),
+          text: AppLocalizations.of(context)!.category_advice_3)
+    ];
   }
 }

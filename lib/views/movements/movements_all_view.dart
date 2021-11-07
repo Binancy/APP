@@ -1,5 +1,8 @@
+// ignore_for_file: no_logic_in_create_state
+
 import 'package:binancy/controllers/providers/movements_change_notifier.dart';
 import 'package:binancy/globals.dart';
+import 'package:binancy/models/category.dart';
 import 'package:binancy/models/expend.dart';
 import 'package:binancy/models/income.dart';
 import 'package:binancy/utils/ui/styles.dart';
@@ -13,32 +16,34 @@ import 'movements_card_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AllMovementView extends StatefulWidget {
+  final Category? selectedCategory;
   final int initialPage;
-  const AllMovementView({this.initialPage = 0});
+  const AllMovementView({this.initialPage = 0, this.selectedCategory});
 
   @override
-  // ignore: no_logic_in_create_state
-  _AllMovementViewState createState() => _AllMovementViewState(initialPage);
+  _AllMovementViewState createState() =>
+      _AllMovementViewState(initialPage, selectedCategory);
 }
 
 class _AllMovementViewState extends State<AllMovementView>
     with SingleTickerProviderStateMixin {
   DateTime? fromDate, toDate;
   double? minValue, maxValue;
+  Category? selectedCategory;
 
   late PageController pageController;
   late TabController tabController;
 
   int pageIndex;
 
-  _AllMovementViewState(this.pageIndex);
+  _AllMovementViewState(this.pageIndex, this.selectedCategory);
 
   @override
   void initState() {
+    super.initState();
     pageController = PageController(initialPage: pageIndex);
     tabController =
         TabController(length: 2, vsync: this, initialIndex: pageIndex);
-    super.initState();
   }
 
   @override
@@ -128,6 +133,13 @@ class _AllMovementViewState extends State<AllMovementView>
                         : AppLocalizations.of(context)!.expends_realized,
                     style: titleCardStyle(),
                   ),
+                  selectedCategory != null
+                      ? Text(
+                          AppLocalizations.of(context)!.category +
+                              ": " +
+                              selectedCategory!.title,
+                          style: semititleStyle())
+                      : const SizedBox(),
                 ],
               ))
             ],
@@ -161,7 +173,9 @@ class _AllMovementViewState extends State<AllMovementView>
       children: [
         incomeMovements.isNotEmpty
             ? headerWidget(incomeMovements.length, MovementType.INCOME)
-            : const SizedBox(height: customMargin),
+            : selectedCategory != null
+                ? headerWidget(incomeMovements.length, MovementType.INCOME)
+                : const SizedBox(height: customMargin),
         Container(
           clipBehavior: Clip.antiAliasWithSaveLayer,
           height: 65,
@@ -221,7 +235,9 @@ class _AllMovementViewState extends State<AllMovementView>
       children: [
         expenseMovements.isNotEmpty
             ? headerWidget(expenseMovements.length, MovementType.EXPEND)
-            : const SizedBox(height: customMargin),
+            : selectedCategory != null
+                ? headerWidget(expenseMovements.length, MovementType.EXPEND)
+                : const SizedBox(height: customMargin),
         Container(
           clipBehavior: Clip.antiAliasWithSaveLayer,
           height: 65,
@@ -276,7 +292,7 @@ class _AllMovementViewState extends State<AllMovementView>
       MovementType movementType, List<dynamic> movementList) {
     switch (movementType) {
       case MovementType.INCOME:
-        List<Income> incomeList = movementList as List<Income>;
+        List<Income> incomeList = List.from(movementList);
         if (fromDate != null && toDate == null) {
           incomeList.removeWhere(
               (element) => element.date.isBefore(fromDate ?? DateTime.now()));
@@ -298,9 +314,19 @@ class _AllMovementViewState extends State<AllMovementView>
               element.value < minValue || element.value > maxValue);
         }
 
+        if (selectedCategory != null) {
+          incomeList.removeWhere((element) {
+            if (element.category != null) {
+              return element.category!.idCategory !=
+                  selectedCategory!.idCategory;
+            }
+            return true;
+          });
+        }
+
         return incomeList;
       case MovementType.EXPEND:
-        List<Expend> expendList = movementList as List<Expend>;
+        List<Expend> expendList = List.from(movementList);
         if (fromDate != null && toDate == null) {
           expendList.removeWhere(
               (element) => element.date.isBefore(fromDate ?? DateTime.now()));
@@ -320,6 +346,16 @@ class _AllMovementViewState extends State<AllMovementView>
         } else if (minValue != null && maxValue != null) {
           expendList.removeWhere((element) =>
               element.value < minValue || element.value > maxValue);
+        }
+
+        if (selectedCategory != null) {
+          expendList.removeWhere((element) {
+            if (element.category != null) {
+              return element.category!.idCategory !=
+                  selectedCategory!.idCategory;
+            }
+            return true;
+          });
         }
         return expendList;
     }

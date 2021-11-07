@@ -158,7 +158,7 @@ class _CategoryViewState extends State<CategoryView> {
                                     child: Text(
                                         createMode
                                             ? AppLocalizations.of(context)!
-                                                .goals_header
+                                                .category_add
                                             : selectedCategory!.title,
                                         style: headerItemView(),
                                         textAlign: TextAlign.center)),
@@ -178,8 +178,10 @@ class _CategoryViewState extends State<CategoryView> {
                             child: BinancyButton(
                                 context: context,
                                 text: createMode
-                                    ? AppLocalizations.of(context)!.add_goal
-                                    : AppLocalizations.of(context)!.update_goal,
+                                    ? AppLocalizations.of(context)!
+                                        .category_add_button
+                                    : AppLocalizations.of(context)!
+                                        .category_update,
                                 action: () async {
                                   await checkData(categoriesProvider);
                                 }),
@@ -223,7 +225,7 @@ class _CategoryViewState extends State<CategoryView> {
         controller: titleController,
         style: inputStyle(),
         decoration: customInputDecoration(
-            AppLocalizations.of(context)!.goal_title, BinancyIcons.tag),
+            AppLocalizations.of(context)!.category_title, BinancyIcons.tag),
       ),
     );
   }
@@ -266,7 +268,8 @@ class _CategoryViewState extends State<CategoryView> {
                   const SpaceDivider(
                     isVertical: true,
                   ),
-                  Text("Cambia el color de la categoría", style: inputStyle())
+                  Text(AppLocalizations.of(context)!.pick_colour,
+                      style: inputStyle())
                 ],
               )),
         ),
@@ -294,7 +297,7 @@ class _CategoryViewState extends State<CategoryView> {
             errorBorder: InputBorder.none,
             disabledBorder: InputBorder.none,
             counterStyle: detailStyle(),
-            hintText: AppLocalizations.of(context)!.goal_description,
+            hintText: AppLocalizations.of(context)!.category_description,
             hintStyle: inputStyle()),
         style: inputStyle(),
         maxLength: 300,
@@ -315,7 +318,7 @@ class _CategoryViewState extends State<CategoryView> {
       }
     } else {
       BinancyInfoDialog(
-          context, AppLocalizations.of(context)!.goal_invalid_title, [
+          context, AppLocalizations.of(context)!.category_error_needs_title, [
         BinancyInfoDialogItem(
             AppLocalizations.of(context)!.accept, () => Navigator.pop(context))
       ]);
@@ -338,7 +341,7 @@ class _CategoryViewState extends State<CategoryView> {
         await categoriesChangeNotifier.updateCategories(context);
         binancyProgressDialog.dismissDialog();
         BinancyInfoDialog(
-            context, AppLocalizations.of(context)!.goal_add_success, [
+            context, AppLocalizations.of(context)!.category_add_success, [
           BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () {
             leaveScreen();
           })
@@ -346,7 +349,7 @@ class _CategoryViewState extends State<CategoryView> {
       } else {
         binancyProgressDialog.dismissDialog();
         BinancyInfoDialog(
-            context, AppLocalizations.of(context)!.goal_add_fail, [
+            context, AppLocalizations.of(context)!.category_add_error, [
           BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () {
             Navigator.pop(context);
           })
@@ -370,7 +373,7 @@ class _CategoryViewState extends State<CategoryView> {
         await categoriesChangeNotifier.updateCategories(context);
         binancyProgressDialog.dismissDialog();
         BinancyInfoDialog(
-            context, AppLocalizations.of(context)!.goal_update_success, [
+            context, AppLocalizations.of(context)!.category_update_success, [
           BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () {
             setState(() {
               selectedCategory = category;
@@ -383,7 +386,7 @@ class _CategoryViewState extends State<CategoryView> {
         binancyProgressDialog.dismissDialog();
 
         BinancyInfoDialog(
-            context, AppLocalizations.of(context)!.goal_update_fail, [
+            context, AppLocalizations.of(context)!.category_update_error, [
           BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () {
             Navigator.pop(context);
           })
