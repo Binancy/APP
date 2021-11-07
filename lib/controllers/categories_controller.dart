@@ -47,15 +47,15 @@ class CategoriesController {
   }
 
   static Future<bool> createCategory(Category category) async {
-    ConnAPI connAPI =
-        ConnAPI(APIEndpoints.CREATE_CATEGORY, "POST", false, category.toJson());
+    ConnAPI connAPI = ConnAPI(APIEndpoints.CREATE_CATEGORY, "POST", false,
+        {"data": category.toJson()});
     await connAPI.callAPI();
     return connAPI.getStatus() == 200;
   }
 
   static Future<bool> updateCategory(Category category) async {
-    ConnAPI connAPI =
-        ConnAPI(APIEndpoints.UPDATE_CATEGORY, "PUT", false, category.toJson());
+    ConnAPI connAPI = ConnAPI(APIEndpoints.UPDATE_CATEGORY, "PUT", false,
+        {"data": category.toJson()});
     await connAPI.callAPI();
     return connAPI.getStatus() == 200;
   }

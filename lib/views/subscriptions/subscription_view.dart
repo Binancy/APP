@@ -429,17 +429,19 @@ class _SubscriptionViewState extends State<SubscriptionView> {
 
     BinancyProgressDialog binancyProgressDialog =
         BinancyProgressDialog(context: context)..showProgressDialog();
-    await SubscriptionsController.addSubscription(subscription).then((value) {
-      binancyProgressDialog.dismissDialog();
+    await SubscriptionsController.addSubscription(subscription)
+        .then((value) async {
       if (value) {
+        await subscriptionsProvider.updateSubscriptions();
+        binancyProgressDialog.dismissDialog();
         BinancyInfoDialog(
             context, AppLocalizations.of(context)!.subscription_add_success, [
-          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () async {
-            await subscriptionsProvider.updateSubscriptions();
+          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () {
             leaveScreen();
           })
         ]);
       } else {
+        binancyProgressDialog.dismissDialog();
         BinancyInfoDialog(
             context, AppLocalizations.of(context)!.subscription_add_fail, [
           BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () {
@@ -464,13 +466,13 @@ class _SubscriptionViewState extends State<SubscriptionView> {
     BinancyProgressDialog binancyProgressDialog =
         BinancyProgressDialog(context: context)..showProgressDialog();
     await SubscriptionsController.updateSubscription(subscription)
-        .then((value) {
-      binancyProgressDialog.dismissDialog();
+        .then((value) async {
       if (value) {
+        await subscriptionsProvider.updateSubscriptions();
+        binancyProgressDialog.dismissDialog();
         BinancyInfoDialog(context,
             AppLocalizations.of(context)!.subscription_update_success, [
-          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () async {
-            await subscriptionsProvider.updateSubscriptions();
+          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () {
             setState(() {
               selectedSubscription = subscription;
               allowEdit = false;
@@ -479,6 +481,7 @@ class _SubscriptionViewState extends State<SubscriptionView> {
           })
         ]);
       } else {
+        binancyProgressDialog.dismissDialog();
         BinancyInfoDialog(
             context, AppLocalizations.of(context)!.subscription_update_fail, [
           BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () {

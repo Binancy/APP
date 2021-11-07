@@ -1,5 +1,6 @@
 import 'package:binancy/models/expend.dart';
 import 'package:binancy/models/income.dart';
+import 'package:binancy/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -28,7 +29,7 @@ class Category {
         'idCategory': idCategory,
         'idUser': idUser,
         'title': title,
-        'color': color.toString(),
+        'color': Utils.parseColour(color),
         'description': description,
         'isPredefined': isPredefined ? 1 : 0
       };

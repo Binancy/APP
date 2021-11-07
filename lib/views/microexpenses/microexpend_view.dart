@@ -393,17 +393,19 @@ class _MicroExpendViewState extends State<MicroExpendView> {
 
     BinancyProgressDialog binancyProgressDialog =
         BinancyProgressDialog(context: context)..showProgressDialog();
-    await MicroExpensesController.addMicroExpend(microExpend).then((value) {
-      binancyProgressDialog.dismissDialog();
+    await MicroExpensesController.addMicroExpend(microExpend)
+        .then((value) async {
       if (value) {
+        await microExpensesProvider.updateMicroExpenses();
+        binancyProgressDialog.dismissDialog();
         BinancyInfoDialog(
             context, AppLocalizations.of(context)!.microexpend_add_success, [
-          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () async {
-            await microExpensesProvider.updateMicroExpenses();
+          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () {
             leaveScreen();
           })
         ]);
       } else {
+        binancyProgressDialog.dismissDialog();
         BinancyInfoDialog(
             context, AppLocalizations.of(context)!.microexpend_add_fail, [
           BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () {
@@ -425,13 +427,14 @@ class _MicroExpendViewState extends State<MicroExpendView> {
 
     BinancyProgressDialog binancyProgressDialog =
         BinancyProgressDialog(context: context)..showProgressDialog();
-    await MicroExpensesController.updateMicroExpend(microExpend).then((value) {
-      binancyProgressDialog.dismissDialog();
+    await MicroExpensesController.updateMicroExpend(microExpend)
+        .then((value) async {
       if (value) {
+        await microExpensesProvider.updateMicroExpenses();
+        binancyProgressDialog.dismissDialog();
         BinancyInfoDialog(
             context, AppLocalizations.of(context)!.microexpend_update_success, [
-          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () async {
-            await microExpensesProvider.updateMicroExpenses();
+          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () {
             setState(() {
               selectedMicroExpend = microExpend;
               allowEdit = false;
@@ -440,6 +443,7 @@ class _MicroExpendViewState extends State<MicroExpendView> {
           })
         ]);
       } else {
+        binancyProgressDialog.dismissDialog();
         BinancyInfoDialog(
             context, AppLocalizations.of(context)!.microexpend_update_fail, [
           BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () {
@@ -460,18 +464,19 @@ class _MicroExpendViewState extends State<MicroExpendView> {
 
     BinancyProgressDialog binancyProgressDialog =
         BinancyProgressDialog(context: context)..showProgressDialog();
-    ExpensesController.insertExpend(microExpend).then((value) {
-      binancyProgressDialog.dismissDialog();
+    ExpensesController.insertExpend(microExpend).then((value) async {
       if (value) {
+        await Provider.of<MovementsChangeNotifier>(context, listen: false)
+            .updateMovements();
+        binancyProgressDialog.dismissDialog();
         BinancyInfoDialog(
             context, AppLocalizations.of(context)!.microexpend_add_success, [
-          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () async {
-            await Provider.of<MovementsChangeNotifier>(context, listen: false)
-                .updateMovements();
+          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () {
             leaveScreen();
           })
         ]);
       } else {
+        binancyProgressDialog.dismissDialog();
         BinancyInfoDialog(
             context, AppLocalizations.of(context)!.microexpend_add_fail, [
           BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () {

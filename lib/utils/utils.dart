@@ -354,6 +354,14 @@ class Utils {
       focusNode.unfocus();
     }
   }
+
+  static String parseColour(Color color) {
+    if (color is MaterialColor) {
+      return color.toString().split(' Color(')[1].split(')')[0];
+    } else {
+      return color.toString().split('Color(')[1].split(')')[0];
+    }
+  }
 }
 
 class DecimalTextInputFormatter extends TextInputFormatter {

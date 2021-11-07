@@ -378,17 +378,19 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
 
     BinancyProgressDialog binancyProgressDialog =
         BinancyProgressDialog(context: context)..showProgressDialog();
-    await SavingsPlansController.addSavingsPlan(savingsPlan).then((value) {
-      binancyProgressDialog.dismissDialog();
+    await SavingsPlansController.addSavingsPlan(savingsPlan)
+        .then((value) async {
       if (value) {
+        await savingsPlanChangeNotifier.updateSavingsPlan();
+        binancyProgressDialog.dismissDialog();
         BinancyInfoDialog(
             context, AppLocalizations.of(context)!.goal_add_success, [
-          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () async {
-            await savingsPlanChangeNotifier.updateSavingsPlan();
+          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () {
             leaveScreen();
           })
         ]);
       } else {
+        binancyProgressDialog.dismissDialog();
         BinancyInfoDialog(
             context, AppLocalizations.of(context)!.goal_add_fail, [
           BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () {
@@ -413,13 +415,14 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
 
     BinancyProgressDialog binancyProgressDialog =
         BinancyProgressDialog(context: context)..showProgressDialog();
-    await SavingsPlansController.updateSavingsPlan(savingsPlan).then((value) {
-      binancyProgressDialog.dismissDialog();
+    await SavingsPlansController.updateSavingsPlan(savingsPlan)
+        .then((value) async {
       if (value) {
+        await savingsPlanChangeNotifier.updateSavingsPlan();
+        binancyProgressDialog.dismissDialog();
         BinancyInfoDialog(
             context, AppLocalizations.of(context)!.goal_update_success, [
-          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () async {
-            await savingsPlanChangeNotifier.updateSavingsPlan();
+          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () {
             setState(() {
               selectedSavingsPlan = savingsPlan;
               allowEdit = false;
@@ -428,6 +431,7 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
           })
         ]);
       } else {
+        binancyProgressDialog.dismissDialog();
         BinancyInfoDialog(
             context, AppLocalizations.of(context)!.goal_update_fail, [
           BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () {

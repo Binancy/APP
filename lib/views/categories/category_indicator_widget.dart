@@ -34,7 +34,7 @@ class Indicator extends StatelessWidget {
         ),
         Text(
           text,
-          style: inputStyle(),
+          style: semititleStyle(),
           overflow: TextOverflow.ellipsis,
         )
       ],

@@ -196,6 +196,7 @@ class _CategoryViewState extends State<CategoryView> {
     if (selectedCategory != null) {
       createMode = false;
       titleController.text = selectedCategory!.title;
+      selectedColour = selectedCategory!.color;
       if (selectedCategory!.description != null) {
         descriptionController.text = selectedCategory!.description!;
       }
@@ -308,9 +309,9 @@ class _CategoryViewState extends State<CategoryView> {
       CategoriesChangeNotifier categoriesChangeNotifier) async {
     if (titleController.text.isNotEmpty) {
       if (createMode) {
-        await insertSavingsPlan(categoriesChangeNotifier);
+        await insertCategory(categoriesChangeNotifier);
       } else {
-        await updateSavingsPlan(categoriesChangeNotifier);
+        await updateCategory(categoriesChangeNotifier);
       }
     } else {
       BinancyInfoDialog(
@@ -321,7 +322,7 @@ class _CategoryViewState extends State<CategoryView> {
     }
   }
 
-  Future<void> insertSavingsPlan(
+  Future<void> insertCategory(
       CategoriesChangeNotifier categoriesChangeNotifier) async {
     Category savingsPlan = Category()
       ..title = titleController.text
@@ -332,17 +333,18 @@ class _CategoryViewState extends State<CategoryView> {
 
     BinancyProgressDialog binancyProgressDialog =
         BinancyProgressDialog(context: context)..showProgressDialog();
-    await CategoriesController.createCategory(savingsPlan).then((value) {
-      binancyProgressDialog.dismissDialog();
+    await CategoriesController.createCategory(savingsPlan).then((value) async {
       if (value) {
+        await categoriesChangeNotifier.updateCategories(context);
+        binancyProgressDialog.dismissDialog();
         BinancyInfoDialog(
             context, AppLocalizations.of(context)!.goal_add_success, [
-          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () async {
-            await categoriesChangeNotifier.updateCategories(context);
+          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () {
             leaveScreen();
           })
         ]);
       } else {
+        binancyProgressDialog.dismissDialog();
         BinancyInfoDialog(
             context, AppLocalizations.of(context)!.goal_add_fail, [
           BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () {
@@ -353,22 +355,23 @@ class _CategoryViewState extends State<CategoryView> {
     });
   }
 
-  Future<void> updateSavingsPlan(
+  Future<void> updateCategory(
       CategoriesChangeNotifier categoriesChangeNotifier) async {
     Category category = Category()
       ..title = titleController.text
+      ..idCategory = selectedCategory!.idCategory
       ..description = descriptionController.text
       ..color = selectedColour;
 
     BinancyProgressDialog binancyProgressDialog =
         BinancyProgressDialog(context: context)..showProgressDialog();
-    await CategoriesController.updateCategory(category).then((value) {
-      binancyProgressDialog.dismissDialog();
+    await CategoriesController.updateCategory(category).then((value) async {
       if (value) {
+        await categoriesChangeNotifier.updateCategories(context);
+        binancyProgressDialog.dismissDialog();
         BinancyInfoDialog(
             context, AppLocalizations.of(context)!.goal_update_success, [
-          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () async {
-            await categoriesChangeNotifier.updateCategories(context);
+          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () {
             setState(() {
               selectedCategory = category;
               allowEdit = false;
@@ -377,6 +380,8 @@ class _CategoryViewState extends State<CategoryView> {
           })
         ]);
       } else {
+        binancyProgressDialog.dismissDialog();
+
         BinancyInfoDialog(
             context, AppLocalizations.of(context)!.goal_update_fail, [
           BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, () {

@@ -102,11 +102,19 @@ class _CategorySummaryViewState extends State<CategorySummaryView> {
                     ),
                     SliverToBoxAdapter(
                       child: Center(
+                          child: Text("Categorías predefinidas",
+                              style: titleCardStyle())),
+                    ),
+                    SliverToBoxAdapter(
+                        child: predefinedCategoriesWidget(
+                            categoriesChangeNotifier, context)),
+                    SliverToBoxAdapter(
+                      child: Center(
                           child:
                               Text("Tus categorías", style: titleCardStyle())),
                     ),
                     SliverToBoxAdapter(
-                        child: categoryListWidget(
+                        child: userCategoriesWidget(
                             categoriesChangeNotifier, context)),
                     SliverToBoxAdapter(child: addCategoryButton(context)),
                     const SliverToBoxAdapter(child: SpaceDivider())
@@ -231,7 +239,7 @@ class _CategorySummaryViewState extends State<CategorySummaryView> {
     );
   }
 
-  Widget categoryListWidget(
+  Widget predefinedCategoriesWidget(
       CategoriesChangeNotifier categoriesChangeNotifier, BuildContext context) {
     return Container(
         clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -245,36 +253,114 @@ class _CategorySummaryViewState extends State<CategorySummaryView> {
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemBuilder: (_, index) => CategoryCardWidget(
-                    category: categoryList.elementAt(index),
+                    category: categoriesChangeNotifier.predefinedCategories
+                        .elementAt(index),
                     context: context,
                     categoriesChangeNotifier: categoriesChangeNotifier),
                 separatorBuilder: (context, index) => const LinearDivider(),
-                itemCount: categoryList.length > categoryMaxItemsToShow
-                    ? categoryMaxItemsToShow
-                    : categoryList.length),
-            categoryList.length > categoryMaxItemsToShow
-                ? Column(
-                    children: [
-                      const LinearDivider(),
-                      Material(
-                        color: Colors.transparent,
-                        clipBehavior: Clip.antiAliasWithSaveLayer,
-                        child: InkWell(
-                          highlightColor: themeColor.withOpacity(0.1),
-                          splashColor: themeColor.withOpacity(0.1),
-                          onTap: () {},
-                          child: SizedBox(
-                              height: buttonHeight,
-                              child: Center(
-                                  child: Text("Ver todas tus categorías",
-                                      style: buttonStyle()))),
-                        ),
-                      )
-                    ],
-                  )
-                : const SizedBox()
+                itemCount: categoriesChangeNotifier.predefinedCategories.length)
           ],
         ));
+  }
+
+  Widget userCategoriesWidget(
+      CategoriesChangeNotifier categoriesChangeNotifier, BuildContext context) {
+    if (categoriesChangeNotifier.userCategoryList.isNotEmpty) {
+      return Container(
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          decoration: BoxDecoration(
+              color: themeColor.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(customBorderRadius)),
+          margin: const EdgeInsets.all(customMargin),
+          child: Column(
+            children: [
+              ListView.separated(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemBuilder: (_, index) => CategoryCardWidget(
+                      category: categoriesChangeNotifier.userCategoryList
+                          .elementAt(index),
+                      context: context,
+                      categoriesChangeNotifier: categoriesChangeNotifier),
+                  separatorBuilder: (context, index) => const LinearDivider(),
+                  itemCount: categoriesChangeNotifier.userCategoryList.length >
+                          categoryMaxItemsToShow
+                      ? categoryMaxItemsToShow
+                      : categoriesChangeNotifier.userCategoryList.length),
+              categoriesChangeNotifier.userCategoryList.length >
+                      categoryMaxItemsToShow
+                  ? Column(
+                      children: [
+                        const LinearDivider(),
+                        Material(
+                          color: Colors.transparent,
+                          clipBehavior: Clip.antiAliasWithSaveLayer,
+                          child: InkWell(
+                            highlightColor: themeColor.withOpacity(0.1),
+                            splashColor: themeColor.withOpacity(0.1),
+                            onTap: () {},
+                            child: SizedBox(
+                                height: buttonHeight,
+                                child: Center(
+                                    child: Text("Ver todas tus categorías",
+                                        style: buttonStyle()))),
+                          ),
+                        )
+                      ],
+                    )
+                  : const SizedBox()
+            ],
+          ));
+    } else {
+      return Padding(
+        padding: const EdgeInsets.all(customMargin),
+        child: Material(
+          borderRadius: BorderRadius.circular(customBorderRadius),
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          color: themeColor.withOpacity(0.1),
+          elevation: 0,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(customBorderRadius),
+            onTap: () => Navigator.push(
+                context,
+                PageTransition(
+                    type: PageTransitionType.rightToLeftWithFade,
+                    child: MultiProvider(
+                      providers: [
+                        ChangeNotifierProvider(
+                          create: (_) =>
+                              Provider.of<CategoriesChangeNotifier>(context),
+                        )
+                      ],
+                      child: const CategoryView(allowEdit: true),
+                    ))),
+            child: Container(
+              padding: const EdgeInsets.all(customMargin),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(
+                      height: 100,
+                      width: 100,
+                      child: Icon(
+                        Icons.add_rounded,
+                        size: 100,
+                        color: Colors.white,
+                      )),
+                  Text(AppLocalizations.of(context)!.no_microexpends,
+                      style: accentStyle(), textAlign: TextAlign.center),
+                  const SizedBox(
+                    height: 35,
+                    width: 35,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+    }
   }
 
   List<PieChartSectionData> categoriesToSections(
