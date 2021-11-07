@@ -1,0 +1,372 @@
+{
+    "add_income": "Afegir ingrès",
+    "add_expend": "Afegir despesa",
+    "my_account": "El meu compte",
+    "see_categories": "Veure categories",
+    "see_all_movements": "Tots els moviments",
+    "microexpends": "Despeses ràpides",
+    "goals": "Objectius",
+    "my_subscriptions": "Les meves subscripcions",
+    "help_advice": "Ajudes i consells",
+    "become_premium": "Fes-te premium",
+    "settings": "Configuració",
+    "see_heritage": "Veure patrimoni",
+    "see_incomes": "Veure ingressos",
+    "see_expends": "Veure despeses",
+    "see_subscriptions": "Veure subscripcions",
+    "my_heritage": "El meu patrimoni",
+    "latests_movements": "Últims moviments",
+    "no_incomes": "No hi ha cap ingrès registrat. Toca per afegir un",
+    "no_expends": "No hi ha cap despesa registrada. Toca per afegir una",
+    "no_subscriptions": "No hi ha cap subscripció registrada. Toca per afegir una",
+    "no_goals": "No hi ha cap objectiu registrat. Toca per afegir un",
+    "my_data": "Les meves dades",
+    "name": "Nom",
+    "email": "Correu electrònic",
+    "current_plan": "Pla actual",
+    "version": "Versió de {appName}",
+    "my_profile": "El meu perfil",
+    "notifications": "Notificacions",
+    "privacy_policy": "Política de privacitat",
+    "change_plan": "Canvia el teu pla",
+    "logout": "Tancar sessió",
+    "birthday": "Data de naixement",
+    "first_of_month": "Principi de mes",
+    "edit_profile": "Edita el teu perfil",
+    "change_first_of_month": "Canvia el teu principi de mes",
+    "change_password": "Canvia la teva contrasenya",
+    "delete_data": "Esborrar les teves dades",
+    "delete_account": "Elimina la teva compta",
+    "current_password": "Contrasenya actual",
+    "new_password": "Nova contrasenya",
+    "repeat_new_password": "Repeteix la nova contrasenya",
+    "change_password_header": "Canvia la teva contrasenya",
+    "your_name": "El teu nom",
+    "your_first_surname": "El teu primer cognom",
+    "your_last_surname": "El teu segon cognom",
+    "update_profile": "Actualitza el teu perfil",
+    "change_first_of_month_header": "Selecciona el teu principi de mes",
+    "change_day": "Canviar dia",
+    "movement_title": "Títol del moviment",
+    "movement_data": "Dades del moviment",
+    "movement_description": "Afegeix una descripció a aquest moviment",
+    "movement_date": "Data de realització",
+    "add_income_confirm": "Afegeix l'ingrès",
+    "add_expend_confirm": "Afegeix la despesa",
+    "income": "Ingressos",
+    "expend": "Despeses",
+    "incomes_realized": "Ingressos realitzats",
+    "premium_action": "Aquesta és una funció premium",
+    "premium_action_description": "Per a utilitzar aquesta funció has d'adquirir un dels plans premium que {appName} ofereix",
+    "logout_confirm": "Estàs segur que vols tancar la teva sessió?",
+    "cancel": "Cancel·lar",
+    "accept": "Acceptar",
+    "delete_data_description": "Està segur que vols eliminar totes les teves dades? La teva compta seguirà estant activa per {appName} y els altres serveis que {organizationName} ofereix.",
+    "delete_account_description": "Estàs segur que vols eliminar la teva compta? Si elimines la teva compta també s'eliminarà aquesta compta per als altres serveis que {organizationName} ofereix. Si només vols eliminar les teves dades de {appName} selecciona \"Només {appName}\"",
+    "registered_since": "Registrat desde",
+    "only_appName": "Només {appName}",
+    "your_monthly_balance": "El vostre saldo mensual",
+    "dashboard_actions_header": "Que vols fer?",
+    "dashboard_summary_widget_description": "Aquest mes has ingressat {totalIncomes}{currency} i has gastat {totalExpends}{currency}",
+    "my_summary": "El meu resum",
+    "actions": "Accions",
+    "support": "Suport",
+    "realization_date": "Data de realització",
+    "select_category": "Selecciona una categoría",
+    "premium_ad_description": "Desbloqueja més gràfics i opcions comprant un pla premium",
+    "all_movements": "Tots els movimients",
+    "since_forever": "Desde sempre",
+    "expends_realized": "Despeses realitzades",
+    "your_microexpends": "Les teves despeses ràpides",
+    "microexpends_ad_description": "Aqui podràs afegir despeses que realitzis amb frequència y poder afegir-los mès ràpid.",
+    "subscriptions_active": "Subscripcions actives",
+    "all_subscriptions": "Totes les subscripcions",
+    "add_subscription_header": "Afegeix una nova subscripció",
+    "add_subscription": "Afegir subscripció",
+    "subscription_title": "Títol de la subscripció",
+    "subscription_amount": "Import de la subscripció",
+    "subscription_day": "Dia de renovació",
+    "subscription_ignore_this_month": "No renovar aquest mes",
+    "subscription_description": "Afegeix una descripció a aquesta subscripció",
+    "update_subscription": "Actualizar subscripció",
+    "exit_confirm": "Esteu segur que voleu marxar?",
+    "abort": "Abortar",
+    "make_donation": "Fes una donació",
+    "goals_header": "Afegeix un objetiu",
+    "goal_title": "Títol del objectiu",
+    "goal_amount": "Quantitat a estalviar",
+    "goal_date": "Data límit",
+    "goal_description": "Afegeix una descripció a aquest objectiu",
+    "add_goal": "Afegir objectiu",
+    "update_goal": "Actualizar objectiu",
+    "update_income": "Actualizar ingrès",
+    "update_expend": "Actualizar depessa",
+    "goals_ad_description": "Estableix objectius que complir en un temps determinat",
+    "unexpected_error": "Ha hagut un error inesperat. Torna a provar-hi més tarde",
+    "income_add_success": "Ingrès afegit correctament!",
+    "income_add_fail": "Ha hagut un error a l'afegir l'ingrès",
+    "income_update_success": "Ingrès actualizat correctament!",
+    "income_update_fail": "Ha hagut un error a l'actualizar l'ingrès",
+    "income_title": "Títol de l'ingrès",
+    "income_value": "Valor de l'ingrès",
+    "expend_title": "Títol de la despessa",
+    "expend_value": "Valor de la despessa",
+    "expend_add_success": "Despesa afegida correctament!",
+    "expend_add_fail": "Ha hagut un error a l'afegir la despesa",
+    "expend_update_success": "Despesa actualizada correctament!",
+    "expend_update_fail": "Ha hagut un error a l'actualizar la despesa",
+    "subscription_add_success": "Subscripció afegida correctament!",
+    "subscription_add_fail": "Ha hagut un error a l'afegir la subscripció",
+    "subscription_update_success": "Subscripció actualizada correctament!",
+    "subscription_update_fail": "Ha hagut un error a l'actualizar la suscripció",
+    "goal_add_success": "Objectiu afegit correctament!",
+    "goal_add_fail": "Ha hagut un error a l'afegir l'objectiu",
+    "goal_update_success": "Objectiu actualizat correctament!",
+    "goal_update_fail": "Ha hagut un error a l'actualizar l'objectiu",
+    "microexpend_add_success": "Despesa ràpida afegida correctament!",
+    "microexpend_add_fail": "Ha hagut un error a l'afegir la despesa ràpida",
+    "microexpend_update_success": "Despesa ràpida actualizada correctament!",
+    "microexpend_update_fail": "Ha hagut un error a l'actualizar la despesa ràpida",
+    "please_wait": "Si us plau, esperi...",
+    "forgot_password_1": "Ha oblidat la teva contrasenya?",
+    "forgot_password_2": "Recuperala",
+    "login": "Iniciar sessió",
+    "register_button_header": "Encara no tens una compta?",
+    "register": "Registra't",
+    "create_your_account": "Crea la teva compta",
+    "continue_register": "Continuar registre",
+    "login_button_header": "Ja tens una compta?",
+    "register_data_needed": "Falten dades per introduir",
+    "password_not_valid": "La contrasenya no es vàlida",
+    "email_not_valid": "El correu electrònic no es vàlid",
+    "register_privacy_terms_1": "He llegit i accepto ",
+    "register_privacy_terms_2": "els termes i condicions de {appName} i {organizationName}\n",
+    "register_advice_1": "{appName} et pemet classificar els teus moviments en categories per a tindre un major control d'aquests",
+    "register_advice_2": "{appName} emmagatzena tots els teus moviments per a que no se t'escapi res",
+    "register_advice_3": "{appName} et pemet visualitzar els teus moviments de múltiples formes i filtres",
+    "password": "Contrasenya",
+    "premium_features": "Característiques premium",
+    "latests_balances": "Els meus últims saldos",
+    "subscription": "Subscripcions",
+    "your_goals": "Els teus objectius",
+    "see_less": "Veure menys",
+    "see_more": "Veure més",
+    "payday_dialog_header": "Selecciona el dia de renovació",
+    "subscription_invalid_day": "El dia de renovació introduit no es vàlid o no hi ha",
+    "subscription_invalid_amount": "El valor introduit no es vàlid o esta en blanc",
+    "subscription_invalid_title": "La subscripció ha de tenir un títol",
+    "subscription_renew_description": "Si habilites aquesta opció {appName} no renovarà aquesta subscripció aquest mes. Aquesta funció és útil si la subscripció es renova el mateix dia que creguis la subscripció, però ja s'ha efectuat el primer cobrament",
+    "subscription_active": "Subscripció activa",
+    "subscription_renew_next": "La teva pròxima subscripció a renovar",
+    "updating": "Actualitzant...",
+    "update_success": "Dades actualitzades",
+    "update_fail": "No s'ha pogut actualitzar",
+    "update_placeholder": "Llisca per actualitzar",
+    "update_release": "Solta per actualitzar",
+    "goal_invalid_title": "El títol de l'objectiu no es vàlid o està en blanc",
+    "goal_invalid_amount": "La quantitar a estalviar de l'objectiu no es vàlid o està en blanc",
+    "no_data": "No hi ha dades",
+    "payday_change_success": "Principi de mes actualitzat correctament",
+    "payday_change_fail": "El títol de l'objectiu no es vàlid o està en blanc",
+    "profile_update_success": "Perfil actualizat correctament!",
+    "profile_update_fail": "Ha hagut un error al actualizar el teu perfil",
+    "profile_update_no_changes": "No hi han canvis al teu perfil",
+    "profile_invalid_name": "El nom introduït no es vàlid",
+    "set_birthday": "Introdueix la teva data de naixement",
+    "password_not_match": "Les contrasenyes no son les mateixes",
+    "password_not_empty": "La contrasenya no pot estar en blanc",
+    "password_not_current_password": "La contrasenya que has introduït no es la teva contrasenya actual",
+    "password_current_empty": "Has d'introduïr la teva contrasenya",
+    "movement_invalid_amount": "El valor del moviment no es vàlid o està en blanc",
+    "movement_invalid_title": "El títol del moviment no es vàlid o està en blanc",
+    "movement_invalid_date": "La data de realització del moviment no es vàlid o està en blanc",
+    "register_steps": "Pas {currentStep} de {totalSteps}",
+    "register_invalid_terms": "Has d'aceptar els termes de {appName}",
+    "password_requirements": "La contrasenya ha de tenir com a mínim 8 caràcters de longitud, 1 majúscula, 1 minúscula, 1 número i 1 caràcter especial",
+    "login_error_password": "L'usuari o la contrasenya no es correcta",
+    "error_no_connection": "No tens connexió a Internet",
+    "error_timeout": "S'ha esgotat els temps màxim per dur a terme l'acció",
+    "microexpend_header": "Afegeix una despesa ràpida",
+    "microexpend_title": "Títol de la despesa ràpida",
+    "microexpend_amount": "Valor de la despesa ràpida",
+    "microexpend_description": "Afegeix una descripció a aquesta despesa ràpida",
+    "add_microexpend": "Afegir despesa ràpida",
+    "update_microexpend": "Actualitzar despesa ràpida",
+    "microexpend_invalid_title": "El títol de la despesa ràpida no es vàlid o està en blanc",
+    "microexpend_invalid_amount": "El valor de la despesa ràpida no es vàlid o està en blanc",
+    "no_microexpends": "No hi ha cap despesa ràpida registrada. Toca per afegir una",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "goal_delete_success": "Objectiu eliminat correctament!",
+    "goal_delete_error": "Ha hagut un error al eliminar l'objectiu",
+    "today": "Avui",
+    "tomorrow": "Demà",
+    "goal_due_date": "{days} días restantes",
+    "goal_overdue": "Va finalitzar fa {days} dies",
+    "goal_amount_of_total": "{currentAmount}{currency} de {totalAmount}{currency}",
+    "income_delete_success": "Ingrès eliminat correctament!",
+    "income_delete_error": "Ha hagut un error al eliminar l'ingrès",
+    "expend_delete_success": "Despessa eliminat correctament!",
+    "expend_delete_error": "Ha hagut un error al eliminar la despessa",
+    "add": "Afegir",
+    "microexpend_delete_success": "Despessa ràpida eliminada correctament!",
+    "microexpend_delete_error": "Ha hagut un error al eliminar la depessa ràpida",
+    "subscription_delete_success":"Subscripció eliminada correctament!",
+    "subscription_delete_error":"Ha hagut un error al eliminar la subscripció",
+    "category_subscription":"Subscripcions",
+    "category_vital_income":"Ingressos Vitals",
+    "category_supplies":"Sumministres",
+    "category_fashion_beauty":"Moda y Bellesa",
+    "category_transport_travel":"Transport y Viatges",
+    "category_subscription_desc":"Gimnàs, Plataformes online, Pagaments recurrents",
+    "category_vital_income_desc":"Alquilers, Nòmines, Pensions",
+    "category_supplies_desc":"Facturaments, Segurs, Contractes",
+    "category_fashion_beauty_desc":"Vestimenta, Peluqueries, Botigues de moda",
+    "category_transport_travel_desc":"Benzina, Transport públic, Avions",
+    "movement_singular": "moviment",
+    "movement_plural": "moviments",
+    "category": "Categoria",
+    "category_header": "Categories",
+    "category_predefined": "Categories predefinides",
+    "category_user": "Les teves categories",
+    "category_add": "Afegeix una categoria",
+    "category_update": "Actualitza la categoria",
+    "category_title": "Títol de la categoria",
+    "category_description": "Descripció de la categoria",
+    "pick_colour": "Escull un color",
+    "category_error_needs_title": "La categoria ha de tenir un títol",
+    "category_add_success": "Categoria afegida correctament!",
+    "category_add_error": "Ha hagut un error al afegir la categoria",
+    "category_update_success": "Categoria actualitzada correctament!",
+    "category_update_error": "Ha hagut un error al actualizar la categoria",
+    "category_delete_success": "Categoria eliminada correctament!",
+    "category_delete_error": "Ha hagut un error al actualizar la categoria",
+    "category_advice_1": "Visualitza tots els moviments dels últims 90 dies classificats per categories",
+    "category_advice_2": "Pots crear les teves propies categories i classificar els teus moviments",
+    "category_advice_3": "Una categoria pot tenir ingressos y despesses, per veure l'altre tipus de moviment, clica al botó \"Canvia\"",
+    "no_categories": "No hi ha cap categoria registrada. Toca per afegir una",
+    "movements_without_category": "Senze categoritzar",
+    "category_add_button": "Afegir categoria",
+    "see_all_categories": "Veure totes les categories",
+    "register_error": "Ha hagut un error al realitzar el registre, si us plau, torna a provar més tard",
+    "password_update_success": "Contrasenya actualitzada correctament!",
+    "password_update_error": "Ha hagut un error al actualitzar la teva contrasenya, si us plau torna a provar més tard.",
+    "user_data_delete_success": "Tota la teva data ha estat eliminada correctament!",
+    "user_data_delete_error": "Ha hagut un error al eliminar les teves dades, si us plau, torna a provar més tard",
+    "user_delete_success": "La teva compta ha estat eliminada correctament!",
+    "user_delete_error": "Ha hagut un error al eliminar la teva compta, si us plau, torna a provar més tard",
+    "support_email_header": "Envia un correu electrònic",
+    "support_email_description": "Omple i envia un correu electrònic a l'equip de suport explicant el teu problema, {appName} utilitzarà el correu electrònic del teu compte per contestar",
+    "support_feedback_header": "Enviar feedback",
+    "support_feedback_description": "Amb aquesta opció podràs enviar una captura de pantalla, poder ressaltar la zona concreta del problema i explicar el problema com a comentari de la captura. Per poder anar a altres pantalles prem la icona \"Navigate\"",
+    "support_footer": "Adreça electrònic de contacte",
+    "support_advice_1": "{appName} us permet posar-vos en contacte amb l'equip de suport de 2 maneres diferents.",
+    "support_advice_2": "Pots contactar amb suport enviant un correu electrònic directament i explicant el problema",
+    "support_advice_3": "O també podeu fer una captura de pantalla i comentar el problema tocant l'opció \"Enviar feedback\"",
+    "support_feedback_success": "Report enviat correctament!",
+    "advice_feedback_header": "Què et sembla {appName}?",
+    "advice_feedback_subtitle": "Deixa la teva opinió a la Play Store",
+    "@advice_feedback_header": {
+        "placeholders": {
+            "appName": {}
+        }
+    },
+    "@support_advice_1": {
+        "placeholders": {
+            "appName": {}
+        }
+    }, 
+    "@support_email_description": {
+        "placeholders": {
+            "appName": {}
+        }
+    },
+    "@goal_amount_of_total" : {
+        "placeholders": {
+            "currentAmount": {},
+            "currency": {},
+            "totalAmount": {}
+        }
+    },
+    "@goal_due_date" : {
+        "placeholders": {
+            "days": {}
+        }
+    },
+    "@goal_overdue" : {
+        "placeholders": {
+            "days": {}
+        }
+    },
+    "@premium_action_description" : {
+        "placeholders": {
+            "appName": {}
+        }
+    },
+    "@version": {
+        "placeholders": {
+            "appName": {}
+        }
+    },
+    "@delete_data_description": {
+        "placeholders": {
+            "appName": {},
+            "organizationName": {}
+        }
+    },
+    "@delete_account_description": {
+        "placeholders": {
+            "appName": {},
+            "organizationName": {}
+        }
+    },
+    "@register_advice_1": {
+        "placeholders": {
+            "appName": {}
+        }
+    },
+    "@register_advice_2": {
+        "placeholders": {
+            "appName": {}
+        }
+    },
+    "@register_advice_3": {
+        "placeholders": {
+            "appName": {}
+        }
+    },
+    "@only_appName": {
+        "placeholders": {
+            "appName": {}
+        }
+    },
+    "@register_privacy_terms_2": {
+        "placeholders": {
+            "appName": {},
+            "organizationName": {}
+        }
+    },
+    "@subscription_renew_description": {
+        "placeholders": {
+            "appName": {}
+        }
+    },
+    "@register_invalid_terms": {
+        "placeholders": {
+            "appName": {}
+        }
+    },
+    "@register_steps": {
+        "placeholders": {
+            "currentStep": {},
+            "totalSteps": {}
+        }
+    },
+    "@dashboard_summary_widget_description": {
+        "placeholders": {
+            "totalIncomes": {},
+            "totalExpends": {},
+            "currency": {}
+        }
+    }
+}

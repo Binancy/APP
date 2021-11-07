@@ -1,3 +1,372 @@
 {
-    "header_summary": "Tu resumen"
+    "add_income": "Añade un ingreso",
+    "add_expend": "Añade un gasto",
+    "my_account": "Mi cuenta",
+    "see_categories": "Ver categorías",
+    "see_all_movements": "Todos mis movimientos",
+    "microexpends": "Gastos rápidos",
+    "goals": "Objetivos",
+    "my_subscriptions": "Mis suscripciones",
+    "help_advice": "Ayudas y consejos",
+    "become_premium": "Hazte premium",
+    "settings": "Ajustes",
+    "see_heritage": "Ver patrimonio",
+    "see_incomes": "Ver ingresos",
+    "see_expends": "Ver gastos",
+    "see_subscriptions": "Ver suscripciones",
+    "my_heritage": "Mi patrimonio",
+    "latests_movements": "Mis últimos movimientos",
+    "no_incomes": "No hay ningún ingreso registrado. Toca para añadir uno.",
+    "no_expends": "No hay ningún gasto registrado. Toca para añadir uno.",
+    "no_subscriptions": "No hay ninguna suscripción registrada. Toca para añadir una.",
+    "no_goals": "No hay ningún objetivo registrado. Toca para añadir uno.",
+    "my_data": "Mis datos",
+    "name": "Nombre",
+    "email": "Email",
+    "current_plan": "Plan actual",
+    "version": "Versión de {appName}",
+    "my_profile": "Mi perfil",
+    "notifications": "Notificaciones",
+    "privacy_policy": "Política de privacidad",
+    "change_plan": "Cambiar de plan",
+    "logout": "Cerrar sesión",
+    "birthday": "Fecha de nacimiento",
+    "first_of_month": "Principio de mes",
+    "edit_profile": "Editar perfil",
+    "change_first_of_month": "Cambiar principio de mes",
+    "change_password": "Cambiar contraseña",
+    "delete_data": "Borrar mis datos",
+    "delete_account": "Eliminar mi cuenta",
+    "current_password": "Contraseña actual",
+    "new_password": "Nueva contraseña",
+    "repeat_new_password": "Repite tu nueva contraseña",
+    "change_password_header": "Cambia tu contraseña",
+    "your_name": "Tu nombre",
+    "your_first_surname": "Tu primer apellido",
+    "your_last_surname": "Tu segundo apellido",
+    "update_profile": "Actualizar perfil",
+    "change_first_of_month_header": "Selecciona tu principio de mes",
+    "change_day": "Cambiar día",
+    "movement_title": "Título del movimiento",
+    "movement_data": "Datos del movimiento",
+    "movement_description": "Añade una descripción a este movimiento",
+    "movement_date": "Fecha de realización",
+    "add_income_confirm": "Añadir ingreso",
+    "add_expend_confirm": "Añadir gasto",
+    "income": "Ingresos",
+    "expend": "Gastos",
+    "incomes_realized": "Ingresos realizados",
+    "premium_action": "Esta es una función premium",
+    "premium_action_description": "Para utilizar esta función premium debes adquirir uno de los planes que {appName} ofrece",
+    "logout_confirm": "¿Está seguro que quieres cerrar tu sesión?",
+    "cancel": "Cancelar",
+    "accept": "Aceptar",
+    "delete_data_description": "¿Estás seguro que quieres eliminar todos tus datos? Tu cuenta seguirá estando activa para {appName} y los demás servicios que {organizationName} ofrece.",
+    "delete_account_description": "¿Estás seguro que quieres eliminar tu cuenta? Si eliminas tu cuenta también se eliminará esta cuenta para los demás servicios que {organizationName} ofrece. Si solamente quieres eliminar tus datos de {appName} selecciona \"Solo {appName}\"",
+    "registered_since": "Registrado desde",
+    "only_appName": "Solo {appName}",
+    "your_monthly_balance": "Tu balance mensual",
+    "dashboard_actions_header": "¿Que quieres hacer?",
+    "dashboard_summary_widget_description": "Este mes has ingresado {totalIncomes}{currency} y has gastado {totalExpends}{currency}",
+    "my_summary": "Mi resumen",
+    "actions": "Acciones",
+    "support": "Soporte",
+    "realization_date": "Fecha de realización",
+    "select_category": "Selecciona una categoría",
+    "premium_ad_description": "Desbloquea más gráficos y opciones comprando un plan premium",
+    "all_movements": "Todos tus movimientos",
+    "since_forever": "Desde siempre",
+    "expends_realized": "Gastos realizados",
+    "your_microexpends": "Tus gastos rápidos",
+    "microexpends_ad_description": "Aquí podrás añadir los gastos que realices con frecuencia y añadirlos más rápidamente.",
+    "subscriptions_active": "Suscripciones activas",
+    "all_subscriptions": "Todas tus suscripciones",
+    "add_subscription_header": "Añade una nueva suscripción",
+    "add_subscription": "Añadir suscripción",
+    "subscription_title": "Título de la suscripción",
+    "subscription_amount": "Importe de la suscripción",
+    "subscription_day": "Día de renovación",
+    "subscription_ignore_this_month": "No renovar este mes",
+    "subscription_description": "Añade una descripción a esta suscripción",
+    "update_subscription": "Actualizar suscripción",
+    "exit_confirm": "¿Estás seguro que quieres salir?",
+    "abort": "Abortar",
+    "make_donation": "Haz una donación",
+    "goals_header": "Añade un objetivo",
+    "goal_title": "Título del objetivo",
+    "goal_amount": "Cantidad a ahorrar",
+    "goal_date": "Fecha límite",
+    "goal_description": "Añade una descripción a este objetivo",
+    "add_goal": "Añadir objetivo",
+    "update_goal": "Actualizar objetivo",
+    "update_income": "Actualizar ingreso",
+    "update_expend": "Actualizar gasto",
+    "goals_ad_description": "Establece objetivos que cumplir en un tiempo objetivo",
+    "unexpected_error": "Ha ocurrido un error inesperado, inténtalo de nuevo más tarde",
+    "income_add_success": "¡Ingreso añadido correctamente!",
+    "income_add_fail": "Ha ocurrido un error al añadir el ingreso",
+    "income_update_success": "¡Ingreso actualizado correctamente!",
+    "income_update_fail": "Ha ocurrido un error al actualizar el ingreso",
+    "income_title": "Título del ingreso",
+    "income_value": "Importe del ingreso",
+    "expend_title": "Título del gasto",
+    "expend_value": "Importe del gasto",
+    "expend_add_success": "¡Gasto añadido correctamente!",
+    "expend_add_fail": "Ha ocurrido un error al añadir el gasto",
+    "expend_update_success": "¡Gasto actualizado correctamente!",
+    "expend_update_fail": "Ha ocurrido un error al actualizar el gasto",
+    "subscription_add_success": "¡Suscripción añadida correctamente!",
+    "subscription_add_fail": "Ha ocurrido un error al añadir la suscripción",
+    "subscription_update_success": "¡Suscripción actualizada correctamente!",
+    "subscription_update_fail": "Ha ocurrido un error al actualizar la suscripción",
+    "goal_add_success": "¡Objetivo añadido correctamente!",
+    "goal_add_fail": "Ha ocurrido un error al añadir el objetivo",
+    "goal_update_success": "¡Objetivo actualizado correctamente!",
+    "goal_update_fail": "Ha ocurrido un error al actualizar el objetivo",
+    "microexpend_add_success": "¡Gasto rápido añadido correctamente!",
+    "microexpend_add_fail": "Ha ocurrido un error al añadir el gasto rápido",
+    "microexpend_update_success": "¡Gasto rápido actualizado correctamente!",
+    "microexpend_update_fail": "Ha ocurrido un error al actualizar el gasto rápido",
+    "please_wait": "Por favor, espera...",
+    "forgot_password_1": "¿Has olvidado tu contraseña?",
+    "forgot_password_2": "Recupérala",
+    "login": "Iniciar sesión",
+    "register_button_header": "¿Todavía no tienes cuenta?",
+    "register": "Regístrate",
+    "create_your_account": "Crea tu cuenta",
+    "continue_register": "Continuar registro",
+    "login_button_header": "¿Ya tienes cuenta?",
+    "register_data_needed": "Faltan datos por introducir",
+    "password_not_valid": "La contraseña no es válida",
+    "email_not_valid": "El correo electrónico introducido no es válido",
+    "register_privacy_terms_1": "He leído y acepto",
+    "register_privacy_terms_2": "los términos y condiciones de {appName} y {organizationName}",
+    "register_advice_1": "{appName} te permite clasificar tus movimientos en categorías para tener un mayor control sobre ellos.",
+    "register_advice_2": "{appName} almacena todos tus movimientos para que no se te escape ninguno.",
+    "register_advice_3": "{appName} te permite visualizar tus movimientos de múltiples formas y filtros.",
+    "password": "Contraseña",
+    "premium_features": "Características premium",
+    "latests_balances": "Tus últimos balances",
+    "subscription": "Suscripciones",
+    "your_goals": "Tus objectivos",
+    "see_less": "Ver menos",
+    "see_more": "Ver más",
+    "payday_dialog_header": "Selecciona el día de renovación",
+    "subscription_invalid_day": "El día de renovación no es válido o está en blanco",
+    "subscription_invalid_amount": "El valor de la suscripción no es válido o está en blanco",
+    "subscription_invalid_title": "La suscripción debe tener un título",
+    "subscription_renew_description": "Si habilitas esta opción {appName} no renovará esta suscripción este mes. Esta función es util si la suscripción se renueva el mismo día que creas la suscripcíon, pero ya se ha efectuado el primer cobro",
+    "subscription_active": "Suscripción activa",
+    "subscription_renew_next": "Tu próxima suscripción a renovar",
+    "updating": "Actualizando",
+    "update_success": "¡Datos actualizados!",
+    "update_fail": "Ha ocurrido un error al actualizar",
+    "update_placeholder": "Desliza para actualizar",
+    "update_release": "Suelta para actualizar",
+    "goal_invalid_title": "El título del objetivo no es válido o está en blanco",
+    "goal_invalid_amount": "El importe a ahorrar del objetivo no es válido o está en blanco",
+    "no_data": "No hay datos",
+    "payday_change_success": "¡Principio de mes actualizado correctamente!",
+    "payday_change_fail": "Ha ocurrido un error al actualizar tu principio de mes",
+    "profile_update_success": "¡Perfil actualizado correctamente!",
+    "profile_update_fail": "Ha ocurrido un error al actualizar tu perfil",
+    "profile_update_no_changes": "No hay cambios en tu perfil",
+    "profile_invalid_name": "El nombre introducido no es válido",
+    "set_birthday": "Introduce tu fecha de nacimiento",
+    "password_not_match": "Las contraseñas no coinciden",
+    "password_not_empty": "La contraseña no puede estar en blanco",
+    "password_not_current_password": "La contraseña que has introducido no es tu contraseña actual",
+    "password_current_empty": "Tienes que introducir tu contraseña actual",
+    "movement_invalid_amount": "El valor del movimiento no es válido o está en blanco",
+    "movement_invalid_title": "El título del movimiento no es válido o está en blanco",
+    "movement_invalid_date": "La fecha de realización del movimiento no es válido o está en blanco",
+    "register_steps": "Paso {currentStep} de {totalSteps}",
+    "register_invalid_terms": "Tienes que aceptar los términos de {appName}",
+    "password_requirements": "La contraseña debe tener como mínimo 8 caracteres de longitud, 1 mayúscula, 1 minúscula, 1 número y 1 carácter especial",
+    "login_error_password": "El correo o la contraseña no son correctos",
+    "error_no_connection": "No tienes conexión a Internet",
+    "error_timeout": "Se ha agotado el tiempo máximo para llevar a cabo la acción",
+    "microexpend_header": "Añade un gasto rápido",
+    "microexpend_title": "Título del gasto rápido",
+    "microexpend_amount": "Importe del gasto rápido",
+    "microexpend_description": "Añade una descripción a este gasto rápido",
+    "add_microexpend": "Añadir gasto rápido",
+    "update_microexpend": "Actualizar gasto rápido",
+    "microexpend_invalid_title": "El título del gasto rápido no es válido o está en blanco",
+    "microexpend_invalid_amount": "El importe del gasto rápido no es válido o está en blanco",
+    "no_microexpends": "No hay ningún gasto rápido registrado. Toca para añadir uno.",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "goal_delete_success": "¡Objetivo eliminado correctamente!",
+    "goal_delete_error": "Ha ocurrido un error al eliminar el objetivo",
+    "today": "Hoy",
+    "tomorrow": "Mañana",
+    "goal_due_date": "{days} dias restantes",
+    "goal_overdue": "Finalizó hace {days} días",
+    "goal_amount_of_total": "{currentAmount}{currency} de {totalAmount}{currency}",
+    "income_delete_success": "¡Ingreso eliminado correctamente!",
+    "income_delete_error": "Ha ocurrido un error al eliminar el ingreso",
+    "expend_delete_success": "¡Gasto eliminado correctamente!",
+    "expend_delete_error": "Ha ocurrido un error al eliminar el gasto",
+    "add": "Añadir",
+    "microexpend_delete_success": "¡Gasto rápido eliminado correctamente!",
+    "microexpend_delete_error": "Ha ocurrido un error al eliminar el gasto rápido",
+    "subscription_delete_success":"¡Suscrpción eliminada correctamente!",
+    "subscription_delete_error":"Ha ocurrido un error al eliminar la suscripción",
+    "category_subscription":"Suscripciones",
+    "category_vital_income":"Ingresos Vitales",
+    "category_supplies":"Suministros",
+    "category_fashion_beauty":"Moda y Belleza",
+    "category_transport_travel":"Transporte y Viajes",
+    "category_subscription_desc":"Gimnasio, Plataformas online, Pagos recurrentes",
+    "category_vital_income_desc":"Alquiler, Nóminas, Pensiones",
+    "category_supplies_desc":"Facturas, Seguros, Contratos",
+    "category_fashion_beauty_desc":"Vestimenta, Peluquerías, Tiendas de moda",
+    "category_transport_travel_desc":"Gasolina, Transporte público, Aviones",
+    "movement_singular": "movimiento",
+    "movement_plural": "movimientos",
+    "category": "Categoría",
+    "category_header": "Categorías",
+    "category_predefined": "Categorías predefinidas",
+    "category_user": "Tus categorías",
+    "category_add": "Añade una categoría",
+    "category_update": "Actualizar categoría",
+    "category_title": "Título de la categoría",
+    "category_description": "Descripción de la categoría",
+    "pick_colour": "Escoge un color",
+    "category_error_needs_title": "La categoría tiene que tener un título",
+    "category_add_success": "¡Categoría añadida correctamente!",
+    "category_add_error": "Ha ocurrido un error al añadir la categoría",
+    "category_update_success": "¡Categoría actualizada correctamente!",
+    "category_update_error": "Ha ocurrido un error al actualizar la categoría",
+    "category_delete_success": "¡Categoría eliminada correctamente!",
+    "category_delete_error": "Ha ocurrido un error al eliminar la categoría",
+    "category_advice_1": "Visualiza todos tus movimientos de los últimos 90 días clasificados en categorías",
+    "category_advice_2": "Puedes crear tus propias categorías y clasficar tus movimientos con ellas",
+    "category_advice_3": "Una categoría puede tener ingresos y gastos. Para ver el otro tipo de movimiento pulsa en el botón \"Rotar\"",
+    "no_categories": "No hay ninguna categoría registrada. Toca para añadir una.",
+    "movements_without_category": "Sin categorizar",
+    "category_add_button": "Añadir categoría",
+    "see_all_categories": "Ver todas las categorías",
+    "register_error": "Ha ocurrido un error en el proceso de registo, por favor, vuelve a probar más tarde",
+    "password_update_success": "¡Contraseña actualizada correctamente!",
+    "password_update_error": "Ha ocurrido un error al actualizar tu contraseña, por favor, vuelve a probar más tarde",
+    "user_data_delete_success": "¡Todos tus datos han sido eliminados correctamente!",
+    "user_data_delete_error": "Ha ocurrido un error al eliminar todos tus datos, por favor, vuelve a probar más tarde",
+    "user_delete_success": "¡Tu cuenta ha sido eliminada correctamente!",
+    "user_delete_error": "Ha ocurrido un error al eliminar tu usuario, por favor, vuelve a probar más tarde",
+    "support_email_header": "Envia un correo electrónico",
+    "support_email_description": "Rellena y envia un correo electrónico al equipo de soporte explicando tu problema, {appName} usará el correo electrónico de tu cuenta para contestar",
+    "support_feedback_header": "Enviar feedback",
+    "support_feedback_description": "Con esta opción podrás enviar una captura de pantalla, poder resaltar la zona concreta del problema y explicar el problema como comentario de la captura. Para poder ir a otras pantallas pulsa el icono \"Navigate\"",
+    "support_footer": "Correo electrónico de contacto",
+    "support_advice_1": "{appName} te permite ponerte en contacto con el equipo de soporte de 2 maneras distintas.",
+    "support_advice_2": "Puedes contactar con soporte enviando un correo electrónico directamente y explicando el problema",
+    "support_advice_3": "O también puedes hacer una captura de pantalla y comentar el problema tocando la opción \"Enviar feedback\"",
+    "support_feedback_success": "¡Reporte enviado correctamente!",
+    "advice_feedback_header": "¿Que te parece {appName}?",
+    "advice_feedback_subtitle": "Deja tu opinión en la Play Store",
+    "@advice_feedback_header": {
+        "placeholders": {
+            "appName": {}
+        }
+    },
+    "@support_advice_1": {
+        "placeholders": {
+            "appName": {}
+        }
+    }, 
+    "@support_email_description": {
+        "placeholders": {
+            "appName": {}
+        }
+    },
+    "@goal_amount_of_total" : {
+        "placeholders": {
+            "currentAmount": {},
+            "currency": {},
+            "totalAmount": {}
+        }
+    },
+    "@goal_due_date" : {
+        "placeholders": {
+            "days": {}
+        }
+    },
+    "@goal_overdue" : {
+        "placeholders": {
+            "days": {}
+        }
+    },
+    "@version" : {
+        "placeholders": {
+            "appName": {}
+        }
+    },
+    "@delete_data_description" : {
+        "placeholders": {
+            "appName": {},
+            "organizationName": {}
+        }
+    },
+    "@delete_account_description" : {
+        "placeholders": {
+            "appName": {},
+            "organizationName": {}
+        }
+    },
+    "@only_appName": {
+        "placeholders": {
+            "appName": {}
+        }
+    },
+    "@register_advice_1" : {
+        "placeholders": {
+            "appName": {}
+        }
+    },
+    "@premium_action_description" : {
+        "placeholders": {
+            "appName": {}
+        }
+    },
+    "@register_advice_2" : {
+        "placeholders": {
+            "appName": {}
+        }
+    },
+    "@register_advice_3" : {
+        "placeholders": {
+            "appName": {}
+        }
+    },
+    "@register_privacy_terms_2" : {
+        "placeholders": {
+            "appName": {},
+            "organizationName": {}
+        }
+    },
+    "@subscription_renew_description" : {
+        "placeholders": {
+            "appName": {}
+        }
+    },
+    "@register_invalid_terms" : {
+        "placeholders": {
+            "appName": {}
+        }
+    },
+    "@register_steps" : {
+        "placeholders": {
+            "currentStep": {},
+            "totalSteps": {}
+        }
+    },
+    "@dashboard_summary_widget_description" : {
+        "placeholders": {
+            "totalIncomes": {},
+            "totalExpends": {},
+            "currency": {}
+        }
+    }
 }
