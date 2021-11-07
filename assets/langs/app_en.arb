@@ -248,6 +248,13 @@
     "movements_without_category": "Without category",
     "category_add_button": "Add category",
     "see_all_categories": "See all categories",
+    "register_error": "An error has ocurred during the reguister, please try again later",
+    "password_update_success": "Password updated successfully!",
+    "password_update_error": "An error has ocurred updating your password",
+    "user_data_delete_success": "All your data has been deleted successfully!",
+    "user_data_delete_error": "An error has ocurred deleting all your data, please try again later",
+    "user_delete_success": "Your user has been deleted successfully!",
+    "user_delete_error": "An error has ocurred deleting your user, please try again later",
     "@goal_amount_of_total" : {
         "placeholders": {
             "currentAmount": {},

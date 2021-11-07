@@ -30,7 +30,7 @@
     "privacy_policy": "Política de privacidad",
     "change_plan": "Cambiar de plan",
     "logout": "Cerrar sesión",
-    "birthday": "Fecha de nacimientos",
+    "birthday": "Fecha de nacimiento",
     "first_of_month": "Principio de mes",
     "edit_profile": "Editar perfil",
     "change_first_of_month": "Cambiar principio de mes",
@@ -248,6 +248,13 @@
     "movements_without_category": "Sin categorizar",
     "category_add_button": "Añadir categoría",
     "see_all_categories": "Ver todas las categorías",
+    "register_error": "Ha ocurrido un error en el proceso de registo, por favor, vuelve a probar más tarde",
+    "password_update_success": "¡Contraseña actualizada correctamente!",
+    "password_update_error": "Ha ocurrido un error al actualizar tu contraseña, por favor, vuelve a probar más tarde",
+    "user_data_delete_success": "¡Todos tus datos han sido eliminados correctamente!",
+    "user_data_delete_error": "Ha ocurrido un error al eliminar todos tus datos, por favor, vuelve a probar más tarde",
+    "user_delete_success": "¡Tu cuenta ha sido eliminada correctamente!",
+    "user_delete_error": "Ha ocurrido un error al eliminar tu usuario, por favor, vuelve a probar más tarde",
     "@goal_amount_of_total" : {
         "placeholders": {
             "currentAmount": {},

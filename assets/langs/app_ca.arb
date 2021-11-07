@@ -248,6 +248,13 @@
     "movements_without_category": "Senze categoritzar",
     "category_add_button": "Afegir categoria",
     "see_all_categories": "Veure totes les categories",
+    "register_error": "Ha hagut un error al realitzar el registre, si us plau, torna a provar més tard",
+    "password_update_success": "Contrasenya actualitzada correctament!",
+    "password_update_error": "Ha hagut un error al actualitzar la teva contrasenya, si us plau torna a provar més tard.",
+    "user_data_delete_success": "Tota la teva data ha estat eliminada correctament!",
+    "user_data_delete_error": "Ha hagut un error al eliminar les teves dades, si us plau, torna a provar més tard",
+    "user_delete_success": "La teva compta ha estat eliminada correctament!",
+    "user_delete_error": "Ha hagut un error al eliminar la teva compta, si us plau, torna a provar més tard",
     "@goal_amount_of_total" : {
         "placeholders": {
             "currentAmount": {},

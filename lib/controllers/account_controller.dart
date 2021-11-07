@@ -8,6 +8,7 @@ import 'package:binancy/views/enroll/loading_view.dart';
 import 'package:binancy/views/enroll/splash_view.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AccountController {
   static Future<void> registerUser(
@@ -31,34 +32,43 @@ class AccountController {
             (route) => false);
       } else {
         BinancyInfoDialog(
-            context,
-            "Ha ocurrido un error al registrarte, intentalo más tarde",
-            [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
+            context, AppLocalizations.of(context)!.register_error, [
+          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept,
+              () => Navigator.pop(context))
+        ]);
       }
     } else {
-      BinancyInfoDialog(
-          context,
-          "Ha ocurrido un error al registrarte, intentalo más tarde",
-          [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
+      BinancyInfoDialog(context, AppLocalizations.of(context)!.register_error, [
+        BinancyInfoDialogItem(
+            AppLocalizations.of(context)!.accept, () => Navigator.pop(context))
+      ]);
     }
   }
 
   static Future<void> deleteAccount(BuildContext context) async {
     ConnAPI connAPI = ConnAPI(APIEndpoints.DELETE_ACCOUNT, "DELETE", false,
         {"id": userData['idUser']});
+    BinancyProgressDialog binancyProgressDialog =
+        BinancyProgressDialog(context: context);
+    binancyProgressDialog.showProgressDialog();
     await connAPI.callAPI();
-
+    binancyProgressDialog.dismissDialog();
     if (connAPI.getStatus() == 200) {
       await Utils.clearSecureStorage();
       gotoLogin(context);
     } else {
       BinancyException? exception = connAPI.getException();
       if (exception != null) {
-        BinancyInfoDialog(context, exception.description,
-            [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
+        BinancyInfoDialog(context, exception.description, [
+          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept,
+              () => Navigator.pop(context))
+        ]);
       } else {
-        BinancyInfoDialog(context, "Ha ocurrido un error inesperado",
-            [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
+        BinancyInfoDialog(
+            context, AppLocalizations.of(context)!.unexpected_error, [
+          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept,
+              () => Navigator.pop(context))
+        ]);
       }
     }
   }
@@ -66,19 +76,31 @@ class AccountController {
   static Future<void> deleteUserData(BuildContext context) async {
     ConnAPI connAPI = ConnAPI(APIEndpoints.DELETE_USER_DATA, "DELETE", false,
         {"id": userData['idUser']});
+    BinancyProgressDialog binancyProgressDialog =
+        BinancyProgressDialog(context: context);
+    binancyProgressDialog.showProgressDialog();
     await connAPI.callAPI();
-
+    binancyProgressDialog.dismissDialog();
     if (connAPI.getStatus() == 200) {
-      await Utils.clearSecureStorage();
-      gotoLogin(context);
+      BinancyInfoDialog(
+          context, AppLocalizations.of(context)!.user_data_delete_success, [
+        BinancyInfoDialogItem(
+            AppLocalizations.of(context)!.accept, () => Navigator.pop(context))
+      ]);
     } else {
       BinancyException? exception = connAPI.getException();
       if (exception != null) {
-        BinancyInfoDialog(context, exception.description,
-            [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
+        BinancyInfoDialog(
+            context, AppLocalizations.of(context)!.user_data_delete_error, [
+          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept,
+              () => Navigator.pop(context))
+        ]);
       } else {
-        BinancyInfoDialog(context, "Ha ocurrido un error inesperado",
-            [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
+        BinancyInfoDialog(
+            context, AppLocalizations.of(context)!.unexpected_error, [
+          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept,
+              () => Navigator.pop(context))
+        ]);
       }
     }
   }
@@ -93,16 +115,24 @@ class AccountController {
     binancyProgressDialog.dismissDialog();
     if (connAPI.getStatus() == 200) {
       userData['password'] = Utils.encrypt(newPassword);
-      BinancyInfoDialog(context, "Contaseña actualizada correctamente",
-          [BinancyInfoDialogItem("Aceptar", onSuccess)]);
+      BinancyInfoDialog(
+          context, AppLocalizations.of(context)!.password_update_success, [
+        BinancyInfoDialogItem(AppLocalizations.of(context)!.accept, onSuccess)
+      ]);
     } else {
       BinancyException? exception = connAPI.getException();
       if (exception != null) {
-        BinancyInfoDialog(context, exception.description,
-            [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
+        BinancyInfoDialog(
+            context, AppLocalizations.of(context)!.password_update_error, [
+          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept,
+              () => Navigator.pop(context))
+        ]);
       } else {
-        BinancyInfoDialog(context, "Ha ocurrido un error inesperado",
-            [BinancyInfoDialogItem("Aceptar", () => Navigator.pop(context))]);
+        BinancyInfoDialog(
+            context, AppLocalizations.of(context)!.unexpected_error, [
+          BinancyInfoDialogItem(AppLocalizations.of(context)!.accept,
+              () => Navigator.pop(context))
+        ]);
       }
     }
   }
