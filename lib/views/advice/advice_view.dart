@@ -119,10 +119,13 @@ class _AdviceViewState extends State<AdviceView> {
                           )),
                 ),
                 SpaceDivider(customSpace: 15),
-                Text("¿Que te parece " + appName + "?",
+                Text(
+                    AppLocalizations.of(context)!
+                        .advice_feedback_header(appName),
                     style: titleCardStyle()),
                 SpaceDivider(customSpace: 5),
-                Text("Deja tu opinión en la Play Store", style: accentStyle()),
+                Text(AppLocalizations.of(context)!.advice_feedback_subtitle,
+                    style: accentStyle()),
                 SpaceDivider(customSpace: 15),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -161,7 +164,7 @@ class _AdviceViewState extends State<AdviceView> {
     actionsRowList
         .add(BinancyHeaderRow(text: AppLocalizations.of(context)!.actions));
 
-    actionsRowList.add(BinancyActionRow(
+    /* actionsRowList.add(BinancyActionRow(
         text: "Acerca de " + appName,
         action: () => Navigator.push(
             context,
@@ -169,9 +172,9 @@ class _AdviceViewState extends State<AdviceView> {
                 child: AdviceBinancyView(),
                 type: PageTransitionType.rightToLeftWithFade))));
     actionsRowList.add(
-        BinancyActionRow(text: "Preguntas frecuentes (FAQ)", action: () {}));
+        BinancyActionRow(text: "Preguntas frecuentes (FAQ)", action: () {})); */
     actionsRowList.add(BinancyActionRow(
-        text: "Enviar sugerencias",
+        text: AppLocalizations.of(context)!.advice_send_suggestion,
         action: () => launch(
             Mailto(to: [supportEmail], subject: "Suggestion - " + appName)
                 .toString())));

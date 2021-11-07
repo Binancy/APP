@@ -255,6 +255,32 @@
     "user_data_delete_error": "Ha ocurrido un error al eliminar todos tus datos, por favor, vuelve a probar más tarde",
     "user_delete_success": "¡Tu cuenta ha sido eliminada correctamente!",
     "user_delete_error": "Ha ocurrido un error al eliminar tu usuario, por favor, vuelve a probar más tarde",
+    "support_email_header": "Envia un correo electrónico",
+    "support_email_description": "Rellena y envia un correo electrónico al equipo de soporte explicando tu problema, {appName} usará el correo electrónico de tu cuenta para contestar",
+    "support_feedback_header": "Enviar feedback",
+    "support_feedback_description": "Con esta opción podrás enviar una captura de pantalla, poder resaltar la zona concreta del problema y explicar el problema como comentario de la captura. Para poder ir a otras pantallas pulsa el icono \"Navigate\"",
+    "support_footer": "Correo electrónico de contacto",
+    "support_advice_1": "{appName} te permite ponerte en contacto con el equipo de soporte de 2 maneras distintas.",
+    "support_advice_2": "Puedes contactar con soporte enviando un correo electrónico directamente y explicando el problema",
+    "support_advice_3": "O también puedes hacer una captura de pantalla y comentar el problema tocando la opción \"Enviar feedback\"",
+    "support_feedback_success": "¡Reporte enviado correctamente!",
+    "advice_feedback_header": "¿Que te parece {appName}?",
+    "advice_feedback_subtitle": "Deja tu opinión en la Play Store",
+    "@advice_feedback_header": {
+        "placeholders": {
+            "appName": {}
+        }
+    },
+    "@support_advice_1": {
+        "placeholders": {
+            "appName": {}
+        }
+    }, 
+    "@support_email_description": {
+        "placeholders": {
+            "appName": {}
+        }
+    },
     "@goal_amount_of_total" : {
         "placeholders": {
             "currentAmount": {},

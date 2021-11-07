@@ -85,14 +85,15 @@ class _SupportViewState extends State<SupportView> {
                 borderRadius: BorderRadius.circular(customBorderRadius),
                 child: Column(
                   children: [
-                    const BinancyHeaderRow(text: "Envia un correo electrónico"),
+                    BinancyHeaderRow(
+                        text:
+                            AppLocalizations.of(context)!.support_email_header),
                     const LinearDivider(),
                     Padding(
                       padding: const EdgeInsets.all(customMargin),
                       child: Text(
-                        "Rellena y envia un correo electrónico al equipo de soporte explicando tu problema, " +
-                            appName +
-                            " usará el correo electrónico de tu cuenta para contestar",
+                        AppLocalizations.of(context)!
+                            .support_email_description(appName),
                         style: inputStyle(),
                       ),
                     )
@@ -114,21 +115,27 @@ class _SupportViewState extends State<SupportView> {
                 onTap: () {
                   BetterFeedback.of(context).show((feedback) async =>
                       BinancyInfoDialog(
-                          context, "¡Reporte enviado correctamente!", [
-                        BinancyInfoDialogItem(
-                            AppLocalizations.of(context)!.accept,
-                            () => Navigator.pop(context))
-                      ]));
+                          context,
+                          AppLocalizations.of(context)!
+                              .support_feedback_success,
+                          [
+                            BinancyInfoDialogItem(
+                                AppLocalizations.of(context)!.accept,
+                                () => Navigator.pop(context))
+                          ]));
                 },
                 borderRadius: BorderRadius.circular(customBorderRadius),
                 child: Column(
                   children: [
-                    const BinancyHeaderRow(text: "Enviar feedback"),
+                    BinancyHeaderRow(
+                        text: AppLocalizations.of(context)!
+                            .support_feedback_header),
                     const LinearDivider(),
                     Padding(
                       padding: const EdgeInsets.all(customMargin),
                       child: Text(
-                        "Con esta opción podrás enviar una captura de pantalla, poder resaltar la zona concreta del problema y explicar el problema como comentario de la captura. Para poder ir a otras pantallas pulsa el icono \"Navigate\"",
+                        AppLocalizations.of(context)!
+                            .support_feedback_description,
                         style: inputStyle(),
                       ),
                     )
@@ -139,8 +146,8 @@ class _SupportViewState extends State<SupportView> {
           ),
           const SpaceDivider(customSpace: 40),
           Center(
-            child:
-                Text("Correo electrónico de contacto", style: miniInputStyle()),
+            child: Text(AppLocalizations.of(context)!.support_footer,
+                style: miniInputStyle()),
           ),
           Center(
             child: Text(supportEmail, style: accentStyle()),
@@ -155,18 +162,15 @@ class _SupportViewState extends State<SupportView> {
 
     supportAdviceCards.add(AdviceCard(
         icon: SvgPicture.asset("assets/svg/dashboard_settings.svg"),
-        text: appName +
-            " te permite ponerte en contacto con el equipo de soporte de 2 maneras distintas."));
+        text: AppLocalizations.of(context)!.support_advice_1(appName)));
 
     supportAdviceCards.add(AdviceCard(
         icon: SvgPicture.asset("assets/svg/dashboard_settings.svg"),
-        text:
-            "Puedes contactar con soporte enviando un correo electrónico directamente y explicando el problema"));
+        text: AppLocalizations.of(context)!.support_advice_2));
 
     supportAdviceCards.add(AdviceCard(
         icon: SvgPicture.asset("assets/svg/dashboard_settings.svg"),
-        text:
-            "O también puedes hacer una captura de pantalla y comentar el problema tocando la opción \"Enviar feedback\""));
+        text: AppLocalizations.of(context)!.support_advice_3));
 
     return supportAdviceCards;
   }

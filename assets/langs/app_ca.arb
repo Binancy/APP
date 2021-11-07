@@ -255,6 +255,32 @@
     "user_data_delete_error": "Ha hagut un error al eliminar les teves dades, si us plau, torna a provar més tard",
     "user_delete_success": "La teva compta ha estat eliminada correctament!",
     "user_delete_error": "Ha hagut un error al eliminar la teva compta, si us plau, torna a provar més tard",
+    "support_email_header": "Envia un correu electrònic",
+    "support_email_description": "Omple i envia un correu electrònic a l'equip de suport explicant el teu problema, {appName} utilitzarà el correu electrònic del teu compte per contestar",
+    "support_feedback_header": "Enviar feedback",
+    "support_feedback_description": "Amb aquesta opció podràs enviar una captura de pantalla, poder ressaltar la zona concreta del problema i explicar el problema com a comentari de la captura. Per poder anar a altres pantalles prem la icona \"Navigate\"",
+    "support_footer": "Adreça electrònic de contacte",
+    "support_advice_1": "{appName} us permet posar-vos en contacte amb l'equip de suport de 2 maneres diferents.",
+    "support_advice_2": "Pots contactar amb suport enviant un correu electrònic directament i explicant el problema",
+    "support_advice_3": "O també podeu fer una captura de pantalla i comentar el problema tocant l'opció \"Enviar feedback\"",
+    "support_feedback_success": "Report enviat correctament!",
+    "advice_feedback_header": "Què et sembla {appName}?",
+    "advice_feedback_subtitle": "Deixa la teva opinió a la Play Store",
+    "@advice_feedback_header": {
+        "placeholders": {
+            "appName": {}
+        }
+    },
+    "@support_advice_1": {
+        "placeholders": {
+            "appName": {}
+        }
+    }, 
+    "@support_email_description": {
+        "placeholders": {
+            "appName": {}
+        }
+    },
     "@goal_amount_of_total" : {
         "placeholders": {
             "currentAmount": {},

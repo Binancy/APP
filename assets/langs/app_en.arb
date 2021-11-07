@@ -255,6 +255,33 @@
     "user_data_delete_error": "An error has ocurred deleting all your data, please try again later",
     "user_delete_success": "Your user has been deleted successfully!",
     "user_delete_error": "An error has ocurred deleting your user, please try again later",
+    "support_email_header": "Send an email",
+    "support_email_description": "Fill and send an email to the support team explaining your problem, {appName} will use the email of your account to answer",
+    "support_feedback_header": "Send feedback",
+    "support_feedback_description": "With this option you can send a screenshot, highlight the specific area of ​​the problem and explain the problem as a comment on the screenshot. To be able to go to other screens, press the \"Navigate\" icon",
+    "support_footer": "Contact email",
+    "support_advice_1": "{appName} allows you to contact the support team in 2 different ways.",
+    "support_advice_2": "You can contact support by sending an email directly and explaining the problem",
+    "support_advice_3": "Or you can also take a screenshot and comment on the problem by touching the option \"Send feedback\"",
+    "support_feedback_success": "Report sent successfully!",
+    "advice_send_suggestion": "Send suggestions",
+    "advice_feedback_header": "What do you think of {appName}?",
+    "advice_feedback_subtitle": "Leave your opinion on the Play Store",
+    "@advice_feedback_header": {
+        "placeholders": {
+            "appName": {}
+        }
+    },
+    "@support_advice_1": {
+        "placeholders": {
+            "appName": {}
+        }
+    }, 
+    "@support_email_description": {
+        "placeholders": {
+            "appName": {}
+        }
+    },
     "@goal_amount_of_total" : {
         "placeholders": {
             "currentAmount": {},

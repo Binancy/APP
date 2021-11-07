@@ -5,6 +5,7 @@
    <application
         android:label="Binancy"
         android:theme="@style/LaunchTheme"
+        android:usesCleartextTraffic="true"
         android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
