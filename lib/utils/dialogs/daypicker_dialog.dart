@@ -25,7 +25,7 @@ class BinancyDayPickerDialog {
       return showGeneralDialog(
         context: context,
         barrierLabel: "",
-        barrierDismissible: true,
+        barrierDismissible: false,
         barrierColor: Colors.transparent,
         transitionDuration:
             const Duration(milliseconds: progressDialogBlurAnimation),
