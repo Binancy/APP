@@ -242,7 +242,7 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
         ],
         textInputAction: TextInputAction.next,
         readOnly: !allowEdit,
-        keyboardType: TextInputType.number,
+        keyboardType: TextInputType.numberWithOptions(decimal: true),
         controller: totalAmountController,
         style: inputStyle(),
         decoration: customInputDecoration(

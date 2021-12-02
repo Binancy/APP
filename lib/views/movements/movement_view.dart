@@ -418,7 +418,7 @@ class _MovementViewState extends State<MovementView> {
         ],
         textInputAction: TextInputAction.next,
         readOnly: !allowEdit,
-        keyboardType: TextInputType.number,
+        keyboardType: TextInputType.numberWithOptions(decimal: true),
         controller: valueController,
         style: inputStyle(),
         decoration: customInputDecoration(

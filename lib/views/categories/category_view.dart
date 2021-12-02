@@ -228,6 +228,7 @@ class _CategoryViewState extends State<CategoryView> {
         textInputAction: TextInputAction.next,
         readOnly: !allowEdit,
         keyboardType: TextInputType.name,
+        autofillHints: const [AutofillHints.name],
         controller: titleController,
         style: inputStyle(),
         decoration: customInputDecoration(

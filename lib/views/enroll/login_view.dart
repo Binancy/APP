@@ -204,6 +204,7 @@ class _LoginViewState extends State<LoginView> {
           passwordFocusNode.requestFocus();
         },
         keyboardType: TextInputType.emailAddress,
+        autofillHints: const [AutofillHints.email],
         controller: emailController,
         style: inputStyle(),
         decoration: customInputDecoration(
