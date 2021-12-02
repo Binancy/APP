@@ -423,16 +423,20 @@ class DecimalTextInputFormatter extends TextInputFormatter {
     String value = newValue.text;
 
     if (value.contains(".") &&
-        value.substring(value.indexOf(".") + 1).length > decimalRange) {
+            value.substring(value.indexOf(".") + 1).length > decimalRange ||
+        value.contains(",") &&
+            value.substring(value.indexOf(",") + 1).length > decimalRange) {
       truncated = oldValue.text;
       newSelection = oldValue.selection;
-    } else if (value == ".") {
+    } else if (value == "." || value == ",") {
       truncated = "0.";
 
       newSelection = newValue.selection.copyWith(
         baseOffset: math.min(truncated.length, truncated.length + 1),
         extentOffset: math.min(truncated.length, truncated.length + 1),
       );
+
+      truncated.replaceAll(",", ".");
     }
 
     return TextEditingValue(
