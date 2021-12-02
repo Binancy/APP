@@ -482,7 +482,7 @@ class _MovementViewState extends State<MovementView> {
   Future<void> insertIncome(MovementsChangeNotifier movementsProvider) async {
     Income income = Income()
       ..title = titleController.text
-      ..value = double.parse(valueController.text)
+      ..value = Utils.parseInputAmount(valueController.text)
       ..date = Utils.fromYMD(parsedDate, context)
       ..idUser = userData['idUser']
       ..description = noteController.text
@@ -516,7 +516,7 @@ class _MovementViewState extends State<MovementView> {
   Future<void> updateIncome(MovementsChangeNotifier movementsProvider) async {
     Income income = Income()
       ..title = titleController.text
-      ..value = double.parse(valueController.text)
+      ..value = Utils.parseInputAmount(valueController.text)
       ..date = Utils.fromYMD(parsedDate, context)
       ..idUser = userData['idUser']
       ..description = noteController.text
@@ -556,7 +556,7 @@ class _MovementViewState extends State<MovementView> {
   Future<void> insertExpend(MovementsChangeNotifier movementsProvider) async {
     Expend expend = Expend()
       ..title = titleController.text
-      ..value = double.parse(valueController.text)
+      ..value = Utils.parseInputAmount(valueController.text)
       ..date = Utils.fromYMD(parsedDate, context)
       ..idUser = userData['idUser']
       ..description = noteController.text
@@ -591,7 +591,7 @@ class _MovementViewState extends State<MovementView> {
   Future<void> updateExpend(MovementsChangeNotifier movementsProvider) async {
     Expend expend = Expend()
       ..title = titleController.text
-      ..value = double.parse(valueController.text)
+      ..value = Utils.parseInputAmount(valueController.text)
       ..date = Utils.fromYMD(parsedDate, context)
       ..idUser = userData['idUser']
       ..description = noteController.text

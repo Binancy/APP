@@ -406,7 +406,7 @@ class _MicroExpendViewState extends State<MicroExpendView> {
       MicroExpensesChangeNotifier microExpensesProvider) async {
     MicroExpend microExpend = MicroExpend()
       ..title = titleController.text
-      ..amount = double.parse(amountController.text)
+      ..amount = Utils.parseInputAmount(amountController.text)
       ..idUser = userData['idUser']
       ..idCategory =
           selectedCategory != null ? selectedCategory!.idCategory : null
@@ -442,7 +442,7 @@ class _MicroExpendViewState extends State<MicroExpendView> {
       MicroExpensesChangeNotifier microExpensesProvider) async {
     MicroExpend microExpend = MicroExpend()
       ..title = titleController.text
-      ..amount = double.parse(amountController.text)
+      ..amount = Utils.parseInputAmount(amountController.text)
       ..idUser = userData['idUser']
       ..idMicroExpend = selectedMicroExpend!.idMicroExpend
       ..category = selectedCategory

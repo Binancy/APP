@@ -385,7 +385,7 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
     SavingsPlan savingsPlan = SavingsPlan()
       ..name = nameController.text
       ..description = descriptionController.text
-      ..amount = double.parse(totalAmountController.text)
+      ..amount = Utils.parseInputAmount(totalAmountController.text)
       ..idUser = userData['idUser']
       ..limitDate = Utils.isValidDateYMD(parsedDate, context)
           ? Utils.fromYMD(parsedDate, context)
@@ -421,7 +421,7 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
     SavingsPlan savingsPlan = SavingsPlan()
       ..name = nameController.text
       ..description = descriptionController.text
-      ..amount = double.parse(totalAmountController.text)
+      ..amount = Utils.parseInputAmount(totalAmountController.text)
       ..idUser = userData['idUser']
       ..idSavingsPlan = selectedSavingsPlan!.idSavingsPlan
       ..limitDate = Utils.isValidDateYMD(parsedDate, context)

@@ -435,7 +435,7 @@ class _SubscriptionViewState extends State<SubscriptionView> {
     Subscription subscription = Subscription()
       ..name = nameController.text
       ..idUser = userData['idUser']
-      ..value = double.parse(amountController.text)
+      ..value = Utils.parseInputAmount(amountController.text)
       ..payDay = int.parse(payDay)
       ..latestMonth = ignoreCheckoutThisMonth
           ? Utils.thisMonthEnun(Utils.getTodayDate())
@@ -472,7 +472,7 @@ class _SubscriptionViewState extends State<SubscriptionView> {
     Subscription subscription = Subscription()
       ..name = nameController.text
       ..idUser = userData['idUser']
-      ..value = double.parse(amountController.text)
+      ..value = Utils.parseInputAmount(amountController.text)
       ..payDay = int.parse(payDay)
       ..idSubscription = selectedSubscription!.idSubscription
       ..latestMonth = selectedSubscription!.latestMonth

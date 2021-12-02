@@ -404,6 +404,10 @@ class Utils {
   static bool isIOS() {
     return Platform.isIOS;
   }
+
+  static double parseInputAmount(String rawAmount) {
+    return double.parse(rawAmount.replaceAll(",", "."));
+  }
 }
 
 class DecimalTextInputFormatter extends TextInputFormatter {
@@ -435,8 +439,6 @@ class DecimalTextInputFormatter extends TextInputFormatter {
         baseOffset: math.min(truncated.length, truncated.length + 1),
         extentOffset: math.min(truncated.length, truncated.length + 1),
       );
-
-      truncated.replaceAll(",", ".");
     }
 
     return TextEditingValue(

@@ -88,6 +88,14 @@ TextStyle balanceValueStyle() {
       fontFamily: "Segoe UI");
 }
 
+TextStyle movementsHeaderTotalStyle() {
+  return TextStyle(
+      color: textColor,
+      fontSize: 65,
+      fontWeight: FontWeight.bold,
+      fontFamily: "Segoe UI");
+}
+
 TextStyle savingsPlanTitleStyle(bool accent) {
   return TextStyle(
       color: accent ? accentColor : textColor,
