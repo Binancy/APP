@@ -207,7 +207,7 @@ class MovementBalanceView extends StatelessWidget {
               Text(AppLocalizations.of(context)!.my_heritage,
                   style: accentTitleStyle()),
               Text(Utils.parseAmount(movementsProvider.totalHeritage),
-                  style: balanceValueStyle()),
+                  style: movementsHeaderTotalStyle()),
             ],
           ),
         ),

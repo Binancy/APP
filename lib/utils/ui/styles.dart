@@ -1,3 +1,4 @@
+import 'package:binancy/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -82,7 +83,7 @@ TextStyle headerItemView() {
 TextStyle balanceValueStyle() {
   return TextStyle(
       color: textColor,
-      fontSize: 65,
+      fontSize: Utils.isIOS() ? 85 : 65,
       fontWeight: FontWeight.bold,
       fontFamily: "Segoe UI");
 }

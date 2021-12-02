@@ -390,7 +390,6 @@ class _MovementViewState extends State<MovementView> {
         textInputAction: TextInputAction.next,
         readOnly: !allowEdit,
         keyboardType: TextInputType.name,
-        autofillHints: const [AutofillHints.name],
         controller: titleController,
         style: inputStyle(),
         decoration: customInputDecoration(

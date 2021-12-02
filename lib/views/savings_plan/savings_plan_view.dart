@@ -217,7 +217,6 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
         textInputAction: TextInputAction.next,
         readOnly: !allowEdit,
         keyboardType: TextInputType.name,
-        autofillHints: const [AutofillHints.name],
         controller: nameController,
         style: inputStyle(),
         decoration: customInputDecoration(

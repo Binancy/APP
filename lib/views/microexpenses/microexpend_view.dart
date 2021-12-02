@@ -231,7 +231,6 @@ class _MicroExpendViewState extends State<MicroExpendView> {
         textInputAction: TextInputAction.next,
         readOnly: !allowEdit,
         keyboardType: TextInputType.name,
-        autofillHints: const [AutofillHints.name],
         controller: titleController,
         style: inputStyle(),
         decoration: customInputDecoration(

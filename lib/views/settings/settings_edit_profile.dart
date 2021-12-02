@@ -148,7 +148,6 @@ class _SettingsEditUserInfoViewState extends State<SettingsEditUserInfoView> {
         onSubmitted: onSubmitted,
         inputFormatters: inputFormatters,
         keyboardType: TextInputType.name,
-        autofillHints: const [AutofillHints.name],
         controller: controller,
         style: inputStyle(),
         decoration: customInputDecoration(hintText, icon),
