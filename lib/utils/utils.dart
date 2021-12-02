@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 import 'package:binancy/controllers/providers/categories_change_notifier.dart';
 import 'package:binancy/controllers/providers/microexpenses_change_notifier.dart';
@@ -398,6 +399,10 @@ class Utils {
     }
 
     return status;
+  }
+
+  static bool isIOS() {
+    return Platform.isIOS;
   }
 }
 

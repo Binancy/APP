@@ -83,6 +83,7 @@ class _DashboardViewState extends State<DashboardView> {
             body: ScrollConfiguration(
                 behavior: MyBehavior(),
                 child: SmartRefresher(
+                  physics: const ClampingScrollPhysics(),
                   header: ClassicHeader(
                     textStyle: inputStyle(),
                     idleIcon: Icon(Icons.arrow_downward, color: accentColor),
