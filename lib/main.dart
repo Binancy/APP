@@ -16,7 +16,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 
 void main() async {
-  runZonedGuarded<Future<void>>(() async {
+  /* runZonedGuarded<Future<void>>(() async {
     Paint.enableDithering = true;
 
     WidgetsFlutterBinding.ensureInitialized();
@@ -36,7 +36,12 @@ void main() async {
     }
 
     runApp(MyApp());
-  }, (error, stack) => FirebaseCrashlytics.instance.recordError(error, stack));
+  }, (error, stack) => FirebaseCrashlytics.instance.recordError(error, stack)); */
+Paint.enableDithering = true;
+
+    WidgetsFlutterBinding.ensureInitialized();
+  runApp(MyApp());
+
 }
 
 class MyApp extends StatefulWidget {
