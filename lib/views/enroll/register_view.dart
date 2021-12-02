@@ -135,6 +135,7 @@ class _RegisterViewState extends State<RegisterView> {
               alignment: Alignment.center,
               child: TextField(
                 keyboardType: TextInputType.emailAddress,
+                autofillHints: const [AutofillHints.email],
                 controller: emailController,
                 focusNode: emailFocusNode,
                 style: inputStyle(),
@@ -287,6 +288,7 @@ class _RegisterViewState extends State<RegisterView> {
               alignment: Alignment.center,
               child: TextField(
                 keyboardType: TextInputType.name,
+                autofillHints: const [AutofillHints.name],
                 textCapitalization: TextCapitalization.words,
                 controller: nameController,
                 style: inputStyle(),
@@ -313,6 +315,7 @@ class _RegisterViewState extends State<RegisterView> {
                 onSubmitted: (value) => lastSurnameFocusNode.requestFocus(),
                 focusNode: firstSurnameFocusNode,
                 keyboardType: TextInputType.name,
+                autofillHints: const [AutofillHints.name],
                 textCapitalization: TextCapitalization.words,
                 decoration: customInputDecoration(
                     AppLocalizations.of(context)!.your_first_surname,
@@ -340,6 +343,7 @@ class _RegisterViewState extends State<RegisterView> {
                 },
                 focusNode: lastSurnameFocusNode,
                 keyboardType: TextInputType.name,
+                autofillHints: const [AutofillHints.name],
                 textCapitalization: TextCapitalization.words,
                 decoration: customInputDecoration(
                     AppLocalizations.of(context)!.your_last_surname,

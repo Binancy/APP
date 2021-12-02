@@ -237,6 +237,7 @@ class _SubscriptionViewState extends State<SubscriptionView> {
         textInputAction: TextInputAction.next,
         readOnly: !allowEdit,
         keyboardType: TextInputType.name,
+        autofillHints: const [AutofillHints.name],
         controller: nameController,
         style: inputStyle(),
         decoration: customInputDecoration(
@@ -261,7 +262,7 @@ class _SubscriptionViewState extends State<SubscriptionView> {
         ],
         textInputAction: TextInputAction.next,
         readOnly: !allowEdit,
-        keyboardType: TextInputType.number,
+        keyboardType: TextInputType.numberWithOptions(decimal: true),
         controller: amountController,
         style: inputStyle(),
         decoration: customInputDecoration(

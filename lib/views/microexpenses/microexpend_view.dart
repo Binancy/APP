@@ -231,6 +231,7 @@ class _MicroExpendViewState extends State<MicroExpendView> {
         textInputAction: TextInputAction.next,
         readOnly: !allowEdit,
         keyboardType: TextInputType.name,
+        autofillHints: const [AutofillHints.name],
         controller: titleController,
         style: inputStyle(),
         decoration: customInputDecoration(
@@ -255,7 +256,7 @@ class _MicroExpendViewState extends State<MicroExpendView> {
         ],
         textInputAction: TextInputAction.next,
         readOnly: !allowEdit,
-        keyboardType: TextInputType.number,
+        keyboardType: const TextInputType.numberWithOptions(decimal: true),
         controller: amountController,
         style: inputStyle(),
         decoration: customInputDecoration(
