@@ -4,7 +4,6 @@ import 'package:binancy/controllers/providers/movements_change_notifier.dart';
 import 'package:binancy/controllers/providers/plans_change_notifier.dart';
 import 'package:binancy/controllers/providers/savings_plans_change_notifier.dart';
 import 'package:binancy/controllers/providers/subscriptions_change_notifier.dart';
-import 'package:binancy/globals.dart';
 import 'package:binancy/utils/ui/icons.dart';
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/ui/widgets.dart';

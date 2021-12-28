@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:binancy/controllers/account_controller.dart';
 import 'package:binancy/globals.dart';
 import 'package:binancy/utils/dialogs/daypicker_dialog.dart';
@@ -10,10 +9,7 @@ import 'package:binancy/utils/ui/widgets.dart';
 import 'package:binancy/views/settings/settings_change_password.dart';
 import 'package:binancy/views/settings/settings_edit_profile.dart';
 import 'package:binancy/views/settings/settings_view.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SettingsUserDataView extends StatefulWidget {

@@ -13,7 +13,6 @@ import 'package:binancy/views/dashboard/dashboard_view.dart';
 import 'package:binancy/views/enroll/login_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../globals.dart';
