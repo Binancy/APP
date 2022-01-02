@@ -36,6 +36,8 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
   List<ActionButtonWidget> actionsList = [];
   List<Widget> pageList = [];
 
+  PageController pageController = PageController();
+
   bool firstRun = true;
 
   @override
@@ -77,6 +79,7 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
                     height: (MediaQuery.of(context).size.height / 10 * 2.5),
                     child: PageView(
                       onPageChanged: (value) => updatePointers(value),
+                      controller: pageController,
                       children: pageList,
                     )),
                 Padding(
@@ -442,11 +445,16 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
   List<Widget> buildPointers() {
     List<Widget> pointersList = [];
     for (var i = 0; i < pageList.length; i++) {
-      pointersList.add(AnimatedOpacity(
-          opacity: opacityValueList[i],
-          curve: Curves.easeInOut,
-          duration: const Duration(milliseconds: opacityAnimationDurationMS),
-          child: const Icon(Icons.circle, color: Colors.white, size: 10)));
+      pointersList.add(GestureDetector(
+        onTap: () => pageController.animateToPage(i,
+            duration: const Duration(milliseconds: adviceTransitionDuration),
+            curve: Curves.easeOut),
+        child: AnimatedOpacity(
+            opacity: opacityValueList[i],
+            curve: Curves.easeInOut,
+            duration: const Duration(milliseconds: opacityAnimationDurationMS),
+            child: const Icon(Icons.circle, color: Colors.white, size: 10)),
+      ));
     }
 
     return pointersList;
