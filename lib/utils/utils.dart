@@ -265,8 +265,12 @@ class Utils {
 
   static Month getMonthNameOfPayDay(DateTime thisMonthPayday) {
     bool isAfterHalfMonth = thisMonthPayday.day >= 16;
-    return Month.values[
-        isAfterHalfMonth ? thisMonthPayday.month + 1 : thisMonthPayday.month];
+    if (thisMonthPayday.month == Month.values.length - 1) {
+      return Month.values[isAfterHalfMonth ? 1 : 12];
+    } else {
+      return Month.values[
+          isAfterHalfMonth ? thisMonthPayday.month + 1 : thisMonthPayday.month];
+    }
   }
 
   static int getPayDayOfMonth(DateTime date) {
