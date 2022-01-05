@@ -190,11 +190,13 @@ class _BinancyIconVerticalState extends State<BinancyIconVertical> {
   }
 
   void revealProgressIndicator() {
-    Future.delayed(const Duration(
-            milliseconds: splashScreenTimeToShowProgressIndicatorMS))
-        .then((value) => setState(() {
-              progressIndicatorSize = 75;
-            }));
+    if (widget.showProgressIndicator) {
+      Future.delayed(const Duration(
+              milliseconds: splashScreenTimeToShowProgressIndicatorMS))
+          .then((value) => setState(() {
+                progressIndicatorSize = 75;
+              }));
+    }
   }
 }
 

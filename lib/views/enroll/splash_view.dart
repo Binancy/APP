@@ -34,7 +34,9 @@ class _SplashScreenState extends State<SplashScreen> {
           children: [
             const Positioned(
                 child: Center(
-              child: BinancyIconVertical(),
+              child: BinancyIconVertical(
+                showProgressIndicator: true,
+              ),
             )),
             Positioned(
                 child: Container(
