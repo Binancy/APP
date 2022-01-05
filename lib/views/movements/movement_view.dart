@@ -283,6 +283,7 @@ class _MovementViewState extends State<MovementView> {
             if (allowEdit) {
               BinancyDatePicker binancyDatePicker = BinancyDatePicker(
                   context: context,
+                  lastDate: Utils.getTodayDate(),
                   initialDate: Utils.isValidDateYMD(parsedDate, context)
                       ? Utils.fromYMD(parsedDate, context)
                       : DateTime.now());

@@ -293,6 +293,7 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
             if (allowEdit) {
               BinancyDatePicker binancyDatePicker = BinancyDatePicker(
                   context: context,
+                  firstDate: Utils.getTodayDate(),
                   initialDate: Utils.isValidDateYMD(parsedDate, context)
                       ? Utils.fromYMD(parsedDate, context)
                       : DateTime.now());

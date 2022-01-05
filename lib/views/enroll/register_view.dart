@@ -357,6 +357,7 @@ class _RegisterViewState extends State<RegisterView> {
                     FocusScope.of(context).unfocus();
                     BinancyDatePicker binancyDatePicker = BinancyDatePicker(
                         context: context,
+                        lastDate: Utils.getTodayDate(),
                         initialDate: Utils.isValidDateYMD(parsedDate, context)
                             ? Utils.fromYMD(parsedDate, context)
                             : DateTime.now());
