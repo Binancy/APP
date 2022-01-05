@@ -146,11 +146,22 @@ class BinancyLogoVert extends StatelessWidget {
   }
 }
 
-class BinancyIconVertical extends StatelessWidget {
-  const BinancyIconVertical({Key? key}) : super(key: key);
+class BinancyIconVertical extends StatefulWidget {
+  const BinancyIconVertical({Key? key, this.showProgressIndicator = false})
+      : super(key: key);
+
+  final bool showProgressIndicator;
+
+  @override
+  State<BinancyIconVertical> createState() => _BinancyIconVerticalState();
+}
+
+class _BinancyIconVerticalState extends State<BinancyIconVertical> {
+  double progressIndicatorSize = 0;
 
   @override
   Widget build(BuildContext context) {
+    revealProgressIndicator();
     return SizedBox(
         width: MediaQuery.of(context).size.width,
         child: Padding(
@@ -163,8 +174,27 @@ class BinancyIconVertical extends StatelessWidget {
                 Image.asset(
                   "assets/icons/binancy_icon.png",
                 ),
+                AnimatedContainer(
+                  height: progressIndicatorSize,
+                  width: progressIndicatorSize,
+                  duration: const Duration(
+                      milliseconds: splashScreenProgressIndicatorTransitionMS),
+                  child: CircularProgressIndicator(
+                    strokeWidth: 5,
+                    backgroundColor: themeColor.withOpacity(0.1),
+                    color: accentColor,
+                  ),
+                )
               ],
             ))));
+  }
+
+  void revealProgressIndicator() {
+    Future.delayed(const Duration(
+            milliseconds: splashScreenTimeToShowProgressIndicatorMS))
+        .then((value) => setState(() {
+              progressIndicatorSize = 75;
+            }));
   }
 }
 

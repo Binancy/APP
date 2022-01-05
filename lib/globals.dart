@@ -56,6 +56,8 @@ const int swapAnimationDurationMS = 500;
 const int autoPassAdviceInterval = 5;
 const int adviceTransitionDuration = 500;
 const int registerTransitionDuration = 750;
+const int splashScreenTimeToShowProgressIndicatorMS = 1000;
+const int splashScreenProgressIndicatorTransitionMS = 150;
 
 // UI GLOBALS
 const int dashboardMaxNotifications = 3;
