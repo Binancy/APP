@@ -266,6 +266,7 @@
     "support_feedback_success": "Report enviat correctament!",
     "advice_feedback_header": "Què et sembla {appName}?",
     "advice_feedback_subtitle": "Deixa la teva opinió a la Play Store",
+    "subscriptions_next_subscription_to_pay": "La teva proxima subscripció a renovar:",
     "@advice_feedback_header": {
         "placeholders": {
             "appName": {}

@@ -40,8 +40,8 @@ class SubscriptionsController {
 
   static Future<bool> paySubscription(Subscription subscription) async {
     Expend subscriptionToExpend = Expend()
-      //   ..category = Category.subscriptionCategory()
-      ..date = DateTime.now()
+      // ..category = Category.subscriptionCategory()
+      ..date = subscription.getPayDayDate()!
       ..description = subscription.description
       ..idUser = userData['idUser']
       ..title = subscription.name

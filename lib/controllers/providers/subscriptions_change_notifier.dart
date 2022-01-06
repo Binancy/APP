@@ -16,6 +16,7 @@ class SubscriptionsChangeNotifier extends ChangeNotifier {
   Future<void> updateSubscriptions() async {
     if (await Utils.hasConnection().timeout(timeout)) {
       subscriptionsList = await SubscriptionsController.getSubscriptions();
+      subscriptionsList.sort((a, b) => b.date!.isAfter(a.date!) ? 0 : 1);
       await getTotalSubscriptionsValue();
       notifyListeners();
     }
@@ -35,24 +36,10 @@ class SubscriptionsChangeNotifier extends ChangeNotifier {
       ..latestMonth = Month.NONE;
 
     for (var subscription in subscriptionsList) {
-      if (subscription.latestMonth.index < today.month) {
-        if (subscription.payDay > today.day &&
-                subscription.payDay > nextSubscriptionToPay.payDay ||
-            nextSubscriptionToPay.payDay == 0) {
-          nextSubscriptionToPay = subscription;
-        }
-      } else if (subscription.latestMonth.index == 12 && today.month == 1) {
-        if (subscription.payDay < today.day &&
-                subscription.payDay < nextSubscriptionToPay.payDay ||
-            nextSubscriptionToPay.payDay == 0) {
-          nextSubscriptionToPay = subscription;
-        }
-      } else if (subscription.latestMonth.index == today.month) {
-        if (subscription.payDay > today.day &&
-                subscription.payDay < nextSubscriptionToPay.payDay ||
-            nextSubscriptionToPay.payDay == 0) {
-          nextSubscriptionToPay = subscription;
-        }
+      if (nextSubscriptionToPay.date == null) {
+        nextSubscriptionToPay = subscription;
+      } else if (nextSubscriptionToPay.date!.isAfter(subscription.date!)) {
+        nextSubscriptionToPay = subscription;
       }
     }
 
