@@ -13,8 +13,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class AccountController {
   static Future<void> registerUser(
       BuildContext context, Map<String, dynamic> registerData) async {
-    ConnAPI connAPI =
-        ConnAPI(APIEndpoints.REGISTER, "POST", false, {"data": registerData});
+    ConnAPI connAPI = ConnAPI(
+        APIEndpoints.REGISTER, "POST", false, {"data": registerData},
+        disableTimeout: true);
     BinancyProgressDialog binancyProgressDialog =
         BinancyProgressDialog(context: context)..showProgressDialog();
     await connAPI.callAPI();

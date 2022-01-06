@@ -16,11 +16,15 @@ class ConnAPI {
   bool isTest = false;
   var response;
   Map<String, String> headers = {"Content-Type": "application/json"};
+  final bool disableTimeout;
 
-  ConnAPI(this.endpoint, this.method, this.isTest, this.requestJSON);
+  ConnAPI(this.endpoint, this.method, this.isTest, this.requestJSON,
+      {this.disableTimeout = false});
 
   Future<void> callAPI() async {
-    await Utils.hasConnection().timeout(timeout).then((value) async {
+    await Utils.hasConnection()
+        .timeout(disableTimeout ? const Duration(seconds: 30) : timeout)
+        .then((value) async {
       if (value) {
         try {
           switch (method) {

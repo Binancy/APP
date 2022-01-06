@@ -68,7 +68,8 @@ class _SplashScreenState extends State<SplashScreen> {
     if (isOnStorage) {
       String token = await Utils.getFromSecureStorage("token");
       ConnAPI connAPI = ConnAPI(
-          APIEndpoints.LOGIN_WITH_TOKEN, "POST", false, {"token": token});
+          APIEndpoints.LOGIN_WITH_TOKEN, "POST", false, {"token": token},
+          disableTimeout: true);
       await connAPI.callAPI();
       if (connAPI.getStatus() == 200) {
         userData = connAPI.getResponse()![0];

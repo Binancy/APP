@@ -126,7 +126,8 @@ class _LoginViewState extends State<LoginView> {
     if (email.isNotEmpty && passwordController.text.isNotEmpty) {
       if (Utils.verifyEmail(email)) {
         ConnAPI connAPI = ConnAPI(APIEndpoints.LOGIN, "POST", false,
-            {'email': email, 'pass': password});
+            {'email': email, 'pass': password},
+            disableTimeout: true);
         BinancyProgressDialog progressDialog =
             BinancyProgressDialog(context: context)..showProgressDialog();
         await connAPI.callAPI();
