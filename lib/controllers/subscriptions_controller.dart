@@ -162,6 +162,13 @@ class SubscriptionsController {
         }
       }
 
+      // Implemented in 1.2, this fix will allow to check subscriptions if Binancy
+      // was not opened for more than a month.
+      if (subscription.date!.isBefore(today) ||
+          subscription.date!.isAtSameMomentAs(today)) {
+        update = true;
+      }
+
       if (update) {
         if (await updateSubscriptionLatestMonth(subscription)) {
           notifyListeners = true;
