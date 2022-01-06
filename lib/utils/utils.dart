@@ -403,6 +403,11 @@ class Utils {
 
     return status;
   }
+
+  static String getCurrencyFromAvaiableCurrencyList() {
+    String rawCurrency = avaiableCurrencies.elementAt(userData['currency']);
+    return rawCurrency.split("(")[1][0];
+  }
 }
 
 class DecimalTextInputFormatter extends TextInputFormatter {

@@ -268,7 +268,10 @@
     "advice_feedback_header": "What do you think of {appName}?",
     "advice_feedback_subtitle": "Leave your opinion on the Play Store",
     "subscriptions_next_subscription_to_pay": "Your next subscription to renew:",
-
+    "currency_header": "Change currency",
+    "currency_eur": "Euro (€)",
+    "currency_usd": "Dollar ($)",
+    "currency_pnd": "Pound (£)",
     "@advice_feedback_header": {
         "placeholders": {
             "appName": {}

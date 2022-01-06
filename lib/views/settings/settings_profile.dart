@@ -2,6 +2,7 @@ import 'package:binancy/controllers/account_controller.dart';
 import 'package:binancy/globals.dart';
 import 'package:binancy/utils/dialogs/daypicker_dialog.dart';
 import 'package:binancy/utils/dialogs/info_dialog.dart';
+import 'package:binancy/utils/dialogs/itempicker_dialog.dart';
 import 'package:binancy/utils/dialogs/progress_dialog.dart';
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/utils.dart';
@@ -171,6 +172,20 @@ class _SettingsUserDataViewState extends State<SettingsUserDataView> {
         text: AppLocalizations.of(context)!.delete_account,
         action: () => confirmDeleteAccount(),
       ),
+      const LinearDivider(),
+      BinancyActionRow(
+          text: AppLocalizations.of(context)!.currency_header,
+          action: () {
+            BinancySelectorPickerDialog(
+                    context: context,
+                    title: AppLocalizations.of(context)!.currency_header,
+                    hint: AppLocalizations.of(context)!.currency_header,
+                    items: avaiableCurrencies,
+                    selectedItem:
+                        avaiableCurrencies.elementAt(userData['currency']),
+                    onChanged: (value) {})
+                .showSelectorPickerDialog();
+          })
     ];
 
     return Container(

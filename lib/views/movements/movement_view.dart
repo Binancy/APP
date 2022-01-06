@@ -196,7 +196,22 @@ class _MovementViewState extends State<MovementView> {
                           const SpaceDivider(),
                           datePicker(context),
                           const SpaceDivider(),
-                          categorySelector(context),
+                          BinancySelectorWidget(
+                            hint: AppLocalizations.of(context)!.select_category,
+                            items: categoryList,
+                            selectedItem: selectedCategory,
+                            onChanged: (value) {
+                              setState(() {
+                                selectedCategory = value;
+                              });
+                            },
+                            allowEdit: allowEdit,
+                            icon: Icon(
+                              BinancyIcons.folder,
+                              color: accentColor,
+                              size: 36,
+                            ),
+                          ),
                           const SpaceDivider(),
                           movementNotes(),
                           const SpaceDivider(),
@@ -317,60 +332,6 @@ class _MovementViewState extends State<MovementView> {
                 ],
               )),
         ),
-      ),
-    );
-  }
-
-  Padding categorySelector(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: customMargin, right: customMargin),
-      child: Material(
-        color: themeColor.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(customBorderRadius),
-        child: Container(
-            height: buttonHeight,
-            padding:
-                const EdgeInsets.only(left: customMargin, right: customMargin),
-            child: Row(
-              children: [
-                Icon(
-                  BinancyIcons.folder,
-                  color: accentColor,
-                  size: 36,
-                ),
-                const SpaceDivider(
-                  isVertical: true,
-                ),
-                Expanded(
-                    child: DropdownButton<Category>(
-                        isExpanded: true,
-                        hint: Text(
-                          AppLocalizations.of(context)!.select_category,
-                          style: inputStyle(),
-                        ),
-                        onTap: () => FocusScope.of(context).unfocus(),
-                        dropdownColor: primaryColor,
-                        borderRadius: BorderRadius.circular(customBorderRadius),
-                        isDense: true,
-                        elevation: 0,
-                        iconDisabledColor: accentColor,
-                        iconEnabledColor: accentColor,
-                        value: selectedCategory,
-                        onChanged: allowEdit
-                            ? (value) {
-                                setState(() {
-                                  selectedCategory = value;
-                                });
-                              }
-                            : null,
-                        style: inputStyle(),
-                        underline: const SizedBox(),
-                        items: categoryList
-                            .map((e) => DropdownMenuItem<Category>(
-                                value: e, child: Text(e.title)))
-                            .toList()))
-              ],
-            )),
       ),
     );
   }

@@ -14,6 +14,7 @@ import 'package:binancy/views/enroll/login_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../globals.dart';
 
@@ -54,6 +55,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void startSplashScreen(BuildContext context) async {
+    getAvaiableCurrencies(context);
     await precacheSvg(context);
     if (await checkLoginWithToken()) {
       gotoDashboard(context);
@@ -138,6 +140,14 @@ class _SplashScreenState extends State<SplashScreen> {
               SvgPicture.svgStringDecoder, "assets/svg/dashboard_settings.svg"),
           null),
     ]);
+  }
+
+  void getAvaiableCurrencies(BuildContext context) {
+    avaiableCurrencies = [
+      AppLocalizations.of(context)!.currency_eur,
+      AppLocalizations.of(context)!.currency_usd,
+      AppLocalizations.of(context)!.currency_pnd
+    ];
   }
 }
 
