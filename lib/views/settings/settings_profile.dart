@@ -2,11 +2,11 @@ import 'package:binancy/controllers/account_controller.dart';
 import 'package:binancy/globals.dart';
 import 'package:binancy/utils/dialogs/daypicker_dialog.dart';
 import 'package:binancy/utils/dialogs/info_dialog.dart';
-import 'package:binancy/utils/dialogs/itempicker_dialog.dart';
 import 'package:binancy/utils/dialogs/progress_dialog.dart';
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/ui/widgets.dart';
+import 'package:binancy/views/settings/settings_change_currency.dart';
 import 'package:binancy/views/settings/settings_change_password.dart';
 import 'package:binancy/views/settings/settings_edit_profile.dart';
 import 'package:binancy/views/settings/settings_view.dart';
@@ -175,17 +175,7 @@ class _SettingsUserDataViewState extends State<SettingsUserDataView> {
       const LinearDivider(),
       BinancyActionRow(
           text: AppLocalizations.of(context)!.currency_header,
-          action: () {
-            BinancySelectorPickerDialog(
-                    context: context,
-                    title: AppLocalizations.of(context)!.currency_header,
-                    hint: AppLocalizations.of(context)!.currency_header,
-                    items: avaiableCurrencies,
-                    selectedItem:
-                        avaiableCurrencies.elementAt(userData['currency']),
-                    onChanged: (value) {})
-                .showSelectorPickerDialog();
-          })
+          action: () => editCurrency(context))
     ];
 
     return Container(
@@ -215,6 +205,26 @@ class _SettingsUserDataViewState extends State<SettingsUserDataView> {
       context: context,
       builder: (context) =>
           SettingsEditUserInfoView(refreshParent: () => setState(() {})),
+    );
+  }
+
+  Future<dynamic> editCurrency(BuildContext context) {
+    return showModalBottomSheet(
+      barrierColor: themeColor.withOpacity(0.65),
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(customBorderRadius),
+            topRight: Radius.circular(customBorderRadius)),
+      ),
+      constraints: BoxConstraints(
+          maxHeight: MediaQuery.of(context).size.height -
+              MediaQuery.of(context).padding.top -
+              kToolbarHeight),
+      context: context,
+      builder: (context) =>
+          SettingsChangeCurrencyView(refreshParent: () => setState(() {})),
     );
   }
 

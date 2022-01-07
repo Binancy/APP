@@ -30,7 +30,6 @@ class SubscriptionsChangeNotifier extends ChangeNotifier {
   }
 
   Subscription? getNextSubscriptionToPay() {
-    DateTime today = DateTime.now();
     Subscription nextSubscriptionToPay = Subscription()
       ..payDay = 0
       ..latestMonth = Month.NONE;

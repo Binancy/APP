@@ -154,4 +154,11 @@ class AccountController {
     await connAPI.callAPI();
     return connAPI.getStatus() == 200;
   }
+
+  static Future<bool> updateCurrency(int selectedCurrency) async {
+    ConnAPI connAPI = ConnAPI(APIEndpoints.UPDATE_CURRENCY, "PUT", false,
+        {"id": userData['idUser'], "currency": selectedCurrency});
+    await connAPI.callAPI();
+    return connAPI.getStatus() == 200;
+  }
 }

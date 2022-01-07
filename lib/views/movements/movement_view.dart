@@ -196,20 +196,25 @@ class _MovementViewState extends State<MovementView> {
                           const SpaceDivider(),
                           datePicker(context),
                           const SpaceDivider(),
-                          BinancySelectorWidget(
-                            hint: AppLocalizations.of(context)!.select_category,
-                            items: categoryList,
-                            selectedItem: selectedCategory,
-                            onChanged: (value) {
-                              setState(() {
-                                selectedCategory = value;
-                              });
-                            },
-                            allowEdit: allowEdit,
-                            icon: Icon(
-                              BinancyIcons.folder,
-                              color: accentColor,
-                              size: 36,
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: customMargin, right: customMargin),
+                            child: BinancySelectorWidget(
+                              hint:
+                                  AppLocalizations.of(context)!.select_category,
+                              items: categoryList,
+                              selectedItem: selectedCategory,
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedCategory = value;
+                                });
+                              },
+                              allowEdit: allowEdit,
+                              icon: Icon(
+                                BinancyIcons.folder,
+                                color: accentColor,
+                                size: 36,
+                              ),
                             ),
                           ),
                           const SpaceDivider(),

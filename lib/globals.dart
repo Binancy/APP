@@ -7,7 +7,7 @@ const String organizationName = "Appxs";
 const String appVersion = "1.2.1";
 
 // API GLOBALS
-const String apiURL = "https://binancy.herokuapp.com";
+const String apiURL = "http://api.binancy.appxs.es";
 const String testURL = "http://localhost:5000";
 const Duration timeout = Duration(milliseconds: 5000);
 const supportEmail = "support@appxs.es";

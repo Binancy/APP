@@ -405,8 +405,12 @@ class Utils {
   }
 
   static String getCurrencyFromAvaiableCurrencyList() {
-    String rawCurrency = avaiableCurrencies.elementAt(userData['currency']);
-    return rawCurrency.split("(")[1][0];
+    try {
+      String rawCurrency = avaiableCurrencies.elementAt(userData['currency']);
+      return rawCurrency.split("(")[1][0];
+    } catch (e) {
+      return "€";
+    }
   }
 }
 

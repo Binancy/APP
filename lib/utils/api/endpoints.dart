@@ -5,6 +5,7 @@ class APIEndpoints {
   static const String CHANGE_PASSWORD = "/api/account/changePassword";
   static const String UPDATE_PROFILE = "/api/account/updateProfile";
   static const String UPDATE_PAYDAY = "/api/account/updatePayDay";
+  static const String UPDATE_CURRENCY = "/api/account/updateCurrency";
 
   // LOGIN & REGISTER
   static const String LOGIN = "/api/login";

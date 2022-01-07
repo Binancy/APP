@@ -271,6 +271,11 @@
     "currency_eur": "Euro (€)",
     "currency_usd": "Dólar ($)",
     "currency_pnd": "Libra (£)",
+    "currency_update_button" : "Actualizar divisa",
+    "currency_update_ok": "¡Divisa actualizada correctamente!",
+    "currency_update_ko": "Error al actualizar tu divisa",
+    "currency_update_not_needed": "La divisa seleccionada es tu actual divisa, no es necesario actualizar tu divisa",
+    "close": "Salir",
     "@advice_feedback_header": {
         "placeholders": {
             "appName": {}

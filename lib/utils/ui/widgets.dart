@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:binancy/globals.dart';
 import 'package:flutter_svg/svg.dart';
 
-import 'icons.dart';
-
 class LinearDivider extends StatelessWidget {
   const LinearDivider({
     Key? key,
@@ -250,53 +248,50 @@ class BinancySelectorWidget extends StatefulWidget {
 class _BinancySelectorWidgetState extends State<BinancySelectorWidget> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: customMargin, right: customMargin),
-      child: Material(
-        color: themeColor.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(customBorderRadius),
-        child: Container(
-            height: buttonHeight,
-            padding:
-                const EdgeInsets.only(left: customMargin, right: customMargin),
-            child: Row(
-              children: [
-                widget.icon ?? const SizedBox(),
-                widget.icon != null
-                    ? const SpaceDivider(
-                        isVertical: true,
-                      )
-                    : const SizedBox(),
-                Expanded(
-                    child: DropdownButton<dynamic>(
-                        isExpanded: true,
-                        hint: Text(
-                          widget.hint,
-                          style: inputStyle(),
-                        ),
-                        onTap: () => FocusScope.of(context).unfocus(),
-                        dropdownColor: primaryColor,
-                        borderRadius: BorderRadius.circular(customBorderRadius),
-                        isDense: true,
-                        elevation: 0,
-                        iconDisabledColor: accentColor,
-                        iconEnabledColor: accentColor,
-                        value: widget.selectedItem,
-                        onChanged: widget.allowEdit
-                            ? (value) {
-                                widget.onChanged(value);
-                              }
-                            : null,
+    return Material(
+      color: themeColor.withOpacity(0.1),
+      borderRadius: BorderRadius.circular(customBorderRadius),
+      child: Container(
+          height: buttonHeight,
+          padding:
+              const EdgeInsets.only(left: customMargin, right: customMargin),
+          child: Row(
+            children: [
+              widget.icon ?? const SizedBox(),
+              widget.icon != null
+                  ? const SpaceDivider(
+                      isVertical: true,
+                    )
+                  : const SizedBox(),
+              Expanded(
+                  child: DropdownButton<dynamic>(
+                      isExpanded: true,
+                      hint: Text(
+                        widget.hint,
                         style: inputStyle(),
-                        underline: const SizedBox(),
-                        items: widget.items
-                            .map((e) => DropdownMenuItem<dynamic>(
-                                value: e,
-                                child: Text(e is Category ? e.title : e)))
-                            .toList()))
-              ],
-            )),
-      ),
+                      ),
+                      onTap: () => FocusScope.of(context).unfocus(),
+                      dropdownColor: primaryColor,
+                      borderRadius: BorderRadius.circular(customBorderRadius),
+                      isDense: true,
+                      elevation: 0,
+                      iconDisabledColor: accentColor,
+                      iconEnabledColor: accentColor,
+                      value: widget.selectedItem,
+                      onChanged: widget.allowEdit
+                          ? (value) {
+                              widget.onChanged(value);
+                            }
+                          : null,
+                      style: inputStyle(),
+                      underline: const SizedBox(),
+                      items: widget.items
+                          .map((e) => DropdownMenuItem<dynamic>(
+                              value: e,
+                              child: Text(e is Category ? e.title : e)))
+                          .toList()))
+            ],
+          )),
     );
   }
 }
