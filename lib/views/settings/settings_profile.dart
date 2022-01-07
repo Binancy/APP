@@ -165,17 +165,17 @@ class _SettingsUserDataViewState extends State<SettingsUserDataView> {
       ),
       const LinearDivider(),
       BinancyActionRow(
+          text: AppLocalizations.of(context)!.currency_header,
+          action: () => editCurrency(context)),
+      const LinearDivider(),
+      BinancyActionRow(
           text: AppLocalizations.of(context)!.delete_data,
           action: () => confirmDeleteUserData()),
       const LinearDivider(),
       BinancyActionRow(
         text: AppLocalizations.of(context)!.delete_account,
         action: () => confirmDeleteAccount(),
-      ),
-      const LinearDivider(),
-      BinancyActionRow(
-          text: AppLocalizations.of(context)!.currency_header,
-          action: () => editCurrency(context))
+      )
     ];
 
     return Container(
