@@ -3,7 +3,6 @@
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/ui/widgets.dart';
 import 'package:binancy/utils/utils.dart';
-import 'package:binancy/views/advice/advice_binancy_view.dart';
 import 'package:binancy/views/advice/advice_card.dart';
 import 'package:binancy/views/advice/support_view.dart';
 import 'package:binancy/views/settings/settings_view.dart';

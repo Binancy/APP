@@ -267,6 +267,16 @@
     "advice_send_suggestion": "Send suggestions",
     "advice_feedback_header": "What do you think of {appName}?",
     "advice_feedback_subtitle": "Leave your opinion on the Play Store",
+    "subscriptions_next_subscription_to_pay": "Your next subscription to renew:",
+    "currency_header": "Change currency",
+    "currency_eur": "Euro (€)",
+    "currency_usd": "Dollar ($)",
+    "currency_pnd": "Pound (£)",
+    "currency_update_button" : "Update currency",
+    "currency_update_ok": "Currency updated successfully!",
+    "currency_update_ko": "An error has ocurred updating your currency",
+    "currency_update_not_needed": "The selected currency is your actual currency, an update is not needed",
+    "close": "Close",
     "@advice_feedback_header": {
         "placeholders": {
             "appName": {}

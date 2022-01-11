@@ -357,7 +357,9 @@ class MovementBalanceView extends StatelessWidget {
           DateTime(today.year, today.month - i, today.day));
       Month month = Utils.getMonthNameOfPayDay(payDayMonth);
 
-      if (month.index > payDayMonth.month) {
+      if (payDayMonth.year < Utils.getTodayDate().year &&
+              month == Month.JANUARY ||
+          month.index > payDayMonth.month) {
         payDayMonth = Utils.getStartMonthByPayDay(
             DateTime(today.year, today.month - (i - 1), today.day));
       }

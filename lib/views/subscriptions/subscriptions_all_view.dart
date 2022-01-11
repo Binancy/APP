@@ -96,7 +96,9 @@ class SubscriptionsView extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Text("Tu próxima subscripción a renovar:",
+                                Text(
+                                    AppLocalizations.of(context)!
+                                        .subscriptions_next_subscription_to_pay,
                                     style: accentStyle()),
                                 Text(
                                     provider.getNextSubscriptionToPay() != null

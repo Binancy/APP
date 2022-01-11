@@ -40,8 +40,8 @@ class SubscriptionsController {
 
   static Future<bool> paySubscription(Subscription subscription) async {
     Expend subscriptionToExpend = Expend()
-      //   ..category = Category.subscriptionCategory()
-      ..date = DateTime.now()
+      // ..category = Category.subscriptionCategory()
+      ..date = subscription.getPayDayDate()!
       ..description = subscription.description
       ..idUser = userData['idUser']
       ..title = subscription.name
@@ -160,6 +160,13 @@ class SubscriptionsController {
             }
           }
         }
+      }
+
+      // Implemented in 1.2, this fix will allow to check subscriptions if Binancy
+      // was not opened for more than a month.
+      if (subscription.date!.isBefore(today) ||
+          subscription.date!.isAtSameMomentAs(today)) {
+        update = true;
       }
 
       if (update) {

@@ -10,7 +10,6 @@ import 'package:binancy/utils/ui/styles.dart';
 import 'package:binancy/utils/utils.dart';
 import 'package:binancy/utils/ui/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -294,6 +293,7 @@ class _SavingsPlanViewState extends State<SavingsPlanView> {
             if (allowEdit) {
               BinancyDatePicker binancyDatePicker = BinancyDatePicker(
                   context: context,
+                  firstDate: Utils.getTodayDate(),
                   initialDate: Utils.isValidDateYMD(parsedDate, context)
                       ? Utils.fromYMD(parsedDate, context)
                       : DateTime.now());

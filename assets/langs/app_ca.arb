@@ -266,6 +266,16 @@
     "support_feedback_success": "Report enviat correctament!",
     "advice_feedback_header": "Què et sembla {appName}?",
     "advice_feedback_subtitle": "Deixa la teva opinió a la Play Store",
+    "subscriptions_next_subscription_to_pay": "La teva proxima subscripció a renovar:",
+    "currency_header": "Canviar divisa",
+    "currency_eur": "Euro (€)",
+    "currency_usd": "Dòlar ($)",
+    "currency_pnd": "Lliura (£)",
+    "currency_update_button" : "Actualizar divisa",
+    "currency_update_ok": "La teva divisa s'ha actualitzat correctament!",
+    "currency_update_ko": "Ha hagut un error al actualitzar la teva divisa",
+    "currency_update_not_needed": "La divisa seleccionada es la teva divisa actual, no es necesari actualitzar.",
+    "close": "Tancar",
     "@advice_feedback_header": {
         "placeholders": {
             "appName": {}

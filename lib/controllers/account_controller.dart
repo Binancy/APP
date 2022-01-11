@@ -13,8 +13,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class AccountController {
   static Future<void> registerUser(
       BuildContext context, Map<String, dynamic> registerData) async {
-    ConnAPI connAPI =
-        ConnAPI(APIEndpoints.REGISTER, "POST", false, {"data": registerData});
+    ConnAPI connAPI = ConnAPI(
+        APIEndpoints.REGISTER, "POST", false, {"data": registerData},
+        disableTimeout: true);
     BinancyProgressDialog binancyProgressDialog =
         BinancyProgressDialog(context: context)..showProgressDialog();
     await connAPI.callAPI();
@@ -150,6 +151,13 @@ class AccountController {
   static Future<bool> updatePayDay(int payday) async {
     ConnAPI connAPI = ConnAPI(APIEndpoints.UPDATE_PAYDAY, "PUT", false,
         {"id": userData['idUser'], "payDay": payday});
+    await connAPI.callAPI();
+    return connAPI.getStatus() == 200;
+  }
+
+  static Future<bool> updateCurrency(int selectedCurrency) async {
+    ConnAPI connAPI = ConnAPI(APIEndpoints.UPDATE_CURRENCY, "PUT", false,
+        {"id": userData['idUser'], "currency": selectedCurrency});
     await connAPI.callAPI();
     return connAPI.getStatus() == 200;
   }

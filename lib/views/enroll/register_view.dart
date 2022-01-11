@@ -9,7 +9,6 @@ import 'package:binancy/utils/ui/widgets.dart';
 import 'package:binancy/views/advice/advice_card.dart';
 import 'package:binancy/views/enroll/privacy_terms_view.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:page_transition/page_transition.dart';
@@ -358,6 +357,7 @@ class _RegisterViewState extends State<RegisterView> {
                     FocusScope.of(context).unfocus();
                     BinancyDatePicker binancyDatePicker = BinancyDatePicker(
                         context: context,
+                        lastDate: Utils.getTodayDate(),
                         initialDate: Utils.isValidDateYMD(parsedDate, context)
                             ? Utils.fromYMD(parsedDate, context)
                             : DateTime.now());

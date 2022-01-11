@@ -18,9 +18,7 @@ import 'package:binancy/views/payments/premium_plans_view.dart';
 import 'package:binancy/views/savings_plan/savings_plans_all_view.dart';
 import 'package:binancy/views/settings/settings_view.dart';
 import 'package:binancy/views/subscriptions/subscriptions_all_view.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:page_transition/page_transition.dart';
@@ -37,6 +35,8 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
   List<double> opacityValueList = [];
   List<ActionButtonWidget> actionsList = [];
   List<Widget> pageList = [];
+
+  PageController pageController = PageController();
 
   bool firstRun = true;
 
@@ -79,6 +79,7 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
                     height: (MediaQuery.of(context).size.height / 10 * 2.5),
                     child: PageView(
                       onPageChanged: (value) => updatePointers(value),
+                      controller: pageController,
                       children: pageList,
                     )),
                 Padding(
@@ -444,11 +445,16 @@ class _DashboardActionsCardState extends State<DashboardActionsCard> {
   List<Widget> buildPointers() {
     List<Widget> pointersList = [];
     for (var i = 0; i < pageList.length; i++) {
-      pointersList.add(AnimatedOpacity(
-          opacity: opacityValueList[i],
-          curve: Curves.easeInOut,
-          duration: const Duration(milliseconds: opacityAnimationDurationMS),
-          child: const Icon(Icons.circle, color: Colors.white, size: 10)));
+      pointersList.add(GestureDetector(
+        onTap: () => pageController.animateToPage(i,
+            duration: const Duration(milliseconds: adviceTransitionDuration),
+            curve: Curves.easeOut),
+        child: AnimatedOpacity(
+            opacity: opacityValueList[i],
+            curve: Curves.easeInOut,
+            duration: const Duration(milliseconds: opacityAnimationDurationMS),
+            child: const Icon(Icons.circle, color: Colors.white, size: 10)),
+      ));
     }
 
     return pointersList;

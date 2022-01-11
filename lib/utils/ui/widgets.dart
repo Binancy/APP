@@ -1,3 +1,4 @@
+import 'package:binancy/models/category.dart';
 import 'package:binancy/utils/ui/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:binancy/globals.dart';
@@ -146,11 +147,22 @@ class BinancyLogoVert extends StatelessWidget {
   }
 }
 
-class BinancyIconVertical extends StatelessWidget {
-  const BinancyIconVertical({Key? key}) : super(key: key);
+class BinancyIconVertical extends StatefulWidget {
+  const BinancyIconVertical({Key? key, this.showProgressIndicator = false})
+      : super(key: key);
+
+  final bool showProgressIndicator;
+
+  @override
+  State<BinancyIconVertical> createState() => _BinancyIconVerticalState();
+}
+
+class _BinancyIconVerticalState extends State<BinancyIconVertical> {
+  double progressIndicatorSize = 0;
 
   @override
   Widget build(BuildContext context) {
+    revealProgressIndicator();
     return SizedBox(
         width: MediaQuery.of(context).size.width,
         child: Padding(
@@ -163,8 +175,29 @@ class BinancyIconVertical extends StatelessWidget {
                 Image.asset(
                   "assets/icons/binancy_icon.png",
                 ),
+                AnimatedContainer(
+                  height: progressIndicatorSize,
+                  width: progressIndicatorSize,
+                  duration: const Duration(
+                      milliseconds: splashScreenProgressIndicatorTransitionMS),
+                  child: CircularProgressIndicator(
+                    strokeWidth: 5,
+                    backgroundColor: themeColor.withOpacity(0.1),
+                    color: accentColor,
+                  ),
+                )
               ],
             ))));
+  }
+
+  void revealProgressIndicator() {
+    if (widget.showProgressIndicator) {
+      Future.delayed(const Duration(
+              milliseconds: splashScreenTimeToShowProgressIndicatorMS))
+          .then((value) => setState(() {
+                progressIndicatorSize = 75;
+              }));
+    }
   }
 }
 
@@ -187,6 +220,79 @@ class BinancyIconHorizontal extends StatelessWidget {
                 ),
               ],
             ))));
+  }
+}
+
+class BinancySelectorWidget extends StatefulWidget {
+  final Icon? icon;
+  final String hint;
+  final bool allowEdit;
+  final List<dynamic> items;
+  final dynamic selectedItem;
+  final Function(dynamic) onChanged;
+
+  const BinancySelectorWidget(
+      {Key? key,
+      required this.hint,
+      required this.items,
+      required this.selectedItem,
+      required this.onChanged,
+      this.allowEdit = true,
+      this.icon})
+      : super(key: key);
+
+  @override
+  _BinancySelectorWidgetState createState() => _BinancySelectorWidgetState();
+}
+
+class _BinancySelectorWidgetState extends State<BinancySelectorWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: themeColor.withOpacity(0.1),
+      borderRadius: BorderRadius.circular(customBorderRadius),
+      child: Container(
+          height: buttonHeight,
+          padding:
+              const EdgeInsets.only(left: customMargin, right: customMargin),
+          child: Row(
+            children: [
+              widget.icon ?? const SizedBox(),
+              widget.icon != null
+                  ? const SpaceDivider(
+                      isVertical: true,
+                    )
+                  : const SizedBox(),
+              Expanded(
+                  child: DropdownButton<dynamic>(
+                      isExpanded: true,
+                      hint: Text(
+                        widget.hint,
+                        style: inputStyle(),
+                      ),
+                      onTap: () => FocusScope.of(context).unfocus(),
+                      dropdownColor: primaryColor,
+                      borderRadius: BorderRadius.circular(customBorderRadius),
+                      isDense: true,
+                      elevation: 0,
+                      iconDisabledColor: accentColor,
+                      iconEnabledColor: accentColor,
+                      value: widget.selectedItem,
+                      onChanged: widget.allowEdit
+                          ? (value) {
+                              widget.onChanged(value);
+                            }
+                          : null,
+                      style: inputStyle(),
+                      underline: const SizedBox(),
+                      items: widget.items
+                          .map((e) => DropdownMenuItem<dynamic>(
+                              value: e,
+                              child: Text(e is Category ? e.title : e)))
+                          .toList()))
+            ],
+          )),
+    );
   }
 }
 

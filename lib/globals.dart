@@ -1,12 +1,13 @@
 // APP GLOBALS
 import 'package:binancy/models/category.dart';
+import 'package:binancy/utils/utils.dart';
 
 const String appName = "Binancy";
 const String organizationName = "Appxs";
-const String appVersion = "1.1.1";
+const String appVersion = "1.2.1";
 
 // API GLOBALS
-const String apiURL = "https://binancy.herokuapp.com";
+const String apiURL = "http://api.binancy.appxs.es";
 const String testURL = "http://localhost:5000";
 const Duration timeout = Duration(milliseconds: 5000);
 const supportEmail = "support@appxs.es";
@@ -29,7 +30,10 @@ extension ParseToString on AvaiablePlans {
 // USER GLOBALS
 Map<String, dynamic> userData = {};
 List<Category> categoryList = [];
-String currency = "€";
+List<String> avaiableCurrencies = [];
+String currency = avaiableCurrencies.isNotEmpty
+    ? Utils.getCurrencyFromAvaiableCurrencyList()
+    : "€";
 
 // WIDGET GLOBALS
 const double customBorderRadius = 10;
@@ -56,6 +60,8 @@ const int swapAnimationDurationMS = 500;
 const int autoPassAdviceInterval = 5;
 const int adviceTransitionDuration = 500;
 const int registerTransitionDuration = 750;
+const int splashScreenTimeToShowProgressIndicatorMS = 1000;
+const int splashScreenProgressIndicatorTransitionMS = 150;
 
 // UI GLOBALS
 const int dashboardMaxNotifications = 3;
